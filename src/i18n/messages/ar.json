@@ -6,5 +6,30 @@
     "light": "فاتح",
     "dark": "داكن",
     "system": "النظام"
-  }
+  },
+  "Navigation": {
+    "home": "الرئيسية",
+    "products": "المنتجات",
+    "categories": "الفئات",
+    "occasions": "المناسبات",
+    "contact": "تواصل معنا",
+    "about": "من نحن",
+    "terms": "الشروط والأحكام",
+    "privacy": "سياسة الخصوصية",
+    "faqs": "الأسئلة الشائعة"
+  },
+  "Footer": {
+    "discover": "اكتشف موقعنا",
+    "brand": "تطبيق روز للتجارة الإلكترونية",
+    "rights": "جميع الحقوق محفوظة | {year}",
+    "newsletterTitle": "احصل على كوبون خصم 20%",
+    "newsletterSubtitle": "بالاشتراك في نشرتنا البريدية",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "subscribe": "اشترك"
+  },
+  "emailRequired": "من فضلك أدخل بريدك الإلكتروني",
+  "emailInvalid": "من فضلك أدخل بريدًا إلكترونيًا صحيحًا",
+  "subscribeSuccess": "تم الاشتراك بنجاح",
+  "subscribeAlready": "هذا البريد مشترك بالفعل",
+  "subscribeError": "حدث خطأ، حاول مرة أخرى"
 }

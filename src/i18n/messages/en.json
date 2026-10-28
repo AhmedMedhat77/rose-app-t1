@@ -6,5 +6,30 @@
     "light": "Light",
     "dark": "Dark",
     "system": "System"
-  }
+  },
+  "Navigation": {
+    "home": "Home",
+    "products": "Products",
+    "categories": "Categories",
+    "occasions": "Occasions",
+    "contact": "Contact",
+    "about": "About",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy",
+    "faqs": "FAQs"
+  },
+  "Footer": {
+    "discover": "Discover our website",
+    "brand": "Rose E-Commerce App",
+    "rights": "All rights reserved | {year}",
+    "newsletterTitle": "Get 20% Off Discount Coupon",
+    "newsletterSubtitle": "By subscribing to our newsletter",
+    "emailPlaceholder": "Enter Your Email",
+    "subscribe": "Subscribe"
+  },
+  "emailRequired": "Please enter your email",
+  "emailInvalid": "Please enter a valid email",
+  "subscribeSuccess": "Subscribed successfully",
+  "subscribeAlready": "This email is already subscribed",
+  "subscribeError": "Something went wrong, please try again"
 }
