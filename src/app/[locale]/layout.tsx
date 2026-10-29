@@ -16,6 +16,7 @@ import { geistMono, sarabun, tajawal } from "../fonts";
 import "../globals.css";
 import { ThemeMode } from "@/components/theme-mode";
 import Footer from "@/components/layout/footer/footer";
+import { Header } from "@/components/layout/header/header";
 
 export const metadata: Metadata = {
   title: "Rose App",
@@ -66,6 +67,7 @@ export default async function RootLayout({
               <LocaleSwitcher />
               <ThemeMode />
             </header>
+            <Header />
 
             <main className="flex-1">{children}</main>
             <Footer />

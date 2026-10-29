@@ -6,7 +6,7 @@ export default async function HomePage() {
   return (
     <div>
       {t("welcome")}
-      <Button>Primary</Button>
+      <Button className="mt-6">Primary</Button>
     </div>
   );
 }

@@ -11,16 +11,17 @@ export function LocaleSwitcher() {
   const pathname = usePathname();
   const t = useTranslations();
 
+  const otherLocales = routing.locales.filter((l) => l !== locale);
+
   return (
     <nav aria-label={t("language")} className="flex gap-3 p-4">
-      {routing.locales.map((nextLocale) => (
+      {otherLocales.map((nextLocale) => (
         <Link
           key={nextLocale}
           href={pathname}
           locale={nextLocale}
           lang={nextLocale}
           dir={nextLocale === "ar" ? "rtl" : "ltr"}
-          aria-current={locale === nextLocale ? "page" : undefined}
           className={`text-primary focus-visible:outline-ring rounded-sm px-2 py-1 underline-offset-4 hover:underline focus-visible:outline-2 ${nextLocale === "ar" ? "font-arabic" : "font-english"}`}
         >
           {localeNames[nextLocale]}

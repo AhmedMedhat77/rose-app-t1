@@ -18,18 +18,27 @@
     "privacy": "Privacy Policy",
     "faqs": "FAQs"
   },
+  "Header": {
+    "searchPlaceholder": "What awesome gift are you looking for?",
+    "searchLabel": "Search",
+    "login": "Login",
+    "wishlist": "Wishlist",
+    "cart": "Cart",
+    "notifications": "Notifications",
+    "mainNavigation": "Main navigation"
+  },
   "Footer": {
     "discover": "Discover our website",
     "brand": "Rose E-Commerce App",
     "rights": "All rights reserved | {year}",
-    "newsletterTitle": "Get 20% Off Discount Coupon",
+    "newsletterTitle": "Get <highlight>{percent}</highlight> Off Discount Coupon",
     "newsletterSubtitle": "By subscribing to our newsletter",
     "emailPlaceholder": "Enter Your Email",
-    "subscribe": "Subscribe"
-  },
-  "emailRequired": "Please enter your email",
-  "emailInvalid": "Please enter a valid email",
-  "subscribeSuccess": "Subscribed successfully",
-  "subscribeAlready": "This email is already subscribed",
-  "subscribeError": "Something went wrong, please try again"
+    "subscribe": "Subscribe",
+    "emailRequired": "Please enter your email",
+    "emailInvalid": "Please enter a valid email",
+    "subscribeSuccess": "Subscribed successfully",
+    "subscribeAlready": "This email is already subscribed",
+    "subscribeError": "Something went wrong, please try again"
+  }
 }

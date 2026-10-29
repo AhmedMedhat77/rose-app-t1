@@ -18,18 +18,27 @@
     "privacy": "سياسة الخصوصية",
     "faqs": "الأسئلة الشائعة"
   },
+  "Header": {
+    "searchPlaceholder": "ما هي الهدية الرائعة التي تبحث عنها؟",
+    "searchLabel": "بحث",
+    "login": "تسجيل الدخول",
+    "wishlist": "المفضلة",
+    "cart": "السلة",
+    "notifications": "الإشعارات",
+    "mainNavigation": "التنقل الرئيسي"
+  },
   "Footer": {
     "discover": "اكتشف موقعنا",
     "brand": "تطبيق روز للتجارة الإلكترونية",
     "rights": "جميع الحقوق محفوظة | {year}",
-    "newsletterTitle": "احصل على كوبون خصم 20%",
+    "newsletterTitle": "احصل على كوبون خصم <highlight>{percent}</highlight>",
     "newsletterSubtitle": "بالاشتراك في نشرتنا البريدية",
     "emailPlaceholder": "أدخل بريدك الإلكتروني",
-    "subscribe": "اشترك"
-  },
-  "emailRequired": "من فضلك أدخل بريدك الإلكتروني",
-  "emailInvalid": "من فضلك أدخل بريدًا إلكترونيًا صحيحًا",
-  "subscribeSuccess": "تم الاشتراك بنجاح",
-  "subscribeAlready": "هذا البريد مشترك بالفعل",
-  "subscribeError": "حدث خطأ، حاول مرة أخرى"
+    "subscribe": "اشترك",
+    "emailRequired": "من فضلك أدخل بريدك الإلكتروني",
+    "emailInvalid": "من فضلك أدخل بريدًا إلكترونيًا صحيحًا",
+    "subscribeSuccess": "تم الاشتراك بنجاح",
+    "subscribeAlready": "هذا البريد مشترك بالفعل",
+    "subscribeError": "حدث خطأ، حاول مرة أخرى"
+  }
 }
