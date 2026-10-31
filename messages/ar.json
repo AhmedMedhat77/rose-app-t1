@@ -1,10 +1,29 @@
 {
-  "welcome": "مرحباً",
+  "welcome": "مرحبا",
   "language": "اللغة",
   "theme": {
-    "label": "المظهر",
+    "label": "السمة",
     "light": "فاتح",
     "dark": "داكن",
     "system": "النظام"
+  },
+  "toast": {
+    "informative": "رسالة توضيحية",
+    "successful": "عملية ناجحة",
+    "unsuccessful": "عملية غير ناجحة",
+    "close": "إغلاق الإشعار",
+    "notifications": "الإشعارات"
+  },
+  "pagination": {
+    "label": "ترقيم الصفحات",
+    "first": "الصفحة الأولى",
+    "previous": "الصفحة السابقة",
+    "next": "الصفحة التالية",
+    "last": "الصفحة الأخيرة",
+    "page": "صفحة {page}"
+  },
+  "textarea": {
+    "label": "التسمية",
+    "placeholder": "اكتب هنا..."
   }
 }

@@ -1,10 +1,29 @@
 {
   "welcome": "welcome",
-  "language": "Language",
+  "language": "language",
   "theme": {
-    "label": "Theme",
-    "light": "Light",
-    "dark": "Dark",
-    "system": "System"
+    "label": "theme",
+    "light": "light",
+    "dark": "dark",
+    "system": "system"
+  },
+  "toast": {
+    "informative": "Informative message",
+    "successful": "Successful operation",
+    "unsuccessful": "Unsuccessful operation",
+    "close": "Close toast",
+    "notifications": "Notifications"
+  },
+  "pagination": {
+    "label": "Pagination",
+    "first": "First page",
+    "previous": "Previous page",
+    "next": "Next page",
+    "last": "Last page",
+    "page": "Page {page}"
+  },
+  "textarea": {
+    "label": "Label",
+    "placeholder": "Placeholder"
   }
 }
