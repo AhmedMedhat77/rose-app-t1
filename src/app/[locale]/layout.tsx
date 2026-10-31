@@ -8,7 +8,7 @@ import { routing } from "../../i18n/routing";
 import { geistMono, sarabun, tajawal } from "../fonts";
 import "../globals.css";
 
-import { Toaster } from "@/shared/components/ui/toast"
+import { Toaster } from "@/shared/components/ui/toast";
 
 export const metadata: Metadata = {
   title: "Rose App",
