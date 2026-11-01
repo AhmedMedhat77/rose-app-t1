@@ -1,2 +1,42 @@
+#!/usr/bin/env sh
+
+echo ""
+echo "🚀 [Git Pre-Commit Hook] Running quality checks..."
+echo "--------------------------------------------------"
+
+# 1. Format and lint staged files with lint-staged
+echo "1️⃣  Running lint-staged (ESLint + Prettier on staged files)..."
 npx --no-install lint-staged
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "❌ [Pre-Commit Error] Linting or formatting failed on staged files!"
+  echo "👉 Fix the errors above or run 'npm run lint:fix' and 'npm run format'."
+  echo ""
+  exit 1
+fi
+
+# 2. Whole-project TypeScript type checking
+echo "2️⃣  Running TypeScript type check (npm run typecheck)..."
 npm run typecheck
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "❌ [Pre-Commit Error] TypeScript type check failed!"
+  echo "👉 Run 'npm run typecheck' locally and resolve all type issues."
+  echo ""
+  exit 1
+fi
+
+# 3. Next.js production build verification
+echo "3️⃣  Verifying Next.js production build (npm run build)..."
+npm run build
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "❌ [Pre-Commit Error] Next.js build failed!"
+  echo "👉 Run 'npm run build' locally to see detailed compiler errors."
+  echo ""
+  exit 1
+fi
+
+echo "--------------------------------------------------"
+echo "✅ All pre-commit checks passed! Commit allowed."
+echo ""

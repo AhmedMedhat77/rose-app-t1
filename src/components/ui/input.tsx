@@ -2,11 +2,11 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
-import { Eye, EyeOff, Search, Upload } from "lucide-react";
 import { Button } from "@base-ui/react";
 import { useLocale, useTranslations } from "next-intl";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { Eye, EyeOff, Search, Upload } from "lucide-react";
 
 const defaultInputStyle = cn(
   "rounded-lg",

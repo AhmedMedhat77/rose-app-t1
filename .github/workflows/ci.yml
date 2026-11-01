@@ -1,0 +1,89 @@
+name: CI - Code Quality & Build
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - develop
+      - "chore/**"
+      - "feat/**"
+      - "fix/**"
+  pull_request:
+    branches:
+      - main
+      - master
+      - develop
+  workflow_dispatch:
+
+# Cancel in-progress runs when new commits are pushed to the same PR or branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Lint, Format, Typecheck & Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: 📦 Cache Next.js build output
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('src/**/*.{js,jsx,ts,tsx}') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🎨 Check Code Formatting (Prettier)
+        id: format
+        run: npm run format:check
+
+      - name: 🔍 Check Code Quality (ESLint)
+        id: lint
+        run: npm run lint
+
+      - name: 🏷️ Check TypeScript Types
+        id: typecheck
+        run: npm run typecheck
+
+      - name: 🏗️ Verify Production Build (Next.js)
+        id: build
+        run: npm run build
+        env:
+          NODE_ENV: production
+          NEXT_TELEMETRY_DISABLED: 1
+
+      - name: 📊 Generate CI Summary
+        if: always()
+        run: |
+          echo "## 🚀 CI Pipeline Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "| :--- | :--- |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🎨 Prettier Format | ${{ steps.format.outcome == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🔍 ESLint Linting | ${{ steps.lint.outcome == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🏷️ TypeScript Types | ${{ steps.typecheck.outcome == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🏗️ Next.js Production Build | ${{ steps.build.outcome == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ job.status }}" != "success" ]; then
+            echo "> [!WARNING]" >> $GITHUB_STEP_SUMMARY
+            echo "> One or more checks failed. Please review the logs above to identify and fix the issue." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "> [!TIP]" >> $GITHUB_STEP_SUMMARY
+            echo "> All code quality, type, and build validations passed cleanly! 🎉" >> $GITHUB_STEP_SUMMARY
+          fi

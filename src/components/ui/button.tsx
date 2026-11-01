@@ -1,56 +1,114 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
+import { LoaderCircle } from "lucide-react";
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-ring-danger [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  [
+    // flex
+    "group/button inline-flex shrink-0 items-center justify-center cursor-pointer",
+    // border
+    "gap-2.5 whitespace-nowrap rounded-lg border border-transparent",
+    // text
+    "bg-clip-padding text-base  font-medium dark:font-semibold dark:text-sm ",
+    "transition-colors duration-200 outline-none select-none",
+    "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
+    "active:not-aria-[haspopup]:translate-y-px",
+    "disabled:pointer-events-none disabled:cursor-not-allowed",
+    "disabled:bg-bg-soft disabled:border-transparent dark:disabled:bg-bg-muted disabled:text-text-muted",
+    "aria-invalid:border-destructive aria-invalid:ring-3",
+    "aria-invalid:ring-destructive/20",
+    "[&_svg]:pointer-events-none [&_svg]:shrink-0",
+    "[&_svg:not([class*='size-'])]:size-4",
+  ],
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary-hover",
-        outline:
-          "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_srgb,var(--secondary),var(--foreground)_10%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
-        ghost:
-          "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
-        destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive-hover focus-visible:border-border-danger focus-visible:ring-ring-danger",
-        link: "text-primary underline-offset-4 hover:underline",
+        primary: [
+          // color
+          "bg-bg-primary text-text-inverse",
+          // hover
+          "hover:bg-bg-primary-saturated",
+        ],
+        secondary: [
+          // color
+          "bg-bg-primary-fade text-text-primary dark:text-text-plain",
+          // hover
+          "hover:bg-bg-primary-faint",
+        ],
+        outline: [
+          // color
+          "border-border-primary  bg-bg-plain text-text-primary",
+          // hover
+          "hover:bg-bg-primary-fade",
+        ],
+        subtle: [
+          // color
+          "border-border-soft bg-bg-muted text-text-plain",
+          // hover
+          "hover:bg-bg-soft dark:hover:bg-bg-subtle dark:hover:border-border-primary",
+        ],
+        ghost: [
+          // color
+          "bg-bg-plain text-text-plain",
+          // hover
+          "hover:bg-bg-soft",
+        ],
+        destructive: [
+          // color
+          "bg-bg-danger text-text-inverse",
+          // hover
+          "hover:bg-bg-danger-saturated",
+        ],
       },
+
       size: {
-        default:
-          "h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        xs: "h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
-        sm: "h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
-        lg: "h-9 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        icon: "size-8",
-        "icon-xs":
-          "size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",
-        "icon-sm":
-          "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
-        "icon-lg": "size-9",
+        default: "h-11 dark:h-10.25 px-4",
+        xs: "h-6 gap-1 rounded-md px-2 text-xs",
+        sm: "h-9 gap-1.5 rounded-lg px-3 text-sm",
+        lg: "h-12 px-6 text-base",
+        icon: "size-11 p-0",
+        "icon-xs": "size-6 rounded-md p-0",
+        "icon-sm": "size-9 rounded-lg p-0",
+        "icon-lg": "size-12 p-0",
       },
     },
+
     defaultVariants: {
-      variant: "default",
+      variant: "primary",
       size: "default",
     },
   },
 );
 
+type ButtonProps = ButtonPrimitive.Props &
+  VariantProps<typeof buttonVariants> & {
+    loading?: boolean;
+  };
+
 function Button({
   className,
-  variant = "default",
+  variant = "primary",
   size = "default",
+  loading = false,
+  disabled = false,
+  children,
   ...props
-}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+}: ButtonProps) {
+  const isDisabled = Boolean(disabled || loading);
+
   return (
     <ButtonPrimitive
       data-slot="button"
+      data-loading={loading || undefined}
+      aria-busy={loading || undefined}
       className={cn(buttonVariants({ variant, size, className }))}
+      disabled={isDisabled}
       {...props}
-    />
+    >
+      {children}
+      {loading && <LoaderCircle aria-hidden="true" className="animate-spin" />}
+    </ButtonPrimitive>
   );
 }
 

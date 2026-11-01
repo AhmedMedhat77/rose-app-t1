@@ -5,19 +5,37 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useReducer,
   type ReactNode,
 } from "react";
 
-export const themeModes = ["light", "dark", "system"] as const;
-export type ThemeMode = (typeof themeModes)[number];
-type ResolvedTheme = "light" | "dark";
-const themeStorageKey = "rose-theme";
+import {
+  parseTheme,
+  resolveTheme,
+  systemCookie,
+  themeCookie,
+  type ResolvedTheme,
+  type ThemeMode,
+} from "./theme.shared";
 
-export function parseTheme(value: string | null): ThemeMode {
-  return themeModes.includes(value as ThemeMode)
-    ? (value as ThemeMode)
-    : "system";
+// Re-exported so existing client imports (e.g. theme-mode.tsx) still resolve
+// from this module; the definitions live in theme.shared.
+export {
+  parseResolved,
+  parseTheme,
+  resolveTheme,
+  systemCookie,
+  themeCookie,
+  themeModes,
+  type ResolvedTheme,
+  type ThemeMode,
+} from "./theme.shared";
+
+const cookieMaxAge = 60 * 60 * 24 * 365;
+
+function writeCookie(name: string, value: string) {
+  document.cookie = `${name}=${value};path=/;max-age=${cookieMaxAge};samesite=lax`;
 }
 
 type ThemeContextValue = {
@@ -54,73 +72,57 @@ function themeReducer(state: ThemeState, action: ThemeAction): ThemeState {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
-  // =================== Hooks ===================
+export function ThemeProvider({
+  children,
+  initialTheme,
+  initialSystemTheme,
+}: {
+  children: ReactNode;
+  initialTheme: ThemeMode;
+  initialSystemTheme: ResolvedTheme;
+}) {
+  // hooks
+  // Seed from the server-read cookies so the rendered class matches <html>.
   const [state, dispatch] = useReducer(themeReducer, {
-    theme: "system",
-    systemTheme: "light",
-    initialized: false,
+    theme: initialTheme,
+    systemTheme: initialSystemTheme,
+    initialized: true,
   });
-  const resolvedTheme =
-    state.theme === "system" ? state.systemTheme : state.theme;
+  const resolvedTheme = resolveTheme(state.theme, state.systemTheme);
 
-  // =================== SETTERS ===================
+  // setters
   const setTheme = useCallback((theme: ThemeMode) => {
     const mode = parseTheme(theme);
     dispatch({ type: "set-theme", theme: mode });
-    try {
-      window.localStorage.setItem(themeStorageKey, mode);
-    } catch {
-      // Theme selection remains available when browser storage is blocked.
-    }
+    writeCookie(themeCookie, mode);
   }, []);
 
-  // =================== EFFECTS ===================
-  useEffect(() => {
+  // effects
+  useLayoutEffect(() => {
     const media = window.matchMedia("(prefers-color-scheme: dark)");
-    let theme: ThemeMode = "system";
-    try {
-      theme = parseTheme(window.localStorage.getItem(themeStorageKey));
-    } catch {
-      // Use the system preference when browser storage is unavailable.
+    const systemTheme: ResolvedTheme = media.matches ? "dark" : "light";
+    // Correct the server's (possibly stale) system value and persist it so the
+    // next server render resolves "system" to the right class.
+    if (systemTheme !== initialSystemTheme) {
+      dispatch({ type: "system-change", systemTheme });
     }
-    dispatch({
-      type: "initialize",
-      theme,
-      systemTheme: media.matches ? "dark" : "light",
-    });
+    writeCookie(systemCookie, systemTheme);
 
     const onSystemChange = (event: MediaQueryListEvent) => {
-      dispatch({
-        type: "system-change",
-        systemTheme: event.matches ? "dark" : "light",
-      });
-    };
-    const onStorage = (event: StorageEvent) => {
-      try {
-        if (event.storageArea !== window.localStorage) return;
-      } catch {
-        return;
-      }
-      if (event.key === themeStorageKey || event.key === null) {
-        dispatch({ type: "set-theme", theme: parseTheme(event.newValue) });
-      }
+      const next: ResolvedTheme = event.matches ? "dark" : "light";
+      dispatch({ type: "system-change", systemTheme: next });
+      writeCookie(systemCookie, next);
     };
 
     media.addEventListener("change", onSystemChange);
-    window.addEventListener("storage", onStorage);
-    return () => {
-      media.removeEventListener("change", onSystemChange);
-      window.removeEventListener("storage", onStorage);
-    };
-  }, []);
+    return () => media.removeEventListener("change", onSystemChange);
+  }, [initialSystemTheme]);
 
   useEffect(() => {
-    if (!state.initialized) return;
     const root = document.documentElement;
     root.classList.remove("light", "dark");
     root.classList.add(resolvedTheme);
-  }, [state.initialized, resolvedTheme]);
+  }, [resolvedTheme]);
 
   return (
     <ThemeContext value={{ theme: state.theme, resolvedTheme, setTheme }}>
