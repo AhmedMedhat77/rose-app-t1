@@ -9,7 +9,7 @@ import {
   type ReactNode,
 } from "react";
 
-export const themeModes = ["light", "dark", "system"] as const;
+export const themeModes = ["light", "system", "dark"] as const;
 export type ThemeMode = (typeof themeModes)[number];
 type ResolvedTheme = "light" | "dark";
 const themeStorageKey = "rose-theme";
