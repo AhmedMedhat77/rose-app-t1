@@ -1,10 +1,19 @@
 {
   "welcome": "welcome",
   "language": "Language",
+
   "theme": {
     "label": "Theme",
     "light": "Light",
     "dark": "Dark",
     "system": "System"
+  },
+
+  "Input": {
+    "uploadFile": "Upload File",
+    "searchPlaceholder": "Search...",
+    "numberPlaceholder": "Select Number",
+    "phoneNumber": "Entry Phone Number",
+    "fileRequired": "Please select a file"
   }
 }

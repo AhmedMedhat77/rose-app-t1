@@ -16,11 +16,11 @@ export default async function HomePage() {
 
       <Input label="default" variant="default" />
       <Input label="password" variant="password" />
-      <Input label="error" variant="error" />
-      <Input label="number" variant="number" />
+      <Input label="password" variant="search" inputSize="lg" />
+      <Input label="error" isError={true} inputSize="sm" />
+      <Input label="number" variant="number" inputSize="lg" />
       <Input label="upload" variant="upload" />
-      <Input label="phoneNumber" variant="phoneNumber" />
-      <Input label="disabled" variant="disabled" />
+      <Input label="disabled" isDisabled={true} />
 
       <PhoneNumberInput />
 
