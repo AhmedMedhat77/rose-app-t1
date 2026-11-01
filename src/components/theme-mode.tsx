@@ -2,7 +2,8 @@
 import { useTranslations } from "next-intl";
 import { Monitor, Moon, Sun } from "lucide-react";
 import { parseTheme, themeModes, useTheme } from "@/context/theme.context";
-import { cn } from "@/shared/utils/tailwind-merge";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { cn } from "cn";
 
 const icons = {
   light: Sun,
@@ -15,34 +16,33 @@ export function ThemeMode() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <div
-      role="group"
+    <ToggleGroup
       aria-label={t("label")}
+      value={[theme]}
+      onValueChange={(value) => {
+        const next = value[0];
+        if (next) setTheme(parseTheme(next));
+      }}
       className={cn(
-        "inline-flex h-10 w-27 items-center",
+        "inline-flex h-10 w-27 items-center gap-0",
         "border-border-soft bg-bg-plain rounded-full border p-0.75",
       )}
     >
       {themeModes.map((mode) => {
         const Icon = icons[mode];
-        const isSelected = theme === mode;
 
         return (
-          <button
+          <ToggleGroupItem
             key={mode}
-            type="button"
+            value={mode}
             aria-label={t(mode)}
-            aria-pressed={isSelected}
             title={t(mode)}
-            onClick={() => setTheme(parseTheme(mode))}
             className={cn(
-              "text-text-plain flex size-8.5 flex-1 items-center justify-center",
-              "rounded-full transition-colors",
-              "focus-visible:outline-none",
+              "text-text-plain size-8.5 min-w-0 flex-1 rounded-full px-0",
+              "hover:bg-transparent",
               "focus-visible:ring-ring focus-visible:ring-2",
-              "focus-visible:ring-offset-1",
-              "focus-visible:ring-offset-background",
-              isSelected && "bg-bg-soft dark:bg-bg-muted shadow-sm",
+              "focus-visible:ring-offset-background focus-visible:ring-offset-1",
+              "data-pressed:bg-bg-soft dark:data-pressed:bg-bg-muted data-pressed:shadow-sm",
             )}
           >
             <Icon
@@ -50,9 +50,9 @@ export function ThemeMode() {
               className="size-4.5 shrink-0"
               strokeWidth={2}
             />
-          </button>
+          </ToggleGroupItem>
         );
       })}
-    </div>
+    </ToggleGroup>
   );
 }

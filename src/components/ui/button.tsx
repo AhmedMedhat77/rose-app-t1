@@ -1,6 +1,6 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/shared/utils/tailwind-merge";
+import { cn } from "cn";
 import { LoaderCircle } from "lucide-react";
 
 const buttonVariants = cva(
@@ -10,13 +10,12 @@ const buttonVariants = cva(
     // border
     "gap-2.5 whitespace-nowrap rounded-lg border border-transparent",
     // text
-    "bg-clip-padding text-base font-english font-medium dark:font-semibold dark:text-sm ",
+    "bg-clip-padding text-base  font-medium dark:font-semibold dark:text-sm ",
     "transition-colors duration-200 outline-none select-none",
     "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
     "active:not-aria-[haspopup]:translate-y-px",
     "disabled:pointer-events-none disabled:cursor-not-allowed",
-    "disabled:bg-muted disabled:text-muted-foreground",
-    "disabled:opacity-100",
+    "disabled:bg-bg-soft disabled:border-transparent dark:disabled:bg-bg-muted disabled:text-text-muted",
     "aria-invalid:border-destructive aria-invalid:ring-3",
     "aria-invalid:ring-destructive/20",
     "[&_svg]:pointer-events-none [&_svg]:shrink-0",
@@ -25,54 +24,42 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: cn(
+        primary: [
           // color
           "bg-bg-primary text-text-inverse",
           // hover
           "hover:bg-bg-primary-saturated",
-          // disabeld
-          "disabled:bg-bg-soft disabled:border-transparent dark:disabled:bg-bg-muted disabled:text-text-muted",
-        ),
-        secondary: cn(
+        ],
+        secondary: [
           // color
           "bg-bg-primary-fade text-text-primary dark:text-text-plain",
           // hover
           "hover:bg-bg-primary-faint",
-          // disabeld
-          "disabled:bg-bg-soft disabled:border-transparent dark:disabled:bg-bg-muted disabled:text-text-muted",
-        ),
-        outline: cn(
+        ],
+        outline: [
           // color
           "border-border-primary  bg-bg-plain text-text-primary",
           // hover
           "hover:bg-bg-primary-fade",
-          // disabeld
-          "disabled:bg-bg-soft disabled:border-transparent dark:disabled:bg-bg-muted disabled:text-text-muted",
-        ),
-        subtle: cn(
+        ],
+        subtle: [
           // color
           "border-border-soft bg-bg-muted text-text-plain",
           // hover
           "hover:bg-bg-soft dark:hover:bg-bg-subtle dark:hover:border-border-primary",
-          // disabeld
-          "disabled:bg-bg-soft disabled:border-transparent dark:disabled:bg-bg-muted disabled:text-text-muted",
-        ),
-        ghost: cn(
+        ],
+        ghost: [
           // color
           "bg-bg-plain text-text-plain",
           // hover
           "hover:bg-bg-soft",
-          // disabeld
-          "disabled:bg-bg-soft disabled:border-transparent dark:disabled:bg-bg-muted disabled:text-text-muted",
-        ),
-        destructive: cn(
+        ],
+        destructive: [
           // color
           "bg-bg-danger text-text-inverse",
           // hover
           "hover:bg-bg-danger-saturated",
-          // disabeld
-          "disabled:bg-bg-soft disabled:border-transparent dark:disabled:bg-bg-muted disabled:text-text-muted",
-        ),
+        ],
       },
 
       size: {
