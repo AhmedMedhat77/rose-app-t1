@@ -16,7 +16,7 @@ export default async function HomePage() {
 
       <Input label="default" variant="default" />
       <Input label="password" variant="password" />
-      <Input label="password" variant="search" inputSize="lg" />
+      <Input label="Search" variant="search" inputSize="lg" />
       <Input label="error" isError={true} inputSize="sm" />
       <Input label="number" variant="number" inputSize="lg" />
       <Input label="upload" variant="upload" />

@@ -187,7 +187,7 @@ function Input({
                   )
                 }
                 className={cn(
-                  "absolute top-1/2 flex -translate-y-1/2 items-center justify-center",
+                  "text-text-muted absolute top-1/2 flex -translate-y-1/2 items-center justify-center",
                   inputSize === "lg"
                     ? "inset-s-150"
                     : inputSize === "sm"
@@ -201,9 +201,9 @@ function Input({
                 }
               >
                 {passwordInput === "password" ? (
-                  <EyeOff size={18} />
+                  <EyeOff size={20} />
                 ) : (
-                  <Eye size={18} />
+                  <Eye size={20} />
                 )}
               </button>
             )}
