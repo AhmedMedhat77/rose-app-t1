@@ -20,43 +20,5 @@
     "logout": "Logout",
     "profile": "Profile",
     "settings": "Settings"
-  },
-  "demo": {
-    "fruits": {
-      "apple": "Apple",
-      "banana": "Banana",
-      "cherry": "Cherry",
-      "orange": "Orange",
-      "mango": "Mango",
-      "strawberry": "Strawberry",
-      "grape": "Grape",
-      "watermelon": "Watermelon",
-      "pineapple": "Pineapple",
-      "peach": "Peach",
-      "kiwi": "Kiwi",
-      "pear": "Pear",
-      "blueberry": "Blueberry",
-      "lemon": "Lemon",
-      "coconut": "Coconut",
-      "avocado": "Avocado"
-    },
-    "options": {
-      "first": "First Option",
-      "second": "Second Option",
-      "third": "Third Option",
-      "fourth": "Fourth Option",
-      "fifth": "Fifth Option",
-      "sixth": "Sixth Option",
-      "seventh": "Seventh Option",
-      "eighth": "Eighth Option",
-      "ninth": "Ninth Option",
-      "tenth": "Tenth Option",
-      "eleventh": "Eleventh Option",
-      "twelfth": "Twelfth Option",
-      "thirteenth": "Thirteenth Option",
-      "fourteenth": "Fourteenth Option",
-      "fifteenth": "Fifteenth Option",
-      "sixteenth": "Sixteenth Option"
-    }
   }
 }
