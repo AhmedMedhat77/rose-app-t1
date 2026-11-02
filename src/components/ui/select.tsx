@@ -21,7 +21,7 @@ function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
   return (
     <SelectPrimitive.Value
       data-slot="select-value"
-      className={cn("flex flex-1 text-left text-sm", className)}
+      className={cn("flex flex-1 text-start text-sm", className)}
       {...props}
     />
   );
@@ -41,13 +41,15 @@ function SelectTrigger({
       data-size={size}
       className={cn(
         // border and color
-        "border-soft bg-background aria-invalid:border-destructive aria-invalid:ring-destructive/20 data-placeholder:text-muted-foreground",
+        "border-border-soft bg-bg-plain aria-invalid:border-border-danger aria-invalid:ring-ring-danger data-placeholder:text-text-soft border aria-invalid:ring-2",
         // layout and spacing
-        "group flex w-full items-center justify-between gap-2 rounded-lg border p-4",
+        "group flex w-full items-center justify-between gap-2 rounded-lg p-4",
+        // focus
+        "focus-visible:border-border-primary focus-visible:ring-ring-default focus-visible:ring-3",
         // typography
         "text-sm whitespace-nowrap",
         // transitions and interaction
-        "transition-colors outline-none select-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-2",
+        "transition-colors outline-none select-none disabled:cursor-not-allowed disabled:opacity-50",
         // size
         "data-[size=default]:h-12.25 data-[size=sm]:h-7",
         // select value
@@ -61,7 +63,7 @@ function SelectTrigger({
       {children}
       <SelectPrimitive.Icon
         render={
-          <ChevronDownIcon className="text-muted-foreground pointer-events-none size-4 transition-transform duration-200 group-data-popup-open:rotate-180" />
+          <ChevronDownIcon className="text-text-soft pointer-events-none size-4 transition-transform duration-200 group-data-popup-open:rotate-180" />
         }
       />
     </SelectPrimitive.Trigger>
@@ -97,9 +99,9 @@ function SelectContent({
           data-align-trigger={alignItemWithTrigger}
           className={cn(
             // border and color
-            "border-soft bg-popover text-popover-foreground",
+            "border-border-soft bg-bg-plain text-text-plain",
             // shadow and ring
-            "shadow-subtle ring-foreground/10 ring-1",
+            "shadow-shadow-subtle ring-foreground/10 ring-1",
             // side transitions
             "data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 outline-none",
             // open and close transitions
@@ -133,7 +135,7 @@ function SelectLabel({
   return (
     <SelectPrimitive.GroupLabel
       data-slot="select-label"
-      className={cn("text-muted-foreground px-1.5 py-1 text-xs", className)}
+      className={cn("text-text-default text-sm font-medium", className)}
       {...props}
     />
   );
@@ -149,9 +151,9 @@ function SelectItem({
       data-slot="select-item"
       className={cn(
         // selected
-        "data-selected:bg-muted data-selected:text-primary",
+        "data-selected:bg-bg-muted data-selected:text-text-primary",
         // hover
-        "hover:bg-muted data-highlighted:bg-muted",
+        "hover:bg-bg-muted data-highlighted:bg-bg-muted",
         // layout
         "relative flex w-full items-center",
         // interaction
@@ -203,7 +205,7 @@ function SelectScrollUpButton({
       data-slot="select-scroll-up-button"
       className={cn(
         // color
-        "bg-popover",
+        "bg-bg-plain",
         // positioning
         "top-0 z-10",
         // layout
@@ -234,7 +236,7 @@ function SelectScrollDownButton({
       data-slot="select-scroll-down-button"
       className={cn(
         // color
-        "bg-popover",
+        "bg-bg-plain",
         // positioning
         "bottom-0 z-10",
         // layout

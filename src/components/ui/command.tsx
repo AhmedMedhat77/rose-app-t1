@@ -21,7 +21,7 @@ function Command({
     <CommandPrimitive
       data-slot="command"
       className={cn(
-        "bg-popover text-popover-foreground flex size-full flex-col overflow-hidden rounded-xl! p-1",
+        "bg-bg-plain text-text-plain flex size-full flex-col overflow-hidden rounded-xl! p-1",
         className,
       )}
       {...props}
@@ -68,7 +68,7 @@ function CommandInput({
 }: React.ComponentProps<typeof CommandPrimitive.Input>) {
   return (
     <div data-slot="command-input-wrapper" className="p-2.5">
-      <InputGroup className="border-soft bg-background h-12.25 gap-2 rounded-[6px] border px-4 text-sm whitespace-nowrap shadow-none! transition-colors outline-none *:data-[slot=input-group-addon]:pl-2!">
+      <InputGroup className="border-border-soft bg-bg-plain h-12.25 gap-2 rounded-[6px] border px-4 text-sm whitespace-nowrap shadow-none! transition-colors outline-none *:data-[slot=input-group-addon]:ps-2!">
         <CommandPrimitive.Input
           data-slot="command-input"
           className={cn(
@@ -127,7 +127,7 @@ function CommandGroup({
       data-slot="command-group"
       className={cn(
         // color
-        "text-foreground **:[[cmdk-group-heading]]:text-muted-foreground",
+        "text-text-plain **:[[cmdk-group-heading]]:text-text-soft",
         // overflow
         "overflow-hidden",
         // spacing
@@ -164,9 +164,9 @@ function CommandItem({
       data-slot="command-item"
       className={cn(
         // hover
-        "group/command-item hover:bg-muted",
+        "group/command-item hover:bg-bg-muted",
         // selected
-        "data-[selected=true]:bg-muted data-[checked=true]:bg-muted data-[checked=true]:text-primary data-selected:*:[svg]:text-foreground",
+        "data-[selected=true]:bg-bg-muted data-[checked=true]:bg-bg-muted data-[checked=true]:text-text-primary data-selected:*:[svg]:text-text-plain",
         // layout and spacing
         "relative flex cursor-default items-center gap-2.5 p-4",
         // typography
@@ -195,9 +195,9 @@ function CommandShortcut({
       data-slot="command-shortcut"
       className={cn(
         // color
-        "text-muted-foreground group-data-selected/command-item:text-foreground",
+        "text-text-soft group-data-selected/command-item:text-text-plain",
         // spacing
-        "ml-auto",
+        "ms-auto",
         // typography
         "text-xs tracking-widest",
         className,

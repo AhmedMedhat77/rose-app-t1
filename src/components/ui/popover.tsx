@@ -9,35 +9,8 @@ function Popover({ ...props }: PopoverPrimitive.Root.Props) {
   return <PopoverPrimitive.Root data-slot="popover" {...props} />;
 }
 
-function PopoverTrigger({
-  className,
-  ...props
-}: PopoverPrimitive.Trigger.Props) {
-  return (
-    <PopoverPrimitive.Trigger
-      data-slot="popover-trigger"
-      className={cn(
-        // color
-        "bg-background",
-        // layout and spacing
-        "flex h-12.25 w-full items-center justify-between gap-2 px-4",
-        // border
-        "border-soft rounded-lg border",
-        // typography
-        "text-sm font-normal whitespace-nowrap",
-        // transitions and focus
-        "transition-colors outline-none",
-        // selection
-        "select-none",
-        // disabled
-        "disabled:cursor-not-allowed disabled:opacity-50",
-        // icons
-        "[&_svg]:pointer-events-none [&_svg]:shrink-0",
-        className,
-      )}
-      {...props}
-    />
-  );
+function PopoverTrigger({ ...props }: PopoverPrimitive.Trigger.Props) {
+  return <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props} />;
 }
 
 function PopoverContent({
@@ -65,7 +38,7 @@ function PopoverContent({
           data-slot="popover-content"
           className={cn(
             // color
-            "bg-popover text-popover-foreground",
+            "bg-bg-plain text-text-plain",
             // animation
             "data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
             // layout
@@ -112,7 +85,7 @@ function PopoverDescription({
   return (
     <PopoverPrimitive.Description
       data-slot="popover-description"
-      className={cn("text-muted-foreground", className)}
+      className={cn("text-text-soft", className)}
       {...props}
     />
   );
@@ -126,6 +99,7 @@ export type ComboboxOption = {
 type ComboboxStatus = "idle" | "loading" | "error";
 
 export type ComboboxProps = {
+  label?: string;
   /** controlled */
   value?: string;
   /** uncontrolled */
@@ -173,6 +147,7 @@ function useControllableState<T>(
 }
 
 function Combobox({
+  label,
   value,
   defaultValue = "",
   onValueChange,
@@ -267,93 +242,118 @@ function Combobox({
   const showEmpty = !showLoading && !showError && items.length === 0;
 
   return (
-    <Popover open={open} onOpenChange={handleOpenChange}>
-      <PopoverTrigger
-        id={id}
-        disabled={disabled}
-        role="combobox"
-        aria-expanded={open}
-        aria-haspopup="listbox"
-        aria-label={ariaLabel}
-        data-slot="combobox-trigger"
-        className={className}
-      >
-        <span
+    <div className="flex w-full flex-col gap-1.5">
+      {label && (
+        <label htmlFor={id} className="text-text-default text-sm font-medium">
+          {label}
+        </label>
+      )}
+      <Popover open={open} onOpenChange={handleOpenChange}>
+        <PopoverTrigger
+          id={id}
+          disabled={disabled}
+          role="combobox"
+          aria-expanded={open}
+          aria-haspopup="listbox"
+          aria-label={ariaLabel}
+          data-slot="combobox-trigger"
           className={cn(
-            "min-w-0 flex-1 truncate text-start",
-            !selectedOption && "text-muted-foreground",
+            // color
+            "bg-bg-plain",
+            // layout and spacing
+            "flex h-12.25 w-full items-center justify-between gap-2 px-4",
+            // border
+            "border-border-soft rounded-lg border",
+            // typography
+            "text-sm font-normal whitespace-nowrap",
+            // transitions and focus
+            "focus-visible:border-border-primary focus-visible:ring-ring-default transition-colors outline-none focus-visible:ring-3",
+            // selection
+            "select-none",
+            // disabled
+            "disabled:cursor-not-allowed disabled:opacity-50",
+            // icons
+            "[&_svg]:pointer-events-none [&_svg]:shrink-0",
+            className,
           )}
         >
-          {selectedOption ? selectedOption.label : placeholder}
-        </span>
-        <ChevronDownIcon
-          className={cn(
-            "text-muted-foreground size-4 shrink-0 transition-transform duration-200",
-            open && "rotate-180",
-          )}
-        />
-      </PopoverTrigger>
-
-      <PopoverContent
-        align="start"
-        data-slot="combobox-content"
-        className={cn(
-          "w-(--anchor-width) min-w-48 gap-0 overflow-hidden p-0",
-          contentClassName,
-        )}
-      >
-        <Command shouldFilter={false} className="p-0">
-          <CommandInput
-            value={query}
-            onValueChange={setQuery}
-            placeholder={searchPlaceholder}
+          <span
+            className={cn(
+              "min-w-0 flex-1 truncate text-start",
+              !selectedOption && "text-text-soft",
+            )}
+          >
+            {selectedOption ? selectedOption.label : placeholder}
+          </span>
+          <ChevronDownIcon
+            className={cn(
+              "text-text-soft size-4 shrink-0 transition-transform duration-200",
+              open && "rotate-180",
+            )}
           />
-          <CommandList>
-            {showLoading && (
-              <div
-                role="status"
-                className="text-muted-foreground py-6 text-center text-sm"
-              >
-                {loadingMessage}
-              </div>
-            )}
-            {showError && (
-              <div
-                role="alert"
-                className="text-muted-foreground py-6 text-center text-sm"
-              >
-                {errorMessage}
-              </div>
-            )}
-            {showEmpty && (
-              <div
-                role="status"
-                className="text-muted-foreground py-6 text-center text-sm"
-              >
-                {emptyMessage}
-              </div>
-            )}
+        </PopoverTrigger>
 
-            {!showLoading &&
-              !showError &&
-              items.map((option) => (
-                <CommandItem
-                  key={option.value}
-                  value={option.value}
-                  disabled={option.disabled}
-                  onSelect={() => handleSelect(option)}
-                  title={option.label}
-                  data-checked={selected === option.value}
+        <PopoverContent
+          align="start"
+          data-slot="combobox-content"
+          className={cn(
+            "w-(--anchor-width) min-w-48 gap-0 overflow-hidden p-0",
+            contentClassName,
+          )}
+        >
+          <Command shouldFilter={false} className="p-0">
+            <CommandInput
+              value={query}
+              onValueChange={setQuery}
+              placeholder={searchPlaceholder}
+            />
+            <CommandList>
+              {showLoading && (
+                <div
+                  role="status"
+                  className="text-text-soft py-6 text-center text-sm"
                 >
-                  <span className="min-w-0 flex-1 truncate">
-                    {option.label}
-                  </span>
-                </CommandItem>
-              ))}
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
+                  {loadingMessage}
+                </div>
+              )}
+              {showError && (
+                <div
+                  role="alert"
+                  className="text-text-soft py-6 text-center text-sm"
+                >
+                  {errorMessage}
+                </div>
+              )}
+              {showEmpty && (
+                <div
+                  role="status"
+                  className="text-text-soft py-6 text-center text-sm"
+                >
+                  {emptyMessage}
+                </div>
+              )}
+
+              {!showLoading &&
+                !showError &&
+                items.map((option) => (
+                  <CommandItem
+                    key={option.value}
+                    value={option.value}
+                    disabled={option.disabled}
+                    onSelect={() => handleSelect(option)}
+                    title={option.label}
+                    data-checked={selected === option.value}
+                  >
+                    <span className="min-w-0 flex-1 truncate">
+                      {option.label}
+                    </span>
+                  </CommandItem>
+                ))}
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </div>
   );
 }
 export {

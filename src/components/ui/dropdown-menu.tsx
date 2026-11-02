@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Menu as MenuPrimitive } from "@base-ui/react/menu";
 import { cn } from "cn";
-import { ChevronRightIcon, CheckIcon } from "lucide-react";
+import { ChevronRightIcon } from "lucide-react";
 
 function DropdownMenu({ ...props }: MenuPrimitive.Root.Props) {
   return <MenuPrimitive.Root data-slot="dropdown-menu" {...props} />;
@@ -42,9 +42,9 @@ function DropdownMenuContent({
           data-slot="dropdown-menu-content"
           className={cn(
             // color
-            "bg-popover text-popover-foreground",
+            "bg-bg-plain text-text-plain",
             // shadow and border color
-            "shadow-subtle border-muted ring-foreground/10",
+            "shadow-shadow-subtle border-border-muted ring-foreground/10",
             // side positioning animations
             "data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
             // open and close transitions
@@ -82,7 +82,7 @@ function DropdownMenuLabel({
       data-slot="dropdown-menu-label"
       data-inset={inset}
       className={cn(
-        "text-muted-foreground px-1.5 py-1 text-xs font-medium data-inset:pl-7",
+        "text-text-soft px-1.5 py-1 text-xs font-medium data-inset:ps-7",
         className,
       )}
       {...props}
@@ -108,13 +108,15 @@ function DropdownMenuItem({
         // group
         "group/dropdown-menu-item",
         // color
-        "data-selected:text-primary hover:text-plain data-highlighted:text-plain not-data-[variant=destructive]:hover:**:text-accent-foreground data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:text-destructive data-[variant=destructive]:*:[svg]:text-destructive",
+        "data-selected:text-text-primary hover:text-text-plain data-highlighted:text-text-plain not-data-[variant=destructive]:hover:**:text-text-primary data-[variant=destructive]:text-text-danger data-[variant=destructive]:focus:text-text-danger data-[variant=destructive]:*:[svg]:text-text-danger",
+        // selected colors
+        "data-checked:bg-bg-muted data-checked:text-text-primary",
         // background
-        "data-selected:bg-muted hover:bg-muted data-highlighted:bg-muted data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20",
+        "data-selected:bg-bg-muted hover:bg-bg-muted data-highlighted:bg-bg-muted data-[variant=destructive]:focus:bg-bg-danger/10 dark:data-[variant=destructive]:focus:bg-bg-danger/20",
         // layout
         "relative flex items-center",
         // spacing
-        "gap-2.5 p-4 data-inset:pl-7",
+        "gap-2.5 p-4 data-inset:ps-7",
         // typography
         "text-sm data-selected:font-medium",
         // interaction
@@ -146,17 +148,17 @@ function DropdownMenuSubTrigger({
       data-inset={inset}
       className={cn(
         // focus
-        "focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground",
+        "focus:bg-bg-primary-fade focus:text-text-primary not-data-[variant=destructive]:focus:**:text-text-primary",
         // selected
-        "data-popup-open:bg-accent data-popup-open:text-accent-foreground",
+        "data-popup-open:bg-bg-primary-fade data-popup-open:text-text-primary",
         // active
-        "data-open:bg-accent data-open:text-accent-foreground",
+        "data-open:bg-bg-primary-fade data-open:text-text-primary",
         // layout
         "flex cursor-default items-center gap-1.5",
         // border
         "rounded-md outline-hidden",
         // spacing
-        "px-1.5 py-1 data-inset:pl-7",
+        "px-1.5 py-1 data-inset:ps-7",
         // typography
         "text-sm select-none",
         // icons
@@ -166,7 +168,7 @@ function DropdownMenuSubTrigger({
       {...props}
     >
       {children}
-      <ChevronRightIcon className="ml-auto" />
+      <ChevronRightIcon className="ms-auto" />
     </MenuPrimitive.SubmenuTrigger>
   );
 }
@@ -184,7 +186,7 @@ function DropdownMenuSubContent({
       data-slot="dropdown-menu-sub-content"
       className={cn(
         // color
-        "bg-popover text-popover-foreground ring-foreground/10",
+        "bg-bg-plain text-text-plain ring-foreground/10",
         // transitions
         "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 duration-100",
         // layout
@@ -220,31 +222,36 @@ function DropdownMenuCheckboxItem({
       data-slot="dropdown-menu-checkbox-item"
       data-inset={inset}
       className={cn(
-        // focus
-        "focus:bg-accent focus:text-accent-foreground focus:**:text-accent-foreground",
         // layout
-        "relative flex cursor-default items-center",
+        "relative flex cursor-default items-center rounded-none! shadow-none",
+
         // spacing
-        "gap-1.5 rounded-md py-1 pr-8 pl-1.5 data-inset:pl-7",
+        "gap-2.5 p-4 data-inset:ps-7",
+
         // typography
         "text-sm",
+
         // interaction
-        "outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50",
+
+        "data-disabled:pointer-events-none data-disabled:opacity-50",
+        // hover, focus and highlighted
+        "hover:bg-bg-muted hover:text-text-plain",
+        "data-highlighted:bg-bg-muted data-highlighted:text-text-plain",
+
+        // checked state
+        "data-checked:bg-bg-muted data-checked:text-text-primary data-checked:font-medium",
+
+        // checkbox-specific state
+        "data-checked:**:text-text-primary",
+
         // icons
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+
         className,
       )}
       checked={checked}
       {...props}
     >
-      <span
-        className="pointer-events-none absolute right-2 flex items-center justify-center"
-        data-slot="dropdown-menu-checkbox-item-indicator"
-      >
-        <MenuPrimitive.CheckboxItemIndicator>
-          <CheckIcon />
-        </MenuPrimitive.CheckboxItemIndicator>
-      </span>
       {children}
     </MenuPrimitive.CheckboxItem>
   );
@@ -274,13 +281,13 @@ function DropdownMenuRadioItem({
       data-inset={inset}
       className={cn(
         // selected colors
-        "data-checked:bg-muted data-checked:text-primary",
+        "data-checked:bg-bg-muted data-checked:text-text-primary",
         // hover
-        "hover:bg-muted hover:text-plain hover:**:text-accent-foreground data-highlighted:bg-muted data-highlighted:text-plain",
+        "hover:bg-bg-muted hover:text-text-plain hover:**:text-text-primary data-highlighted:bg-bg-muted data-highlighted:text-text-plain",
         // layout
         "relative flex cursor-default items-center gap-2.5",
         // spacing
-        "p-4 data-inset:pl-7",
+        "p-4 data-inset:ps-7",
         // typography
         "text-sm",
         // focus
@@ -295,10 +302,6 @@ function DropdownMenuRadioItem({
       )}
       {...props}
     >
-      <span
-        className="pointer-events-none absolute right-2 flex items-center justify-center"
-        data-slot="dropdown-menu-radio-item-indicator"
-      ></span>
       {children}
     </MenuPrimitive.RadioItem>
   );
@@ -326,11 +329,11 @@ function DropdownMenuShortcut({
       data-slot="dropdown-menu-shortcut"
       className={cn(
         // color
-        "text-muted-foreground",
+        "text-text-soft",
         // focus
-        "group-focus/dropdown-menu-item:text-accent-foreground",
+        "group-focus/dropdown-menu-item:text-text-primary",
         // spacing
-        "ml-auto",
+        "ms-auto",
         // typography
         "text-xs tracking-widest",
         className,
