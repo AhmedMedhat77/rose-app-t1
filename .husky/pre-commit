@@ -1,12 +1,26 @@
 #!/usr/bin/env sh
 
+# Node's Windows npm/npx files start with `#!/usr/bin/env bash`. Husky runs
+# this hook with sh, so Windows forwards that shebang to WSL. With no working
+# distro, WSL fails on execve(/bin/bash). The .cmd shims skip the shebang.
+case "$(uname -s)" in
+  MINGW* | MSYS* | CYGWIN*)
+    npm_command="npm.cmd"
+    npx_command="npx.cmd"
+    ;;
+  *)
+    npm_command="npm"
+    npx_command="npx"
+    ;;
+esac
+
 echo ""
 echo "🚀 [Git Pre-Commit Hook] Running quality checks..."
 echo "--------------------------------------------------"
 
 # 1. Format and lint staged files with lint-staged
 echo "1️⃣  Running lint-staged (ESLint + Prettier on staged files)..."
-npx --no-install lint-staged
+"$npx_command" --no-install lint-staged
 if [ $? -ne 0 ]; then
   echo ""
   echo "❌ [Pre-Commit Error] Linting or formatting failed on staged files!"
@@ -17,7 +31,7 @@ fi
 
 # 2. Whole-project TypeScript type checking
 echo "2️⃣  Running TypeScript type check (npm run typecheck)..."
-npm run typecheck
+"$npm_command" run typecheck
 if [ $? -ne 0 ]; then
   echo ""
   echo "❌ [Pre-Commit Error] TypeScript type check failed!"
@@ -28,7 +42,7 @@ fi
 
 # 3. Next.js production build verification
 echo "3️⃣  Verifying Next.js production build (npm run build)..."
-npm run build
+"$npm_command" run build
 if [ $? -ne 0 ]; then
   echo ""
   echo "❌ [Pre-Commit Error] Next.js build failed!"
