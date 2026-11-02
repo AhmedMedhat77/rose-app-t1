@@ -16,7 +16,7 @@ import { geistMono, sarabun, tajawal } from "../fonts";
 import "../globals.css";
 import { ThemeMode } from "@/components/theme-mode";
 
-import { Toaster } from "@/shared/components/ui/toast";
+import { Toaster } from "@/components/ui/toast";
 
 export const metadata: Metadata = {
   title: "Rose App",
