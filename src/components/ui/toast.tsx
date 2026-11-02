@@ -7,7 +7,10 @@ import { cn } from "cn";
 
 import { Button } from "@/components/ui/button";
 import { XIcon, Check, X, Info } from "lucide-react";
-import { TOAST_STATE, type ToastState } from "@/shared/constants/toast-states";
+import {
+  TOAST_STATE,
+  type ToastState,
+} from "@/shared/lib/constants/toast-states";
 import { useTranslations } from "next-intl";
 
 /** Type guard for toast variants defined in `TOAST_STATE`. */
