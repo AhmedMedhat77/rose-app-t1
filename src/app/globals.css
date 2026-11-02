@@ -15,6 +15,7 @@
   --color-maroon-600: #a6252a;
   --color-maroon-700: #741c21;
   --color-maroon-800: #501419;
+  --color-maroon-850: #431819;
   --color-maroon-900: #2c0c10;
   --color-maroon-950: #20090c;
   --color-red-50: #fef2f2;
@@ -72,6 +73,7 @@
   --color-emerald-800: #006045;
   --color-emerald-900: #004f3b;
   --color-emerald-950: #002c22;
+  --color-emerald-975: #073627;
   --color-yellow-50: #fefce8;
   --color-yellow-100: #fef9c3;
   --color-yellow-200: #fef08a;
@@ -261,11 +263,7 @@
     var(--color-emerald-500) 50%,
     transparent
   );
-  --bg-success-fade: color-mix(
-    in srgb,
-    var(--color-emerald-500) 25%,
-    transparent
-  );
+  --bg-success-fade: var(--color-emerald-975);
   --bg-warning: var(--color-yellow-500);
   --bg-warning-faint: color-mix(
     in srgb,
@@ -279,7 +277,7 @@
   );
   --bg-danger: var(--color-red-500);
   --bg-danger-faint: color-mix(in srgb, var(--color-red-500) 50%, transparent);
-  --bg-danger-fade: color-mix(in srgb, var(--color-red-500) 25%, transparent);
+  --bg-danger-fade: var(--color-maroon-850);
   --text-plain: var(--color-zinc-50);
   --text-subtle: var(--color-zinc-500);
   --text-muted: var(--color-zinc-400);

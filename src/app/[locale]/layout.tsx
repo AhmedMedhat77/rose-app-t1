@@ -16,6 +16,8 @@ import { geistMono, sarabun, tajawal } from "../fonts";
 import "../globals.css";
 import { ThemeMode } from "@/components/theme-mode";
 
+import { Toaster } from "@/components/ui/toast";
+
 export const metadata: Metadata = {
   title: "Rose App",
   description: "Rose Application",
@@ -66,6 +68,7 @@ export default async function RootLayout({
               <ThemeMode />
             </header>
             {children}
+            <Toaster />
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>
