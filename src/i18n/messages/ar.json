@@ -25,5 +25,18 @@
   "textarea": {
     "label": "التسمية",
     "placeholder": "اكتب هنا..."
+  },
+  "select": {
+    "label": "اختر",
+    "placeholder": "اختر خيارًا",
+    "search": "بحث...",
+    "noOptions": "لا توجد خيارات",
+    "loading": "جارٍ تحميل الخيارات...",
+    "error": "فشل تحميل الخيارات"
+  },
+  "menu": {
+    "logout": "تسجيل الخروج",
+    "profile": "الملف الشخصي",
+    "settings": "الإعدادات"
   }
 }

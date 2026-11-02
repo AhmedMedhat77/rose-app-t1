@@ -25,5 +25,19 @@
   "textarea": {
     "label": "Label",
     "placeholder": "Placeholder"
+  },
+
+  "select": {
+    "label": "Select",
+    "placeholder": "Select an option",
+    "search": "Search...",
+    "noOptions": "No options found",
+    "loading": "Loading options...",
+    "error": "Failed to load options"
+  },
+  "menu": {
+    "logout": "Logout",
+    "profile": "Profile",
+    "settings": "Settings"
   }
 }
