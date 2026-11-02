@@ -34,15 +34,7 @@ function resolvePageSize(pageSize: number): number {
   return pageSize;
 }
 
-/**
- * Page numbers and ellipses between the first/previous and next/last controls.
- *
- * Always 7 slots once there are more than 7 pages. The earlier window used 5
- * slots at the ends (`1 2 3 … 10`) and 7 in the middle (`1 … 4 5 6 … 10`), so
- * the bar grew by two buttons and every control shifted while paging.
- * The ends now show the same seven slots as the middle: five numbers plus an
- * ellipsis and the opposite boundary page.
- */
+// Page numbers and ellipses between the first/previous and next/last controls.
 function getPageItems(current: number, total: number): PageToken[] {
   if (total <= 0) return [];
   if (total <= 7) {

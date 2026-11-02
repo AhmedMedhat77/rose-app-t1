@@ -5,7 +5,7 @@ import { Toast as ToastPrimitive } from "@base-ui/react/toast";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 
-import { Button } from "@/shared/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { XIcon, Check, X, Info } from "lucide-react";
 import { TOAST_STATE, type ToastState } from "@/shared/constants/toast-states";
 import { useTranslations } from "next-intl";
@@ -89,8 +89,8 @@ const toastVariants = cva(
     variants: {
       variant: {
         informative: "bg-bg-muted",
-        successful: "bg-[#073627]", //bg-bg-success-fade
-        unsuccessful: "bg-[#431819]", //bg-bg-danger-fade
+        successful: "bg-bg-success-fade",
+        unsuccessful: "bg-bg-danger-fade",
       },
     },
     defaultVariants: {
@@ -145,7 +145,13 @@ function ToastTitle({ className, ...props }: ToastPrimitive.Title.Props) {
 function ToastClose({
   className,
   children,
-  render = <Button variant="ghost" size="icon-sm" />,
+  render = (
+    <Button
+      variant="ghost"
+      size="icon-sm"
+      className="bg-transparent hover:bg-transparent"
+    />
+  ),
   ...props
 }: ToastPrimitive.Close.Props) {
   return (
@@ -153,7 +159,7 @@ function ToastClose({
       data-slot="toast-close"
       render={render}
       className={cn(
-        "text-text-soft absolute end-1 top-1 shrink-0 after:absolute after:-inset-2 after:content-['']",
+        "text-text-soft hover:text-text-plain absolute end-1 top-1 shrink-0 after:absolute after:-inset-2 after:content-['']",
         className,
       )}
       {...props}
