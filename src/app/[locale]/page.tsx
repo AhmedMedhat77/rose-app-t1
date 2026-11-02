@@ -16,7 +16,7 @@ export default async function HomePage() {
 
       <Input label="default" variant="default" />
       <Input label="password" variant="password" />
-      <Input label="Search" variant="search" inputSize="lg" />
+      <Input label="Search" variant="search" inputSize="sm" />
       <Input label="error" isError={true} inputSize="sm" />
       <Input label="number" variant="number" inputSize="lg" />
       <Input label="upload" variant="upload" />
@@ -27,8 +27,8 @@ export default async function HomePage() {
       <div>
         <InputOTP maxLength={6}>
           <InputOTPGroup>
-            <InputOTPSlot isDisabled={true} index={0} />
-            <InputOTPSlot isError={true} index={1} />
+            <InputOTPSlot index={0} />
+            <InputOTPSlot index={1} />
             <InputOTPSlot index={2} />
           </InputOTPGroup>
 

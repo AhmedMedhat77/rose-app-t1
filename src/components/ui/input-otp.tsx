@@ -54,33 +54,31 @@ function InputOTPSlot({
   const { char, hasFakeCaret, isActive } = inputOTPContext?.slots[index] ?? {};
 
   const defaultInputStyle = cn(
-    "relative flex h-11.25 w-11.25 items-center justify-center",
+    "relative z-0 flex h-11.25 w-11.25 items-center justify-center",
     "m-1 rounded-lg border p-4 text-center text-3xl",
+    "border-1 border-[var-(--border-soft)",
     "border-input opacity-100",
-    "hover:border-[var(--border-primary-fade)] hover:shadow-[0_0_0_var(--bg-primary-fade)_var(--bg-primary-fade)]",
-    "focus:border-[var(--border-primary)] focue:shadow-[0_0_0_var(--bg-primary-fade)_var(--bg-primary-fade)]",
+    "hover:border-[var(--border-default)]",
+    "focus:border-[var(--border-primary)]",
     "focus-visible:ring-ring",
     "dark:bg-[var(--bg-soft)]",
     isActive && "border-[var(--border-primary)]",
     isError &&
-      "text-text-danger border-border-danger shadow-[0_0_0_3px_var(--border-danger-faint)] dark:shadow-[0_0_0_3px_var(--border-danger-faint)]",
+      "border-border-danger text-text-danger shadow-[0_0_0_3px_var(--border-danger-faint)]",
+    isDisabled &&
+      "cursor-not-allowed border-input bg-bg-muted text-text-muted opacity-50",
   );
 
   return (
     <div
       data-slot="input-otp-slot"
       data-active={isActive}
-      className={cn(
-        defaultInputStyle,
-        className,
-        isDisabled === true &&
-          "bg-bg-muted text-text-muted cursor-not-allowed opacity-50",
-      )}
+      className={cn(defaultInputStyle, className)}
       {...props}
     >
-      {char}
+      {char && /^\d$/.test(char) ? char : ""}
 
-      {hasFakeCaret && (
+      {hasFakeCaret && !isDisabled && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           <div className="animate-caret-blink bg-foreground h-4 w-px duration-1000" />
         </div>

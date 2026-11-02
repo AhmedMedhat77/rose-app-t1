@@ -10,13 +10,12 @@ import { Eye, EyeOff, Search, Upload } from "lucide-react";
 
 const defaultInputStyle = cn(
   "rounded-lg",
-  "border",
+  "border border-[var(--border-soft)]",
   "p-4",
   "gap-2",
   "opacity-100",
-  "border-input",
   "focus-visible:ring-ring",
-  "hover:border-[var(--border-primary-fade)]",
+  "hover:!border-[var(--border-default)]",
   "focus:border-[var(--border-primary)]",
   "dark:bg-[var(--bg-soft)]",
 );
@@ -105,12 +104,7 @@ function Input({
           <Search
             size={18}
             className={cn(
-              "text-text-muted absolute top-1/2 z-3 -translate-y-1/2",
-              inputSize === "lg"
-                ? "inset-e-225"
-                : inputSize === "sm"
-                  ? "inset-e-342"
-                  : "inset-e-300",
+              "text-text-muted absolute inset-5 top-1/2 z-5 -translate-y-1/2",
             )}
           />
         )}
@@ -222,21 +216,28 @@ function PhoneNumberInput() {
   return (
     <div dir={isArabic ? "rtl" : "ltr"} className="p-1.25">
       <PhoneInput
-        country="us"
+        country="eg"
         placeholder={t("phoneNumber")}
-        containerClass="!w-full"
+        containerClass="!relative !w-[20.4rem] !h-[3rem]"
         inputClass={cn(
-          "!w-20.4 !h-10 !text-sm !rounded-md !border !border-input !bg-background !text-foreground",
-          isArabic ? "!pr-12 !pl-3 !text-right" : "!pl-12 !pr-3 !text-left",
-          "focus:!border-ring focus:!outline-none focus:!ring-[3px] focus:!ring-ring/50",
+          "!w-full !h-[3rem] !rounded-xl  transition-all",
+          "!bg-background !text-sm !font-normal !text-foreground",
+          "!shadow-none !outline-hidden",
+          "placeholder:!text-muted-foreground border-1 border-[var-(--border-soft)]",
+
+          // Hover & Focus
+          "hover:!border-[var(--border-default)]",
+          "focus:!border-[var(--border-primary)]",
+          "focus-visible:!ring-2 focus-visible:!ring-ring",
+          isArabic ? "!pr-14 !pl-3 !text-right" : "!pl-14 !pr-3 !text-left",
         )}
         buttonClass={cn(
-          "!absolute !top-0 !h-10 !border-0 !bg-transparent hover:!bg-accent",
-          isArabic
-            ? "!right-0 !rounded-r-md !border-l !border-input"
-            : "!left-0 !rounded-l-md !border-r !border-input",
+          "!absolute !top-0 !h-full !w-12",
+          "!border-0 !bg-transparent hover:!bg-transparent overflow-hidden ",
+          isArabic ? "!right-0 !rounded-r-xl" : "!left-0 !rounded-l-xl",
         )}
-        dropdownClass="!bg-background !text-foreground"
+        dropdownClass="!z-50 !rounded-lg !border !border-input !bg-background !text-foreground"
+        countryCodeEditable={false}
       />
     </div>
   );
