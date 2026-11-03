@@ -4,24 +4,25 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 import { Button } from "@base-ui/react";
 import { useLocale, useTranslations } from "next-intl";
-import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { Eye, EyeOff, Search, Upload } from "lucide-react";
+import { PhoneInput } from "react-international-phone";
+import "react-international-phone/style.css";
 
 const defaultInputStyle = cn(
   "rounded-lg",
-  "border border-[var(--border-soft)]",
+  "border border-border-soft",
   "p-4",
   "gap-2",
   "opacity-100",
-  "focus-visible:ring-ring",
-  "hover:!border-[var(--border-default)]",
-  "focus:border-[var(--border-primary)]",
-  "dark:bg-[var(--bg-soft)]",
+  "hover:ring-ring-default hover:ring-3 hover:border-border-default",
+  "dark:bg-bg-soft",
+  "focus:border-border-primary focus-visible:border-border-primary focus-visible:ring-ring-default focus-visible:ring-3",
+  "aria-invalid:border-border-danger aria-invalid:ring-ring-danger aria-invalid:hover:border-border-danger aria-invalid:focus:border-border-danger aria-invalid:focus-visible:border-border-danger aria-invalid:ring-3",
 );
 
 const errorInputStyle = cn(
-  "text-text-danger border-border-danger shadow-[0_0_0_3px_var(--border-danger-faint)] dark:shadow-[0_0_0_3px_var(--border-danger-faint)]",
+  "text-text-danger border-border-danger ring-ring-danger ring-3 hover:border-danger hover:ring-ring-danger hover:ring-3 dark:shadow-[0_0_0_3px_border-border-danger-faint]",
 );
 
 const inputVariants = cva(
@@ -212,32 +213,52 @@ function PhoneNumberInput() {
   const t = useTranslations("Input");
   const locale = useLocale();
   const isArabic = locale === "ar";
+  const [phone, setPhone] = React.useState("");
 
   return (
     <div dir={isArabic ? "rtl" : "ltr"} className="p-1.25">
       <PhoneInput
-        country="eg"
+        defaultCountry="eg"
+        value={phone}
+        onChange={(phone) => setPhone(phone)}
         placeholder={t("phoneNumber")}
-        containerClass="!relative !w-[20.4rem] !h-[3rem]"
-        inputClass={cn(
-          "!w-full !h-[3rem] !rounded-xl  transition-all",
-          "!bg-background !text-sm !font-normal !text-foreground",
-          "!shadow-none !outline-hidden",
-          "placeholder:!text-muted-foreground border-1 border-[var-(--border-soft)]",
+        className={cn(
+          "!relative !h-[3rem] !w-[20.4rem] !rounded-xl",
+          "border-border-soft !bg-background border",
+          "hover:ring-ring-default hover:border-border-default hover:ring-3",
+          "focus:border-border-primary focus-visible:border-border-primary focus-visible:ring-ring-default focus-visible:ring-3",
+          "focus-within:!ring-ring focus-within:!ring-2",
+        )}
+        inputClassName={cn(
+          "!w-full !h-full !rounded-xl",
+          "!border-0 !bg-transparent",
+          "!text-sm !font-normal !text-foreground",
+          "!shadow-none !outline-none",
+          "placeholder:!text-muted-foreground",
+          "focus:!border-0 focus:!ring-0",
+          isArabic ? "!text-right" : "!text-left",
+        )}
+        countrySelectorStyleProps={{
+          buttonClassName: cn(
+            "!h-full !border-0 !bg-transparent",
+            "hover:!bg-transparent !shadow-none",
+            isArabic ? "!rounded-r-xl" : "!rounded-l-xl",
+          ),
+          flagClassName: cn(
+            "!rounded-sm",
+            isArabic ? "!-translate-x-1" : "!translate-x-1",
+          ),
+          dropdownArrowClassName: "!text-muted-foreground",
 
-          // Hover & Focus
-          "hover:!border-[var(--border-default)]",
-          "focus:!border-[var(--border-primary)]",
-          "focus-visible:!ring-2 focus-visible:!ring-ring",
-          isArabic ? "!pr-14 !pl-3 !text-right" : "!pl-14 !pr-3 !text-left",
-        )}
-        buttonClass={cn(
-          "!absolute !top-0 !h-full !w-12",
-          "!border-0 !bg-transparent hover:!bg-transparent overflow-hidden ",
-          isArabic ? "!right-0 !rounded-r-xl" : "!left-0 !rounded-l-xl",
-        )}
-        dropdownClass="!z-50 !rounded-lg !border !border-input !bg-background !text-foreground"
-        countryCodeEditable={false}
+          dropdownStyleProps: {
+            className: cn(
+              "!z-[9999] !rounded-lg",
+              "relative inset-s-0 !border !border-input",
+              "!bg-background !text-foreground",
+              isArabic ? "[direction:rtl]" : "[direction:ltr]",
+            ),
+          },
+        }}
       />
     </div>
   );
