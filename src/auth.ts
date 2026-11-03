@@ -3,18 +3,15 @@ import Credentials from "next-auth/providers/credentials";
 import { loginMutation } from "./features/auth/actions/mutations";
 
 export const authOptions: AuthOptions = {
-  pages: {},
+  pages: {
+    signIn: "/auth/login",
+    error: "/auth/login",
+  },
   providers: [
     Credentials({
       credentials: {
-        email: {
-          label: "email",
-          type: "",
-        },
-        password: {
-          label: "email",
-          type: "",
-        },
+        email: {},
+        password: {},
       },
       authorize: async (credentials) => {
         if (credentials?.email || !credentials?.password) {
