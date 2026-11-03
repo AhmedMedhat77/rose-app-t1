@@ -1,55 +1,68 @@
 "use client";
 
-import { BellOff, BrushCleaning, CheckCheck } from "lucide-react";
-
+import {
+  BellOff,
+  BrushCleaning,
+  Check,
+  CheckCheck,
+  EllipsisVertical,
+  Trash2,
+} from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { cn } from "cn";
 import { Card } from "@/components/ui/card";
-
-export interface NotificationItem {
-  id: string;
-  title: string;
-  read: boolean;
-}
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "cn";
+import { INotificationItem } from "../types/notification";
 
 interface NotificationsPanelProps {
-  notifications?: NotificationItem[];
+  notifications?: INotificationItem[];
   onClearAll?: () => void;
   onMarkAllAsRead?: () => void;
+  onMarkAsRead?: (id: string) => void;
+  onDelete?: (id: string) => void;
   className?: string;
 }
 
 const actionClass =
-  "h-auto gap-2 px-1 py-1 text-lg font-medium text-zinc-400 hover:bg-transparent hover:text-zinc-600 [&_svg]:size-7";
+  "h-auto gap-2 px-1 py-1   text-zinc-400 hover:bg-transparent hover:text-zinc-600";
 
 export default function NotificationsPanel({
   notifications = [],
   onClearAll,
   onMarkAllAsRead,
+  onMarkAsRead,
+  onDelete,
   className,
 }: NotificationsPanelProps) {
+  const t = useTranslations("NotificationsPanel");
   const isEmpty = notifications.length === 0;
 
   return (
     <Card
       aria-label="Notifications"
       className={cn(
-        "flex min-h-56 w-full max-w-84 flex-col gap-0 overflow-hidden border-0 bg-white p-0 shadow-2xl",
+        "flex flex-col gap-0 overflow-hidden border-0 bg-white p-0 shadow-2xl",
         className,
       )}
     >
       {/* Header */}
-      <header className="bg-maroon-700 min-h-13 max-w-84 px-4 py-4">
+      <header className="bg-maroon-700 px-4 py-4">
         <h2 className="text-xl leading-tight font-bold text-white">
-          Notifications
+          {t("title")}
+          {!isEmpty && ` (${notifications.length})`}
         </h2>
       </header>
 
       {/* Actions */}
-      <div className="flex items-center justify-between border-b border-[#d9dadd] px-5 py-3">
+      <div className="flex items-center justify-between border-b border-white px-5 py-3">
         <Button variant="ghost" className={actionClass} onClick={onClearAll}>
           <BrushCleaning />
-          Clear all notifications
+          {t("clearAll")}
         </Button>
 
         <Button
@@ -58,18 +71,21 @@ export default function NotificationsPanel({
           onClick={onMarkAllAsRead}
         >
           <CheckCheck />
-          Mark all as read
+          {t("markAllAsRead")}
         </Button>
       </div>
 
       {/* Body */}
-      <div className="flex flex-1 flex-col items-center justify-center gap-4 p-6">
+      <div
+        className={cn(
+          "flex flex-1 flex-col items-center",
+          isEmpty ? "justify-center gap-4 p-6" : "max-h-80 overflow-y-auto",
+        )}
+      >
         {isEmpty ? (
           <>
-            <BellOff className="size-20 text-[#6b6f76]" strokeWidth={1.25} />
-            <p className="text-xl text-[#6b6f76]">
-              No notifications to display.
-            </p>
+            <BellOff className="size-20 text-zinc-500" strokeWidth={1.25} />
+            <p className="text-xl text-zinc-500">{t("empty")}</p>
           </>
         ) : (
           <ul className="w-full">
@@ -77,11 +93,51 @@ export default function NotificationsPanel({
               <li
                 key={n.id}
                 className={cn(
-                  "border-b border-[#d9dadd] py-3",
-                  n.read ? "font-normal" : "font-bold",
+                  "flex items-start gap-2 border-b border-white px-4 py-3",
+                  n.isRead && "bg-zinc-300",
                 )}
               >
-                {n.title}
+                <div className="flex-1">
+                  <p
+                    className={cn(
+                      "text-sm",
+                      n.isRead ? "text-text-soft font-normal" : "font-bold",
+                    )}
+                  >
+                    {n.title}
+                  </p>
+                  <p className="text-text-soft line-clamp-2 text-xs">
+                    {n.message}
+                  </p>
+                </div>
+
+                <Popover>
+                  <PopoverTrigger
+                    aria-label="Notification options"
+                    className="text-text-soft hover:text-zinc-700"
+                  >
+                    <EllipsisVertical className="size-4" />
+                  </PopoverTrigger>
+                  <PopoverContent align="end" className="gap-1 p-1">
+                    <button
+                      type="button"
+                      disabled={n.isRead}
+                      onClick={() => onMarkAsRead?.(n.id)}
+                      className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-zinc-100 disabled:cursor-not-allowed disabled:text-zinc-400 disabled:hover:bg-transparent"
+                    >
+                      <Check className="size-4" />
+                      {t("markAsRead")}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => onDelete?.(n.id)}
+                      className="text-text-danger flex items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-zinc-100"
+                    >
+                      <Trash2 className="size-4" />
+                      {t("delete")}
+                    </button>
+                  </PopoverContent>
+                </Popover>
               </li>
             ))}
           </ul>

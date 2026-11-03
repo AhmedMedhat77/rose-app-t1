@@ -34,10 +34,7 @@ export function NavBar() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <nav
-      aria-label={t("mainNavigation")}
-      className="dark:bg-soft-pink-200 bg-maroon-700"
-    >
+    <nav aria-label={t("mainNavigation")} className="bg-bg-primary-saturated">
       <ul className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-10 gap-y-1 px-6">
         {MAIN_LINKS.map(({ key, href }) => {
           const active = isActive(href);
@@ -49,8 +46,8 @@ export function NavBar() {
                 className={cn(
                   "flex items-center gap-2 border-b-2 py-3 text-[16px] transition-colors hover:opacity-80",
                   active
-                    ? "text-soft-pink-200 dark:text-maroon-800 border-current"
-                    : "border-transparent text-zinc-50 dark:text-zinc-800",
+                    ? "text-soft-pink-200 dark:text-text-inverse"
+                    : "dark:text-text-inverse border-transparent text-zinc-50",
                 )}
               >
                 {NAV_ICONS[key]}

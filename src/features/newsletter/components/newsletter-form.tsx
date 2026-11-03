@@ -6,12 +6,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { newsletterSchema } from "../schema/schema";
 import { useTranslations } from "next-intl";
 import { SubscribeResult, subscribeToNewsletter } from "../apis/subscribe";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-
+import { Input } from "@/components/ui/input";
+import { TOAST_STATE } from "@/shared/lib/constants/toast-states";
+import { addToast } from "@/components/ui/toast";
+import { ArrowRight } from "lucide-react";
 export default function NewsletterForm() {
-  //state
-  const [result, setResult] = useState<SubscribeResult | null>(null);
   //Translation
   const t = useTranslations("Footer");
   //Form
@@ -31,14 +31,19 @@ export default function NewsletterForm() {
 
   const onSubmit = async ({ email }: INewsLetterFormValues) => {
     const response = await subscribeToNewsletter(email);
-    setResult(response);
-    if (response === "subscribed") reset();
-  };
 
-  const resultMessage = {
-    subscribed: t("subscribeSuccess"),
-    "already-subscribed": t("subscribeAlready"),
-    error: t("subscribeError"),
+    const messages: Record<SubscribeResult, string> = {
+      subscribed: t("subscribeSuccess"),
+      "already-subscribed": t("subscribeAlready"),
+      error: t("subscribeError"),
+    };
+
+    if (response === "subscribed") {
+      addToast(TOAST_STATE.Successful, messages[response]);
+      reset();
+    } else {
+      addToast(TOAST_STATE.Unsuccessful, messages[response]);
+    }
   };
 
   return (
@@ -48,45 +53,30 @@ export default function NewsletterForm() {
       className="mt-5 flex flex-col gap-2"
     >
       <div className="relative">
-        <input
+        <Input
           type="email"
           placeholder={t("emailPlaceholder")}
           aria-label={t("emailPlaceholder")}
 
-          className="focus-visible:ring-soft-pink-300 h-14 w-full rounded-full bg-zinc-600 ps-6 pe-40 text-base text-white placeholder:text-zinc-400 focus-visible:ring-2 focus-visible:outline-none"
+          className="h-12 w-full rounded-full bg-zinc-600 ps-6 pe-40 text-base text-white placeholder:text-zinc-400 focus-visible:ring-2 focus-visible:outline-none"
           {...register("email")}
         />
 
         <Button
           type="submit"
+          variant="secondary"
           disabled={isSubmitting}
-          className="bg-maroon-50 text-maroon-700 hover:bg-maroon-100 dark:bg-soft-pink-300 dark:hover:bg-soft-pink-200 focus-visible:ring-soft-pink-300 absolute inset-y-0 end-0 flex items-center gap-3 rounded-full px-6 text-base font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:text-zinc-900"
+          loading={isSubmitting}
+          className="dark:bg-bg-primary focus-visible:ring-soft-pink-300 dark:text-text-inverse absolute inset-y-0 inset-e-0 flex h-full items-center gap-3 rounded-full px-6"
         >
           {t("subscribe")}
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            className="size-5 rtl:rotate-180"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
+          <ArrowRight />
         </Button>
       </div>
 
       {errors.email && (
         <p role="alert" className="ps-6 text-sm text-red-400">
           {errors.email.message}
-        </p>
-      )}
-
-      {result && (
-        <p role="status" className="ps-6 text-sm text-white">
-          {resultMessage[result]}
         </p>
       )}
     </form>

@@ -31,7 +31,19 @@
     "pushBusy": "Please wait...",
     "pushUnsupported": "Notifications are not supported in this browser.",
     "pushDenied": "Notifications are blocked. Enable them from your browser settings.",
-    "pushError": "Something went wrong. Please try again."
+    "pushError": "Something went wrong. Please try again.",
+    "pushEnabled": "Push notifications are enabled.",
+    "pushDisabled": "Push notifications are disabled.",
+    "pushNotEnabled": "Push notifications are not enabled."
+  },
+  "NotificationsPanel": {
+    "title": "Notifications",
+    "clearAll": "Clear all notifications",
+    "markAllAsRead": "Mark all as read",
+    "empty": "No notifications to display.",
+    "options": "Notification options",
+    "markAsRead": "Mark as read",
+    "delete": "Delete notification"
   },
   "Footer": {
     "discover": "Discover our website",

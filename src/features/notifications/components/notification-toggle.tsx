@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { addToast } from "@/components/ui/toast";
+import { TOAST_STATE } from "@/shared/lib/constants/toast-states";
 import { getVapidPublicKey } from "../apis/notification-vapid-public-key";
 import { useTranslations } from "next-intl";
 import {
@@ -41,8 +42,15 @@ export function NotificationToggle() {
     setState("busy");
     try {
       const result = await enablePush();
-      setState(result === "denied" ? "denied" : "on");
+      if (result === "denied") {
+        addToast(TOAST_STATE.Unsuccessful, t("pushDenied"));
+        setState("denied");
+      } else {
+        addToast(TOAST_STATE.Successful, t("pushEnabled"));
+        setState("on");
+      }
     } catch {
+      addToast(TOAST_STATE.Unsuccessful, t("pushError"));
       setState("error");
     }
   };
@@ -51,8 +59,10 @@ export function NotificationToggle() {
     setState("busy");
     try {
       await disablePush();
+      addToast(TOAST_STATE.Successful, t("pushDisabled"));
       setState("off");
     } catch {
+      addToast(TOAST_STATE.Unsuccessful, t("pushError"));
       setState("error");
     }
   };
@@ -80,6 +90,9 @@ export function NotificationToggle() {
         >
           {state === "busy" ? t("pushBusy") : t("pushEnable")}
         </Button>
+      )}
+      {(state === "off" || state === "error") && (
+        <p className="text-text-soft text-xs">{t("pushNotEnabled")}</p>
       )}
       {state === "error" && (
         <p role="alert" className="text-text-danger text-xs">

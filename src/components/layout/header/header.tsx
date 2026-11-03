@@ -18,7 +18,7 @@ export function Header() {
     <header>
       {/* Top bar */}
       <div className="bg-background">
-        <div className="mx-auto flex max-w-7xl items-center gap-6 px-6 py-3">
+        <div className="mx-auto flex items-center gap-6 px-6 py-3">
           <Link href="/" className="shrink-0">
             <Image
               src="/images/logo 1.png"
@@ -30,8 +30,8 @@ export function Header() {
             />
           </Link>
 
-          <div className="relative min-w-0 flex-1">
-            <Search className="text-muted-foreground pointer-events-none absolute inset-y-0 start-3 my-auto size-4" />
+          <div className="relative flex-1">
+            <Search className="text-muted-foreground pointer-events-none absolute inset-y-0 inset-s-3 my-auto size-4" />
             <input
               type="search"
               placeholder={t("searchPlaceholder")}
@@ -67,8 +67,6 @@ export function Header() {
 
             <div className="border-border flex items-center gap-2 border-s ps-4">
               <LocaleSwitcher />
-
-              {/* <ThemeSwitcher /> */}
             </div>
           </div>
         </div>
