@@ -29,7 +29,7 @@ interface NotificationsPanelProps {
 }
 
 const actionClass =
-  "h-auto gap-2 px-1 py-1   text-zinc-400 hover:bg-transparent hover:text-zinc-600";
+  "h-auto gap-2 px-1 py-1   text-text-muted hover:bg-transparent hover:text-zinc-600";
 
 export default function NotificationsPanel({
   notifications = [],
@@ -84,8 +84,8 @@ export default function NotificationsPanel({
       >
         {isEmpty ? (
           <>
-            <BellOff className="size-20 text-zinc-500" strokeWidth={1.25} />
-            <p className="text-xl text-zinc-500">{t("empty")}</p>
+            <BellOff className="text-text-soft size-20" strokeWidth={1.25} />
+            <p className="text-text-soft text-xl">{t("empty")}</p>
           </>
         ) : (
           <ul className="w-full">

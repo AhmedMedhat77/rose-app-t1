@@ -58,7 +58,7 @@ export default function NewsletterForm() {
           placeholder={t("emailPlaceholder")}
           aria-label={t("emailPlaceholder")}
 
-          className="h-12 w-full rounded-full bg-zinc-600 ps-6 pe-40 text-base text-white placeholder:text-zinc-400 focus-visible:ring-2 focus-visible:outline-none"
+          className="placeholder:text-text-muted h-12 w-full rounded-full bg-zinc-600 ps-6 pe-40 text-base text-white focus-visible:ring-2 focus-visible:outline-none"
           {...register("email")}
         />
 

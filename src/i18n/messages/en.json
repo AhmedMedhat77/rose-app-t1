@@ -79,6 +79,13 @@
     "placeholder": "Placeholder"
   },
 
+  "Input": {
+    "uploadFile": "Upload File",
+    "searchPlaceholder": "Search...",
+    "numberPlaceholder": "Select Number",
+    "phoneNumber": "Entry Phone Number",
+    "fileRequired": "Please select a file"
+  },
   "select": {
     "label": "Select",
     "placeholder": "Select an option",

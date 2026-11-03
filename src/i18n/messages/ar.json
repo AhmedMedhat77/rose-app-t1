@@ -79,6 +79,13 @@
     "label": "التسمية",
     "placeholder": "اكتب هنا..."
   },
+  "Input": {
+    "uploadFile": "رفع ملف",
+    "searchPlaceholder": "ابحث...",
+    "numberPlaceholder": "اختر رقماً",
+    "phoneNumber": "ادخل رقم الهاتف",
+    "fileRequired": "من فضلك اختر ملفاً"
+  },
   "select": {
     "label": "اختر",
     "placeholder": "اختر خيارًا",
