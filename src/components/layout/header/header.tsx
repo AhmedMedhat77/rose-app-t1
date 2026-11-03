@@ -4,13 +4,9 @@ import { LocaleSwitcher } from "@/components/locale-switcher";
 
 import { Link } from "@/i18n/navigation";
 import { NavBar } from "./nav-bar";
-import {
-  BellIcon,
-  HeartIcon,
-  Search,
-  ShoppingCartIcon,
-  User,
-} from "lucide-react";
+import { HeartIcon, Search, ShoppingCartIcon, User } from "lucide-react";
+import { NotificationsMenu } from "@/features/notifications/components/notifications-menu";
+import { NotificationToggle } from "../../../features/notifications/components/notification-toggle";
 
 const ICON_BUTTON =
   "text-foreground hover:text-primary flex size-9 items-center justify-center rounded-md transition-colors";
@@ -30,6 +26,7 @@ export function Header() {
               width={64}
               height={64}
               priority
+              style={{ width: "auto", height: "auto" }}
             />
           </Link>
 
@@ -63,13 +60,9 @@ export function Header() {
               <Link href="/cart" aria-label={t("cart")} className={ICON_BUTTON}>
                 <ShoppingCartIcon />
               </Link>
-              <button
-                type="button"
-                aria-label={t("notifications")}
-                className={ICON_BUTTON}
-              >
-                <BellIcon />
-              </button>
+
+              <NotificationsMenu label={t("notifications")} />
+              <NotificationToggle />
             </div>
 
             <div className="border-border flex items-center gap-2 border-s ps-4">
@@ -80,7 +73,6 @@ export function Header() {
           </div>
         </div>
       </div>
-
       <NavBar />
     </header>
   );

@@ -25,7 +25,13 @@
     "wishlist": "المفضلة",
     "cart": "السلة",
     "notifications": "الإشعارات",
-    "mainNavigation": "التنقل الرئيسي"
+    "mainNavigation": "التنقل الرئيسي",
+    "pushEnable": "تفعيل الإشعارات",
+    "pushDisable": "إيقاف الإشعارات",
+    "pushBusy": "من فضلك انتظر...",
+    "pushUnsupported": "الإشعارات غير مدعومة في هذا المتصفح.",
+    "pushDenied": "الإشعارات محظورة. فعّلها من إعدادات المتصفح.",
+    "pushError": "حدث خطأ، حاول مرة أخرى."
   },
   "Footer": {
     "discover": "اكتشف موقعنا",

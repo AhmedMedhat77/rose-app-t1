@@ -7,6 +7,7 @@ import { newsletterSchema } from "../schema/schema";
 import { useTranslations } from "next-intl";
 import { SubscribeResult, subscribeToNewsletter } from "../apis/subscribe";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 export default function NewsletterForm() {
   //state
@@ -56,10 +57,10 @@ export default function NewsletterForm() {
           {...register("email")}
         />
 
-        <button
+        <Button
           type="submit"
           disabled={isSubmitting}
-          className="bg-maroon-50 text-maroon-700 hover:bg-maroon-100 focus-visible:ring-soft-pink-300 absolute inset-y-0 end-0 flex items-center gap-3 rounded-full px-6 text-base font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+          className="bg-maroon-50 text-maroon-700 hover:bg-maroon-100 dark:bg-soft-pink-300 dark:hover:bg-soft-pink-200 focus-visible:ring-soft-pink-300 absolute inset-y-0 end-0 flex items-center gap-3 rounded-full px-6 text-base font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:text-zinc-900"
         >
           {t("subscribe")}
           <svg
@@ -74,7 +75,7 @@ export default function NewsletterForm() {
           >
             <path d="M5 12h14M13 6l6 6-6 6" />
           </svg>
-        </button>
+        </Button>
       </div>
 
       {errors.email && (

@@ -18,11 +18,17 @@ export default function Footer() {
   const t = useTranslations("Footer");
   const tNav = useTranslations("Navigation");
   return (
-    <footer className="bg-zinc-900 px-20 py-10 text-zinc-100">
+    <footer className="bg-zinc-900 px-20 py-10 text-zinc-100 dark:bg-zinc-950">
       <div className="flex flex-wrap gap-4">
         {/* Brand */}
         <div className="flex flex-col justify-center">
-          <Image src="/images/logo 1.png" alt="Rose" width={240} height={225} />
+          <Image
+            src="/images/logo 1.png"
+            alt="Rose"
+            width={240}
+            height={225}
+            className="h-auto w-60"
+          />
           <p className="text-soft-pink-300 m-auto text-[18px]">{t("brand")}</p>
           <p className="m-auto text-[14px] text-zinc-100">
             {t("rights", { year })}

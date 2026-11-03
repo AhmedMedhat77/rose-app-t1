@@ -1,0 +1,2579 @@
+=== FILE: src/app/fonts.ts ===
+import { Geist_Mono, Sarabun, Tajawal } from "next/font/google";
+
+export const sarabun = Sarabun({
+  variable: "--font-sarabun",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
+});
+
+export const tajawal = Tajawal({
+  variable: "--font-tajawal",
+  subsets: ["arabic", "latin"],
+  weight: ["300", "400", "500", "700", "800"],
+  display: "swap",
+});
+
+export const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+=== FILE: src/app/globals.css ===
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Primitive palettes from the design reference. */
+@theme {
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-maroon-50: #fbeaea;
+  --color-maroon-100: #f3c5c7;
+  --color-maroon-200: #ea9fa2;
+  --color-maroon-300: #e07a7d;
+  --color-maroon-400: #d75458;
+  --color-maroon-500: #cd2e33;
+  --color-maroon-600: #a6252a;
+  --color-maroon-700: #741c21;
+  --color-maroon-800: #501419;
+  --color-maroon-900: #2c0c10;
+  --color-maroon-950: #20090c;
+  --color-red-50: #fef2f2;
+  --color-red-100: #fee2e2;
+  --color-red-200: #fecaca;
+  --color-red-300: #fca5a5;
+  --color-red-400: #f87171;
+  --color-red-500: #ef4444;
+  --color-red-600: #dc2626;
+  --color-red-700: #b91c1c;
+  --color-red-800: #991b1b;
+  --color-red-900: #7f1d1d;
+  --color-red-950: #450a0a;
+  --color-pink-50: #fff0f8;
+  --color-pink-100: #ffd6ec;
+  --color-pink-200: #ffaddc;
+  --color-pink-300: #ff84cb;
+  --color-pink-400: #ff5bba;
+  --color-pink-500: #f82ba9;
+  --color-pink-600: #d0198f;
+  --color-pink-700: #a41173;
+  --color-pink-800: #790a55;
+  --color-pink-900: #52043a;
+  --color-pink-950: #340021;
+  --color-soft-pink-50: #fff1f5;
+  --color-soft-pink-100: #ffe0e7;
+  --color-soft-pink-200: #ffc2d0;
+  --color-soft-pink-300: #ffa3b9;
+  --color-soft-pink-400: #ff85a2;
+  --color-soft-pink-500: #ff668b;
+  --color-soft-pink-600: #e65073;
+  --color-soft-pink-700: #cc3a5b;
+  --color-soft-pink-800: #b32443;
+  --color-soft-pink-900: #99102c;
+  --color-soft-pink-950: #590414;
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-200: #bedbff;
+  --color-blue-300: #8ec5ff;
+  --color-blue-400: #50a2ff;
+  --color-blue-500: #2b7fff;
+  --color-blue-600: #155dfc;
+  --color-blue-700: #135dfc;
+  --color-blue-800: #193cb8;
+  --color-blue-900: #1c398e;
+  --color-blue-950: #162456;
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d0fae5;
+  --color-emerald-200: #a4f4cf;
+  --color-emerald-300: #5ee9b5;
+  --color-emerald-400: #00d492;
+  --color-emerald-500: #00bc7d;
+  --color-emerald-600: #009966;
+  --color-emerald-700: #007a55;
+  --color-emerald-800: #006045;
+  --color-emerald-900: #004f3b;
+  --color-emerald-950: #002c22;
+  --color-yellow-50: #fefce8;
+  --color-yellow-100: #fef9c3;
+  --color-yellow-200: #fef08a;
+  --color-yellow-300: #fde047;
+  --color-yellow-400: #facc15;
+  --color-yellow-500: #eab308;
+  --color-yellow-600: #ca8a04;
+  --color-yellow-700: #a16207;
+  --color-yellow-800: #854d0e;
+  --color-yellow-900: #713f12;
+  --color-yellow-950: #422006;
+  --color-zinc-50: #fafafa;
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-200: #e4e4e7;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-400: #a1a1aa;
+  --color-zinc-500: #71717a;
+  --color-zinc-600: #52525b;
+  --color-zinc-700: #3f3f46;
+  --color-zinc-800: #27272a;
+  --color-zinc-900: #18181b;
+  --color-zinc-950: #09090b;
+}
+
+/* Dark faint/fade opacity follows the swatches where reference labels conflict. */
+/* Semantic roles: bg-*, text-*, and border-* remain independent. */
+:root {
+  color-scheme: light;
+  --bg-plain: var(--color-white);
+  --bg-subtle: var(--color-zinc-50);
+  --bg-muted: var(--color-zinc-100);
+  --bg-soft: var(--color-zinc-200);
+  --bg-default: var(--color-zinc-500);
+  --bg-inverse: var(--color-zinc-800);
+  --bg-primary: var(--color-maroon-800);
+  --bg-primary-faint: var(--color-maroon-100);
+  --bg-primary-fade: var(--color-maroon-50);
+  --bg-info: var(--color-blue-600);
+  --bg-info-faint: var(--color-blue-100);
+  --bg-info-fade: var(--color-blue-50);
+  --bg-secondary: var(--color-soft-pink-400);
+  --bg-secondary-faint: var(--color-soft-pink-100);
+  --bg-secondary-fade: var(--color-soft-pink-50);
+  --bg-success: var(--color-emerald-500);
+  --bg-success-faint: var(--color-emerald-100);
+  --bg-success-fade: var(--color-emerald-50);
+  --bg-warning: var(--color-yellow-400);
+  --bg-warning-faint: var(--color-yellow-100);
+  --bg-warning-fade: var(--color-yellow-50);
+  --bg-danger: var(--color-red-600);
+  --bg-danger-faint: var(--color-red-100);
+  --bg-danger-fade: var(--color-red-50);
+  --text-plain: var(--color-zinc-800);
+  --text-subtle: var(--color-zinc-300);
+  --text-muted: var(--color-zinc-400);
+  --text-soft: var(--color-zinc-500);
+  --text-default: var(--color-zinc-600);
+  --text-inverse: var(--color-white);
+  --text-primary: var(--color-maroon-800);
+  --text-primary-faint: var(--color-maroon-100);
+  --text-primary-fade: var(--color-maroon-50);
+  --text-info: var(--color-blue-600);
+  --text-info-faint: var(--color-blue-100);
+  --text-info-fade: var(--color-blue-50);
+  --text-secondary: var(--color-soft-pink-400);
+  --text-secondary-faint: var(--color-soft-pink-100);
+  --text-secondary-fade: var(--color-soft-pink-50);
+  --text-success: var(--color-emerald-500);
+  --text-success-faint: var(--color-emerald-100);
+  --text-success-fade: var(--color-emerald-50);
+  --text-warning: var(--color-yellow-400);
+  --text-warning-faint: var(--color-yellow-100);
+  --text-warning-fade: var(--color-yellow-50);
+  --text-danger: var(--color-red-600);
+  --text-danger-faint: var(--color-red-100);
+  --text-danger-fade: var(--color-red-50);
+  --border-plain: var(--color-zinc-800);
+  --border-subtle: var(--color-zinc-100);
+  --border-muted: var(--color-zinc-200);
+  --border-soft: var(--color-zinc-300);
+  --border-default: var(--color-zinc-400);
+  --border-inverse: var(--color-white);
+  --border-primary: var(--color-maroon-800);
+  --border-primary-faint: var(--color-maroon-100);
+  --border-primary-fade: var(--color-maroon-50);
+  --border-info: var(--color-blue-600);
+  --border-info-faint: var(--color-blue-100);
+  --border-info-fade: var(--color-blue-50);
+  --border-secondary: var(--color-soft-pink-400);
+  --border-secondary-faint: var(--color-soft-pink-100);
+  --border-secondary-fade: var(--color-soft-pink-50);
+  --border-success: var(--color-emerald-500);
+  --border-success-faint: var(--color-emerald-100);
+  --border-success-fade: var(--color-emerald-50);
+  --border-warning: var(--color-yellow-400);
+  --border-warning-faint: var(--color-yellow-100);
+  --border-warning-fade: var(--color-yellow-50);
+  --border-danger: var(--color-red-600);
+  --border-danger-faint: var(--color-red-100);
+  --border-danger-fade: var(--color-red-50);
+  --bg-elevated: color-mix(in srgb, var(--color-black) 20%, transparent);
+  --bg-overlay: color-mix(in srgb, var(--color-black) 50%, transparent);
+  --bg-primary-saturated: var(--color-maroon-700);
+  --bg-danger-saturated: var(--color-red-700);
+  --ring-default: var(--color-maroon-50);
+  --ring-danger: var(--color-red-100);
+  --background: var(--bg-plain);
+  --foreground: var(--text-plain);
+  --card: var(--bg-subtle);
+  --card-foreground: var(--text-plain);
+  --popover: var(--bg-plain);
+  --popover-foreground: var(--text-plain);
+  --primary: var(--bg-primary);
+  --primary-foreground: var(--text-inverse);
+  --primary-hover: var(--bg-primary-saturated);
+  --secondary: var(--bg-secondary);
+  --secondary-foreground: var(--text-plain);
+  --muted: var(--bg-muted);
+  --muted-foreground: var(--text-soft);
+  --accent: var(--bg-primary-fade);
+  --accent-foreground: var(--text-primary);
+  --destructive: var(--bg-danger);
+  --destructive-foreground: var(--color-white);
+  --destructive-hover: var(--bg-danger-saturated);
+  --border: var(--border-muted);
+  --input: var(--border-default);
+  --ring: var(--ring-default);
+  --sidebar: var(--bg-subtle);
+  --sidebar-foreground: var(--text-plain);
+  --sidebar-primary: var(--bg-primary);
+  --sidebar-primary-foreground: var(--text-inverse);
+  --sidebar-accent: var(--bg-primary-fade);
+  --sidebar-accent-foreground: var(--text-primary);
+  --sidebar-border: var(--border-muted);
+  --sidebar-ring: var(--ring-default);
+  --chart-1: var(--bg-primary);
+  --chart-2: var(--bg-secondary);
+  --chart-3: var(--bg-info);
+  --chart-4: var(--bg-success);
+  --chart-5: var(--bg-warning);
+  --radius: 6px;
+  --shadow-subtle-sm: 0 2px 5px rgb(0 0 0 / 7%);
+  --shadow-subtle: 0 4px 10px rgb(0 0 0 / 7%);
+  --shadow-subtle-lg: 0 4px 18px rgb(0 0 0 / 7%);
+  --shadow-soft-sm: 0 2px 5px rgb(0 0 0 / 10%);
+  --shadow-soft: 0 4px 10px rgb(0 0 0 / 10%);
+  --shadow-soft-lg: 0 4px 18px rgb(0 0 0 / 10%);
+}
+
+/* Explicit .light overrides the system preference; .dark forces dark mode. */
+.dark {
+  color-scheme: dark;
+  --bg-plain: var(--color-zinc-700);
+  --bg-subtle: var(--color-zinc-800);
+  --bg-muted: var(--color-zinc-900);
+  --bg-soft: var(--color-zinc-700);
+  --bg-default: var(--color-zinc-600);
+  --bg-inverse: var(--color-zinc-50);
+  --bg-primary: var(--color-soft-pink-300);
+  --bg-primary-faint: color-mix(
+    in srgb,
+    var(--color-soft-pink-300) 75%,
+    transparent
+  );
+  --bg-primary-fade: color-mix(
+    in srgb,
+    var(--color-soft-pink-300) 25%,
+    transparent
+  );
+  --bg-info: var(--color-blue-500);
+  --bg-info-faint: var(--color-blue-900);
+  --bg-info-fade: color-mix(in srgb, var(--color-blue-500) 25%, transparent);
+  --bg-secondary: var(--color-maroon-600);
+  --bg-secondary-faint: color-mix(
+    in srgb,
+    var(--color-maroon-600) 50%,
+    transparent
+  );
+  --bg-secondary-fade: color-mix(
+    in srgb,
+    var(--color-maroon-600) 25%,
+    transparent
+  );
+  --bg-success: var(--color-emerald-500);
+  --bg-success-faint: color-mix(
+    in srgb,
+    var(--color-emerald-500) 50%,
+    transparent
+  );
+  --bg-success-fade: color-mix(
+    in srgb,
+    var(--color-emerald-500) 25%,
+    transparent
+  );
+  --bg-warning: var(--color-yellow-500);
+  --bg-warning-faint: color-mix(
+    in srgb,
+    var(--color-yellow-500) 50%,
+    transparent
+  );
+  --bg-warning-fade: color-mix(
+    in srgb,
+    var(--color-yellow-500) 25%,
+    transparent
+  );
+  --bg-danger: var(--color-red-500);
+  --bg-danger-faint: color-mix(in srgb, var(--color-red-500) 50%, transparent);
+  --bg-danger-fade: color-mix(in srgb, var(--color-red-500) 25%, transparent);
+  --text-plain: var(--color-zinc-50);
+  --text-subtle: var(--color-zinc-500);
+  --text-muted: var(--color-zinc-400);
+  --text-soft: var(--color-zinc-300);
+  --text-default: var(--color-zinc-200);
+  --text-inverse: var(--color-zinc-800);
+  --text-primary: var(--color-soft-pink-300);
+  --text-primary-faint: color-mix(
+    in srgb,
+    var(--color-soft-pink-300) 75%,
+    transparent
+  );
+  --text-primary-fade: color-mix(
+    in srgb,
+    var(--color-soft-pink-300) 25%,
+    transparent
+  );
+  --text-info: var(--color-blue-500);
+  --text-info-faint: var(--color-blue-900);
+  --text-info-fade: color-mix(in srgb, var(--color-blue-500) 25%, transparent);
+  --text-secondary: var(--color-maroon-600);
+  --text-secondary-faint: color-mix(
+    in srgb,
+    var(--color-maroon-600) 50%,
+    transparent
+  );
+  --text-secondary-fade: color-mix(
+    in srgb,
+    var(--color-maroon-600) 25%,
+    transparent
+  );
+  --text-success: var(--color-emerald-500);
+  --text-success-faint: color-mix(
+    in srgb,
+    var(--color-emerald-500) 50%,
+    transparent
+  );
+  --text-success-fade: color-mix(
+    in srgb,
+    var(--color-emerald-500) 25%,
+    transparent
+  );
+  --text-warning: var(--color-yellow-500);
+  --text-warning-faint: color-mix(
+    in srgb,
+    var(--color-yellow-500) 50%,
+    transparent
+  );
+  --text-warning-fade: color-mix(
+    in srgb,
+    var(--color-yellow-500) 25%,
+    transparent
+  );
+  --text-danger: var(--color-red-500);
+  --text-danger-faint: color-mix(
+    in srgb,
+    var(--color-red-500) 50%,
+    transparent
+  );
+  --text-danger-fade: color-mix(in srgb, var(--color-red-500) 25%, transparent);
+  --border-plain: var(--color-zinc-50);
+  --border-subtle: var(--color-zinc-700);
+  --border-muted: var(--color-zinc-800);
+  --border-soft: var(--color-zinc-600);
+  --border-default: var(--color-zinc-500);
+  --border-inverse: var(--color-zinc-800);
+  --border-primary: var(--color-soft-pink-300);
+  --border-primary-faint: color-mix(
+    in srgb,
+    var(--color-soft-pink-300) 75%,
+    transparent
+  );
+  --border-primary-fade: color-mix(
+    in srgb,
+    var(--color-soft-pink-300) 25%,
+    transparent
+  );
+  --border-info: var(--color-blue-500);
+  --border-info-faint: var(--color-blue-900);
+  --border-info-fade: color-mix(
+    in srgb,
+    var(--color-blue-500) 25%,
+    transparent
+  );
+  --border-secondary: var(--color-maroon-600);
+  --border-secondary-faint: color-mix(
+    in srgb,
+    var(--color-maroon-600) 50%,
+    transparent
+  );
+  --border-secondary-fade: color-mix(
+    in srgb,
+    var(--color-maroon-600) 25%,
+    transparent
+  );
+  --border-success: var(--color-emerald-500);
+  --border-success-faint: color-mix(
+    in srgb,
+    var(--color-emerald-500) 50%,
+    transparent
+  );
+  --border-success-fade: color-mix(
+    in srgb,
+    var(--color-emerald-500) 25%,
+    transparent
+  );
+  --border-warning: var(--color-yellow-500);
+  --border-warning-faint: color-mix(
+    in srgb,
+    var(--color-yellow-500) 50%,
+    transparent
+  );
+  --border-warning-fade: color-mix(
+    in srgb,
+    var(--color-yellow-500) 25%,
+    transparent
+  );
+  --border-danger: var(--color-red-500);
+  --border-danger-faint: color-mix(
+    in srgb,
+    var(--color-red-500) 50%,
+    transparent
+  );
+  --border-danger-fade: color-mix(
+    in srgb,
+    var(--color-red-500) 25%,
+    transparent
+  );
+  --bg-elevated: color-mix(in srgb, var(--color-black) 20%, transparent);
+  --bg-overlay: color-mix(in srgb, var(--color-black) 50%, transparent);
+  --bg-primary-saturated: var(--color-soft-pink-200);
+  --bg-danger-saturated: var(--color-red-400);
+  --ring-default: #473036;
+  --ring-danger: #45282c;
+  --primary-foreground: var(--text-inverse);
+  --secondary-foreground: var(--color-white);
+}
+
+@theme inline {
+  --color-bg-plain: var(--bg-plain);
+  --color-bg-subtle: var(--bg-subtle);
+  --color-bg-muted: var(--bg-muted);
+  --color-bg-soft: var(--bg-soft);
+  --color-bg-default: var(--bg-default);
+  --color-bg-inverse: var(--bg-inverse);
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-primary-faint: var(--bg-primary-faint);
+  --color-bg-primary-fade: var(--bg-primary-fade);
+  --color-bg-info: var(--bg-info);
+  --color-bg-info-faint: var(--bg-info-faint);
+  --color-bg-info-fade: var(--bg-info-fade);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-secondary-faint: var(--bg-secondary-faint);
+  --color-bg-secondary-fade: var(--bg-secondary-fade);
+  --color-bg-success: var(--bg-success);
+  --color-bg-success-faint: var(--bg-success-faint);
+  --color-bg-success-fade: var(--bg-success-fade);
+  --color-bg-warning: var(--bg-warning);
+  --color-bg-warning-faint: var(--bg-warning-faint);
+  --color-bg-warning-fade: var(--bg-warning-fade);
+  --color-bg-danger: var(--bg-danger);
+  --color-bg-danger-faint: var(--bg-danger-faint);
+  --color-bg-danger-fade: var(--bg-danger-fade);
+  --color-text-plain: var(--text-plain);
+  --color-text-subtle: var(--text-subtle);
+  --color-text-muted: var(--text-muted);
+  --color-text-soft: var(--text-soft);
+  --color-text-default: var(--text-default);
+  --color-text-inverse: var(--text-inverse);
+  --color-text-primary: var(--text-primary);
+  --color-text-primary-faint: var(--text-primary-faint);
+  --color-text-primary-fade: var(--text-primary-fade);
+  --color-text-info: var(--text-info);
+  --color-text-info-faint: var(--text-info-faint);
+  --color-text-info-fade: var(--text-info-fade);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-secondary-faint: var(--text-secondary-faint);
+  --color-text-secondary-fade: var(--text-secondary-fade);
+  --color-text-success: var(--text-success);
+  --color-text-success-faint: var(--text-success-faint);
+  --color-text-success-fade: var(--text-success-fade);
+  --color-text-warning: var(--text-warning);
+  --color-text-warning-faint: var(--text-warning-faint);
+  --color-text-warning-fade: var(--text-warning-fade);
+  --color-text-danger: var(--text-danger);
+  --color-text-danger-faint: var(--text-danger-faint);
+  --color-text-danger-fade: var(--text-danger-fade);
+  --color-border-plain: var(--border-plain);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-muted: var(--border-muted);
+  --color-border-soft: var(--border-soft);
+  --color-border-default: var(--border-default);
+  --color-border-inverse: var(--border-inverse);
+  --color-border-primary: var(--border-primary);
+  --color-border-primary-faint: var(--border-primary-faint);
+  --color-border-primary-fade: var(--border-primary-fade);
+  --color-border-info: var(--border-info);
+  --color-border-info-faint: var(--border-info-faint);
+  --color-border-info-fade: var(--border-info-fade);
+  --color-border-secondary: var(--border-secondary);
+  --color-border-secondary-faint: var(--border-secondary-faint);
+  --color-border-secondary-fade: var(--border-secondary-fade);
+  --color-border-success: var(--border-success);
+  --color-border-success-faint: var(--border-success-faint);
+  --color-border-success-fade: var(--border-success-fade);
+  --color-border-warning: var(--border-warning);
+  --color-border-warning-faint: var(--border-warning-faint);
+  --color-border-warning-fade: var(--border-warning-fade);
+  --color-border-danger: var(--border-danger);
+  --color-border-danger-faint: var(--border-danger-faint);
+  --color-border-danger-fade: var(--border-danger-fade);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-overlay: var(--bg-overlay);
+  --color-bg-primary-saturated: var(--bg-primary-saturated);
+  --color-bg-danger-saturated: var(--bg-danger-saturated);
+  --color-ring-default: var(--ring-default);
+  --color-ring-danger: var(--ring-danger);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-hover: var(--destructive-hover);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --font-sans: var(--font-body);
+  --font-english: var(--font-sarabun);
+  --font-arabic: var(--font-tajawal);
+  --font-mono: var(--font-geist-mono);
+  --radius-sm: 4px;
+  --radius-md: var(--radius);
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+}
+
+/* The lang attribute updates with locale navigation. */
+:root {
+  --font-body: var(--font-sarabun);
+}
+
+:root:lang(ar) {
+  --font-body: var(--font-tajawal);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body), Arial, Helvetica, sans-serif;
+  }
+}
+
+=== FILE: src/app/[locale]/about/page.tsx ===
+import React from "react";
+
+export default function AboutPage() {
+  return <div>AboutPage</div>;
+}
+
+=== FILE: src/app/[locale]/categories/page.tsx ===
+import React from "react";
+
+export default function CategoriesPage() {
+  return <div className="text-3xl">CategoriesPAge</div>;
+}
+
+=== FILE: src/app/[locale]/contact/page.tsx ===
+import React from "react";
+
+export default function ContactPage() {
+  return <div className="text-3xl">ContactPage</div>;
+}
+
+=== FILE: src/app/[locale]/error.tsx ===
+"use client";
+
+import React, { Component, ErrorInfo, ReactNode } from "react";
+
+interface ErrorBoundaryProps {
+  children: ReactNode;
+  onError?: (error: Error, errorInfo: ErrorInfo) => void;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
+
+export class GracefullyDegradingErrorBoundary extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
+  private contentRef: React.RefObject<HTMLDivElement | null>;
+
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+    this.contentRef = React.createRef();
+  }
+
+  static getDerivedStateFromError(): ErrorBoundaryState {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    if (this.props.onError) {
+      this.props.onError(error, errorInfo);
+    }
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // Render the current HTML content without hydration
+      return (
+        <>
+          <div
+            ref={this.contentRef}
+            suppressHydrationWarning
+            dangerouslySetInnerHTML={{
+              __html: this.contentRef.current?.innerHTML || "",
+            }}
+          />
+          <div className="fixed right-0 bottom-0 left-0 bg-red-600 px-6 py-4 text-center text-white">
+            <p className="font-semibold">
+              An error occurred during page rendering
+            </p>
+          </div>
+        </>
+      );
+    }
+
+    return <div ref={this.contentRef}>{this.props.children}</div>;
+  }
+}
+
+export default GracefullyDegradingErrorBoundary;
+
+=== FILE: src/app/[locale]/faqs/page.tsx ===
+import React from "react";
+
+export default function FAQsPage() {
+  return <div>FAQsPage</div>;
+}
+
+=== FILE: src/app/[locale]/layout.tsx ===
+import { LocaleSwitcher } from "@/components/locale-switcher";
+import { ThemeProvider } from "@/context/theme.context";
+import {
+  parseResolved,
+  parseTheme,
+  resolveTheme,
+  systemCookie,
+  themeCookie,
+} from "@/context/theme.shared";
+import type { Metadata } from "next";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
+import { routing } from "../../i18n/routing";
+import { geistMono, sarabun, tajawal } from "../fonts";
+import "../globals.css";
+import { ThemeMode } from "@/components/theme-mode";
+import Footer from "@/components/layout/footer/footer";
+import { Header } from "@/components/layout/header/header";
+import { NotificationProvider } from "@/provider/notification-provider";
+
+export const metadata: Metadata = {
+  title: "Rose App",
+  description: "Rose Application",
+  icons: "../favicon.ico",
+};
+
+// The <html> theme class is resolved from the request cookie, so this route
+// cannot be prerendered into a static shell. Block on the server instead of
+// streaming — the root element itself can't sit behind a Suspense fallback.
+export const instant = false;
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+export default async function RootLayout({
+  children,
+  params,
+}: LayoutProps<"/[locale]">) {
+  const { locale } = await params;
+
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+
+  // Direction for HTML
+  const dir = locale === "ar" ? "rtl" : "ltr";
+
+  // Resolve the theme from cookies during render so <html> ships with the
+  // right class and there is no flash before hydration.
+  const cookieStore = await cookies();
+  const theme = parseTheme(cookieStore.get(themeCookie)?.value);
+  const systemTheme = parseResolved(cookieStore.get(systemCookie)?.value);
+  const resolvedTheme = resolveTheme(theme, systemTheme);
+
+  return (
+    <html
+      suppressHydrationWarning
+      lang={locale}
+      dir={dir}
+      className={`${sarabun.variable} ${tajawal.variable} ${geistMono.variable} ${resolvedTheme} h-full antialiased`}
+    >
+      <body className="flex min-h-full flex-col" suppressHydrationWarning>
+        <ThemeProvider initialTheme={theme} initialSystemTheme={systemTheme}>
+          <NextIntlClientProvider>
+            <header className="flex flex-wrap items-center justify-between">
+              <LocaleSwitcher />
+              <ThemeMode />
+            </header>
+            <Header />
+
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </NextIntlClientProvider>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+
+=== FILE: src/app/[locale]/not-found.tsx ===
+import Link from "next/link";
+
+export default function NotFound() {
+  return (
+    <div>
+      <h2>Not Found</h2>
+      <p>Could not find requested resource</p>
+      <Link href="/">Return Home</Link>
+    </div>
+  );
+}
+
+=== FILE: src/app/[locale]/occasions/page.tsx ===
+import React from "react";
+
+export default function OccasionsPage() {
+  return <div className="text-3xl">OccasionsPage</div>;
+}
+
+=== FILE: src/app/[locale]/page.tsx ===
+import { Button } from "@/components/ui/button";
+import { getTranslations } from "next-intl/server";
+
+export default async function HomePage() {
+  const t = await getTranslations();
+  return (
+    <div>
+      {t("welcome")}
+      <Button className="mt-6">Primary</Button>
+    </div>
+  );
+}
+
+=== FILE: src/app/[locale]/privacy/page.tsx ===
+import React from "react";
+
+export default function PrivacyPage() {
+  return <div>PrivacyPage</div>;
+}
+
+=== FILE: src/app/[locale]/products/page.tsx ===
+import React from "react";
+
+export default function ProductsPage() {
+  return <div className="text-3xl">ProductsPage</div>;
+}
+
+=== FILE: src/app/[locale]/terms/page.tsx ===
+import React from "react";
+
+export default function TermsPage() {
+  return <div>TermsPage</div>;
+}
+
+=== FILE: src/components/layout/footer/footer.tsx ===
+import { LEGAL_LINKS, MAIN_LINKS } from "@/constants/navigation";
+import NewsletterForm from "@/features/newsletter/components/newsletter-form";
+import { Link } from "@/i18n/navigation";
+import { useFormatter, useLocale, useTranslations } from "next-intl";
+import Image from "next/image";
+import React from "react";
+
+const FOOTER_LINKS = [...MAIN_LINKS, ...LEGAL_LINKS];
+
+export default function Footer() {
+  //Translations
+  const format = useFormatter();
+  const local = useLocale();
+  const year = format.number(new Date().getFullYear(), {
+    useGrouping: false,
+    numberingSystem: local === "ar" ? "arab" : "latn",
+  });
+  const t = useTranslations("Footer");
+  const tNav = useTranslations("Navigation");
+  return (
+    <footer className="bg-zinc-900 px-20 py-10 text-zinc-100">
+      <div className="flex flex-wrap gap-4">
+        {/* Brand */}
+        <div className="flex flex-col justify-center">
+          <Image src="/images/logo 1.png" alt="Rose" width={240} height={225} />
+          <p className="text-soft-pink-300 m-auto text-[18px]">{t("brand")}</p>
+          <p className="m-auto text-[14px] text-zinc-100">
+            {t("rights", { year })}
+          </p>
+        </div>
+        <div className="flex flex-1 flex-wrap justify-between px-4">
+          {/* Links */}
+
+          <nav className="flex flex-col items-start">
+            <h2 className="text-soft-pink-300 text-[18px]">{t("discover")}</h2>
+            <ul>
+              {FOOTER_LINKS.map(({ key, href }) => (
+                <li key={key}>
+                  <Link href={href} className="text-[16px] hover:underline">
+                    {tNav(key)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          {/* Newsletter */}
+          <div className="px-4">
+            <h2 className="text-soft-pink-300 text-[20px]">
+              {t.rich("newsletterTitle", {
+                percent: format.number(0.2, {
+                  style: "percent",
+                  numberingSystem: local === "ar" ? "arab" : "latn",
+                }),
+                highlight: (chunks) => (
+                  <span className="text-white">{chunks}</span>
+                ),
+              })}
+            </h2>
+            <p className="text-[15px] text-zinc-500">
+              {t("newsletterSubtitle")}
+            </p>
+            <NewsletterForm />
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+=== FILE: src/components/layout/header/header.tsx ===
+import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { LocaleSwitcher } from "@/components/locale-switcher";
+
+import { Link } from "@/i18n/navigation";
+import { NavBar } from "./nav-bar";
+import {
+  BellIcon,
+  HeartIcon,
+  Search,
+  ShoppingCartIcon,
+  User,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { NotificationsMenu } from "@/features/notifications/components/notifications-menu";
+import { NotificationToggle } from "../notification-toggle";
+
+const ICON_BUTTON =
+  "text-foreground hover:text-primary flex size-9 items-center justify-center rounded-md transition-colors";
+
+export function Header() {
+  const t = useTranslations("Header");
+
+  return (
+    <header>
+      {/* Top bar */}
+      <div className="bg-background">
+        <div className="mx-auto flex max-w-7xl items-center gap-6 px-6 py-3">
+          <Link href="/" className="shrink-0">
+            <Image
+              src="/images/logo 1.png"
+              alt="Rose"
+              width={64}
+              height={64}
+              priority
+            />
+          </Link>
+
+          <div className="relative min-w-0 flex-1">
+            <Search className="text-muted-foreground pointer-events-none absolute inset-y-0 start-3 my-auto size-4" />
+            <input
+              type="search"
+              placeholder={t("searchPlaceholder")}
+              aria-label={t("searchLabel")}
+              className="border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-ring h-11 w-full rounded-lg border bg-transparent ps-10 pe-4 text-sm focus-visible:ring-2 focus-visible:outline-none"
+            />
+          </div>
+
+          <div className="flex shrink-0 items-center gap-4">
+            <Link
+              href="/login"
+              className="text-foreground hover:text-primary flex items-center gap-2 text-sm transition-colors"
+            >
+              <User width={20} height={20} />
+              {t("login")}
+            </Link>
+
+            <div className="border-border flex items-center gap-1 border-s ps-4">
+              <Link
+                href="/wishlist"
+                aria-label={t("wishlist")}
+                className={ICON_BUTTON}
+              >
+                <HeartIcon />
+              </Link>
+              <Link href="/cart" aria-label={t("cart")} className={ICON_BUTTON}>
+                <ShoppingCartIcon />
+              </Link>
+
+              <NotificationsMenu label={t("notifications")} />
+            </div>
+
+            <div className="border-border flex items-center gap-2 border-s ps-4">
+              <LocaleSwitcher />
+
+              {/* <ThemeSwitcher /> */}
+            </div>
+          </div>
+        </div>
+      </div>
+      <NotificationToggle />
+      <NavBar />
+    </header>
+  );
+}
+
+=== FILE: src/components/layout/header/nav-bar.tsx ===
+"use client";
+
+import type { ReactNode } from "react";
+import { useTranslations } from "next-intl";
+import { Link, usePathname } from "@/i18n/navigation";
+import { MAIN_LINKS } from "@/constants/navigation";
+import {
+  ClipboardCheckIcon,
+  GiftIcon,
+  HeadsetIcon,
+  HomeIcon,
+  InfoIcon,
+  PartyPopperIcon,
+} from "lucide-react";
+
+type MainLinkKey = (typeof MAIN_LINKS)[number]["key"];
+
+const NAV_ICONS: Record<MainLinkKey, ReactNode> = {
+  home: <HomeIcon width={20} height={20} />,
+  products: <GiftIcon width={20} height={20} />,
+  categories: <ClipboardCheckIcon width={20} height={20} />,
+  occasions: <PartyPopperIcon width={20} height={20} />,
+  contact: <HeadsetIcon width={20} height={20} />,
+  about: <InfoIcon width={20} height={20} />,
+};
+
+export function NavBar() {
+  const tNav = useTranslations("Navigation");
+  const t = useTranslations("Header");
+  const pathname = usePathname();
+
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
+
+  return (
+    <nav aria-label={t("mainNavigation")} className="bg-maroon-700">
+      <ul className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-10 gap-y-1 px-6">
+        {MAIN_LINKS.map(({ key, href }) => {
+          const active = isActive(href);
+          return (
+            <li key={key}>
+              <Link
+                href={href}
+                aria-current={active ? "page" : undefined}
+                className={`text-soft-pink-200 flex items-center gap-2 border-b-2 py-3 text-[16px] transition-colors hover:opacity-80 ${
+                  active ? "border-current" : "border-transparent text-zinc-50"
+                }`}
+              >
+                {NAV_ICONS[key]}
+                {tNav(key)}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  );
+}
+
+=== FILE: src/components/layout/notification-toggle.tsx ===
+"use client";
+
+import { useEffect, useState } from "react";
+import { disablePush, enablePush, hasActiveSubscription, isPushSupported } from "../../../scripts/regiter-notification-sw";
+import { getVapidPublicKey } from "../../../scripts/apis/notification-vapid-public-key";
+// import { getVapidPublicKey } from "@/scripts/apis/notification-vapid-public-key";
+// import {
+//   disablePush,
+//   enablePush,
+//   hasActiveSubscription,
+//   isPushSupported,
+// } from "@/scripts/regiter-notification-sw";
+
+type State =
+  | "loading"
+  | "hidden" // السيرفر مش جاهز
+  | "unsupported" // المتصفح مش بيدعم
+  | "denied" // المستخدم رفض الإذن
+  | "off"
+  | "on"
+  | "busy"
+  | "error";
+
+export function NotificationToggle() {
+  const [state, setState] = useState<State>("loading");
+
+  useEffect(() => {
+    (async () => {
+      if (!isPushSupported()) return setState("unsupported");
+      const key = await getVapidPublicKey();
+      if (!key) return setState("hidden");
+      if (Notification.permission === "denied") return setState("denied");
+      setState((await hasActiveSubscription()) ? "on" : "off");
+    })();
+  }, []);
+
+  const handleEnable = async () => {
+    setState("busy");
+    try {
+      const result = await enablePush();
+      setState(result === "denied" ? "denied" : "on");
+    } catch {
+      setState("error");
+    }
+  };
+
+  const handleDisable = async () => {
+    setState("busy");
+    try {
+      await disablePush();
+      setState("off");
+    } catch {
+      setState("error");
+    }
+  };
+
+  if (state === "loading" || state === "hidden") return null;
+  if (state === "unsupported") return <p>Notifications are not supported in this browser.</p>;
+  if (state === "denied")
+    return <p>Notifications are blocked. Enable them from your browser settings.</p>;
+
+  return (
+    <div>
+      {state === "error" && <p>Something went wrong. Please try again.</p>}
+      {state === "on" ? (
+        <button onClick={handleDisable}>Disable notifications</button>
+      ) : (
+        <button onClick={handleEnable} disabled={state === "busy"}>
+          {state === "busy" ? "Please wait..." : "Enable notifications"}
+        </button>
+      )}
+    </div>
+  );
+}
+
+=== FILE: src/components/locale-switcher.tsx ===
+"use client";
+
+import { useLocale, useTranslations } from "next-intl";
+import { Link, usePathname } from "@/i18n/navigation";
+import { routing } from "@/i18n/routing";
+
+const localeNames = { en: "English", ar: "العربية" };
+
+export function LocaleSwitcher() {
+  const locale = useLocale();
+  const pathname = usePathname();
+  const t = useTranslations();
+
+  const otherLocales = routing.locales.filter((l) => l !== locale);
+
+  return (
+    <nav aria-label={t("language")} className="flex gap-3 p-4">
+      {otherLocales.map((nextLocale) => (
+        <Link
+          key={nextLocale}
+          href={pathname}
+          locale={nextLocale}
+          lang={nextLocale}
+          dir={nextLocale === "ar" ? "rtl" : "ltr"}
+          className={`text-primary focus-visible:outline-ring rounded-sm px-2 py-1 underline-offset-4 hover:underline focus-visible:outline-2 ${nextLocale === "ar" ? "font-arabic" : "font-english"}`}
+        >
+          {localeNames[nextLocale]}
+        </Link>
+      ))}
+    </nav>
+  );
+}
+
+=== FILE: src/components/theme-mode.tsx ===
+"use client";
+import { useTranslations } from "next-intl";
+import { Monitor, Moon, Sun } from "lucide-react";
+import { parseTheme, themeModes, useTheme } from "@/context/theme.context";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { cn } from "cn";
+
+const icons = {
+  light: Sun,
+  system: Monitor,
+  dark: Moon,
+} as const;
+
+export function ThemeMode() {
+  const t = useTranslations("theme");
+  const { theme, setTheme } = useTheme();
+
+  return (
+    <ToggleGroup
+      aria-label={t("label")}
+      value={[theme]}
+      onValueChange={(value) => {
+        const next = value[0];
+        if (next) setTheme(parseTheme(next));
+      }}
+      className={cn(
+        "inline-flex h-10 w-27 items-center gap-0",
+        "border-border-soft bg-bg-plain rounded-full border p-0.75",
+      )}
+    >
+      {themeModes.map((mode) => {
+        const Icon = icons[mode];
+
+        return (
+          <ToggleGroupItem
+            key={mode}
+            value={mode}
+            aria-label={t(mode)}
+            title={t(mode)}
+            className={cn(
+              "text-text-plain size-8.5 min-w-0 flex-1 rounded-full px-0",
+              "hover:bg-transparent",
+              "focus-visible:ring-ring focus-visible:ring-2",
+              "focus-visible:ring-offset-background focus-visible:ring-offset-1",
+              "data-pressed:bg-bg-soft dark:data-pressed:bg-bg-muted data-pressed:shadow-sm",
+            )}
+          >
+            <Icon
+              aria-hidden="true"
+              className="size-4.5 shrink-0"
+              strokeWidth={2}
+            />
+          </ToggleGroupItem>
+        );
+      })}
+    </ToggleGroup>
+  );
+}
+
+=== FILE: src/components/ui/badge.tsx ===
+import { mergeProps } from "@base-ui/react/merge-props";
+import { useRender } from "@base-ui/react/use-render";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "cn";
+
+const badgeVariants = cva(
+  [
+    // flex
+    "group/badge inline-flex gap-2.5 h-4 w-fit shrink-0 items-center justify-center  overflow-hidden",
+    // border and padding
+    "rounded-full border border-transparent px-2 py-2",
+    // text
+    "text-xs  font-medium  whitespace-nowrap",
+    // transition focus outline
+    "transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&>svg]:pointer-events-none [&>svg]:size-3!",
+  ],
+  {
+    variants: {
+      variant: {
+        primary: [
+          // color
+          "bg-bg-primary text-text-inverse",
+          // hover
+          "hover:bg-bg-primary-saturated",
+        ],
+        secondary: [
+          // color
+          "bg-bg-secondary-faint text-text-primary",
+          // hover
+          "hover:bg-bg-secondary-fade",
+        ],
+        subtle: [
+          // color
+          "bg-bg-soft text-text-plain",
+          //  hover
+          "hover:bg-bg-muted",
+        ],
+      },
+    },
+    defaultVariants: {
+      variant: "primary",
+    },
+  },
+);
+
+function Badge({
+  className,
+  variant = "primary",
+  render,
+  ...props
+}: useRender.ComponentProps<"span"> & VariantProps<typeof badgeVariants>) {
+  return useRender({
+    defaultTagName: "span",
+    props: mergeProps<"span">(
+      {
+        className: cn(badgeVariants({ variant }), className),
+      },
+      props,
+    ),
+    render,
+    state: {
+      slot: "badge",
+      variant,
+    },
+  });
+}
+
+export { Badge, badgeVariants };
+
+=== FILE: src/components/ui/button.tsx ===
+import { Button as ButtonPrimitive } from "@base-ui/react/button";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "cn";
+import { LoaderCircle } from "lucide-react";
+
+const buttonVariants = cva(
+  [
+    // flex
+    "group/button inline-flex shrink-0 items-center justify-center cursor-pointer",
+    // border
+    "gap-2.5 whitespace-nowrap rounded-lg border border-transparent",
+    // text
+    "bg-clip-padding text-base  font-medium dark:font-semibold dark:text-sm ",
+    "transition-colors duration-200 outline-none select-none",
+    "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
+    "active:not-aria-[haspopup]:translate-y-px",
+    "disabled:pointer-events-none disabled:cursor-not-allowed",
+    "disabled:bg-bg-soft disabled:border-transparent dark:disabled:bg-bg-muted disabled:text-text-muted",
+    "aria-invalid:border-destructive aria-invalid:ring-3",
+    "aria-invalid:ring-destructive/20",
+    "[&_svg]:pointer-events-none [&_svg]:shrink-0",
+    "[&_svg:not([class*='size-'])]:size-4",
+  ],
+  {
+    variants: {
+      variant: {
+        primary: [
+          // color
+          "bg-bg-primary text-text-inverse",
+          // hover
+          "hover:bg-bg-primary-saturated",
+        ],
+        secondary: [
+          // color
+          "bg-bg-primary-fade text-text-primary dark:text-text-plain",
+          // hover
+          "hover:bg-bg-primary-faint",
+        ],
+        outline: [
+          // color
+          "border-border-primary  bg-bg-plain text-text-primary",
+          // hover
+          "hover:bg-bg-primary-fade",
+        ],
+        subtle: [
+          // color
+          "border-border-soft bg-bg-muted text-text-plain",
+          // hover
+          "hover:bg-bg-soft dark:hover:bg-bg-subtle dark:hover:border-border-primary",
+        ],
+        ghost: [
+          // color
+          "bg-bg-plain text-text-plain",
+          // hover
+          "hover:bg-bg-soft",
+        ],
+        destructive: [
+          // color
+          "bg-bg-danger text-text-inverse",
+          // hover
+          "hover:bg-bg-danger-saturated",
+        ],
+      },
+
+      size: {
+        default: "h-11 dark:h-10.25 px-4",
+        xs: "h-6 gap-1 rounded-md px-2 text-xs",
+        sm: "h-9 gap-1.5 rounded-lg px-3 text-sm",
+        lg: "h-12 px-6 text-base",
+        icon: "size-11 p-0",
+        "icon-xs": "size-6 rounded-md p-0",
+        "icon-sm": "size-9 rounded-lg p-0",
+        "icon-lg": "size-12 p-0",
+      },
+    },
+
+    defaultVariants: {
+      variant: "primary",
+      size: "default",
+    },
+  },
+);
+
+type ButtonProps = ButtonPrimitive.Props &
+  VariantProps<typeof buttonVariants> & {
+    loading?: boolean;
+  };
+
+function Button({
+  className,
+  variant = "primary",
+  size = "default",
+  loading = false,
+  disabled = false,
+  children,
+  ...props
+}: ButtonProps) {
+  const isDisabled = Boolean(disabled || loading);
+
+  return (
+    <ButtonPrimitive
+      data-slot="button"
+      data-loading={loading || undefined}
+      aria-busy={loading || undefined}
+      className={cn(buttonVariants({ variant, size, className }))}
+      disabled={isDisabled}
+      {...props}
+    >
+      {children}
+      {loading && <LoaderCircle aria-hidden="true" className="animate-spin" />}
+    </ButtonPrimitive>
+  );
+}
+
+export { Button, buttonVariants };
+
+=== FILE: src/components/ui/card.tsx ===
+import * as React from "react"
+import { cn } from "cn"
+
+function Card({
+  className,
+  size = "default",
+  ...props
+}: React.ComponentProps<"div"> & { size?: "default" | "sm" }) {
+  return (
+    <div
+      data-slot="card"
+      data-size={size}
+      className={cn(
+        "group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl bg-card py-(--card-spacing) text-sm text-card-foreground ring-1 ring-foreground/10 [--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-header"
+      className={cn(
+        "group/card-header @container/card-header grid auto-rows-min items-start gap-1 rounded-t-xl px-(--card-spacing) has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-(--card-spacing)",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-title"
+      className={cn(
+        "text-base leading-snug font-medium group-data-[size=sm]/card:text-sm",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-description"
+      className={cn("text-sm text-muted-foreground", className)}
+      {...props}
+    />
+  )
+}
+
+function CardAction({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-action"
+      className={cn(
+        "col-start-2 row-span-2 row-start-1 self-start justify-self-end",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+function CardContent({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-content"
+      className={cn("px-(--card-spacing)", className)}
+      {...props}
+    />
+  )
+}
+
+function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-footer"
+      className={cn(
+        "flex items-center rounded-b-xl border-t bg-muted/50 p-(--card-spacing)",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+export {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardAction,
+  CardDescription,
+  CardContent,
+}
+
+=== FILE: src/components/ui/checkbox.tsx ===
+"use client";
+
+import * as React from "react";
+import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox";
+import { CheckIcon } from "lucide-react";
+import { cn } from "cn";
+
+type CheckboxProps = CheckboxPrimitive.Root.Props & {
+  label?: React.ReactNode;
+  error?: string;
+};
+
+function Checkbox({
+  className,
+  label,
+  error,
+  "aria-describedby": describedBy,
+  ...props
+}: CheckboxProps) {
+  const errorId = React.useId();
+
+  const box = (
+    <CheckboxPrimitive.Root
+      data-slot="checkbox"
+      aria-invalid={error ? true : undefined}
+      aria-describedby={
+        [describedBy, error ? errorId : undefined].filter(Boolean).join(" ") ||
+        undefined
+      }
+      className={cn(
+        // base
+        "peer border-border-primary bg-bg-plain relative flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-lg border transition-all outline-none",
+        // checked
+        "data-checked:bg-bg-primary data-checked:text-text-inverse",
+        // hover + focus:
+        "hover:ring-ring-default focus-visible:ring-ring-default hover:ring-4 focus-visible:ring-4",
+        // error: border
+        "aria-invalid:border-border-danger aria-invalid:aria-checked:border-border-primary",
+        className,
+      )}
+      {...props}
+    >
+      <CheckboxPrimitive.Indicator
+        data-slot="checkbox-indicator"
+        className="grid place-content-center text-current transition-none"
+      >
+        <CheckIcon className="size-4" strokeWidth={3} />
+      </CheckboxPrimitive.Indicator>
+    </CheckboxPrimitive.Root>
+  );
+
+  // if not use label or error
+  if (!label && !error) return box;
+
+  return (
+    <div data-slot="checkbox-field" className="flex flex-col gap-1.5">
+      <label className="text-text-plain flex cursor-pointer items-center gap-2.5 text-sm">
+        {box}
+        {label}
+      </label>
+      {error && (
+        <p
+          id={errorId}
+          role="alert"
+          className="text-text-danger text-xs font-normal"
+        >
+          {error}
+        </p>
+      )}
+    </div>
+  );
+}
+
+export { Checkbox };
+
+=== FILE: src/components/ui/popover.tsx ===
+"use client"
+
+import * as React from "react"
+import { Popover as PopoverPrimitive } from "@base-ui/react/popover"
+import { cn } from "cn"
+
+function Popover({ ...props }: PopoverPrimitive.Root.Props) {
+  return <PopoverPrimitive.Root data-slot="popover" {...props} />
+}
+
+function PopoverTrigger({ ...props }: PopoverPrimitive.Trigger.Props) {
+  return <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props} />
+}
+
+function PopoverContent({
+  className,
+  align = "center",
+  alignOffset = 0,
+  side = "bottom",
+  sideOffset = 4,
+  ...props
+}: PopoverPrimitive.Popup.Props &
+  Pick<
+    PopoverPrimitive.Positioner.Props,
+    "align" | "alignOffset" | "side" | "sideOffset"
+  >) {
+  return (
+    <PopoverPrimitive.Portal>
+      <PopoverPrimitive.Positioner
+        align={align}
+        alignOffset={alignOffset}
+        side={side}
+        sideOffset={sideOffset}
+        className="isolate z-50"
+      >
+        <PopoverPrimitive.Popup
+          data-slot="popover-content"
+          className={cn(
+            "z-50 flex w-72 origin-(--transform-origin) flex-col gap-2.5 rounded-lg bg-popover p-2.5 text-sm text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+            className
+          )}
+          {...props}
+        />
+      </PopoverPrimitive.Positioner>
+    </PopoverPrimitive.Portal>
+  )
+}
+
+function PopoverHeader({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="popover-header"
+      className={cn("flex flex-col gap-0.5 text-sm", className)}
+      {...props}
+    />
+  )
+}
+
+function PopoverTitle({ className, ...props }: PopoverPrimitive.Title.Props) {
+  return (
+    <PopoverPrimitive.Title
+      data-slot="popover-title"
+      className={cn("font-medium", className)}
+      {...props}
+    />
+  )
+}
+
+function PopoverDescription({
+  className,
+  ...props
+}: PopoverPrimitive.Description.Props) {
+  return (
+    <PopoverPrimitive.Description
+      data-slot="popover-description"
+      className={cn("text-muted-foreground", className)}
+      {...props}
+    />
+  )
+}
+
+export {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+}
+
+=== FILE: src/components/ui/toggle-group.tsx ===
+"use client";
+
+import * as React from "react";
+import { Toggle as TogglePrimitive } from "@base-ui/react/toggle";
+import { ToggleGroup as ToggleGroupPrimitive } from "@base-ui/react/toggle-group";
+import { type VariantProps } from "class-variance-authority";
+import { cn } from "cn";
+
+import { toggleVariants } from "@/components/ui/toggle";
+
+const ToggleGroupContext = React.createContext<
+  VariantProps<typeof toggleVariants> & {
+    spacing?: number;
+    orientation?: "horizontal" | "vertical";
+  }
+>({
+  size: "default",
+  variant: "default",
+  spacing: 2,
+  orientation: "horizontal",
+});
+
+function ToggleGroup({
+  className,
+  variant,
+  size,
+  spacing = 2,
+  orientation = "horizontal",
+  children,
+  ...props
+}: ToggleGroupPrimitive.Props &
+  VariantProps<typeof toggleVariants> & {
+    spacing?: number;
+    orientation?: "horizontal" | "vertical";
+  }) {
+  return (
+    <ToggleGroupPrimitive
+      data-slot="toggle-group"
+      data-variant={variant}
+      data-size={size}
+      data-spacing={spacing}
+      data-orientation={orientation}
+      style={{ "--gap": spacing } as React.CSSProperties}
+      className={cn(
+        "group/toggle-group flex w-fit flex-row items-center gap-[--spacing(var(--gap))] rounded-lg data-vertical:flex-col data-vertical:items-stretch data-[size=sm]:rounded-[min(var(--radius-md),10px)]",
+        className,
+      )}
+      {...props}
+    >
+      <ToggleGroupContext.Provider
+        value={{ variant, size, spacing, orientation }}
+      >
+        {children}
+      </ToggleGroupContext.Provider>
+    </ToggleGroupPrimitive>
+  );
+}
+
+function ToggleGroupItem({
+  className,
+  children,
+  variant = "default",
+  size = "default",
+  ...props
+}: TogglePrimitive.Props & VariantProps<typeof toggleVariants>) {
+  const context = React.useContext(ToggleGroupContext);
+
+  return (
+    <TogglePrimitive
+      data-slot="toggle-group-item"
+      data-variant={context.variant || variant}
+      data-size={context.size || size}
+      data-spacing={context.spacing}
+      className={cn(
+        "shrink-0 group-data-[spacing=0]/toggle-group:rounded-none group-data-[spacing=0]/toggle-group:px-2 focus:z-10 focus-visible:z-10 group-data-[spacing=0]/toggle-group:has-data-[icon=inline-end]:pr-1.5 group-data-[spacing=0]/toggle-group:has-data-[icon=inline-start]:pl-1.5 group-data-horizontal/toggle-group:data-[spacing=0]:first:rounded-l-lg group-data-vertical/toggle-group:data-[spacing=0]:first:rounded-t-lg group-data-horizontal/toggle-group:data-[spacing=0]:last:rounded-r-lg group-data-vertical/toggle-group:data-[spacing=0]:last:rounded-b-lg group-data-horizontal/toggle-group:data-[spacing=0]:data-[variant=outline]:border-l-0 group-data-vertical/toggle-group:data-[spacing=0]:data-[variant=outline]:border-t-0 group-data-horizontal/toggle-group:data-[spacing=0]:data-[variant=outline]:first:border-l group-data-vertical/toggle-group:data-[spacing=0]:data-[variant=outline]:first:border-t",
+        toggleVariants({
+          variant: context.variant || variant,
+          size: context.size || size,
+        }),
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </TogglePrimitive>
+  );
+}
+
+export { ToggleGroup, ToggleGroupItem };
+
+=== FILE: src/components/ui/toggle.tsx ===
+"use client";
+
+import { Toggle as TogglePrimitive } from "@base-ui/react/toggle";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "cn";
+
+const toggleVariants = cva(
+  "group/toggle inline-flex items-center justify-center gap-1 rounded-lg text-sm font-medium whitespace-nowrap transition-all outline-none hover:bg-muted hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 aria-pressed:bg-muted data-[state=on]:bg-muted dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  {
+    variants: {
+      variant: {
+        default: "bg-transparent",
+        outline: "border border-input bg-transparent hover:bg-muted",
+      },
+      size: {
+        default:
+          "h-8 min-w-8 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
+        sm: "h-7 min-w-7 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
+        lg: "h-9 min-w-9 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  },
+);
+
+function Toggle({
+  className,
+  variant = "default",
+  size = "default",
+  ...props
+}: TogglePrimitive.Props & VariantProps<typeof toggleVariants>) {
+  return (
+    <TogglePrimitive
+      data-slot="toggle"
+      className={cn(toggleVariants({ variant, size, className }))}
+      {...props}
+    />
+  );
+}
+
+export { Toggle, toggleVariants };
+
+=== FILE: src/constants/navigation.ts ===
+export const MAIN_LINKS = [
+  { key: "home", href: "/" },
+  { key: "products", href: "/products" },
+  { key: "categories", href: "/categories" },
+  { key: "occasions", href: "/occasions" },
+  { key: "contact", href: "/contact" },
+  { key: "about", href: "/about" },
+] as const;
+
+export const LEGAL_LINKS = [
+  { key: "terms", href: "/terms" },
+  { key: "privacy", href: "/privacy" },
+  { key: "faqs", href: "/faqs" },
+] as const;
+
+=== FILE: src/context/theme.context.tsx ===
+"use client";
+
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useReducer,
+  type ReactNode,
+} from "react";
+
+import {
+  parseTheme,
+  resolveTheme,
+  systemCookie,
+  themeCookie,
+  type ResolvedTheme,
+  type ThemeMode,
+} from "./theme.shared";
+
+// Re-exported so existing client imports (e.g. theme-mode.tsx) still resolve
+// from this module; the definitions live in theme.shared.
+export {
+  parseResolved,
+  parseTheme,
+  resolveTheme,
+  systemCookie,
+  themeCookie,
+  themeModes,
+  type ResolvedTheme,
+  type ThemeMode,
+} from "./theme.shared";
+
+const cookieMaxAge = 60 * 60 * 24 * 365;
+
+function writeCookie(name: string, value: string) {
+  document.cookie = `${name}=${value};path=/;max-age=${cookieMaxAge};samesite=lax`;
+}
+
+type ThemeContextValue = {
+  theme: ThemeMode;
+  resolvedTheme: ResolvedTheme;
+  setTheme: (theme: ThemeMode) => void;
+};
+
+type ThemeState = {
+  theme: ThemeMode;
+  systemTheme: ResolvedTheme;
+  initialized: boolean;
+};
+
+type ThemeAction =
+  | { type: "initialize"; theme: ThemeMode; systemTheme: ResolvedTheme }
+  | { type: "set-theme"; theme: ThemeMode }
+  | { type: "system-change"; systemTheme: ResolvedTheme };
+
+function themeReducer(state: ThemeState, action: ThemeAction): ThemeState {
+  switch (action.type) {
+    case "initialize":
+      return {
+        theme: action.theme,
+        systemTheme: action.systemTheme,
+        initialized: true,
+      };
+    case "set-theme":
+      return { ...state, theme: action.theme };
+    case "system-change":
+      return { ...state, systemTheme: action.systemTheme };
+  }
+}
+
+const ThemeContext = createContext<ThemeContextValue | null>(null);
+
+export function ThemeProvider({
+  children,
+  initialTheme,
+  initialSystemTheme,
+}: {
+  children: ReactNode;
+  initialTheme: ThemeMode;
+  initialSystemTheme: ResolvedTheme;
+}) {
+  // hooks
+  // Seed from the server-read cookies so the rendered class matches <html>.
+  const [state, dispatch] = useReducer(themeReducer, {
+    theme: initialTheme,
+    systemTheme: initialSystemTheme,
+    initialized: true,
+  });
+  const resolvedTheme = resolveTheme(state.theme, state.systemTheme);
+
+  // setters
+  const setTheme = useCallback((theme: ThemeMode) => {
+    const mode = parseTheme(theme);
+    dispatch({ type: "set-theme", theme: mode });
+    writeCookie(themeCookie, mode);
+  }, []);
+
+  // effects
+  useLayoutEffect(() => {
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const systemTheme: ResolvedTheme = media.matches ? "dark" : "light";
+    // Correct the server's (possibly stale) system value and persist it so the
+    // next server render resolves "system" to the right class.
+    if (systemTheme !== initialSystemTheme) {
+      dispatch({ type: "system-change", systemTheme });
+    }
+    writeCookie(systemCookie, systemTheme);
+
+    const onSystemChange = (event: MediaQueryListEvent) => {
+      const next: ResolvedTheme = event.matches ? "dark" : "light";
+      dispatch({ type: "system-change", systemTheme: next });
+      writeCookie(systemCookie, next);
+    };
+
+    media.addEventListener("change", onSystemChange);
+    return () => media.removeEventListener("change", onSystemChange);
+  }, [initialSystemTheme]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.remove("light", "dark");
+    root.classList.add(resolvedTheme);
+  }, [resolvedTheme]);
+
+  return (
+    <ThemeContext value={{ theme: state.theme, resolvedTheme, setTheme }}>
+      {children}
+    </ThemeContext>
+  );
+}
+
+export function useTheme() {
+  const context = useContext(ThemeContext);
+  if (!context) throw new Error("useTheme must be used within a ThemeProvider");
+  return context;
+}
+
+=== FILE: src/context/theme.shared.ts ===
+// Theme values shared by the server (layout reads cookies, sets the <html>
+// class) and the client provider. Kept free of "use client" and React context
+// so a Server Component can import it.
+
+export const themeModes = ["light", "system", "dark"] as const;
+export type ThemeMode = (typeof themeModes)[number];
+export type ResolvedTheme = "light" | "dark";
+
+// Cookies (not localStorage) so the server can read the theme during render
+// and emit the class on <html>, avoiding a flash before hydration.
+// themeCookie drives the toggle; systemCookie carries the client's last known
+// OS preference so the server can resolve "system" to a concrete class.
+export const themeCookie = "rose-theme";
+export const systemCookie = "rose-system";
+
+export function parseTheme(value: string | null | undefined): ThemeMode {
+  return themeModes.includes(value as ThemeMode)
+    ? (value as ThemeMode)
+    : "system";
+}
+
+export function parseResolved(value: string | null | undefined): ResolvedTheme {
+  return value === "dark" ? "dark" : "light";
+}
+
+export function resolveTheme(
+  theme: ThemeMode,
+  systemTheme: ResolvedTheme,
+): ResolvedTheme {
+  return theme === "system" ? systemTheme : theme;
+}
+
+=== FILE: src/features/newsletter/apis/subscribe.ts ===
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ?? "https://rose-app.elevate-bootcamp.cloud";
+
+export type SubscribeResult = "subscribed" | "already-subscribed" | "error";
+
+export async function subscribeToNewsletter(
+  email: string,
+): Promise<SubscribeResult> {
+  try {
+    const response = await fetch(`${API_URL}/api/subscriptions`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+
+    if (response.status === 201) return "subscribed";
+    if (response.status === 409) return "already-subscribed";
+    return "error";
+  } catch {
+    return "error";
+  }
+}
+
+=== FILE: src/features/newsletter/components/newsletter-form.tsx ===
+"use client";
+
+import { useForm } from "react-hook-form";
+import { INewsLetterFormValues } from "../types/newsletter";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { newsletterSchema } from "../schema/schema";
+import { useTranslations } from "next-intl";
+import { SubscribeResult, subscribeToNewsletter } from "../apis/subscribe";
+import { useState } from "react";
+
+export default function NewsletterForm() {
+  //state
+  const [result, setResult] = useState<SubscribeResult | null>(null);
+  //Translation
+  const t = useTranslations("Footer");
+  //Form
+  const {
+    handleSubmit,
+    register,
+    formState: { isSubmitting, errors },
+    reset,
+  } = useForm<INewsLetterFormValues>({
+    defaultValues: {
+      email: "",
+    },
+    resolver: zodResolver(newsletterSchema(t)),
+  });
+
+  //Submit Function
+
+  const onSubmit = async ({ email }: INewsLetterFormValues) => {
+    const response = await subscribeToNewsletter(email);
+    setResult(response);
+    if (response === "subscribed") reset();
+  };
+
+  const resultMessage = {
+    subscribed: t("subscribeSuccess"),
+    "already-subscribed": t("subscribeAlready"),
+    error: t("subscribeError"),
+  };
+
+  return (
+    <form
+      noValidate
+      onSubmit={handleSubmit(onSubmit)}
+      className="mt-5 flex flex-col gap-2"
+    >
+      <div className="relative">
+        <input
+          type="email"
+          placeholder={t("emailPlaceholder")}
+          aria-label={t("emailPlaceholder")}
+
+          className="focus-visible:ring-soft-pink-300 h-14 w-full rounded-full bg-zinc-600 ps-6 pe-40 text-base text-white placeholder:text-zinc-400 focus-visible:ring-2 focus-visible:outline-none"
+          {...register("email")}
+        />
+
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="bg-maroon-50 text-maroon-700 hover:bg-maroon-100 focus-visible:ring-soft-pink-300 absolute inset-y-0 end-0 flex items-center gap-3 rounded-full px-6 text-base font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {t("subscribe")}
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            className="size-5 rtl:rotate-180"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </button>
+      </div>
+
+      {errors.email && (
+        <p role="alert" className="ps-6 text-sm text-red-400">
+          {errors.email.message}
+        </p>
+      )}
+
+      {result && (
+        <p role="status" className="ps-6 text-sm text-white">
+          {resultMessage[result]}
+        </p>
+      )}
+    </form>
+  );
+}
+
+=== FILE: src/features/newsletter/schema/schema.ts ===
+import z from "zod";
+import { Translate } from "../types/newsletter";
+
+export function newsletterSchema(t: Translate) {
+  return z.object({
+    email: z.email(t("emailInvalid")).trim().min(1, t("emailRequired")),
+  });
+}
+
+=== FILE: src/features/newsletter/types/newsletter.d.ts ===
+import z from "zod";
+import { newsletterSchema } from "../schema/schema";
+
+export type NewsletterMessageKey = "emailRequired" | "emailInvalid";
+export type Translate = (key: NewsletterMessageKey) => string;
+export type INewsLetterFormValues = z.infer<
+  ReturnType<typeof newsletterSchema>
+>;
+
+=== FILE: src/features/notifications/components/notifications-menu.tsx ===
+"use client";
+
+import { useState } from "react";
+import { BellIcon } from "lucide-react";
+
+
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import NotificationsPanel, { NotificationItem } from "./notifications-pannel";
+
+const ICON_BUTTON =
+  "text-foreground hover:text-primary flex size-9 items-center justify-center  transition-colors";
+
+export function NotificationsMenu({ label }: { label: string }) {
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+
+  return (
+    <Popover>
+      <PopoverTrigger aria-label={label} className={ICON_BUTTON}>
+        <BellIcon />
+      </PopoverTrigger>
+
+      <PopoverContent
+        align="end"
+        className="min-h-56  w-full max-w-84  border-0 bg-transparent p-0 shadow-none"
+      >
+        <NotificationsPanel
+          notifications={notifications}
+          onClearAll={() => setNotifications([])}
+          onMarkAllAsRead={() =>
+            setNotifications((prev) => prev.map((n) => ({ ...n, read: true })))
+          }
+        />
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+=== FILE: src/features/notifications/components/notifications-pannel.tsx ===
+"use client";
+
+import { BellOff, BrushCleaning, CheckCheck } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { cn } from "cn";
+import { Card } from "@/components/ui/card";
+
+
+export interface NotificationItem {
+  id: string;
+  title: string;
+  read: boolean;
+}
+
+interface NotificationsPanelProps {
+  notifications?: NotificationItem[];
+  onClearAll?: () => void;
+  onMarkAllAsRead?: () => void;
+  className?: string;
+}
+
+const actionClass =
+  "h-auto gap-2 px-1 py-1 text-lg font-medium text-zinc-400 hover:bg-transparent hover:text-zinc-600 [&_svg]:size-7";
+
+export default function NotificationsPanel({
+  notifications = [],
+  onClearAll,
+  onMarkAllAsRead,
+  className,
+}: NotificationsPanelProps) {
+  const isEmpty = notifications.length === 0;
+
+  return (
+    <Card
+      aria-label="Notifications"
+      className={cn(
+        "flex min-h-56 w-full max-w-84 flex-col gap-0 overflow-hidden  border-0 bg-white p-0 shadow-2xl",
+        className
+      )}
+    >
+      {/* Header */}
+      <header className="bg-maroon-700 max-w-84 min-h-13 py-4 px-4">
+        <h2 className="text-xl font-bold leading-tight text-white">
+          Notifications
+        </h2>
+      </header>
+
+      {/* Actions */}
+      <div className="flex items-center justify-between border-b border-[#d9dadd] px-5 py-3">
+        <Button variant="ghost" className={actionClass} onClick={onClearAll}>
+          <BrushCleaning />
+          Clear all notifications
+        </Button>
+
+        <Button
+          variant="ghost"
+          className={actionClass}
+          onClick={onMarkAllAsRead}
+        >
+          <CheckCheck />
+          Mark all as read
+        </Button>
+      </div>
+
+      {/* Body */}
+      <div className="flex flex-1 flex-col items-center justify-center gap-4 p-6">
+        {isEmpty ? (
+          <>
+            <BellOff className="size-20 text-[#6b6f76]" strokeWidth={1.25} />
+            <p className="text-xl text-[#6b6f76]">No notifications to display.</p>
+          </>
+        ) : (
+          <ul className="w-full">
+            {notifications.map((n) => (
+              <li
+                key={n.id}
+                className={cn(
+                  "border-b border-[#d9dadd] py-3",
+                  n.read ? "font-normal" : "font-bold"
+                )}
+              >
+                {n.title}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </Card>
+  );
+}
+
+=== FILE: src/i18n/messages/ar.json ===
+{
+  "welcome": "مرحباً",
+  "language": "اللغة",
+  "theme": {
+    "label": "المظهر",
+    "light": "فاتح",
+    "dark": "داكن",
+    "system": "النظام"
+  },
+  "Navigation": {
+    "home": "الرئيسية",
+    "products": "المنتجات",
+    "categories": "الفئات",
+    "occasions": "المناسبات",
+    "contact": "تواصل معنا",
+    "about": "من نحن",
+    "terms": "الشروط والأحكام",
+    "privacy": "سياسة الخصوصية",
+    "faqs": "الأسئلة الشائعة"
+  },
+  "Header": {
+    "searchPlaceholder": "ما هي الهدية الرائعة التي تبحث عنها؟",
+    "searchLabel": "بحث",
+    "login": "تسجيل الدخول",
+    "wishlist": "المفضلة",
+    "cart": "السلة",
+    "notifications": "الإشعارات",
+    "mainNavigation": "التنقل الرئيسي"
+  },
+  "Footer": {
+    "discover": "اكتشف موقعنا",
+    "brand": "تطبيق روز للتجارة الإلكترونية",
+    "rights": "جميع الحقوق محفوظة | {year}",
+    "newsletterTitle": "احصل على كوبون خصم <highlight>{percent}</highlight>",
+    "newsletterSubtitle": "بالاشتراك في نشرتنا البريدية",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "subscribe": "اشترك",
+    "emailRequired": "من فضلك أدخل بريدك الإلكتروني",
+    "emailInvalid": "من فضلك أدخل بريدًا إلكترونيًا صحيحًا",
+    "subscribeSuccess": "تم الاشتراك بنجاح",
+    "subscribeAlready": "هذا البريد مشترك بالفعل",
+    "subscribeError": "حدث خطأ، حاول مرة أخرى"
+  }
+}
+
+=== FILE: src/i18n/messages/en.json ===
+{
+  "welcome": "welcome",
+  "language": "Language",
+  "theme": {
+    "label": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "Navigation": {
+    "home": "Home",
+    "products": "Products",
+    "categories": "Categories",
+    "occasions": "Occasions",
+    "contact": "Contact",
+    "about": "About",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy",
+    "faqs": "FAQs"
+  },
+  "Header": {
+    "searchPlaceholder": "What awesome gift are you looking for?",
+    "searchLabel": "Search",
+    "login": "Login",
+    "wishlist": "Wishlist",
+    "cart": "Cart",
+    "notifications": "Notifications",
+    "mainNavigation": "Main navigation"
+  },
+  "Footer": {
+    "discover": "Discover our website",
+    "brand": "Rose E-Commerce App",
+    "rights": "All rights reserved | {year}",
+    "newsletterTitle": "Get <highlight>{percent}</highlight> Off Discount Coupon",
+    "newsletterSubtitle": "By subscribing to our newsletter",
+    "emailPlaceholder": "Enter Your Email",
+    "subscribe": "Subscribe",
+    "emailRequired": "Please enter your email",
+    "emailInvalid": "Please enter a valid email",
+    "subscribeSuccess": "Subscribed successfully",
+    "subscribeAlready": "This email is already subscribed",
+    "subscribeError": "Something went wrong, please try again"
+  }
+}
+
+=== FILE: src/i18n/navigation.ts ===
+import { createNavigation } from "next-intl/navigation";
+import { routing } from "./routing";
+
+// Lightweight wrappers around Next.js' navigation
+// APIs that consider the routing configuration
+export const { Link, redirect, usePathname, useRouter, getPathname } =
+  createNavigation(routing);
+
+=== FILE: src/i18n/request.ts ===
+import { locale as getRootLocale } from "next/root-params";
+import { hasLocale } from "next-intl";
+import { getRequestConfig } from "next-intl/server";
+import { routing } from "./routing";
+
+export default getRequestConfig(async () => {
+  const paramValue = await getRootLocale();
+
+  let locale: string;
+  if (paramValue && hasLocale(routing.locales, paramValue)) {
+    locale = paramValue;
+  } else {
+    locale = routing.defaultLocale;
+  }
+
+  return {
+    locale,
+    messages: (await import(`./messages/${locale}.json`)).default,
+  };
+});
+
+=== FILE: src/i18n/routing.ts ===
+import { defineRouting } from "next-intl/routing";
+
+export const routing = defineRouting({
+  // A list of all locales that are supported
+  locales: ["en", "ar"],
+
+  // Used when no locale matches
+  defaultLocale: "en",
+});
+
+=== FILE: src/provider/notification-provider.tsx ===
+"use client";
+import React, { ReactNode, useEffect } from "react";
+import subscribeNotificationsSW from "../../scripts/regiter-notification-sw";
+
+export const NotificationProvider = ({ children }: { children: ReactNode }) => {
+  // useEffect(() => {
+  //   const invoke = async () => {
+  //     await subscribeNotificationsSW();
+  //   };
+  //   invoke();
+  // }, []);
+  useEffect(() => {
+    subscribeNotificationsSW()
+      .then((sub) => console.log(JSON.stringify(sub)))
+      .catch((error) => console.error("Notification subscribe failed:", error));
+  }, []);
+  return <>{children}</>;
+};
+
+=== FILE: src/proxy.ts ===
+import createMiddleware from "next-intl/middleware";
+import { routing } from "./i18n/routing";
+
+export default createMiddleware(routing);
+
+export const config = {
+  // Match all pathnames except for
+  // - … if they start with `/api`, `/trpc`, `/_next` or `/_vercel`
+  // - … the ones containing a dot (e.g. `favicon.ico`)
+  matcher: "/((?!api|trpc|_next|_vercel|.*\\..*).*)",
+};
+
+=== FILE: scripts/apis/notification-subscriptions.ts ===
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ?? "https://rose-app.elevate-bootcamp.cloud";
+
+export async function sendSubscriptionToServer(subscription: PushSubscription) {
+  const res = await fetch(`${API_URL}/api/notifications/subscriptions`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(subscription.toJSON()),
+  });
+  if (!res.ok) throw new Error("Failed to save subscription");
+}
+
+export async function deleteSubscriptionFromServer(endpoint: string) {
+  const res = await fetch(`${API_URL}/api/notifications/subscriptions`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ endpoint }),
+  });
+  if (!res.ok) throw new Error("Failed to delete subscription");
+}
+
+=== FILE: scripts/apis/notification-vapid-public-key.ts ===
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ?? "https://rose-app.elevate-bootcamp.cloud";
+
+export async function getVapidPublicKey(): Promise<string | null> {
+  try {
+    const res = await fetch(`${API_URL}/api/notifications/vapid-public-key`);
+
+    if (res.status === 404 || !res.ok) return null;
+
+    const data = await res.json();
+
+    if (!data.pushConfigured) return null;
+
+    return data.publicKey;
+  } catch {
+    return null;
+  }
+}
+
+
+
+=== FILE: scripts/regiter-notification-sw.ts ===
+"use client";
+
+import { getVapidPublicKey } from "./apis/notification-vapid-public-key";
+import {
+  deleteSubscriptionFromServer,
+  sendSubscriptionToServer,
+} from "./apis/notification-subscriptions";
+
+function urlBase64ToUint8Array(base64String: string) {
+  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+  const rawData = atob(base64);
+  return Uint8Array.from(rawData, (c) => c.charCodeAt(0));
+}
+
+export function isPushSupported() {
+  return (
+    typeof window !== "undefined" &&
+    "serviceWorker" in navigator &&
+    "PushManager" in window &&
+    "Notification" in window
+  );
+}
+
+export async function enablePush(): Promise<"subscribed" | "denied"> {
+  const publicKey = await getVapidPublicKey();
+  if (!publicKey) throw new Error("Push is not available");
+
+  const permission = await Notification.requestPermission();
+  if (permission !== "granted") return "denied";
+
+  await navigator.serviceWorker.register("/sw.js");
+  const registration = await navigator.serviceWorker.ready;
+
+  const subscription =
+    (await registration.pushManager.getSubscription()) ??
+    (await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(publicKey),
+    }));
+
+  await sendSubscriptionToServer(subscription);
+  return "subscribed";
+}
+
+export async function disablePush() {
+  const registration = await navigator.serviceWorker.getRegistration();
+  const subscription = await registration?.pushManager.getSubscription();
+  if (!subscription) return;
+
+  const endpoint = subscription.endpoint;
+  await subscription.unsubscribe();
+  await deleteSubscriptionFromServer(endpoint);
+}
+
+export async function hasActiveSubscription() {
+  const registration = await navigator.serviceWorker.getRegistration();
+  return !!(await registration?.pushManager.getSubscription());
+}
+
+=== FILE: public/sw.js ===
+self.addEventListener("install", () => self.skipWaiting());
+self.addEventListener("activate", (event) =>
+  event.waitUntil(self.clients.claim()),
+);
+
+self.addEventListener("push", (event) => {
+  let data = {};
+  try {
+    data = event.data ? event.data.json() : {};
+  } catch {
+    data = { message: event.data ? event.data.text() : "" };
+  }
+
+  const title = data.title || "Rose App";
+  const options = {
+    body: data.message || data.body || "",
+    icon: data.icon || "/images/logo%201.png",
+    data: { link: data.link || data.url || "/" },
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const url = new URL(
+    event.notification.data?.link || "/",
+    self.location.origin,
+  ).href;
+
+  event.waitUntil(
+    (async () => {
+      const windows = await self.clients.matchAll({
+        type: "window",
+        includeUncontrolled: true,
+      });
+
+      for (const client of windows) {
+        if (new URL(client.url).origin === self.location.origin) {
+          await client.focus();
+          if ("navigate" in client) await client.navigate(url);
+          return;
+        }
+      }
+
+      await self.clients.openWindow(url);
+    })(),
+  );
+});
+

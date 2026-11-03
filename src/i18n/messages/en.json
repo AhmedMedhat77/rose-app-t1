@@ -25,7 +25,13 @@
     "wishlist": "Wishlist",
     "cart": "Cart",
     "notifications": "Notifications",
-    "mainNavigation": "Main navigation"
+    "mainNavigation": "Main navigation",
+    "pushEnable": "Enable notifications",
+    "pushDisable": "Disable notifications",
+    "pushBusy": "Please wait...",
+    "pushUnsupported": "Notifications are not supported in this browser.",
+    "pushDenied": "Notifications are blocked. Enable them from your browser settings.",
+    "pushError": "Something went wrong. Please try again."
   },
   "Footer": {
     "discover": "Discover our website",
