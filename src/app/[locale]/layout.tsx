@@ -18,6 +18,8 @@ import { ThemeMode } from "@/components/theme-mode";
 import Footer from "@/components/layout/footer/footer";
 import { Header } from "@/components/layout/header/header";
 
+import { Toaster } from "@/components/ui/toast";
+
 export const metadata: Metadata = {
   title: "Rose App",
   description: "Rose Application",
@@ -71,6 +73,8 @@ export default async function RootLayout({
 
             <main className="flex-1">{children}</main>
             <Footer />
+
+            <Toaster />
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

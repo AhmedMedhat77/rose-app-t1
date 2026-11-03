@@ -1,8 +1,8 @@
 {
-  "welcome": "مرحباً",
+  "welcome": "مرحبا",
   "language": "اللغة",
   "theme": {
-    "label": "المظهر",
+    "label": "السمة",
     "light": "فاتح",
     "dark": "داكن",
     "system": "النظام"
@@ -46,5 +46,37 @@
     "subscribeSuccess": "تم الاشتراك بنجاح",
     "subscribeAlready": "هذا البريد مشترك بالفعل",
     "subscribeError": "حدث خطأ، حاول مرة أخرى"
+  },
+  "toast": {
+    "informative": "رسالة توضيحية",
+    "successful": "عملية ناجحة",
+    "unsuccessful": "عملية غير ناجحة",
+    "close": "إغلاق الإشعار",
+    "notifications": "الإشعارات"
+  },
+  "pagination": {
+    "label": "ترقيم الصفحات",
+    "first": "الصفحة الأولى",
+    "previous": "الصفحة السابقة",
+    "next": "الصفحة التالية",
+    "last": "الصفحة الأخيرة",
+    "page": "صفحة {page}"
+  },
+  "textarea": {
+    "label": "التسمية",
+    "placeholder": "اكتب هنا..."
+  },
+  "select": {
+    "label": "اختر",
+    "placeholder": "اختر خيارًا",
+    "search": "بحث...",
+    "noOptions": "لا توجد خيارات",
+    "loading": "جارٍ تحميل الخيارات...",
+    "error": "فشل تحميل الخيارات"
+  },
+  "menu": {
+    "logout": "تسجيل الخروج",
+    "profile": "الملف الشخصي",
+    "settings": "الإعدادات"
   }
 }

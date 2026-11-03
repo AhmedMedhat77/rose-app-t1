@@ -1,6 +1,6 @@
 {
   "welcome": "welcome",
-  "language": "Language",
+  "language": "language",
   "theme": {
     "label": "Theme",
     "light": "Light",
@@ -46,5 +46,38 @@
     "subscribeSuccess": "Subscribed successfully",
     "subscribeAlready": "This email is already subscribed",
     "subscribeError": "Something went wrong, please try again"
+  },
+  "toast": {
+    "informative": "Informative message",
+    "successful": "Successful operation",
+    "unsuccessful": "Unsuccessful operation",
+    "close": "Close toast",
+    "notifications": "Notifications"
+  },
+  "pagination": {
+    "label": "Pagination",
+    "first": "First page",
+    "previous": "Previous page",
+    "next": "Next page",
+    "last": "Last page",
+    "page": "Page {page}"
+  },
+  "textarea": {
+    "label": "Label",
+    "placeholder": "Placeholder"
+  },
+
+  "select": {
+    "label": "Select",
+    "placeholder": "Select an option",
+    "search": "Search...",
+    "noOptions": "No options found",
+    "loading": "Loading options...",
+    "error": "Failed to load options"
+  },
+  "menu": {
+    "logout": "Logout",
+    "profile": "Profile",
+    "settings": "Settings"
   }
 }
