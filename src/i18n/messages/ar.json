@@ -32,5 +32,18 @@
     "numberPlaceholder": "اختر رقماً",
     "phoneNumber": "ادخل رقم الهاتف",
     "fileRequired": "من فضلك اختر ملفاً"
+  },
+  "select": {
+    "label": "اختر",
+    "placeholder": "اختر خيارًا",
+    "search": "بحث...",
+    "noOptions": "لا توجد خيارات",
+    "loading": "جارٍ تحميل الخيارات...",
+    "error": "فشل تحميل الخيارات"
+  },
+  "menu": {
+    "logout": "تسجيل الخروج",
+    "profile": "الملف الشخصي",
+    "settings": "الإعدادات"
   }
 }
