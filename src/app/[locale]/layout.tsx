@@ -17,6 +17,7 @@ import "../globals.css";
 import { ThemeMode } from "@/components/theme-mode";
 
 import { Toaster } from "@/components/ui/toast";
+import NextAuthProvider from "@/providers/next-auth.provider";
 
 export const metadata: Metadata = {
   title: "Rose App",
@@ -61,16 +62,18 @@ export default async function RootLayout({
       className={`${sarabun.variable} ${tajawal.variable} ${geistMono.variable} ${resolvedTheme} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        <ThemeProvider initialTheme={theme} initialSystemTheme={systemTheme}>
-          <NextIntlClientProvider>
-            <header className="flex flex-wrap items-center justify-between">
-              <LocaleSwitcher />
-              <ThemeMode />
-            </header>
-            {children}
-            <Toaster />
-          </NextIntlClientProvider>
-        </ThemeProvider>
+        <NextAuthProvider>
+          <ThemeProvider initialTheme={theme} initialSystemTheme={systemTheme}>
+            <NextIntlClientProvider>
+              <header className="flex flex-wrap items-center justify-between">
+                <LocaleSwitcher />
+                <ThemeMode />
+              </header>
+              {children}
+              <Toaster />
+            </NextIntlClientProvider>
+          </ThemeProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );
