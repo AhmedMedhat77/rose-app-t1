@@ -26,7 +26,7 @@ const errorInputStyle = cn(
 );
 
 const inputVariants = cva(
-  "flex w-full rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50",
+  "flex w-full  rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -63,6 +63,7 @@ interface sideEffect {
   label?: string;
   isError?: boolean;
   isDisabled?: boolean;
+  error?: string;
 }
 
 function Input({
@@ -93,7 +94,7 @@ function Input({
               : isDisabled === true
                 ? "text-text-muted"
                 : "text-text-default dark:text-text-soft",
-            "py-2 text-[0.9rem] leading-[100%] font-medium tracking-[0%]",
+            "text-[0.9rem] leading-[100%] font-medium tracking-[0%]",
           )}
         >
           {label}
@@ -205,6 +206,9 @@ function Input({
           </div>
         )}
       </div>
+      {props.error && (
+        <p className="text-bg-danger text-sm font-medium">{props.error}</p>
+      )}
     </div>
   );
 }
