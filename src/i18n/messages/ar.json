@@ -1,0 +1,102 @@
+{
+  "welcome": "مرحبا",
+  "language": "اللغة",
+  "theme": {
+    "label": "السمة",
+    "light": "فاتح",
+    "dark": "داكن",
+    "system": "النظام"
+  },
+  "Navigation": {
+    "home": "الرئيسية",
+    "products": "المنتجات",
+    "categories": "الفئات",
+    "occasions": "المناسبات",
+    "contact": "تواصل معنا",
+    "about": "من نحن",
+    "terms": "الشروط والأحكام",
+    "privacy": "سياسة الخصوصية",
+    "faqs": "الأسئلة الشائعة"
+  },
+  "Header": {
+    "searchPlaceholder": "ما هي الهدية الرائعة التي تبحث عنها؟",
+    "searchLabel": "بحث",
+    "login": "تسجيل الدخول",
+    "wishlist": "المفضلة",
+    "cart": "السلة",
+    "notifications": "الإشعارات",
+    "mainNavigation": "التنقل الرئيسي",
+    "pushEnable": "تفعيل الإشعارات",
+    "pushDisable": "إيقاف الإشعارات",
+    "pushBusy": "من فضلك انتظر...",
+    "pushUnsupported": "الإشعارات غير مدعومة في هذا المتصفح.",
+    "pushDenied": "الإشعارات محظورة. فعّلها من إعدادات المتصفح.",
+    "pushError": "حدث خطأ، حاول مرة أخرى.",
+    "pushEnabled": "تم تفعيل الإشعارات.",
+    "pushDisabled": "تم إيقاف الإشعارات.",
+    "pushNotEnabled": "الإشعارات غير مفعّلة."
+  },
+  "NotificationsPanel": {
+    "title": "الإشعارات",
+    "clearAll": "مسح كل الإشعارات",
+    "markAllAsRead": "تحديد الكل كمقروء",
+    "empty": "لا توجد إشعارات لعرضها.",
+    "options": "خيارات الإشعار",
+    "markAsRead": "تحديد كمقروء",
+    "delete": "حذف الإشعار"
+  },
+
+  "Footer": {
+    "discover": "اكتشف موقعنا",
+    "brand": "تطبيق روز للتجارة الإلكترونية",
+    "rights": "جميع الحقوق محفوظة | {year}",
+    "newsletterTitle": "احصل على كوبون خصم <highlight>{percent}</highlight>",
+    "newsletterSubtitle": "بالاشتراك في نشرتنا البريدية",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "subscribe": "اشترك",
+    "emailRequired": "من فضلك أدخل بريدك الإلكتروني",
+    "emailInvalid": "من فضلك أدخل بريدًا إلكترونيًا صحيحًا",
+    "subscribeSuccess": "تم الاشتراك بنجاح",
+    "subscribeAlready": "هذا البريد مشترك بالفعل",
+    "subscribeError": "حدث خطأ، حاول مرة أخرى"
+  },
+  "toast": {
+    "informative": "رسالة توضيحية",
+    "successful": "عملية ناجحة",
+    "unsuccessful": "عملية غير ناجحة",
+    "close": "إغلاق الإشعار",
+    "notifications": "الإشعارات"
+  },
+  "pagination": {
+    "label": "ترقيم الصفحات",
+    "first": "الصفحة الأولى",
+    "previous": "الصفحة السابقة",
+    "next": "الصفحة التالية",
+    "last": "الصفحة الأخيرة",
+    "page": "صفحة {page}"
+  },
+  "textarea": {
+    "label": "التسمية",
+    "placeholder": "اكتب هنا..."
+  },
+  "Input": {
+    "uploadFile": "رفع ملف",
+    "searchPlaceholder": "ابحث...",
+    "numberPlaceholder": "اختر رقماً",
+    "phoneNumber": "ادخل رقم الهاتف",
+    "fileRequired": "من فضلك اختر ملفاً"
+  },
+  "select": {
+    "label": "اختر",
+    "placeholder": "اختر خيارًا",
+    "search": "بحث...",
+    "noOptions": "لا توجد خيارات",
+    "loading": "جارٍ تحميل الخيارات...",
+    "error": "فشل تحميل الخيارات"
+  },
+  "menu": {
+    "logout": "تسجيل الخروج",
+    "profile": "الملف الشخصي",
+    "settings": "الإعدادات"
+  }
+}
