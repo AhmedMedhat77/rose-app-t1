@@ -11,6 +11,7 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { routing } from "../../i18n/routing";
 import {
+  greatVibes,
   geistMono,
   monsieur,
   sarabun,
@@ -62,7 +63,7 @@ export default async function RootLayout({
       suppressHydrationWarning
       lang={locale}
       dir={dir}
-      className={`${sarabun.variable} ${tajawal.variable} ${geistMono.variable} ${monsieur.variable} ${resolvedTheme} h-full antialiased`}
+      className={`${sarabun.variable} ${tajawal.variable} ${geistMono.variable} ${monsieur.variable} ${greatVibes.variable} ${resolvedTheme} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <NextAuthProvider>
