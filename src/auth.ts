@@ -4,8 +4,8 @@ import { loginMutation } from "./features/auth/actions/mutations";
 
 export const authOptions: AuthOptions = {
   pages: {
-    signIn: "/auth/login",
-    error: "/auth/login",
+    signIn: "/login",
+    error: "/login",
   },
   providers: [
     Credentials({

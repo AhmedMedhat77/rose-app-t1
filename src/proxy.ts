@@ -35,7 +35,7 @@ export default function proxy(request: NextRequest) {
   // from constants for auth
   const token = request.cookies.get(AUTH_COOKIE_NAME)?.value;
 
-  // The pathname is locale-prefixed (e.g. `/en/auth/login`); strip the locale
+  // The pathname is locale-prefixed (e.g. `/en/login`); strip the locale
   // so auth checks work regardless of the active locale, and keep the locale
   // so redirects stay within the localized routing.
   const locale = path.match(localePrefix)?.[1] ?? routing.defaultLocale;
@@ -47,7 +47,7 @@ export default function proxy(request: NextRequest) {
       return intlMiddleware(request);
     }
 
-    return NextResponse.redirect(generateURL("/auth/login", locale, request));
+    return NextResponse.redirect(generateURL("/login", locale, request));
   }
 
   // Logged-in users shouldn't see the auth screens.
