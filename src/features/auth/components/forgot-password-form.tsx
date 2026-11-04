@@ -9,13 +9,12 @@ import { useForm } from "react-hook-form";
 import { createLoginSchema } from "@/features/auth/schemas";
 import { Link } from "@/i18n/navigation";
 
+import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
-import { TLoginFormValues } from "../types";
-import FormTitle from "./shared/form-title";
-import FormDivider from "./shared/form-divider";
-import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
 import { addToast } from "@/shared/ui/toast";
+import { TLoginFormValues } from "../types";
+import FormDivider from "./shared/form-divider";
 
 export default function ForgotPasswordForm() {
   const t = useTranslations("Login");
@@ -58,9 +57,11 @@ export default function ForgotPasswordForm() {
 
   return (
     <form noValidate onSubmit={onSubmit} className="w-full space-y-4">
-      <div>
-        <FormTitle title={t("title")} />
+      <div className="text-zinc-800 dark:text-zinc-50">
+        <h1 className="text-3xl font-semibold">Forgot Password?</h1>
+        <p>Worry not, we’ll send you instructions to help you reset it.</p>
       </div>
+      <FormDivider />
 
       <Input
         label={t("email")}
@@ -79,12 +80,12 @@ export default function ForgotPasswordForm() {
       <FormDivider />
       <div className="pt-4 text-center">
         <p className="zinc-800 text-sm font-medium dark:text-zinc-50">
-          Already have an account?{" "}
+          {"Don't have an account?"}{" "}
           <Link
             href="/login"
             className="text-primary font-bold hover:underline"
           >
-            Login
+            Create one now!
           </Link>
         </p>
       </div>
