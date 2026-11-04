@@ -67,7 +67,7 @@ export default function NewsletterForm() {
           variant="secondary"
           disabled={isSubmitting}
           loading={isSubmitting}
-          className="dark:bg-bg-primary focus-visible:ring-soft-pink-300 dark:text-text-inverse absolute inset-y-0 inset-e-0 flex h-full items-center gap-3 rounded-full px-6"
+          className="dark:bg-bg-primary dark:text-text-inverse absolute inset-y-0 inset-e-0 flex h-full items-center gap-3 rounded-full px-6"
         >
           {t("subscribe")}
           <ArrowRight />

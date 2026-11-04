@@ -7,6 +7,7 @@ import { NavBar } from "./nav-bar";
 import { HeartIcon, Search, ShoppingCartIcon, User } from "lucide-react";
 import { NotificationsMenu } from "@/features/notifications/components/notifications-menu";
 import { NotificationToggle } from "../../../features/notifications/components/notification-toggle";
+import { Input } from "@/components/ui/input";
 
 const ICON_BUTTON =
   "text-foreground hover:text-primary flex size-9 items-center justify-center rounded-md transition-colors";
@@ -21,7 +22,7 @@ export function Header() {
         <div className="mx-auto flex items-center gap-6 px-6 py-3">
           <Link href="/" className="shrink-0">
             <Image
-              src="/images/logo 1.png"
+              src="/images/logo.png"
               alt="Rose"
               width={64}
               height={64}
@@ -32,11 +33,11 @@ export function Header() {
 
           <div className="relative flex-1">
             <Search className="text-muted-foreground pointer-events-none absolute inset-y-0 inset-s-3 my-auto size-4" />
-            <input
+            <Input
               type="search"
               placeholder={t("searchPlaceholder")}
               aria-label={t("searchLabel")}
-              className="border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-ring h-11 w-full rounded-lg border bg-transparent ps-10 pe-4 text-sm focus-visible:ring-2 focus-visible:outline-none"
+              className="h-11 w-full rounded-lg ps-10 pe-4 text-sm"
             />
           </div>
 

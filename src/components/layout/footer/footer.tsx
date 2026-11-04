@@ -23,7 +23,7 @@ export default function Footer() {
         {/* Brand */}
         <div className="flex flex-col justify-center">
           <Image
-            src="/images/logo 1.png"
+            src="/images/logo.png"
             alt="Rose"
             width={240}
             height={225}
