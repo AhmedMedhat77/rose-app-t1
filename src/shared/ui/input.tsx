@@ -10,7 +10,7 @@ import "react-international-phone/style.css";
 import "react-phone-input-2/lib/style.css";
 
 const defaultInputStyle = cn(
-  "rounded-lg",
+  "rounded-lg min-h-[1rem]",
   "border border-border-soft",
   "p-4",
   "gap-2",
@@ -84,7 +84,7 @@ function Input({
   const [fileName, setFileName] = React.useState<File | undefined>();
 
   return (
-    <>
+    <div className="space-y-1.5">
       {label && (
         <p
           className={cn(
@@ -93,7 +93,7 @@ function Input({
               : isDisabled === true
                 ? "text-text-muted"
                 : "text-text-default dark:text-text-soft",
-            "py-2 text-[14px] leading-[100%] font-medium tracking-[0%]",
+            "py-2 text-[0.9rem] leading-[100%] font-medium tracking-[0%]",
           )}
         >
           {label}
@@ -205,7 +205,7 @@ function Input({
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 
