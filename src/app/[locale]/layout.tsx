@@ -1,4 +1,3 @@
-import { LocaleSwitcher } from "@/components/locale-switcher";
 import { ThemeProvider } from "@/context/theme.context";
 import {
   parseResolved,
@@ -12,9 +11,8 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { routing } from "../../i18n/routing";
-import { geistMono, sarabun, tajawal } from "../fonts";
+import { geistMono, monsieur, sarabun, tajawal } from "../fonts";
 import "../globals.css";
-import { ThemeMode } from "@/components/theme-mode";
 
 import { Toaster } from "@/components/ui/toast";
 import NextAuthProvider from "@/providers/next-auth.provider";
@@ -59,16 +57,12 @@ export default async function RootLayout({
       suppressHydrationWarning
       lang={locale}
       dir={dir}
-      className={`${sarabun.variable} ${tajawal.variable} ${geistMono.variable} ${resolvedTheme} h-full antialiased`}
+      className={`${sarabun.variable} ${tajawal.variable} ${geistMono.variable} ${monsieur.variable} ${resolvedTheme} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <NextAuthProvider>
           <ThemeProvider initialTheme={theme} initialSystemTheme={systemTheme}>
             <NextIntlClientProvider>
-              <header className="flex flex-wrap items-center justify-between">
-                <LocaleSwitcher />
-                <ThemeMode />
-              </header>
               {children}
               <Toaster />
             </NextIntlClientProvider>

@@ -1,18 +1,22 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { TLoginFormValues } from "../types";
+
+import { startTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "@/features/auth/schemas";
 import { signIn } from "next-auth/react";
-import { startTransition } from "react";
+import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
+import { loginSchema } from "@/features/auth/schemas";
+import { AuthTextField } from "./auth-text-field";
+import { AuthPasswordField } from "./auth-password-field";
+import { TLoginFormValues } from "../types";
+import FormTitle from "./form-title";
 
 export default function LoginForm() {
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     setError,
   } = useForm<TLoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -21,38 +25,84 @@ export default function LoginForm() {
       password: "",
     },
   });
+
   const onSubmit = handleSubmit(async (values) => {
-    console.log(values);
     const response = await signIn("credentials", {
       ...values,
-      // close next auth redirect to show errors
       redirect: false,
     });
 
     if (response?.ok) {
-      const searchParams = new URLSearchParams();
-      // to redirect user to his prev screen or home screen
+      const searchParams = new URLSearchParams(
+        typeof window !== "undefined" ? window.location.search : "",
+      );
       const callbackUrl = searchParams.get("callbackUrl") || "/";
-      // hard redirect
       startTransition(() => {
-        location.href = callbackUrl;
+        window.location.href = callbackUrl;
       });
-    }
-    if (!response?.ok) {
+    } else {
       setError("root", {
-        message: response?.error || "Something went wrong",
+        message: response?.error || "Invalid credentials. Please try again.",
       });
     }
   });
+
   return (
-    <form noValidate onSubmit={onSubmit} className="mx-auto grid w-5xl gap-5">
-      <h1>Login Form</h1>
-      <Input type="email" title="Email" {...register("email")} />
-      <span>{errors.email?.message}</span>
-      <Input type="password" title="password" {...register("password")} />
-      <span>{errors.password?.message}</span>
-      <Button type="submit">Submit</Button>
-      {errors.root && <p>{errors.root.message}</p>}
+    <form noValidate onSubmit={onSubmit} className="w-full space-y-4">
+      <FormTitle title="Welcome back!" />
+      <AuthTextField
+        label="Email"
+        type="email"
+        placeholder="user@example.com"
+        error={errors.email?.message}
+        {...register("email")}
+      />
+
+      <AuthPasswordField
+        label="Password"
+        placeholder="••••••••"
+        error={errors.password?.message}
+        {...register("password")}
+      />
+
+      {/* Forgot password */}
+      <div className="flex justify-end pt-0.5">
+        <Link
+          href="/forgot-password"
+          className="text-xs text-[#ffa3b9] transition-colors hover:underline"
+        >
+          Forgot your password?
+        </Link>
+      </div>
+
+      {/* Root error */}
+      {errors.root && (
+        <p className="rounded-lg border border-red-500/30 bg-red-950/40 p-2 text-center text-xs text-red-400">
+          {errors.root.message}
+        </p>
+      )}
+
+      {/* Login Button */}
+      <Button
+        type="submit"
+        loading={isSubmitting}
+        className="h-11 w-full rounded-lg bg-[#ffa3b9] text-sm font-semibold text-zinc-900 transition-colors hover:bg-[#ff8fa9]"
+      >
+        Login
+      </Button>
+
+      {/* Divider & Create account link */}
+      <div className="w-full border-t border-zinc-700/60 pt-4 text-center">
+        <p className="text-xs text-zinc-300">
+          Don&apos;t have an account?{" "}
+          <Link
+            href="/register"
+            className="font-medium text-[#ffa3b9] hover:underline"
+          >
+            Create one now!
+          </Link>
+        </p>
+      </div>
     </form>
   );
 }
