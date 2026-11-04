@@ -199,8 +199,8 @@ function Input({
                 )}
                 aria-label={
                   passwordInput === "password"
-                    ? "Show password"
-                    : "Hide password"
+                    ? t("showPassword")
+                    : t("hidePassword")
                 }
               >
                 {passwordInput === "password" ? (

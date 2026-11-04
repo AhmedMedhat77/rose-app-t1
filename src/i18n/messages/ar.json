@@ -84,7 +84,9 @@
     "searchPlaceholder": "ابحث...",
     "numberPlaceholder": "اختر رقماً",
     "phoneNumber": "ادخل رقم الهاتف",
-    "fileRequired": "من فضلك اختر ملفاً"
+    "fileRequired": "من فضلك اختر ملفاً",
+    "showPassword": "إظهار كلمة المرور",
+    "hidePassword": "إخفاء كلمة المرور"
   },
   "select": {
     "label": "اختر",
@@ -98,5 +100,22 @@
     "logout": "تسجيل الخروج",
     "profile": "الملف الشخصي",
     "settings": "الإعدادات"
+  },
+  "Auth": {
+    "heroImageAlt": "صناديق هدايا مزينة بشرائط"
+  },
+  "Login": {
+    "title": "مرحبًا بعودتك!",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "user@example.com",
+    "emailInvalid": "يرجى إدخال عنوان بريد إلكتروني صالح",
+    "password": "كلمة المرور",
+    "passwordPlaceholder": "••••••••",
+    "passwordRequired": "يرجى إدخال كلمة المرور",
+    "forgotPassword": "هل نسيت كلمة المرور؟",
+    "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة. يرجى المحاولة مرة أخرى.",
+    "submit": "تسجيل الدخول",
+    "noAccount": "ليس لديك حساب؟",
+    "createAccount": "أنشئ حسابًا الآن!"
   }
 }

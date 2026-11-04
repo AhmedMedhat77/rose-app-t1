@@ -11,7 +11,7 @@ export default function FormDecorative(props?: IProps) {
   return (
     <Image
       src={`/images/separator-${isDark ? "1" : "2"}.png`}
-      alt="decorative separator"
+      alt=""
       width={260}
       height={42}
       className={cn("h-auto w-60 object-contain sm:w-65", props?.className)}

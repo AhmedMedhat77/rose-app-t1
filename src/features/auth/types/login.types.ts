@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { loginSchema } from "../schemas/login.schema";
+import { createLoginSchema } from "../schemas/login.schema";
 import { IUser } from "./auth.types";
 
-export type TLoginFormValues = z.infer<typeof loginSchema>;
+export type TLoginFormValues = z.infer<ReturnType<typeof createLoginSchema>>;
 
 export interface ILoginResponse {
   token: string;

@@ -2,12 +2,15 @@ import FormDecorative from "@/features/auth/components/shared/form-decorative";
 import { AuthLocaleToggle } from "@/shared/auth-locale-toggle";
 import { ThemeMode } from "@/shared/components/ThemeMode";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 
-export default function AuthLayout({
+export default async function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const t = await getTranslations("Auth");
+
   return (
     <main className="grid min-h-screen w-full grid-cols-1 md:grid-cols-2">
       {/* Left Column */}
@@ -46,7 +49,7 @@ export default function AuthLayout({
       <aside className="relative hidden h-screen w-full overflow-hidden md:block">
         <Image
           src="/images/red-gifts.png"
-          alt="Gift boxes with ribbons"
+          alt={t("heroImageAlt")}
           fill
           priority
           sizes="50vw"

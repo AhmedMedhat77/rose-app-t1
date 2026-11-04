@@ -2,10 +2,11 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { startTransition } from "react";
 import { useForm } from "react-hook-form";
 
-import { loginSchema } from "@/features/auth/schemas";
+import { createLoginSchema } from "@/features/auth/schemas";
 import { Link } from "@/i18n/navigation";
 
 import { Button } from "@/shared/ui/button";
@@ -15,13 +16,19 @@ import FormTitle from "./shared/form-title";
 import FormDivider from "./shared/form-divider";
 
 export default function LoginForm() {
+  const t = useTranslations("Login");
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
     setError,
   } = useForm<TLoginFormValues>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(
+      createLoginSchema({
+        emailInvalid: t("emailInvalid"),
+        passwordRequired: t("passwordRequired"),
+      }),
+    ),
     defaultValues: {
       email: "",
       password: "",
@@ -44,7 +51,7 @@ export default function LoginForm() {
       });
     } else {
       setError("root", {
-        message: response?.error || "Invalid credentials. Please try again.",
+        message: t("invalidCredentials"),
       });
     }
   });
@@ -52,19 +59,19 @@ export default function LoginForm() {
   return (
     <form noValidate onSubmit={onSubmit} className="w-full space-y-4">
       <div>
-        <FormTitle title="Welcome back!" />
+        <FormTitle title={t("title")} />
       </div>
       <Input
-        label="Email"
+        label={t("email")}
         type="email"
-        placeholder="user@example.com"
+        placeholder={t("emailPlaceholder")}
         error={errors.email?.message}
         {...register("email")}
       />
 
       <Input
-        label="Password"
-        placeholder="••••••••"
+        label={t("password")}
+        placeholder={t("passwordPlaceholder")}
         type="password"
         error={errors.password?.message}
         {...register("password")}
@@ -76,7 +83,7 @@ export default function LoginForm() {
           href="/forgot-password"
           className="text-primary text-xs transition-colors hover:underline"
         >
-          Forgot your password?
+          {t("forgotPassword")}
         </Link>
       </div>
 
@@ -89,19 +96,19 @@ export default function LoginForm() {
 
       {/* Login Button */}
       <Button className="w-full" type="submit" loading={isSubmitting}>
-        Login
+        {t("submit")}
       </Button>
 
       {/* Divider & Create account link */}
       <FormDivider />
       <div className="pt-4 text-center">
         <p className="zinc-800 text-sm font-medium dark:text-zinc-50">
-          Don&apos;t have an account?{" "}
+          {t("noAccount")}{" "}
           <Link
             href="/register"
             className="text-primary font-bold hover:underline"
           >
-            Create one now!
+            {t("createAccount")}
           </Link>
         </p>
       </div>
