@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui/button";
 import { getTranslations } from "next-intl/server";
 
 export default async function HomePage() {
@@ -6,7 +6,7 @@ export default async function HomePage() {
   return (
     <div>
       {t("welcome")}
-      <Button>Primary</Button>
+      <Button className="mt-6">Primary!</Button>
     </div>
   );
 }

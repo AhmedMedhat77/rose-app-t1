@@ -5,7 +5,7 @@ import {
   resolveTheme,
   systemCookie,
   themeCookie,
-} from "@/context/theme.shared";
+} from "@/shared/lib/utils/theme.util";
 import type { Metadata } from "next";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { cookies } from "next/headers";
