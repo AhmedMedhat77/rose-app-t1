@@ -1,4 +1,4 @@
-import FormDecorative from "@/features/auth/components/form-decorative";
+import FormDecorative from "@/features/auth/components/shared/form-decorative";
 import { AuthLocaleToggle } from "@/shared/auth-locale-toggle";
 import { ThemeMode } from "@/shared/components/ThemeMode";
 import Image from "next/image";

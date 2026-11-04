@@ -11,8 +11,8 @@ import { Link } from "@/i18n/navigation";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { TLoginFormValues } from "../types";
-import FormTitle from "./form-title";
-import FormDivider from "./form-divider";
+import FormTitle from "./shared/form-title";
+import FormDivider from "./shared/form-divider";
 
 export default function LoginForm() {
   const {
