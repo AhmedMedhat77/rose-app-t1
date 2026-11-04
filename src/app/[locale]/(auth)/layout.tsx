@@ -17,13 +17,13 @@ export default async function AuthLayout({
         {/* Top bar with language switcher */}
 
         {/* Center content container */}
-        <div className="my-auto flex w-full flex-col items-center justify-center py-6">
-          <div className="mb-4 flex w-full justify-start">
+        <div className="mx-auto my-auto flex w-full max-w-lg flex-col items-center justify-center py-6">
+          <div className="flex w-full justify-end pb-10">
             <AuthLocaleToggle />
           </div>
-          <div className="w-full max-w-85 sm:max-w-90">
+          <div className="w-full">
             {/* Top decorative flourish */}
-            <div className="mb-4 flex justify-center">
+            <div className="mb-10 flex justify-center">
               <FormDecorative />
             </div>
 
@@ -31,7 +31,7 @@ export default async function AuthLayout({
             {children}
 
             {/* Bottom decorative flourish (flipped vertically) */}
-            <div className="mt-6 flex justify-center">
+            <div className="mt-10 flex justify-center">
               <FormDecorative className="scale-y-[-1]" />
             </div>
           </div>
