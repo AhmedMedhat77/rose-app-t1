@@ -15,6 +15,8 @@ import { routing } from "../../i18n/routing";
 import { geistMono, sarabun, tajawal } from "../fonts";
 import "../globals.css";
 import { ThemeMode } from "@/components/theme-mode";
+import Footer from "@/components/layout/footer/footer";
+import { Header } from "@/components/layout/header/header";
 
 import { Toaster } from "@/components/ui/toast";
 
@@ -60,14 +62,18 @@ export default async function RootLayout({
       dir={dir}
       className={`${sarabun.variable} ${tajawal.variable} ${geistMono.variable} ${resolvedTheme} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">
+      <body className="flex min-h-full flex-col" suppressHydrationWarning>
         <ThemeProvider initialTheme={theme} initialSystemTheme={systemTheme}>
           <NextIntlClientProvider>
             <header className="flex flex-wrap items-center justify-between">
               <LocaleSwitcher />
               <ThemeMode />
             </header>
-            {children}
+            <Header />
+
+            <main className="flex-1">{children}</main>
+            <Footer />
+
             <Toaster />
           </NextIntlClientProvider>
         </ThemeProvider>

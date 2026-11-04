@@ -2,10 +2,62 @@
   "welcome": "welcome",
   "language": "language",
   "theme": {
-    "label": "theme",
-    "light": "light",
-    "dark": "dark",
-    "system": "system"
+    "label": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "Navigation": {
+    "home": "Home",
+    "products": "Products",
+    "categories": "Categories",
+    "occasions": "Occasions",
+    "contact": "Contact",
+    "about": "About",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy",
+    "faqs": "FAQs"
+  },
+  "Header": {
+    "searchPlaceholder": "What awesome gift are you looking for?",
+    "searchLabel": "Search",
+    "login": "Login",
+    "wishlist": "Wishlist",
+    "cart": "Cart",
+    "notifications": "Notifications",
+    "mainNavigation": "Main navigation",
+    "pushEnable": "Enable notifications",
+    "pushDisable": "Disable notifications",
+    "pushBusy": "Please wait...",
+    "pushUnsupported": "Notifications are not supported in this browser.",
+    "pushDenied": "Notifications are blocked. Enable them from your browser settings.",
+    "pushError": "Something went wrong. Please try again.",
+    "pushEnabled": "Push notifications are enabled.",
+    "pushDisabled": "Push notifications are disabled.",
+    "pushNotEnabled": "Push notifications are not enabled."
+  },
+  "NotificationsPanel": {
+    "title": "Notifications",
+    "clearAll": "Clear all notifications",
+    "markAllAsRead": "Mark all as read",
+    "empty": "No notifications to display.",
+    "options": "Notification options",
+    "markAsRead": "Mark as read",
+    "delete": "Delete notification"
+  },
+  "Footer": {
+    "discover": "Discover our website",
+    "brand": "Rose E-Commerce App",
+    "rights": "All rights reserved | {year}",
+    "newsletterTitle": "Get <highlight>{percent}</highlight> Off Discount Coupon",
+    "newsletterSubtitle": "By subscribing to our newsletter",
+    "emailPlaceholder": "Enter Your Email",
+    "subscribe": "Subscribe",
+    "emailRequired": "Please enter your email",
+    "emailInvalid": "Please enter a valid email",
+    "subscribeSuccess": "Subscribed successfully",
+    "subscribeAlready": "This email is already subscribed",
+    "subscribeError": "Something went wrong, please try again"
   },
   "toast": {
     "informative": "Informative message",
