@@ -9,15 +9,11 @@ import {
   Trash2,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Button } from "@/shared/ui/button";
+import { Card } from "@/shared/ui/card";
+import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
 import { cn } from "cn";
-import { INotificationItem } from "../types/notification";
+import { INotificationItem } from "../lib/types/notification";
 
 interface NotificationsPanelProps {
   notifications?: INotificationItem[];

@@ -1,17 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { addToast } from "@/components/ui/toast";
-import { TOAST_STATE } from "@/shared/lib/constants/toast-states";
-import { getVapidPublicKey } from "../apis/notification-vapid-public-key";
+import { addToast } from "@/shared/ui/toast";
+import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
+import { getVapidPublicKey } from "../lib/apis/notification-vapid-public-key.api";
 import { useTranslations } from "next-intl";
 import {
   disablePush,
   enablePush,
   hasActiveSubscription,
   isPushSupported,
-} from "../utils/push";
-import { Button } from "@/components/ui/button";
+} from "../lib/utils/push.util";
+import { Button } from "@/shared/ui/button";
 type State =
   | "loading"
   | "hidden"

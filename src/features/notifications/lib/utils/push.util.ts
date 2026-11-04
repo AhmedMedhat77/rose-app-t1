@@ -3,8 +3,8 @@
 import {
   deleteSubscriptionFromServer,
   sendSubscriptionToServer,
-} from "../apis/notification-subscriptions";
-import { getVapidPublicKey } from "../apis/notification-vapid-public-key";
+} from "../apis/notification-subscriptions.api";
+import { getVapidPublicKey } from "../apis/notification-vapid-public-key.api";
 
 function urlBase64ToUint8Array(base64String: string) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);

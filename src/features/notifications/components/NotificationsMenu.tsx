@@ -4,14 +4,10 @@ import { useState } from "react";
 import { BellIcon } from "lucide-react";
 import { cn } from "cn";
 
-import { Badge } from "@/components/ui/badge";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import NotificationsPanel from "./notifications-pannel";
-import { INotificationItem } from "../types/notification";
+import { Badge } from "@/shared/ui/badge";
+import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
+import NotificationsPanel from "./NotificationsPanel";
+import { INotificationItem } from "../lib/types/notification";
 
 const ICON_BUTTON =
   "text-foreground hover:text-primary flex size-9 items-center justify-center transition-colors";

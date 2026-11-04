@@ -17,10 +17,10 @@ import {
   themeCookie,
   type ResolvedTheme,
   type ThemeMode,
-} from "./theme.shared";
+} from "../lib/utils/theme.util";
 
-// Re-exported so existing client imports (e.g. theme-mode.tsx) still resolve
-// from this module; the definitions live in theme.shared.
+// Re-exported so existing client imports (e.g. ThemeMode.tsx) still resolve
+// from this module; the definitions live in theme.util.ts.
 export {
   parseResolved,
   parseTheme,
@@ -30,7 +30,7 @@ export {
   themeModes,
   type ResolvedTheme,
   type ThemeMode,
-} from "./theme.shared";
+} from "../lib/utils/theme.util";
 
 const cookieMaxAge = 60 * 60 * 24 * 365;
 

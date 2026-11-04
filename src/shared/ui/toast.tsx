@@ -5,12 +5,12 @@ import { Toast as ToastPrimitive } from "@base-ui/react/toast";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui/button";
 import { XIcon, Check, X, Info } from "lucide-react";
 import {
   TOAST_STATE,
   type ToastState,
-} from "@/shared/lib/constants/toast-states";
+} from "@/shared/lib/constants/toast-states.constant";
 import { useTranslations } from "next-intl";
 
 /** Type guard for toast variants defined in `TOAST_STATE`. */

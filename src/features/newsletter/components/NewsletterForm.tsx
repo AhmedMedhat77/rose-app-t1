@@ -1,15 +1,18 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { INewsLetterFormValues } from "../types/newsletter";
+import { INewsLetterFormValues } from "../lib/types/newsletter";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { newsletterSchema } from "../schema/schema";
+import { newsletterSchema } from "../lib/schemas/newsletter.schema";
 import { useTranslations } from "next-intl";
-import { SubscribeResult, subscribeToNewsletter } from "../apis/subscribe";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { TOAST_STATE } from "@/shared/lib/constants/toast-states";
-import { addToast } from "@/components/ui/toast";
+import {
+  SubscribeResult,
+  subscribeToNewsletter,
+} from "../lib/apis/newsletter.api";
+import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
+import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
+import { addToast } from "@/shared/ui/toast";
 import { ArrowRight } from "lucide-react";
 export default function NewsletterForm() {
   //Translation
@@ -70,7 +73,7 @@ export default function NewsletterForm() {
           className="dark:bg-bg-primary dark:text-text-inverse absolute inset-y-0 inset-e-0 flex h-full items-center gap-3 rounded-full px-6"
         >
           {t("subscribe")}
-          <ArrowRight />
+          <ArrowRight className="rtl:rotate-180" />
         </Button>
       </div>
 

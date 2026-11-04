@@ -1,24 +1,28 @@
-import { LocaleSwitcher } from "@/components/locale-switcher";
-import { ThemeProvider } from "@/context/theme.context";
+import { LocaleSwitcher } from "@/shared/components/LocaleSwitcher";
+import { ThemeProvider } from "@/shared/context/theme.context";
 import {
   parseResolved,
   parseTheme,
   resolveTheme,
   systemCookie,
   themeCookie,
-} from "@/context/theme.shared";
+} from "@/shared/lib/utils/theme.util";
 import type { Metadata } from "next";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { routing } from "../../i18n/routing";
-import { geistMono, sarabun, tajawal } from "../fonts";
+import {
+  geistMono,
+  sarabun,
+  tajawal,
+} from "@/shared/lib/constants/fonts.constant";
 import "../globals.css";
-import { ThemeMode } from "@/components/theme-mode";
-import Footer from "@/components/layout/footer/footer";
-import { Header } from "@/components/layout/header/header";
+import { ThemeMode } from "@/shared/components/ThemeMode";
+import Footer from "@/shared/layout/Footer";
+import { Header } from "@/shared/layout/Header";
 
-import { Toaster } from "@/components/ui/toast";
+import { Toaster } from "@/shared/ui/toast";
 
 export const metadata: Metadata = {
   title: "Rose App",

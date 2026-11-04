@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui/button";
 import { getTranslations } from "next-intl/server";
 
 export default async function HomePage() {

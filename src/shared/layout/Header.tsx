@@ -1,13 +1,13 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { LocaleSwitcher } from "@/components/locale-switcher";
+import { LocaleSwitcher } from "@/shared/components/LocaleSwitcher";
 
 import { Link } from "@/i18n/navigation";
-import { NavBar } from "./nav-bar";
+import { NavBar } from "./NavBar";
 import { HeartIcon, Search, ShoppingCartIcon, User } from "lucide-react";
-import { NotificationsMenu } from "@/features/notifications/components/notifications-menu";
-import { NotificationToggle } from "../../../features/notifications/components/notification-toggle";
-import { Input } from "@/components/ui/input";
+import { NotificationsMenu } from "@/features/notifications/components/NotificationsMenu";
+import { NotificationToggle } from "@/features/notifications/components/NotificationToggle";
+import { Input } from "@/shared/ui/input";
 
 const ICON_BUTTON =
   "text-foreground hover:text-primary flex size-9 items-center justify-center rounded-md transition-colors";

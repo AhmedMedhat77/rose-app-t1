@@ -1,8 +1,12 @@
 "use client";
 import { useTranslations } from "next-intl";
 import { Monitor, Moon, Sun } from "lucide-react";
-import { parseTheme, themeModes, useTheme } from "@/context/theme.context";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import {
+  parseTheme,
+  themeModes,
+  useTheme,
+} from "@/shared/context/theme.context";
+import { ToggleGroup, ToggleGroupItem } from "@/shared/ui/toggle-group";
 import { cn } from "cn";
 
 const icons = {

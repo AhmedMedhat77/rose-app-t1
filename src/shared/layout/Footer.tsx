@@ -1,9 +1,11 @@
-import { LEGAL_LINKS, MAIN_LINKS } from "@/constants/navigation";
-import NewsletterForm from "@/features/newsletter/components/newsletter-form";
+import {
+  LEGAL_LINKS,
+  MAIN_LINKS,
+} from "@/shared/lib/constants/navigation.constant";
+import NewsletterForm from "@/features/newsletter/components/NewsletterForm";
 import { Link } from "@/i18n/navigation";
 import { useFormatter, useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
-import React from "react";
 
 const FOOTER_LINKS = [...MAIN_LINKS, ...LEGAL_LINKS];
 

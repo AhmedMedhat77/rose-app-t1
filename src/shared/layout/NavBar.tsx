@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
-import { MAIN_LINKS } from "@/constants/navigation";
+import { MAIN_LINKS } from "@/shared/lib/constants/navigation.constant";
 import {
   ClipboardListIcon,
   GiftIcon,

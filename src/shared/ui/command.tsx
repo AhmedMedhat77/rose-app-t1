@@ -10,8 +10,8 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { InputGroup } from "@/components/ui/input-group";
+} from "@/shared/ui/dialog";
+import { InputGroup } from "@/shared/ui/input-group";
 
 function Command({
   className,
