@@ -1,7 +1,7 @@
 import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
 import { NextRequest, NextResponse } from "next/server";
-import { AUTH_COOKIE_NAME } from "./features/auth";
+import { AUTH_COOKIE_NAME } from "./features/auth/constants";
 
 // Handles locale detection, cookie syncing and locale-prefixed rewrites.
 const intlMiddleware = createMiddleware(routing);

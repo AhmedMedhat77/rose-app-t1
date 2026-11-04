@@ -1,5 +1,5 @@
 import { User } from "next-auth";
-import { IUser } from "./auth";
+import { IUser } from "./auth.types";
 
 declare module "next-auth" {
   /**

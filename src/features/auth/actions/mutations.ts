@@ -3,7 +3,10 @@
 import { HEADERS } from "@/app/shared/constants/api.constant";
 import { BASE_URL } from "@/app/shared/constants/config";
 import { IApiResponse } from "@/app/shared/types/api";
-import { ILoginResponse, TLoginFormValues } from "@/features/auth/types/login";
+import {
+  ILoginResponse,
+  TLoginFormValues,
+} from "@/features/auth/types/login.types";
 
 export async function loginMutation(payload: TLoginFormValues) {
   const response = await fetch(`${BASE_URL}/auth/login`, {

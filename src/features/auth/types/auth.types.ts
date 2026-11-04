@@ -1,10 +1,8 @@
-export enum UserRole {
+export enum ROLE {
   USER = "USER",
   ADMIN = "ADMIN",
   SUPER_ADMIN = "SUPER_ADMIN",
 }
-
-export type ROLE = UserRole;
 
 export enum GENDER {
   MALE = "MALE",
@@ -22,7 +20,7 @@ export interface IUser {
   photo?: string;
   emailVerified: boolean;
   phoneVerified: boolean;
-  role: UserRole;
+  role: ROLE;
   createdAt: string;
   updatedAt: string;
 }

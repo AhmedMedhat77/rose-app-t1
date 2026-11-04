@@ -1,2 +1,2 @@
-export * from "./auth";
-export * from "./login";
+export * from "./auth.types";
+export * from "./login.types";

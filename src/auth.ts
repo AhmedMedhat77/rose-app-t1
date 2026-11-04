@@ -1,6 +1,6 @@
 import { AuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { loginMutation } from "./features/auth/actions/mutations";
+import { loginMutation } from "./features/auth/server";
 
 export const authOptions: AuthOptions = {
   pages: {
