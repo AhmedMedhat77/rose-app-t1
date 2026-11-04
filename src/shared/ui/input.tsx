@@ -154,6 +154,13 @@ function Input({
                     ? passwordInput
                     : type
               }
+              autoComplete={
+                type === "email"
+                  ? "email"
+                  : type === "password"
+                    ? "password"
+                    : props.autoComplete
+              }
               data-slot="input"
               disabled={isDisabled === true}
               placeholder={
