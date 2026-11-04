@@ -3,6 +3,7 @@ import {
   Sarabun,
   Tajawal,
   Monsieur_La_Doulaise,
+  Great_Vibes,
 } from "next/font/google";
 
 export const sarabun = Sarabun({
@@ -27,6 +28,12 @@ export const geistMono = Geist_Mono({
 
 export const monsieur = Monsieur_La_Doulaise({
   variable: "--font-monsieur",
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+});
+export const greatVibes = Great_Vibes({
+  variable: "--font-great-vibes",
   subsets: ["latin"],
   weight: "400",
   display: "swap",
