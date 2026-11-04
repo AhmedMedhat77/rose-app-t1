@@ -14,14 +14,16 @@ import { Input } from "@/shared/ui/input";
 import { TLoginFormValues } from "../types";
 import FormTitle from "./shared/form-title";
 import FormDivider from "./shared/form-divider";
+import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
+import { addToast } from "@/shared/ui/toast";
 
 export default function LoginForm() {
   const t = useTranslations("Login");
+
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-    setError,
   } = useForm<TLoginFormValues>({
     resolver: zodResolver(
       createLoginSchema({
@@ -50,9 +52,7 @@ export default function LoginForm() {
         window.location.href = callbackUrl;
       });
     } else {
-      setError("root", {
-        message: t("invalidCredentials"),
-      });
+      addToast(TOAST_STATE.Unsuccessful, t("invalidCredentials"));
     }
   });
 
@@ -61,6 +61,7 @@ export default function LoginForm() {
       <div>
         <FormTitle title={t("title")} />
       </div>
+
       <Input
         label={t("email")}
         type="email"
@@ -86,13 +87,6 @@ export default function LoginForm() {
           {t("forgotPassword")}
         </Link>
       </div>
-
-      {/* Root error */}
-      {errors.root && (
-        <p className="rounded-lg border border-red-500/30 bg-red-950/40 p-2 text-center text-xs text-red-400">
-          {errors.root.message}
-        </p>
-      )}
 
       {/* Login Button */}
       <Button className="w-full" type="submit" loading={isSubmitting}>

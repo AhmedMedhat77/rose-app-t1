@@ -1,8 +1,7 @@
 import FormDecorative from "@/features/auth/components/shared/form-decorative";
 import { AuthLocaleToggle } from "@/shared/auth-locale-toggle";
-import { ThemeMode } from "@/shared/components/ThemeMode";
-import Image from "next/image";
 import { getTranslations } from "next-intl/server";
+import Image from "next/image";
 
 export default async function AuthLayout({
   children,
@@ -16,15 +15,12 @@ export default async function AuthLayout({
       {/* Left Column */}
       <section className="relative flex min-h-screen flex-col justify-between px-6 py-6 sm:px-12 md:px-14 lg:px-20">
         {/* Top bar with language switcher */}
-        <div className="flex w-full justify-end">
-          <AuthLocaleToggle />
-        </div>
-        <div className="flex w-full justify-end">
-          <ThemeMode />
-        </div>
 
         {/* Center content container */}
         <div className="my-auto flex w-full flex-col items-center justify-center py-6">
+          <div className="mb-4 flex w-full justify-start">
+            <AuthLocaleToggle />
+          </div>
           <div className="w-full max-w-85 sm:max-w-90">
             {/* Top decorative flourish */}
             <div className="mb-4 flex justify-center">
