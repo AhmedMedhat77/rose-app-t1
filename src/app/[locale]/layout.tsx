@@ -1,4 +1,3 @@
-import { ThemeProvider } from "@/context/theme.context";
 import {
   parseResolved,
   parseTheme,
@@ -11,11 +10,17 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { routing } from "../../i18n/routing";
-import { geistMono, monsieur, sarabun, tajawal } from "../fonts";
+import {
+  geistMono,
+  monsieur,
+  sarabun,
+  tajawal,
+} from "@/shared/lib/constants/fonts.constant";
 import "../globals.css";
 
-import { Toaster } from "@/components/ui/toast";
 import NextAuthProvider from "@/providers/next-auth.provider";
+import { ThemeProvider } from "@/shared/context/theme.context";
+import { Toaster } from "@/shared/ui/toast";
 
 export const metadata: Metadata = {
   title: "Rose App",

@@ -1,14 +1,15 @@
 "use client";
 
-import { startTransition } from "react";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
-import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/navigation";
+import { startTransition } from "react";
+import { useForm } from "react-hook-form";
+
 import { loginSchema } from "@/features/auth/schemas";
-import { AuthTextField } from "./auth-text-field";
-import { AuthPasswordField } from "./auth-password-field";
+import { Link } from "@/i18n/navigation";
+
+import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 import { TLoginFormValues } from "../types";
 import FormTitle from "./form-title";
 
@@ -50,18 +51,18 @@ export default function LoginForm() {
   return (
     <form noValidate onSubmit={onSubmit} className="w-full space-y-4">
       <FormTitle title="Welcome back!" />
-      <AuthTextField
+      <Input
         label="Email"
         type="email"
         placeholder="user@example.com"
-        error={errors.email?.message}
+        // error={errors.email?.message}
         {...register("email")}
       />
 
-      <AuthPasswordField
+      <Input
         label="Password"
         placeholder="••••••••"
-        error={errors.password?.message}
+        // error={errors.password?.message}
         {...register("password")}
       />
 
@@ -69,7 +70,7 @@ export default function LoginForm() {
       <div className="flex justify-end pt-0.5">
         <Link
           href="/forgot-password"
-          className="text-xs text-[#ffa3b9] transition-colors hover:underline"
+          className="text-primary text-xs transition-colors hover:underline"
         >
           Forgot your password?
         </Link>
@@ -86,7 +87,7 @@ export default function LoginForm() {
       <Button
         type="submit"
         loading={isSubmitting}
-        className="h-11 w-full rounded-lg bg-[#ffa3b9] text-sm font-semibold text-zinc-900 transition-colors hover:bg-[#ff8fa9]"
+        className="bg-primary hover:bg-primary h-11 w-full rounded-lg text-sm font-semibold text-zinc-900 transition-colors"
       >
         Login
       </Button>
@@ -97,7 +98,7 @@ export default function LoginForm() {
           Don&apos;t have an account?{" "}
           <Link
             href="/register"
-            className="font-medium text-[#ffa3b9] hover:underline"
+            className="text-primary font-medium hover:underline"
           >
             Create one now!
           </Link>

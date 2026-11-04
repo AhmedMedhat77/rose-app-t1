@@ -1,5 +1,5 @@
+import { AuthLocaleToggle } from "@/shared/auth-locale-toggle";
 import Image from "next/image";
-import { AuthLocaleToggle } from "@/components/auth-locale-toggle";
 
 export default function AuthLayout({
   children,
