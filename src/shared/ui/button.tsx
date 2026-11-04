@@ -10,7 +10,7 @@ const buttonVariants = cva(
     // border
     "gap-2.5 whitespace-nowrap rounded-lg border border-transparent",
     // text
-    "bg-clip-padding text-base font-medium",
+    "bg-clip-padding text-base font-medium dark:font-semibold dark:text-sm",
     "transition-colors duration-200 outline-none select-none",
     "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
     "active:not-aria-[haspopup]:translate-y-px",
@@ -63,7 +63,7 @@ const buttonVariants = cva(
       },
 
       size: {
-        default: "h-11 px-4",
+        default: "h-11 dark:h-10.25 px-4",
         xs: "h-6 gap-1 rounded-md px-2 text-xs",
         sm: "h-9 gap-1.5 rounded-lg px-3 text-sm",
         lg: "h-12 px-6 text-base",
