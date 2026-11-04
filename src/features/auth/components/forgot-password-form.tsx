@@ -1,94 +1,45 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
-import { useTranslations } from "next-intl";
-import { startTransition } from "react";
-import { useForm } from "react-hook-form";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
-import { createLoginSchema } from "@/features/auth/schemas";
-import { Link } from "@/i18n/navigation";
+import CreateNewPasswordForm from "./create-new-password-form";
+import ForgotPasswordRequestForm from "./forgot-password-request-form";
+import ResetPasswordSent from "./reset-password-sent";
 
-import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
-import { Button } from "@/shared/ui/button";
-import { Input } from "@/shared/ui/input";
-import { addToast } from "@/shared/ui/toast";
-import { TLoginFormValues } from "../types";
-import FormDivider from "./shared/form-divider";
+type Step = "request" | "sent";
 
+/**
+ * Single-route forgot-password flow with internal steps:
+ *  1. request  — enter email, triggers the reset email
+ *  2. sent     — confirmation showing the exact email entered
+ *  3. reset    — new password, shown when the emailed link lands here
+ *                with a `?token=` query param.
+ */
 export default function ForgotPasswordForm() {
-  const t = useTranslations("Login");
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
 
-  const {
-    handleSubmit,
-    register,
-    formState: { errors, isSubmitting },
-  } = useForm<TLoginFormValues>({
-    resolver: zodResolver(
-      createLoginSchema({
-        emailInvalid: t("emailInvalid"),
-        passwordRequired: t("passwordRequired"),
-      }),
-    ),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
+  const [step, setStep] = useState<Step>("request");
+  const [email, setEmail] = useState("");
 
-  const onSubmit = handleSubmit(async (values) => {
-    const response = await signIn("credentials", {
-      ...values,
-      redirect: false,
-    });
+  // The reset link drives step 3 regardless of in-page state.
+  if (token) {
+    return <CreateNewPasswordForm token={token} />;
+  }
 
-    if (response?.ok) {
-      const searchParams = new URLSearchParams(
-        typeof window !== "undefined" ? window.location.search : "",
-      );
-      const callbackUrl = searchParams.get("callbackUrl") || "/";
-      startTransition(() => {
-        window.location.href = callbackUrl;
-      });
-    } else {
-      addToast(TOAST_STATE.Unsuccessful, t("invalidCredentials"));
-    }
-  });
+  if (step === "sent") {
+    return (
+      <ResetPasswordSent email={email} onBack={() => setStep("request")} />
+    );
+  }
 
   return (
-    <form noValidate onSubmit={onSubmit} className="w-full space-y-4">
-      <div className="text-zinc-800 dark:text-zinc-50">
-        <h1 className="text-3xl font-semibold">Forgot Password?</h1>
-        <p>Worry not, we’ll send you instructions to help you reset it.</p>
-      </div>
-      <FormDivider />
-
-      <Input
-        label={t("email")}
-        type="email"
-        placeholder={t("emailPlaceholder")}
-        error={errors.email?.message}
-        {...register("email")}
-      />
-
-      {/* Login Button */}
-      <Button className="w-full" type="submit" loading={isSubmitting}>
-        Next
-      </Button>
-
-      {/* Divider & Create account link */}
-      <FormDivider />
-      <div className="pt-4 text-center">
-        <p className="zinc-800 text-sm font-medium dark:text-zinc-50">
-          {"Don't have an account?"}{" "}
-          <Link
-            href="/login"
-            className="text-primary font-bold hover:underline"
-          >
-            Create one now!
-          </Link>
-        </p>
-      </div>
-    </form>
+    <ForgotPasswordRequestForm
+      onSent={(value) => {
+        setEmail(value);
+        setStep("sent");
+      }}
+    />
   );
 }
