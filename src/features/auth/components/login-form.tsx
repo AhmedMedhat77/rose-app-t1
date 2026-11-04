@@ -12,6 +12,7 @@ import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { TLoginFormValues } from "../types";
 import FormTitle from "./form-title";
+import FormDivider from "./form-divider";
 
 export default function LoginForm() {
   const {
@@ -50,19 +51,22 @@ export default function LoginForm() {
 
   return (
     <form noValidate onSubmit={onSubmit} className="w-full space-y-4">
-      <FormTitle title="Welcome back!" />
+      <div>
+        <FormTitle title="Welcome back!" />
+      </div>
       <Input
         label="Email"
         type="email"
         placeholder="user@example.com"
-        // error={errors.email?.message}
+        error={errors.email?.message}
         {...register("email")}
       />
 
       <Input
         label="Password"
         placeholder="••••••••"
-        // error={errors.password?.message}
+        type="password"
+        error={errors.password?.message}
         {...register("password")}
       />
 
@@ -84,21 +88,18 @@ export default function LoginForm() {
       )}
 
       {/* Login Button */}
-      <Button
-        type="submit"
-        loading={isSubmitting}
-        className="bg-primary hover:bg-primary h-11 w-full rounded-lg text-sm font-semibold text-zinc-900 transition-colors"
-      >
+      <Button className="w-full" type="submit" loading={isSubmitting}>
         Login
       </Button>
 
       {/* Divider & Create account link */}
-      <div className="w-full border-t border-zinc-700/60 pt-4 text-center">
-        <p className="text-xs text-zinc-300">
+      <FormDivider />
+      <div className="pt-4 text-center">
+        <p className="zinc-800 text-sm font-medium dark:text-zinc-50">
           Don&apos;t have an account?{" "}
           <Link
             href="/register"
-            className="text-primary font-medium hover:underline"
+            className="text-primary font-bold hover:underline"
           >
             Create one now!
           </Link>

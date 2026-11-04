@@ -1,4 +1,11 @@
 import {
+  geistMono,
+  greatVibes,
+  monsieur,
+  sarabun,
+  tajawal,
+} from "@/shared/lib/constants/fonts.constant";
+import {
   parseResolved,
   parseTheme,
   resolveTheme,
@@ -10,13 +17,6 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { routing } from "../../i18n/routing";
-import {
-  greatVibes,
-  geistMono,
-  monsieur,
-  sarabun,
-  tajawal,
-} from "@/shared/lib/constants/fonts.constant";
 import "../globals.css";
 
 import NextAuthProvider from "@/providers/next-auth.provider";

@@ -13,7 +13,7 @@ export function AuthLocaleToggle() {
     <Link
       href={pathname}
       locale={targetLocale}
-      className={`text-sm text-zinc-300 hover:text-white transition-colors ${
+      className={`text-sm text-zinc-300 transition-colors hover:text-white ${
         targetLocale === "ar" ? "font-arabic" : "font-english"
       }`}
     >
@@ -21,4 +21,3 @@ export function AuthLocaleToggle() {
     </Link>
   );
 }
-

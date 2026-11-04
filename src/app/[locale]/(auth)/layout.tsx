@@ -1,4 +1,6 @@
+import FormDecorative from "@/features/auth/components/form-decorative";
 import { AuthLocaleToggle } from "@/shared/auth-locale-toggle";
+import { ThemeMode } from "@/shared/components/ThemeMode";
 import Image from "next/image";
 
 export default function AuthLayout({
@@ -7,12 +9,15 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="grid min-h-screen w-full grid-cols-1 bg-[#27262b] md:grid-cols-2">
+    <main className="grid min-h-screen w-full grid-cols-1 md:grid-cols-2">
       {/* Left Column */}
       <section className="relative flex min-h-screen flex-col justify-between px-6 py-6 sm:px-12 md:px-14 lg:px-20">
         {/* Top bar with language switcher */}
         <div className="flex w-full justify-end">
           <AuthLocaleToggle />
+        </div>
+        <div className="flex w-full justify-end">
+          <ThemeMode />
         </div>
 
         {/* Center content container */}
@@ -20,14 +25,7 @@ export default function AuthLayout({
           <div className="w-full max-w-85 sm:max-w-90">
             {/* Top decorative flourish */}
             <div className="mb-4 flex justify-center">
-              <Image
-                src="/images/separator-1.png"
-                alt="decorative separator"
-                width={260}
-                height={42}
-                className="h-auto w-60 object-contain sm:w-65"
-                priority
-              />
+              <FormDecorative />
             </div>
 
             {/* Page content: heading + form (changes per auth route) */}
@@ -35,13 +33,7 @@ export default function AuthLayout({
 
             {/* Bottom decorative flourish (flipped vertically) */}
             <div className="mt-6 flex justify-center">
-              <Image
-                src="/images/separator-1.png"
-                alt="decorative separator"
-                width={260}
-                height={42}
-                className="h-auto w-60 scale-y-[-1] object-contain sm:w-65"
-              />
+              <FormDecorative className="scale-y-[-1]" />
             </div>
           </div>
         </div>
@@ -51,14 +43,14 @@ export default function AuthLayout({
       </section>
 
       {/* Right Column (Hero image) */}
-      <aside className="relative hidden h-full min-h-screen w-full overflow-hidden md:block">
+      <aside className="relative hidden h-screen w-full overflow-hidden md:block">
         <Image
           src="/images/red-gifts.png"
           alt="Gift boxes with ribbons"
           fill
           priority
           sizes="50vw"
-          className="object-cover object-center"
+          className="object-center"
         />
       </aside>
     </main>
