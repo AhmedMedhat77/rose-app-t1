@@ -27,15 +27,13 @@ import { DeleteAccountDialog } from "./delete-account-dialog";
 import { ProfileFormSkeleton } from "./profile-form-skeleton";
 import { ProfilePhotoUpload } from "./profile-photo-upload";
 
-const INPUT_CLASS = "h-12 rounded-xl";
+const INPUT_CLASS = "h-12 rounded-xl disabled:bg-bg-muted";
 
 function toFormValues(user: UserProfile): Partial<ProfileFormValues> {
   return {
     firstName: user.firstName,
     lastName: user.lastName,
-    email: user.email,
     phone: user.phone ?? "",
-    gender: user.gender ?? undefined,
     photo: undefined,
   };
 }
@@ -78,7 +76,13 @@ function ProfileFormFields({ profile }: { profile: UserProfile }) {
   const t = useTranslations("accountSettings.Profile");
   const { mutate: saveProfile, isPending } = useUpdateProfile();
 
-  const { control, handleSubmit, reset } = useForm<ProfileFormValues>({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    register,
+    formState: { errors },
+  } = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: toFormValues(profile),
     mode: "onChange", // also validates the photo as soon as a file is picked
@@ -97,9 +101,9 @@ function ProfileFormFields({ profile }: { profile: UserProfile }) {
     label: t(`gender.${value}`),
   }));
 
-  // Schema messages are i18n keys (e.g. "errors.invalidEmail").
-  const errorsFor = (message?: string) =>
-    message ? [{ message: t(message as Parameters<typeof t>[0]) }] : undefined;
+  // Schema messages are i18n keys (e.g. "errors.firstNameTooShort").
+  const translateError = (message?: string) =>
+    message ? t(message as Parameters<typeof t>[0]) : undefined;
 
   const onSubmit = (values: ProfileFormValues) => {
     saveProfile(values, {
@@ -121,74 +125,44 @@ function ProfileFormFields({ profile }: { profile: UserProfile }) {
 
       <FieldGroup className="gap-5">
         <div className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
-          <Controller
-            name="firstName"
-            control={control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="profile-first-name">
-                  {t("fields.firstName")}
-                </FieldLabel>
-                <Input
-                  {...field}
-                  id="profile-first-name"
-                  type="text"
-                  autoComplete="given-name"
-                  aria-invalid={fieldState.invalid}
-                  className={INPUT_CLASS}
-                />
-                {fieldState.invalid && (
-                  <FieldError errors={errorsFor(fieldState.error?.message)} />
-                )}
-              </Field>
-            )}
-          />
+          <Field>
+            <Input
+              {...register("firstName")}
+              id="profile-first-name"
+              type="text"
+              autoComplete="given-name"
+              className={INPUT_CLASS}
+              label={t("fields.firstName")}
+              error={translateError(errors.firstName?.message)}
+            />
+          </Field>
 
-          <Controller
-            name="lastName"
-            control={control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="profile-last-name">
-                  {t("fields.lastName")}
-                </FieldLabel>
-                <Input
-                  {...field}
-                  id="profile-last-name"
-                  type="text"
-                  autoComplete="family-name"
-                  aria-invalid={fieldState.invalid}
-                  className={INPUT_CLASS}
-                />
-                {fieldState.invalid && (
-                  <FieldError errors={errorsFor(fieldState.error?.message)} />
-                )}
-              </Field>
-            )}
-          />
+          <Field>
+            <Input
+              {...register("lastName")}
+              id="profile-last-name"
+              type="text"
+              autoComplete="family-name"
+              className={INPUT_CLASS}
+              label={t("fields.lastName")}
+              error={translateError(errors.lastName?.message)}
+            />
+          </Field>
         </div>
 
         {/* Email is shown read-only: changing it requires the verify-by-code flow
             (POST /api/users/email/request), which has no design or spec yet. */}
-        <Controller
-          name="email"
-          control={control}
-          render={({ field }) => (
-            <Field>
-              <FieldLabel htmlFor="profile-email">
-                {t("fields.email")}
-              </FieldLabel>
-              <Input
-                {...field}
-                id="profile-email"
-                type="email"
-                dir="ltr"
-                disabled
-                className={INPUT_CLASS}
-              />
-            </Field>
-          )}
-        />
+        <Field>
+          <Input
+            id="profile-email"
+            value={profile.email}
+            type="email"
+            disabled
+            readOnly
+            className={INPUT_CLASS}
+            label={t("fields.email")}
+          />
+        </Field>
 
         <Controller
           name="phone"
@@ -206,47 +180,40 @@ function ProfileFormFields({ profile }: { profile: UserProfile }) {
                 invalid={fieldState.invalid}
               />
               {fieldState.invalid && (
-                <FieldError errors={errorsFor(fieldState.error?.message)} />
+                <FieldError
+                  errors={
+                    fieldState.error?.message
+                      ? [{ message: translateError(fieldState.error.message) }]
+                      : undefined
+                  }
+                />
               )}
             </Field>
           )}
         />
 
-        <Controller
-          name="gender"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="profile-gender">
-                {t("fields.gender")}
-              </FieldLabel>
-              <Select
-                items={genderItems}
-                value={field.value ?? null}
-                onValueChange={(value) => field.onChange(value)}
-              >
-                <SelectTrigger
-                  id="profile-gender"
-                  aria-invalid={fieldState.invalid}
-                  onBlur={field.onBlur}
-                  className="w-full rounded-xl data-[size=default]:h-12"
-                >
-                  <SelectValue placeholder={t("fields.genderPlaceholder")} />
-                </SelectTrigger>
-                <SelectContent>
-                  {genderItems.map((item) => (
-                    <SelectItem key={item.value} value={item.value}>
-                      {item.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {fieldState.invalid && (
-                <FieldError errors={errorsFor(fieldState.error?.message)} />
-              )}
-            </Field>
-          )}
-        />
+        <Field>
+          <Select
+            disabled
+            readOnly
+            items={genderItems}
+            value={profile.gender ?? null}
+          >
+            <SelectTrigger
+              id="profile-gender"
+              className="disabled:bg-bg-muted w-full rounded-xl data-[size=default]:h-12"
+            >
+              <SelectValue placeholder={t("fields.genderPlaceholder")} />
+            </SelectTrigger>
+            <SelectContent>
+              {genderItems.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </Field>
       </FieldGroup>
 
       <div className="flex flex-col-reverse items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between">

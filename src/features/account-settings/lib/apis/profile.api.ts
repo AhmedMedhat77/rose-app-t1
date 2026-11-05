@@ -26,7 +26,6 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
     ...init,
     headers: {
       Accept: "application/json",
-      // Never set Content-Type for FormData: the browser adds the multipart boundary.
       ...(hasJsonBody && { "Content-Type": "application/json" }),
       ...init.headers,
       ...(process.env.NEXT_PUBLIC_DEV_TOKEN && {

@@ -24,7 +24,6 @@ export interface UpdateProfilePayload {
   firstName: string;
   lastName: string;
   phone: string;
-  gender: Gender;
   photo?: string;
 }
 

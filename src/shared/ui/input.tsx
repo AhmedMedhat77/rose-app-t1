@@ -266,7 +266,7 @@ function PhoneNumberInput({
         "!shadow-none !outline-none",
         "placeholder:!text-muted-foreground",
         "focus:!border-0 focus:!ring-0",
-        isArabic ? "!text-right" : "!text-left",
+        // isArabic ? "!text-right" : "!text-left",
       )}
       countrySelectorStyleProps={{
         buttonClassName: cn(
@@ -278,7 +278,7 @@ function PhoneNumberInput({
           "!rounded-sm",
           isArabic ? "!-translate-x-1" : "!translate-x-1",
         ),
-        dropdownArrowClassName: "!text-muted-foreground",
+        dropdownArrowClassName: "ms-1 !text-muted-foreground",
 
         dropdownStyleProps: {
           className: cn(

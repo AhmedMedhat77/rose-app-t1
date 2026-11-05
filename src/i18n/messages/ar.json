@@ -149,11 +149,11 @@
       "errors": {
         "firstNameRequired": "الاسم الأول مطلوب",
         "firstNameTooShort": "يجب ألا يقل الاسم الأول عن حرفين",
+        "firstNameTooLong": "يجب ألا يتجاوز الاسم الأول 50 حرف",
         "lastNameRequired": "اسم العائلة مطلوب",
         "lastNameTooShort": "يجب ألا يقل اسم العائلة عن حرفين",
-        "invalidEmail": "يرجى إدخال بريد إلكتروني صحيح",
+        "lastNameTooLong": "يجب ألا يتجاوز اسم العائلة 50 حرف",
         "phoneInvalid": "يرجى إدخال رقم هاتف صحيح",
-        "genderRequired": "يرجى اختيار الجنس",
         "fileSizeExceeded": "يجب ألا يتجاوز حجم الصورة 5 ميجابايت",
         "invalidFileType": "الصيغ المسموح بها: JPG وPNG وGIF فقط"
       }

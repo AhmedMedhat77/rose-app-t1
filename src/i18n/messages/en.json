@@ -149,11 +149,11 @@
       "errors": {
         "firstNameRequired": "First name is required",
         "firstNameTooShort": "First name must be at least 2 characters",
+        "firstNameTooLong": "First name must be less than 50 characters",
         "lastNameRequired": "Last name is required",
         "lastNameTooShort": "Last name must be at least 2 characters",
-        "invalidEmail": "Please enter a valid email address",
+        "lastNameTooLong": "Last name must be less than 50 characters",
         "phoneInvalid": "Please enter a valid phone number",
-        "genderRequired": "Please select a gender",
         "fileSizeExceeded": "Photo must be 5 MB or smaller",
         "invalidFileType": "Only JPG, PNG, or GIF images are allowed"
       }
