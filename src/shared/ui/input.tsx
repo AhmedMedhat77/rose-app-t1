@@ -1,16 +1,16 @@
 "use client";
-import * as React from "react";
+import { Button } from "@base-ui/react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
-import { Button } from "@base-ui/react";
-import { useLocale, useTranslations } from "next-intl";
-import "react-phone-input-2/lib/style.css";
 import { Eye, EyeOff, Search, Upload } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import * as React from "react";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
+import "react-phone-input-2/lib/style.css";
 
 const defaultInputStyle = cn(
-  "rounded-lg",
+  "rounded-lg min-h-[1rem]",
   "border border-border-soft",
   "p-4",
   "gap-2",
@@ -26,7 +26,7 @@ const errorInputStyle = cn(
 );
 
 const inputVariants = cva(
-  "flex w-full rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50",
+  "flex w-full  rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -41,9 +41,9 @@ const inputVariants = cva(
         password: defaultInputStyle,
       },
       inputSize: {
-        default: "w-[20.4rem] h-[3.0rem]",
-        sm: "w-[10rem] h-[3.0rem]",
-        lg: "w-[40rem] h-[3.0rem]",
+        default: "h-[3.0rem]",
+        sm: "h-[3.0rem]",
+        lg: "h-[3.0rem]",
       },
     },
     defaultVariants: {
@@ -63,6 +63,7 @@ interface sideEffect {
   label?: string;
   isError?: boolean;
   isDisabled?: boolean;
+  error?: string;
 }
 
 function Input({
@@ -84,7 +85,7 @@ function Input({
   const [fileName, setFileName] = React.useState<File | undefined>();
 
   return (
-    <>
+    <div className="space-y-1.5">
       {label && (
         <p
           className={cn(
@@ -93,7 +94,7 @@ function Input({
               : isDisabled === true
                 ? "text-text-muted"
                 : "text-text-default dark:text-text-soft",
-            "py-2 text-[14px] leading-[100%] font-medium tracking-[0%]",
+            "text-[0.9rem] leading-[100%] font-medium tracking-[0%]",
           )}
         >
           {label}
@@ -114,7 +115,7 @@ function Input({
           <div
             className={cn(
               defaultInputStyle,
-              "relative flex h-12.25 w-81.75 cursor-pointer items-center justify-between gap-3 text-right",
+              "relative flex h-12.25 cursor-pointer items-center justify-between gap-3 text-right",
               isError === true && errorInputStyle,
             )}
           >
@@ -152,6 +153,13 @@ function Input({
                   : variant === "password"
                     ? passwordInput
                     : type
+              }
+              autoComplete={
+                type === "email"
+                  ? "email"
+                  : type === "password"
+                    ? "password"
+                    : props.autoComplete
               }
               data-slot="input"
               disabled={isDisabled === true}
@@ -191,8 +199,8 @@ function Input({
                 )}
                 aria-label={
                   passwordInput === "password"
-                    ? "Show password"
-                    : "Hide password"
+                    ? t("showPassword")
+                    : t("hidePassword")
                 }
               >
                 {passwordInput === "password" ? (
@@ -205,62 +213,83 @@ function Input({
           </div>
         )}
       </div>
-    </>
+      {props.error && (
+        <p className="text-bg-danger text-sm font-medium">{props.error}</p>
+      )}
+    </div>
   );
 }
 
-function PhoneNumberInput() {
+interface PhoneNumberInputProps {
+  value?: string; // E.164, e.g. "+201012345678"
+  onChange?: (value: string) => void;
+  onBlur?: () => void;
+  id?: string; // so <FieldLabel htmlFor> works
+  invalid?: boolean; // aria-invalid + error border
+  disabled?: boolean;
+  className?: string;
+}
+
+function PhoneNumberInput({
+  value = "",
+  onChange,
+  onBlur,
+  id,
+  invalid,
+  disabled,
+  className,
+}: PhoneNumberInputProps) {
   const t = useTranslations("Input");
   const locale = useLocale();
   const isArabic = locale === "ar";
-  const [phone, setPhone] = React.useState("");
 
   return (
-    <div dir={isArabic ? "rtl" : "ltr"} className="p-1.25">
-      <PhoneInput
-        defaultCountry="eg"
-        value={phone}
-        onChange={(phone) => setPhone(phone)}
-        placeholder={t("phoneNumber")}
-        className={cn(
-          "!relative !h-[3rem] !w-[20.4rem] !rounded-xl",
-          "border-border-soft !bg-background border",
-          "hover:ring-ring-default hover:border-border-default hover:ring-3",
-          "focus:border-border-primary focus-visible:border-border-primary focus-visible:ring-ring-default focus-visible:ring-3",
-          "focus-within:!ring-ring focus-within:!ring-2",
-        )}
-        inputClassName={cn(
-          "!w-full !h-full !rounded-xl",
-          "!border-0 !bg-transparent",
-          "!text-sm !font-normal !text-foreground",
-          "!shadow-none !outline-none",
-          "placeholder:!text-muted-foreground",
-          "focus:!border-0 focus:!ring-0",
-          isArabic ? "!text-right" : "!text-left",
-        )}
-        countrySelectorStyleProps={{
-          buttonClassName: cn(
-            "!h-full !border-0 !bg-transparent",
-            "hover:!bg-transparent !shadow-none",
-            isArabic ? "!rounded-r-xl" : "!rounded-l-xl",
-          ),
-          flagClassName: cn(
-            "!rounded-sm",
-            isArabic ? "!-translate-x-1" : "!translate-x-1",
-          ),
-          dropdownArrowClassName: "!text-muted-foreground",
+    <PhoneInput
+      defaultCountry="eg"
+      value={value}
+      disabled={disabled}
+      onChange={(phone) => onChange?.(phone)}
+      placeholder={t("phoneNumber")}
+      inputProps={{ id, onBlur, "aria-invalid": invalid, dir: "ltr" }}
+      className={cn(
+        "!relative !h-[3rem] !w-[20.4rem] !rounded-xl",
+        "border-border-soft !bg-background border",
+        "hover:ring-ring-default hover:border-border-default hover:ring-3",
+        "focus:border-border-primary focus-visible:border-border-primary focus-visible:ring-ring-default focus-visible:ring-3",
+        "focus-within:!ring-ring focus-within:!ring-2",
+        className,
+      )}
+      inputClassName={cn(
+        "!w-full !h-full !rounded-xl",
+        "!border-0 !bg-transparent",
+        "!text-sm !font-normal !text-foreground",
+        "!shadow-none !outline-none",
+        "placeholder:!text-muted-foreground",
+        "focus:!border-0 focus:!ring-0",
+        isArabic ? "!text-right" : "!text-left",
+      )}
+      countrySelectorStyleProps={{
+        buttonClassName: cn(
+          "!h-full !border-0 !bg-transparent",
+          "hover:!bg-transparent !shadow-none",
+          isArabic ? "!rounded-r-xl" : "!rounded-l-xl",
+        ),
+        flagClassName: cn(
+          "!rounded-sm",
+          isArabic ? "!-translate-x-1" : "!translate-x-1",
+        ),
+        dropdownArrowClassName: "!text-muted-foreground",
 
-          dropdownStyleProps: {
-            className: cn(
-              "!z-[9999] !rounded-lg",
-              "relative inset-s-0 !border !border-input",
-              "!bg-background !text-foreground",
-              isArabic ? "[direction:rtl]" : "[direction:ltr]",
-            ),
-          },
-        }}
-      />
-    </div>
+        dropdownStyleProps: {
+          className: cn(
+            "!z-[9999] !rounded-lg",
+            "relative inset-s-0 !border !border-input",
+            "!bg-background !text-foreground",
+            isArabic ? "[direction:rtl]" : "[direction:ltr]",
+          ),
+        },
+      }}
+    />
   );
 }
 

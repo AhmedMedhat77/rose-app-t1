@@ -1,5 +1,6 @@
 import { LocaleSwitcher } from "@/shared/components/LocaleSwitcher";
 import { ThemeProvider } from "@/shared/context/theme.context";
+import QueryProvider from "@/shared/context/query.provider";
 import {
   parseResolved,
   parseTheme,
@@ -67,20 +68,22 @@ export default async function RootLayout({
       className={`${sarabun.variable} ${tajawal.variable} ${geistMono.variable} ${resolvedTheme} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col" suppressHydrationWarning>
-        <ThemeProvider initialTheme={theme} initialSystemTheme={systemTheme}>
-          <NextIntlClientProvider>
-            <header className="flex flex-wrap items-center justify-between">
-              <LocaleSwitcher />
-              <ThemeMode />
-            </header>
-            <Header />
+        <QueryProvider>
+          <ThemeProvider initialTheme={theme} initialSystemTheme={systemTheme}>
+            <NextIntlClientProvider>
+              <header className="flex flex-wrap items-center justify-between">
+                <LocaleSwitcher />
+                <ThemeMode />
+              </header>
+              <Header />
 
-            <main className="flex-1">{children}</main>
-            <Footer />
+              <main className="flex-1">{children}</main>
+              <Footer />
 
-            <Toaster />
-          </NextIntlClientProvider>
-        </ThemeProvider>
+              <Toaster />
+            </NextIntlClientProvider>
+          </ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );

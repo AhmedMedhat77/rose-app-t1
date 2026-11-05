@@ -78,7 +78,6 @@
     "label": "Label",
     "placeholder": "Placeholder"
   },
-
   "Input": {
     "uploadFile": "Upload File",
     "searchPlaceholder": "Search...",
@@ -98,5 +97,82 @@
     "logout": "Logout",
     "profile": "Profile",
     "settings": "Settings"
+  },
+  "accountSettings": {
+    "title": "Account Settings",
+    "sidebar": {
+      "profile": "Profile",
+      "changePassword": "Change Password",
+      "logout": "Logout"
+    },
+    "Profile": {
+      "photo": {
+        "title": "Upload Photo",
+        "hint": "You can upload a .jpg, .png, or .gif photo with max size of 5MB.",
+        "changeAriaLabel": "Change profile photo"
+      },
+      "fields": {
+        "firstName": "First name",
+        "lastName": "Last name",
+        "email": "Email",
+        "phone": "Phone",
+        "gender": "Gender",
+        "genderPlaceholder": "Select gender"
+      },
+      "gender": {
+        "MALE": "Male",
+        "FEMALE": "Female"
+      },
+      "actions": {
+        "save": "Save Changes",
+        "saving": "Saving...",
+        "delete": "Delete My Account"
+      },
+      "deleteDialog": {
+        "title": "Are you sure you want to delete your account?",
+        "description": "This action is permanent and cannot be undone.",
+        "cancel": "Nope, not doing it",
+        "confirm": "Yes, delete",
+        "confirming": "Deleting..."
+      },
+      "toasts": {
+        "updateSuccess": "Profile updated successfully",
+        "updateError": "Couldn't update your profile. Please try again.",
+        "deleteError": "Couldn't delete your account. Please try again.",
+        "deleteForbidden": "Super admin accounts can't be deleted."
+      },
+      "loadError": {
+        "title": "Couldn't load your profile",
+        "description": "Something went wrong. Please try again.",
+        "retry": "Try again"
+      },
+      "errors": {
+        "firstNameRequired": "First name is required",
+        "firstNameTooShort": "First name must be at least 2 characters",
+        "lastNameRequired": "Last name is required",
+        "lastNameTooShort": "Last name must be at least 2 characters",
+        "invalidEmail": "Please enter a valid email address",
+        "phoneInvalid": "Please enter a valid phone number",
+        "genderRequired": "Please select a gender",
+        "fileSizeExceeded": "Photo must be 5 MB or smaller",
+        "invalidFileType": "Only JPG, PNG, or GIF images are allowed"
+      }
+    },
+    "changePasswordContent": {
+      "form": {
+        "oldPassword": "Old Password",
+        "newPassword": "New Password",
+        "confirmPassword": "Confirm New Password",
+        "submit": "Change Password",
+        "oldPasswordError": "Old password is incorrect.",
+        "passwordMismatchError": "New passwords do not match."
+      }
+    },
+    "toasts": {
+      "passwordUpdatedSuccess": "Password updated successfully.",
+      "passwordUpdatedError": "Failed to update password.",
+      "logoutSuccess": "Logged out successfully.",
+      "logoutError": "Failed to logout."
+    }
   }
 }

@@ -45,7 +45,6 @@
     "markAsRead": "تحديد كمقروء",
     "delete": "حذف الإشعار"
   },
-
   "Footer": {
     "discover": "اكتشف موقعنا",
     "brand": "تطبيق روز للتجارة الإلكترونية",
@@ -98,5 +97,82 @@
     "logout": "تسجيل الخروج",
     "profile": "الملف الشخصي",
     "settings": "الإعدادات"
+  },
+  "accountSettings": {
+    "title": "إعدادات الحساب",
+    "sidebar": {
+      "profile": "الملف الشخصي",
+      "changePassword": "تغيير كلمة المرور",
+      "logout": "تسجيل الخروج"
+    },
+    "Profile": {
+      "photo": {
+        "title": "رفع صورة",
+        "hint": "يمكنك رفع صورة بصيغة JPG أو PNG أو GIF بحجم أقصى 5 ميجابايت.",
+        "changeAriaLabel": "تغيير الصورة الشخصية"
+      },
+      "fields": {
+        "firstName": "الاسم الأول",
+        "lastName": "اسم العائلة",
+        "email": "البريد الإلكتروني",
+        "phone": "رقم الهاتف",
+        "gender": "الجنس",
+        "genderPlaceholder": "اختر الجنس"
+      },
+      "gender": {
+        "MALE": "ذكر",
+        "FEMALE": "أنثى"
+      },
+      "actions": {
+        "save": "حفظ التغييرات",
+        "saving": "جارٍ الحفظ...",
+        "delete": "حذف حسابي"
+      },
+      "deleteDialog": {
+        "title": "هل أنت متأكد من حذف حسابك؟",
+        "description": "هذا الإجراء دائم ولا يمكن التراجع عنه.",
+        "cancel": "لا، لا أريد ذلك",
+        "confirm": "نعم، حذف",
+        "confirming": "جارٍ الحذف..."
+      },
+      "toasts": {
+        "updateSuccess": "تم تحديث الملف الشخصي بنجاح",
+        "updateError": "تعذّر تحديث ملفك الشخصي. يرجى المحاولة مرة أخرى.",
+        "deleteError": "تعذّر حذف حسابك. يرجى المحاولة مرة أخرى.",
+        "deleteForbidden": "لا يمكن حذف حسابات المشرف العام."
+      },
+      "loadError": {
+        "title": "تعذّر تحميل ملفك الشخصي",
+        "description": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+        "retry": "إعادة المحاولة"
+      },
+      "errors": {
+        "firstNameRequired": "الاسم الأول مطلوب",
+        "firstNameTooShort": "يجب ألا يقل الاسم الأول عن حرفين",
+        "lastNameRequired": "اسم العائلة مطلوب",
+        "lastNameTooShort": "يجب ألا يقل اسم العائلة عن حرفين",
+        "invalidEmail": "يرجى إدخال بريد إلكتروني صحيح",
+        "phoneInvalid": "يرجى إدخال رقم هاتف صحيح",
+        "genderRequired": "يرجى اختيار الجنس",
+        "fileSizeExceeded": "يجب ألا يتجاوز حجم الصورة 5 ميجابايت",
+        "invalidFileType": "الصيغ المسموح بها: JPG وPNG وGIF فقط"
+      }
+    },
+    "changePasswordContent": {
+      "form": {
+        "oldPassword": "كلمة المرور القديمة",
+        "newPassword": "كلمة المرور الجديدة",
+        "confirmPassword": "تأكيد كلمة المرور الجديدة",
+        "submit": "تغيير كلمة المرور",
+        "oldPasswordError": "كلمة المرور القديمة غير صحيحة.",
+        "passwordMismatchError": "كلمات المرور الجديدة غير متطابقة."
+      }
+    },
+    "toasts": {
+      "passwordUpdatedSuccess": "تم تغيير كلمة المرور بنجاح.",
+      "passwordUpdatedError": "فشل تغيير كلمة المرور.",
+      "logoutSuccess": "تم تسجيل الخروج بنجاح.",
+      "logoutError": "فشل تسجيل الخروج."
+    }
   }
 }
