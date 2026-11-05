@@ -17,8 +17,10 @@ import FormDivider from "./shared/form-divider";
 
 export default function ForgotPasswordRequestForm({
   onSent,
+  defaultEmail = "",
 }: {
   onSent: (email: string) => void;
+  defaultEmail?: string;
 }) {
   const t = useTranslations("ForgotPassword");
   const locale = useLocale();
@@ -31,7 +33,7 @@ export default function ForgotPasswordRequestForm({
     resolver: zodResolver(
       createForgotPasswordSchema({ emailInvalid: t("emailInvalid") }),
     ),
-    defaultValues: { email: "" },
+    defaultValues: { email: defaultEmail },
   });
 
   const onSubmit = handleSubmit(async (values) => {

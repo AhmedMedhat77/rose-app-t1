@@ -3,6 +3,8 @@
 import { ChevronLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import { Link } from "@/i18n/navigation";
+
 import FormDivider from "./shared/form-divider";
 
 export default function ResetPasswordSent({
@@ -47,10 +49,15 @@ export default function ResetPasswordSent({
 
       <FormDivider />
 
-      {/* Help — static, not navigable */}
+      {/* Help */}
       <p className="text-center text-sm font-medium">
         {t("needHelp")}{" "}
-        <span className="text-primary font-bold">{t("contactUs")}</span>
+        <Link
+          href="/contact-us"
+          className="text-primary font-bold hover:underline"
+        >
+          {t("contactUs")}
+        </Link>
       </p>
     </div>
   );

@@ -147,5 +147,8 @@
     "passwordsMismatch": "Passwords do not match",
     "submit": "Reset Password",
     "successToast": "Your password has been successfully reset."
+  },
+  "ContactUs": {
+    "title": "Contact Us"
   }
 }

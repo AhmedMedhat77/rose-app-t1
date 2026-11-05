@@ -36,6 +36,7 @@ export default function ForgotPasswordForm() {
 
   return (
     <ForgotPasswordRequestForm
+      defaultEmail={email}
       onSent={(value) => {
         setEmail(value);
         setStep("sent");
