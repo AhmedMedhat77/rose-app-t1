@@ -533,6 +533,8 @@
   --font-english: var(--font-sarabun);
   --font-arabic: var(--font-tajawal);
   --font-mono: var(--font-geist-mono);
+  --font-monsieur: var(--font-monsieur);
+  --font-great-vibes: var(--font-great-vibes);
   --radius-sm: 4px;
   --radius-md: var(--radius);
   --radius-lg: 8px;
