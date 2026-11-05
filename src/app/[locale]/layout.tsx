@@ -74,10 +74,8 @@ export default async function RootLayout({
               <ThemeMode />
             </header>
             <Header />
-
             <main className="flex-1">{children}</main>
             <Footer />
-
             <Toaster />
           </NextIntlClientProvider>
         </ThemeProvider>

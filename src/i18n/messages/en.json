@@ -18,6 +18,51 @@
     "privacy": "Privacy Policy",
     "faqs": "FAQs"
   },
+  "Hero": {
+    "buy": "I'm buying!",
+    "side": {
+      "badge": "Staring from 10.99 EGP",
+      "title": "Special Gifts For The People You Love",
+      "button": "Shop Now"
+    },
+    "slides": {
+      "flowers": {
+        "title": "Say It with Flowers",
+        "subtitle": "Elegant gifts for every special moment."
+      },
+      "chocolate": {
+        "title": "Sweet Moments",
+        "subtitle": "Chocolate gifts they will love."
+      },
+      "gifts": {
+        "title": "Gifts They Remember",
+        "subtitle": "Surprises for every occasion."
+      }
+    },
+    "cards": {
+      "wedding": {
+        "title": "Celebrate Her Forever with a Gift She'll Always Remember",
+        "badge": "wedding"
+      },
+      "engagement": {
+        "title": "Start Your Engagement Journey with a Gift She'll Love",
+        "badge": "engagement"
+      },
+      "anniversary": {
+        "title": "Celebrate Your Anniversary with a Gift She'll Always Remember",
+        "badge": "anniversary"
+      }
+    },
+    "features": {
+      "delivery": {
+        "title": "Free Delivery",
+        "text": "For orders above 120 EGP"
+      },
+      "refund": { "title": "Get Refund", "text": "Refunds within 30 days" },
+      "payment": { "title": "Safe Payment", "text": "100% Secure Payment" },
+      "support": { "title": "24/7 Support", "text": "Contact us at any time" }
+    }
+  },
   "Header": {
     "searchPlaceholder": "What awesome gift are you looking for?",
     "searchLabel": "Search",
@@ -35,6 +80,15 @@
     "pushEnabled": "Push notifications are enabled.",
     "pushDisabled": "Push notifications are disabled.",
     "pushNotEnabled": "Push notifications are not enabled."
+  },
+  "Search": {
+    "title": "Products you may like:",
+    "loading": "Loading...",
+    "empty": "No products found",
+    "error": "Something went wrong, please try again",
+    "currency": "EGP",
+    "rating": "Rating",
+    "ratings": "ratings"
   },
   "NotificationsPanel": {
     "title": "Notifications",
