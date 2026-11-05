@@ -22,9 +22,7 @@ export default async function AccountSettingsLayout({
       <div className="flex flex-col gap-6 md:flex-row md:items-start">
         <AccountSettingsSidebar />
 
-        <main className="min-h-[720px] flex-1 p-6">
-          {children}
-        </main>
+        <main className="min-h-[720px] flex-1 p-6">{children}</main>
       </div>
     </div>
   );

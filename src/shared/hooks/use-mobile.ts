@@ -14,7 +14,7 @@ export function useIsMobile() {
     mql.addEventListener("change", onChange);
     isMobile = window.innerWidth < MOBILE_BREAKPOINT;
     return () => mql.removeEventListener("change", onChange);
-  }, [isMobile]);
+  }, []);
 
   return !!isMobile;
 }

@@ -13,10 +13,11 @@ export default function Footer() {
   //Translations
   const format = useFormatter();
   const local = useLocale();
-  const year = format.number(new Date().getFullYear(), {
-    useGrouping: false,
-    numberingSystem: local === "ar" ? "arab" : "latn",
-  });
+  const year = 2026;
+  // const year = format.number(new Date().getFullYear(), {
+  //   useGrouping: false,
+  //   numberingSystem: local === "ar" ? "arab" : "latn",
+  // });
   const t = useTranslations("Footer");
   const tNav = useTranslations("Navigation");
   return (

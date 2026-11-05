@@ -11,16 +11,16 @@ export default async function AccountSettingsPage({
 }: AccountSettingsPageProps) {
   return (
     <section>
-      <Suspense fallback={<div className="h-64 animate-pulse rounded-lg bg-muted" />}>
+      <Suspense
+        fallback={<div className="bg-muted h-64 animate-pulse rounded-lg" />}
+      >
         <SettingsContent searchParams={searchParams} />
       </Suspense>
     </section>
   );
 }
 
-async function SettingsContent({
-  searchParams,
-}: AccountSettingsPageProps) {
+async function SettingsContent({ searchParams }: AccountSettingsPageProps) {
   const resolvedParams = await searchParams;
   const activeTab = resolvedParams.tab || "profile";
 

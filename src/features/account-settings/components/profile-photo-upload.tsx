@@ -21,14 +21,21 @@ interface ProfilePhotoFieldProps {
   initials: string;
 }
 
-export function ProfilePhotoUpload({ control, currentPhotoUrl, initials }: ProfilePhotoFieldProps) {
+export function ProfilePhotoUpload({
+  control,
+  currentPhotoUrl,
+  initials,
+}: ProfilePhotoFieldProps) {
   const t = useTranslations("accountSettings.Profile");
   const inputRef = useRef<HTMLInputElement>(null);
   const { field, fieldState } = useController({ control, name: "photo" });
 
   const file = field.value;
   // Only preview files that pass the same rules as the schema (avoids a flash before validation).
-  const isValidFile = !!file && file.size <= MAX_FILE_SIZE && ACCEPTED_IMAGE_TYPES.includes(file.type);
+  const isValidFile =
+    !!file &&
+    file.size <= MAX_FILE_SIZE &&
+    ACCEPTED_IMAGE_TYPES.includes(file.type);
 
   const previewUrl = useMemo(
     () => (file && isValidFile ? URL.createObjectURL(file) : undefined),
@@ -53,7 +60,10 @@ export function ProfilePhotoUpload({ control, currentPhotoUrl, initials }: Profi
     <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
       <div className="relative shrink-0">
         <Avatar className="size-30">
-          <AvatarImage src={previewUrl ?? currentPhotoUrl ?? undefined} alt="" />
+          <AvatarImage
+            src={previewUrl ?? currentPhotoUrl ?? undefined}
+            alt=""
+          />
           <AvatarFallback className="text-2xl">{initials}</AvatarFallback>
         </Avatar>
 
@@ -83,7 +93,9 @@ export function ProfilePhotoUpload({ control, currentPhotoUrl, initials }: Profi
         <h2 className="text-lg font-semibold">{t("photo.title")}</h2>
         <p className="text-muted-foreground text-sm">{t("photo.hint")}</p>
         {errorMessage && (
-          <FieldError errors={[{ message: t(errorMessage as Parameters<typeof t>[0]) }]} />
+          <FieldError
+            errors={[{ message: t(errorMessage as Parameters<typeof t>[0]) }]}
+          />
         )}
       </div>
     </div>

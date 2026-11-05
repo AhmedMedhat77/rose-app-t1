@@ -13,7 +13,9 @@ export function useUpdateProfile() {
   return useMutation({
     mutationFn: async (values: ProfileFormValues) => {
       // Two-step flow per Swagger: upload the image first, then send its temp URL as `photo`.
-      const photo = values.photo ? await uploadProfilePhoto(values.photo) : undefined;
+      const photo = values.photo
+        ? await uploadProfilePhoto(values.photo)
+        : undefined;
 
       // NOTE: email is intentionally not sent (changing it needs the verification flow).
       // NOTE: `gender` is sent although the PATCH Swagger doesn't list it; see handoff notes.

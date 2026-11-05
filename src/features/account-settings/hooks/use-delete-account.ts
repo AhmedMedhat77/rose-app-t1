@@ -19,8 +19,11 @@ export function useDeleteAccount() {
       router.replace("/");
     },
     onError: (error) => {
-      const errorMessage = error instanceof ApiError && error.status === 403 ? t("toasts.deleteForbidden") : t("toasts.deleteError")
-      addToast(TOAST_STATE.Unsuccessful, errorMessage)
+      const errorMessage =
+        error instanceof ApiError && error.status === 403
+          ? t("toasts.deleteForbidden")
+          : t("toasts.deleteError");
+      addToast(TOAST_STATE.Unsuccessful, errorMessage);
     },
   });
 }
