@@ -3,11 +3,11 @@
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
+import { usePasswordResetSent } from "../hooks/use-password-reset-sent";
+
 import CreateNewPasswordForm from "./create-new-password-form";
 import ForgotPasswordRequestForm from "./forgot-password-request-form";
 import ResetPasswordSent from "./reset-password-sent";
-
-type Step = "request" | "sent";
 
 /**
  * Single-route forgot-password flow with internal steps:
@@ -20,7 +20,7 @@ export default function ForgotPasswordForm() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
-  const [step, setStep] = useState<Step>("request");
+  const { sentEmail, setSentEmail } = usePasswordResetSent();
   const [email, setEmail] = useState("");
 
   // The reset link drives step 3 regardless of in-page state.
@@ -28,9 +28,15 @@ export default function ForgotPasswordForm() {
     return <CreateNewPasswordForm token={token} />;
   }
 
-  if (step === "sent") {
+  if (sentEmail !== null) {
     return (
-      <ResetPasswordSent email={email} onBack={() => setStep("request")} />
+      <ResetPasswordSent
+        email={sentEmail}
+        onBack={() => {
+          setEmail(sentEmail);
+          setSentEmail(null);
+        }}
+      />
     );
   }
 
@@ -39,7 +45,7 @@ export default function ForgotPasswordForm() {
       defaultEmail={email}
       onSent={(value) => {
         setEmail(value);
-        setStep("sent");
+        setSentEmail(value);
       }}
     />
   );
