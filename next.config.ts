@@ -14,6 +14,14 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: process.env.NEXT_PUBLIC_IMAGE_DOMAIN!,
+      },
+    ],
+  },
 };
 
 const withNextIntl = createNextIntlPlugin();

@@ -98,5 +98,16 @@
     "logout": "Logout",
     "profile": "Profile",
     "settings": "Settings"
+  },
+  "productFilter": {
+    "filterCategory": "Category",
+    "filtersOccasion": "Occasion",
+    "filtersRating": "Rating",
+    "filtersPrice": "Price",
+    "filtersPriceFrom": "From",
+    "filtersPriceTo": "To",
+    "filtersReset": "Reset",
+    "filtersResetAll": "Reset All",
+    "filtersRetry": "Retry"
   }
 }

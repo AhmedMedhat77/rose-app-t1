@@ -23,6 +23,7 @@ import Footer from "@/shared/layout/Footer";
 import { Header } from "@/shared/layout/Header";
 
 import { Toaster } from "@/shared/ui/toast";
+import QueryProvider from "@/shared/context/query-provider";
 
 export const metadata: Metadata = {
   title: "Rose App",
@@ -68,18 +69,20 @@ export default async function RootLayout({
     >
       <body className="flex min-h-full flex-col" suppressHydrationWarning>
         <ThemeProvider initialTheme={theme} initialSystemTheme={systemTheme}>
-          <NextIntlClientProvider>
-            <header className="flex flex-wrap items-center justify-between">
-              <LocaleSwitcher />
-              <ThemeMode />
-            </header>
-            <Header />
+          <QueryProvider>
+            <NextIntlClientProvider>
+              <header className="flex flex-wrap items-center justify-between">
+                <LocaleSwitcher />
+                <ThemeMode />
+              </header>
+              <Header />
 
-            <main className="flex-1">{children}</main>
-            <Footer />
+              <main className="flex-1">{children}</main>
+              <Footer />
 
-            <Toaster />
-          </NextIntlClientProvider>
+              <Toaster />
+            </NextIntlClientProvider>
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>
