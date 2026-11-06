@@ -226,7 +226,8 @@
 /* Explicit .light overrides the system preference; .dark forces dark mode. */
 .dark {
   color-scheme: dark;
-  --bg-plain: var(--color-zinc-700);
+  /* --bg-plain: var(--color-zinc-700); */
+  --bg-plain: var(--color-zinc-800);
   --bg-subtle: var(--color-zinc-800);
   --bg-muted: var(--color-zinc-900);
   --bg-soft: var(--color-zinc-700);

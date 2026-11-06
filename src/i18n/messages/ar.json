@@ -98,5 +98,16 @@
     "logout": "تسجيل الخروج",
     "profile": "الملف الشخصي",
     "settings": "الإعدادات"
+  },
+  "productFilter": {
+    "filterCategory": "التصنيف",
+    "filtersOccasion": "المناسبة",
+    "filtersRating": "التقييم",
+    "filtersPrice": "السعر",
+    "filtersPriceFrom": "من",
+    "filtersPriceTo": "إلى",
+    "filtersReset": "إعادة تعيين",
+    "filtersResetAll": "إعادة تعيين الكل",
+    "filtersRetry": "إعادة المحاولة"
   }
 }
