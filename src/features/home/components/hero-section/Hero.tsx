@@ -2,10 +2,11 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/shared/ui/button";
-import { CARDS } from "../constants/hero";
+
+import { cn } from "cn";
 import { HeroBadge } from "./HeroBadge";
 import { HeroSlider } from "./HeroSlider";
-import { cn } from "cn";
+import { CARDS } from "../../constants/hero";
 
 const OVERLAY =
   "absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent";
@@ -16,7 +17,7 @@ export function Hero() {
   return (
     <section className="flex flex-col gap-6 px-6 py-4">
       <div className="grid gap-4 lg:grid-cols-[1fr_3fr]">
-        <div className="relative h-110 w-[18.8rem] overflow-hidden rounded-2xl text-white">
+        <div className="relative h-110 overflow-hidden rounded-2xl text-white">
           <Image
             src="/images/red-gifts.png"
             alt=""

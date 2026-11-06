@@ -6,7 +6,6 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/shared/ui/button";
 
-import { SLIDES } from "../constants/hero";
 import {
   Carousel,
   CarouselApi,
@@ -14,6 +13,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { cn } from "cn";
+import { SLIDES } from "../../constants/hero";
 const LIGHT_BUTTON = "w-fit bg-red-50 text-red-800 hover:bg-red-100";
 export function HeroSlider() {
   const t = useTranslations("Hero");

@@ -99,6 +99,22 @@
     "markAsRead": "Mark as read",
     "delete": "Delete notification"
   },
+  "About": {
+    "label": "ABOUT",
+    "titleStart": "Delivering the",
+    "titleHighlight1": "Finest",
+    "titleMiddle": "Gift Boxes for Your",
+    "titleHighlight2": "Special",
+    "titleEnd": "Moments",
+    "description": "Make every moment memorable with our premium gift boxes. Carefully curated and beautifully packaged, each box is filled with handpicked items designed to impress. Whether it's for a birthday, wedding, or a simple “thank you,” our gift boxes are crafted to leave a lasting impression — because thoughtful gifting starts here.",
+    "discover": "Discover",
+    "features": {
+      "prices": "Competitive Prices & Easy Shopping",
+      "quality": "Premium Quality & Elegant Packaging",
+      "occasion": "Perfect for Every Occasion",
+      "delivery": "Fast & Reliable Delivery"
+    }
+  },
   "Footer": {
     "discover": "Discover our website",
     "brand": "Rose E-Commerce App",
