@@ -78,13 +78,14 @@
     "label": "Label",
     "placeholder": "Placeholder"
   },
-
   "Input": {
     "uploadFile": "Upload File",
     "searchPlaceholder": "Search...",
     "numberPlaceholder": "Select Number",
     "phoneNumber": "Entry Phone Number",
-    "fileRequired": "Please select a file"
+    "fileRequired": "Please select a file",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
   },
   "select": {
     "label": "Select",
@@ -98,5 +99,145 @@
     "logout": "Logout",
     "profile": "Profile",
     "settings": "Settings"
+  },
+  "accountSettings": {
+    "title": "Account Settings",
+    "sidebar": {
+      "profile": "Profile",
+      "changePassword": "Change Password",
+      "logout": "Logout"
+    },
+    "Profile": {
+      "photo": {
+        "title": "Upload Photo",
+        "hint": "You can upload a .jpg, .png, or .gif photo with max size of 5MB.",
+        "changeAriaLabel": "Change profile photo"
+      },
+      "fields": {
+        "firstName": "First name",
+        "lastName": "Last name",
+        "email": "Email",
+        "phone": "Phone",
+        "gender": "Gender",
+        "genderPlaceholder": "Select gender"
+      },
+      "gender": {
+        "MALE": "Male",
+        "FEMALE": "Female"
+      },
+      "actions": {
+        "save": "Save Changes",
+        "saving": "Saving...",
+        "delete": "Delete My Account"
+      },
+      "deleteDialog": {
+        "title": "Are you sure you want to delete your account?",
+        "description": "This action is permanent and cannot be undone.",
+        "cancel": "Nope, not doing it",
+        "confirm": "Yes, delete",
+        "confirming": "Deleting..."
+      },
+      "toasts": {
+        "updateSuccess": "Profile updated successfully",
+        "updateError": "Couldn't update your profile. Please try again.",
+        "deleteError": "Couldn't delete your account. Please try again.",
+        "deleteForbidden": "Super admin accounts can't be deleted."
+      },
+      "loadError": {
+        "title": "Couldn't load your profile",
+        "description": "Something went wrong. Please try again.",
+        "retry": "Try again"
+      },
+      "errors": {
+        "firstNameRequired": "First name is required",
+        "firstNameTooShort": "First name must be at least 2 characters",
+        "firstNameTooLong": "First name must be less than 50 characters",
+        "lastNameRequired": "Last name is required",
+        "lastNameTooShort": "Last name must be at least 2 characters",
+        "lastNameTooLong": "Last name must be less than 50 characters",
+        "phoneInvalid": "Please enter a valid phone number",
+        "fileSizeExceeded": "Photo must be 5 MB or smaller",
+        "invalidFileType": "Only JPG, PNG, or GIF images are allowed"
+      }
+    },
+    "changePasswordContent": {
+      "form": {
+        "oldPassword": "Old Password",
+        "newPassword": "New Password",
+        "confirmPassword": "Confirm New Password",
+        "submit": "Change Password",
+        "submitting": "Changing...",
+        "oldPasswordError": "Old password is incorrect.",
+        "passwordMismatchError": "New passwords do not match."
+      },
+      "validation": {
+        "required": "This field is required",
+        "password_min_length": "Password must be at least 8 characters",
+        "password_uppercase": "Password must include an uppercase letter",
+        "password_lowercase": "Password must include a lowercase letter",
+        "password_number": "Password must include a number",
+        "password_special": "Password must include a special character",
+        "password_same_as_old": "New password must be different from the old password",
+        "passwords_do_not_match": "New passwords do not match.",
+        "invalid": "Please check this field"
+      }
+    },
+    "toasts": {
+      "passwordUpdatedSuccess": "Password updated successfully.",
+      "passwordUpdatedError": "Failed to update password.",
+      "logoutSuccess": "Logged out successfully.",
+      "logoutError": "Failed to logout."
+    }
+  },
+  "Auth": {
+    "heroImageAlt": "Gift boxes with ribbons"
+  },
+  "Login": {
+    "title": "Welcome back!",
+    "email": "Email",
+    "emailPlaceholder": "user@example.com",
+    "emailInvalid": "Please enter a valid email address",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "passwordRequired": "Please enter your password",
+    "forgotPassword": "Forgot your password?",
+    "invalidCredentials": "Invalid email or password. Please try again.",
+    "submit": "Login",
+    "noAccount": "Don't have an account?",
+    "createAccount": "Create one now!"
+  },
+  "ResetPasswordSent": {
+    "title": "Password Reset Sent",
+    "sentTo": "We have sent a password reset link to:",
+    "accountExists": "If an account exists for this email address, we've sent password reset instructions. If you don't receive the email within a few minutes, check your spam or junk folder.",
+    "checkSpam": "If you don't see the email within a few minutes, check your spam or junk folder.",
+    "needHelp": "Need help?",
+    "contactUs": "Contact us",
+    "back": "Go back"
+  },
+  "ForgotPassword": {
+    "title": "Forgot Password?",
+    "description": "Worry not, we'll send you instructions to help you reset it.",
+    "email": "Email",
+    "emailPlaceholder": "user@example.com",
+    "emailInvalid": "Please enter a valid email address",
+    "submit": "Next",
+    "noAccount": "Don't have an account?",
+    "createAccount": "Create one now!"
+  },
+  "ResetPassword": {
+    "title": "Create a new password",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "passwordPlaceholder": "••••••••",
+    "passwordRequired": "Please enter your password",
+    "passwordMin": "Password must be at least 8 characters",
+    "confirmRequired": "Please confirm your password",
+    "passwordsMismatch": "Passwords do not match",
+    "submit": "Reset Password",
+    "successToast": "Your password has been successfully reset."
+  },
+  "ContactUs": {
+    "title": "Contact Us"
   }
 }
