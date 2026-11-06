@@ -66,7 +66,10 @@ export default async function RootLayout({
       dir={dir}
       className={`${sarabun.variable} ${tajawal.variable} ${geistMono.variable} ${resolvedTheme} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col" suppressHydrationWarning>
+      <body
+        className="dark:bg-bg-muted flex min-h-full flex-col"
+        suppressHydrationWarning
+      >
         <ThemeProvider initialTheme={theme} initialSystemTheme={systemTheme}>
           <NextIntlClientProvider>
             <header className="flex flex-wrap items-center justify-between">
@@ -74,10 +77,8 @@ export default async function RootLayout({
               <ThemeMode />
             </header>
             <Header />
-
             <main className="flex-1">{children}</main>
             <Footer />
-
             <Toaster />
           </NextIntlClientProvider>
         </ThemeProvider>
