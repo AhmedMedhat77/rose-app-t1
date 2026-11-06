@@ -22,6 +22,7 @@ import "../globals.css";
 import NextAuthProvider from "@/providers/next-auth.provider";
 import { ThemeProvider } from "@/shared/context/theme.context";
 import { Toaster } from "@/shared/ui/toast";
+import { Header } from "@/shared/layout/Header";
 
 export const metadata: Metadata = {
   title: "Rose App",
@@ -69,6 +70,7 @@ export default async function RootLayout({
         <NextAuthProvider>
           <ThemeProvider initialTheme={theme} initialSystemTheme={systemTheme}>
             <NextIntlClientProvider>
+              <Header />
               {children}
               <Toaster />
             </NextIntlClientProvider>

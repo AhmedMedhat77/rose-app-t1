@@ -148,7 +148,83 @@
     "submit": "Reset Password",
     "successToast": "Your password has been successfully reset."
   },
+  "RegisterFlow": {
+    "header": "Become part of our family!",
+    "title": "Create Account",
+    "needHelp": "Need help?",
+    "contactUs": "Contact us"
+  },
+  "SendEmailVerification": {
+    "email": "Email",
+    "emailPlaceholder": "user@example.com",
+    "emailInvalid": "Please enter a valid email address",
+    "sendCode": "Next",
+    "alreadyHaveAccount": "Already have an account?",
+    "login": "Login"
+  },
+  "ConfirmEmailVerification": {
+    "enterOTPCode": "Enter the OTP Code",
+    "weHaveSentCode": "We have sent a 6-digit code to",
+    "edit": "Edit",
+    "codeResent": "A new code has been sent",
+    "emailInvalid": "Please enter a valid email address",
+    "codeRequired": "Please enter the verification code",
+    "codeLength": "Code must be 6 digits",
+    "verifyCode": "Verify Code",
+    "sendANewCode": "Send a new code",
+    "sending": "Sending...",
+    "resendIn": "Resend in {seconds}s"
+  },
+  "AccountDetails": {
+    "enterYourDetails": "Tell us about yourself",
+    "weNeedFewDetails": "A few details to get started",
+    "firstName": "First name",
+    "firstNamePlaceholder": "Zoe",
+    "lastNamePlaceholder": "Jonathan",
+    "lastName": "Last name",
+    "username": "Username",
+    "usernamePlaceholder": "zoe123",
+    "phone": "Phone",
+    "phonePlaceholder": "1012345678",
+    "phoneRequired": "Please enter your phone number",
+    "phoneInvalid": "Please enter a valid phone number",
+    "gender": "Gender",
+    "selectGender": "Select gender",
+    "male": "Male",
+    "female": "Female",
+    "next": "Next",
+    "firstNameRequired": "Please enter your first name",
+    "lastNameRequired": "Please enter your last name",
+    "usernameRequired": "Please enter a username",
+    "genderRequired": "Please select your gender"
+  },
+  "CreatePassword": {
+    "createStrongPassword": "Create a strong password",
+    "chooseSecurePassword": "Choose a secure password to protect your account",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "passwordPlaceholder": "********",
+    "confirmRequired": "Please confirm your password",
+    "passwordsMismatch": "Passwords do not match",
+    "passwordRules": "Use at least 8 characters, with uppercase and lowercase letters, a number and a special character",
+    "accountCreated": "Your account has been created",
+    "passwordRequired": "Please enter your password",
+    "passwordMin": "Password must be at least 8 characters",
+    "passwordUppercase": "Must contain an uppercase letter",
+    "passwordLowercase": "Must contain a lowercase letter",
+    "passwordNumber": "Must contain a number",
+    "passwordSpecial": "Must contain a special character",
+    "confirmPasswordRequired": "Please confirm your password",
+    "passwordMismatch": "Passwords do not match",
+    "back": "Back",
+    "next": "Next "
+  },
   "ContactUs": {
     "title": "Contact Us"
+  },
+  "LoginPopover": {
+    "tabsLabel": "Authentication tabs",
+    "login": "Login",
+    "register": "Register"
   }
 }

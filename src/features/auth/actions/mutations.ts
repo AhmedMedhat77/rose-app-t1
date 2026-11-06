@@ -20,6 +20,20 @@ import {
   TResetPasswordPayload,
 } from "@/features/auth/types/reset-password.types";
 
+// related to register flow
+import {
+  ISendEmailVerificationResponse,
+  TSendEmailVerificationValues,
+} from "@/features/auth/types/register.types";
+import {
+  IConfirmEmailVerificationResponse,
+  TConfirmEmailVerificationValues,
+} from "@/features/auth/types/register.types";
+import {
+  IRegisterResponse,
+  TRegisterFormValues,
+} from "@/features/auth/types/register.types";
+
 export async function loginMutation(payload: TLoginFormValues) {
   const response = await fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
@@ -78,6 +92,58 @@ export async function resetPasswordMutation(payload: TResetPasswordPayload) {
   });
   const data: IApiResponse<IResetPasswordResponse> = await response.json();
   // check if fails
+  if (!data.status) {
+    throw new Error(data.message);
+  }
+  return data.payload;
+}
+
+// related to register flow
+export async function sendEmailVerificationMutation(
+  payload: TSendEmailVerificationValues,
+) {
+  const response = await fetch(`${BASE_URL}/auth/send-email-verification`, {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      ...HEADERS.JSON_HEADER,
+    },
+  });
+  const data: IApiResponse<ISendEmailVerificationResponse> =
+    await response.json();
+  if (!data.status) {
+    throw new Error(data.message);
+  }
+  return data.payload;
+}
+
+export async function confirmEmailVerificationMutation(
+  payload: TConfirmEmailVerificationValues,
+) {
+  const response = await fetch(`${BASE_URL}/auth/confirm-email-verification`, {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      ...HEADERS.JSON_HEADER,
+    },
+  });
+  const data: IApiResponse<IConfirmEmailVerificationResponse> =
+    await response.json();
+  if (!data.status) {
+    throw new Error(data.message);
+  }
+  return data.payload;
+}
+
+export async function registerMutation(payload: TRegisterFormValues) {
+  const response = await fetch(`${BASE_URL}/auth/register`, {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      ...HEADERS.JSON_HEADER,
+    },
+  });
+  const data: IApiResponse<IRegisterResponse> = await response.json();
   if (!data.status) {
     throw new Error(data.message);
   }

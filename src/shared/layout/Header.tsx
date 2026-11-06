@@ -4,10 +4,11 @@ import { LocaleSwitcher } from "@/shared/components/LocaleSwitcher";
 
 import { Link } from "@/i18n/navigation";
 import { NavBar } from "./NavBar";
-import { HeartIcon, Search, ShoppingCartIcon, User } from "lucide-react";
+import { HeartIcon, Search, ShoppingCartIcon } from "lucide-react";
 import { NotificationsMenu } from "@/features/notifications/components/NotificationsMenu";
 import { NotificationToggle } from "@/features/notifications/components/NotificationToggle";
 import { Input } from "@/shared/ui/input";
+import LoginPopover from "@/features/auth/components/login-popover";
 
 const ICON_BUTTON =
   "text-foreground hover:text-primary flex size-9 items-center justify-center rounded-md transition-colors";
@@ -42,13 +43,7 @@ export function Header() {
           </div>
 
           <div className="flex shrink-0 items-center gap-4">
-            <Link
-              href="/login"
-              className="text-foreground hover:text-primary flex items-center gap-2 text-sm transition-colors"
-            >
-              <User width={20} height={20} />
-              {t("login")}
-            </Link>
+            <LoginPopover label={t("login")} />
 
             <div className="border-border flex items-center gap-1 border-s ps-4">
               <Link

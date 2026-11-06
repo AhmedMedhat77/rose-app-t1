@@ -2,6 +2,7 @@ import FormDecorative from "@/features/auth/components/shared/form-decorative";
 import { AuthLocaleToggle } from "@/shared/auth-locale-toggle";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
+import { Suspense } from "react";
 
 export default async function AuthLayout({
   children,
@@ -13,13 +14,19 @@ export default async function AuthLayout({
   return (
     <main className="grid min-h-screen w-full grid-cols-1 md:grid-cols-2">
       {/* Left Column */}
-      <section className="relative flex min-h-screen flex-col justify-between px-6 py-6 sm:px-12 md:px-14 lg:px-20">
+      <section className="relative flex min-h-screen flex-col justify-between px-6 py-2 sm:px-12 md:px-14 lg:px-20">
         {/* Top bar with language switcher */}
 
         {/* Center content container */}
         <div className="mx-auto my-auto flex w-full max-w-lg flex-col items-center justify-center py-6">
           <div className="flex w-full justify-end pb-10">
-            <AuthLocaleToggle />
+            <Suspense
+              fallback={
+                <span className="inline-block h-6" aria-hidden="true" />
+              }
+            >
+              <AuthLocaleToggle />
+            </Suspense>
           </div>
           <div className="w-full">
             {/* Top decorative flourish */}
@@ -42,7 +49,7 @@ export default async function AuthLayout({
       </section>
 
       {/* Right Column (Hero image) */}
-      <aside className="relative hidden h-screen w-full overflow-hidden md:block">
+      <aside className="relative hidden min-h-screen w-full overflow-hidden md:block">
         <Image
           src="/images/red-gifts.png"
           alt={t("heroImageAlt")}
