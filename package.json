@@ -61,7 +61,8 @@
   },
   "optionalDependencies": {
     "@emnapi/core": "1.11.3",
-    "@emnapi/runtime": "1.11.3"
+    "@emnapi/runtime": "1.11.3",
+    "@parcel/watcher-linux-x64-glibc": "2.6.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs,mts,cts}": [
