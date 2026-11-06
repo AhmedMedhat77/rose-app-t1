@@ -19,7 +19,7 @@ export default function CategoryList() {
 
   // Custom hooks
   const { value: selectedId, select } = useFilterParam(FILTER_KEYS.CATEGORY);
-
+  //message error
   if (isError) {
     return (
       <FetchFeedback>{error?.message || "Something went wrong"}</FetchFeedback>

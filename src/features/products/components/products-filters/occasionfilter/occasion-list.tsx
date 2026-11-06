@@ -17,13 +17,12 @@ export default function OccasionList() {
 
   // Custom hooks
   const { value: selectedId, select } = useFilterParam(FILTER_KEYS.OCCASION);
-
+  //message error
   if (isError) {
     return (
       <FetchFeedback>{error?.message || "Something went wrong"}</FetchFeedback>
     );
   }
-
   //function handelScroll
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
@@ -61,7 +60,7 @@ export default function OccasionList() {
               />
             )}
             <div
-              className={`absolute inset-0 flex items-center justify-center ${
+              className={`absolute inset-0 flex items-center justify-center hover:bg-[linear-gradient(180deg,rgba(0,0,0,0.25)_0%,rgba(0,0,0,0.5)_100%)] ${
                 isActive
                   ? "bg-[linear-gradient(180deg,rgba(0,0,0,0.1375)_0%,rgba(166,37,42,0.55)_100%)]"
                   : "bg-[linear-gradient(180deg,rgba(0,0,0,0.4)_0%,rgba(0,0,0,0.8)_100%)]"
