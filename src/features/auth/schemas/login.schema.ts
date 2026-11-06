@@ -1,11 +1,11 @@
 import { z } from "zod";
 
 export function createLoginSchema(messages: {
-  emailInvalid: string;
+  usernameRequired: string;
   passwordRequired: string;
 }) {
   return z.object({
-    email: z.email({ error: messages.emailInvalid }),
+    userName: z.string().trim().min(1, messages.usernameRequired),
     password: z.string().min(1, messages.passwordRequired),
   });
 }

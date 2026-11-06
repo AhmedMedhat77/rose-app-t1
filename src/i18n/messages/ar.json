@@ -105,14 +105,14 @@
   },
   "Login": {
     "title": "مرحبًا بعودتك!",
-    "email": "البريد الإلكتروني",
-    "emailPlaceholder": "user@example.com",
-    "emailInvalid": "يرجى إدخال عنوان بريد إلكتروني صالح",
+    "username": "اسم المستخدم",
+    "usernamePlaceholder": "أدخل اسم المستخدم",
+    "usernameRequired": "يرجى إدخال اسم المستخدم",
     "password": "كلمة المرور",
     "passwordPlaceholder": "••••••••",
     "passwordRequired": "يرجى إدخال كلمة المرور",
     "forgotPassword": "هل نسيت كلمة المرور؟",
-    "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة. يرجى المحاولة مرة أخرى.",
+    "invalidCredentials": "اسم المستخدم أو كلمة المرور غير صحيح. يرجى المحاولة مرة أخرى.",
     "submit": "تسجيل الدخول",
     "noAccount": "ليس لديك حساب؟",
     "createAccount": "أنشئ حسابًا الآن!"
