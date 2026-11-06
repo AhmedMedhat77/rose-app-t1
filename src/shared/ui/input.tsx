@@ -189,14 +189,7 @@ function Input({
                     prev === "password" ? "text" : "password",
                   )
                 }
-                className={cn(
-                  "text-text-muted absolute top-1/2 flex -translate-y-1/2 items-center justify-center",
-                  inputSize === "lg"
-                    ? "inset-s-150"
-                    : inputSize === "sm"
-                      ? "inset-s-32"
-                      : "inset-s-75",
-                )}
+                className="text-text-muted absolute end-4 top-1/2 flex -translate-y-1/2 items-center justify-center"
                 aria-label={
                   passwordInput === "password"
                     ? t("showPassword")

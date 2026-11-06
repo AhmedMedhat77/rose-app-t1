@@ -1,6 +1,6 @@
 import { Suspense } from "react";
+import { ChangePasswordForm } from "@/features/account-settings/components/change-password-form";
 import { ProfileForm } from "@/features/account-settings/components/profile-form";
-// import { ChangePasswordForm } from "@/features/account-settings/components/change-password-form";
 
 interface AccountSettingsPageProps {
   searchParams: Promise<{ tab?: string }>;
@@ -27,7 +27,7 @@ async function SettingsContent({ searchParams }: AccountSettingsPageProps) {
   return (
     <>
       {activeTab === "profile" && <ProfileForm />}
-      {activeTab === "change-password" && <p>Change Password</p>}
+      {activeTab === "change-password" && <ChangePasswordForm />}
     </>
   );
 }

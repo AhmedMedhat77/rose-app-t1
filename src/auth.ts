@@ -40,6 +40,9 @@ export const authOptions: AuthOptions = {
     // works on clint no secure data and works after jwt
     session: ({ token, session }) => {
       session.user = token.user;
+      if (typeof token.accessToken === "string") {
+        session.accessToken = token.accessToken;
+      }
       return session;
     },
   },

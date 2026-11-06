@@ -27,7 +27,7 @@ import { DeleteAccountDialog } from "./delete-account-dialog";
 import { ProfileFormSkeleton } from "./profile-form-skeleton";
 import { ProfilePhotoUpload } from "./profile-photo-upload";
 
-const INPUT_CLASS = "h-12 rounded-xl disabled:bg-bg-muted";
+const INPUT_CLASS = "h-12 rounded-xl disabled:bg-bg-muted shadow-none";
 
 function toFormValues(user: UserProfile): Partial<ProfileFormValues> {
   return {
