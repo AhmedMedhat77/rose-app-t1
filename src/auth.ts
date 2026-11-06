@@ -10,11 +10,11 @@ export const authOptions: AuthOptions = {
   providers: [
     Credentials({
       credentials: {
-        userName: {},
+        username: {},
         password: {},
       },
       authorize: async (credentials) => {
-        if (!credentials?.userName || !credentials?.password) {
+        if (!credentials?.username || !credentials?.password) {
           throw new Error("invalid credentials");
         }
         const data = await loginMutation(credentials);

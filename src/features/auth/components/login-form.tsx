@@ -32,7 +32,7 @@ export default function LoginForm() {
       }),
     ),
     defaultValues: {
-      userName: "",
+      username: "",
       password: "",
     },
   });
@@ -66,8 +66,8 @@ export default function LoginForm() {
         label={t("username")}
         type="text"
         placeholder={t("usernamePlaceholder")}
-        error={errors.userName?.message}
-        {...register("userName")}
+        error={errors.username?.message}
+        {...register("username")}
       />
 
       <Input
