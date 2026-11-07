@@ -42,7 +42,6 @@ export default function LoginForm() {
       ...values,
       redirect: false,
     });
-
     if (response?.ok) {
       const searchParams = new URLSearchParams(
         typeof window !== "undefined" ? window.location.search : "",
