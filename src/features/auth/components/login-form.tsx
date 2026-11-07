@@ -27,12 +27,12 @@ export default function LoginForm() {
   } = useForm<TLoginFormValues>({
     resolver: zodResolver(
       createLoginSchema({
-        emailInvalid: t("emailInvalid"),
+        usernameRequired: t("usernameRequired"),
         passwordRequired: t("passwordRequired"),
       }),
     ),
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
     },
   });
@@ -63,11 +63,11 @@ export default function LoginForm() {
       </div>
 
       <Input
-        label={t("email")}
-        type="email"
-        placeholder={t("emailPlaceholder")}
-        error={errors.email?.message}
-        {...register("email")}
+        label={t("username")}
+        type="text"
+        placeholder={t("usernamePlaceholder")}
+        error={errors.username?.message}
+        {...register("username")}
       />
 
       <Input

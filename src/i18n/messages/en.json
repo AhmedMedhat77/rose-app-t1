@@ -105,14 +105,14 @@
   },
   "Login": {
     "title": "Welcome back!",
-    "email": "Email",
-    "emailPlaceholder": "user@example.com",
-    "emailInvalid": "Please enter a valid email address",
+    "username": "Username",
+    "usernamePlaceholder": "Enter your username",
+    "usernameRequired": "Please enter your username",
     "password": "Password",
     "passwordPlaceholder": "••••••••",
     "passwordRequired": "Please enter your password",
     "forgotPassword": "Forgot your password?",
-    "invalidCredentials": "Invalid email or password. Please try again.",
+    "invalidCredentials": "Invalid username or password. Please try again.",
     "submit": "Login",
     "noAccount": "Don't have an account?",
     "createAccount": "Create one now!"
@@ -226,5 +226,14 @@
     "tabsLabel": "Authentication tabs",
     "login": "Login",
     "register": "Register"
+  },
+  "UserDropdown": {
+    "hello": "Hello",
+    "myAccount": "My Account",
+    "account": "Account",
+    "addresses": "Addresses",
+    "orders": "Orders",
+    "dashboard": "Dashboard",
+    "logout": "Log out"
   }
 }

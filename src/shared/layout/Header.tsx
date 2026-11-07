@@ -8,7 +8,7 @@ import { HeartIcon, Search, ShoppingCartIcon } from "lucide-react";
 import { NotificationsMenu } from "@/features/notifications/components/NotificationsMenu";
 import { NotificationToggle } from "@/features/notifications/components/NotificationToggle";
 import { Input } from "@/shared/ui/input";
-import LoginPopover from "@/features/auth/components/login-popover";
+import AuthMenu from "../components/auth-menu";
 
 const ICON_BUTTON =
   "text-foreground hover:text-primary flex size-9 items-center justify-center rounded-md transition-colors";
@@ -43,7 +43,7 @@ export function Header() {
           </div>
 
           <div className="flex shrink-0 items-center gap-4">
-            <LoginPopover label={t("login")} />
+            <AuthMenu loginLabel={t("login")} />
 
             <div className="border-border flex items-center gap-1 border-s ps-4">
               <Link
