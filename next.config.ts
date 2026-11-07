@@ -14,6 +14,16 @@ const nextConfig: NextConfig = {
       },
     },
   },
+
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "rose-app.elevate-bootcamp.cloud",
+        pathname: "/storage/entities/product/**",
+      },
+    ],
+  },
 };
 
 const withNextIntl = createNextIntlPlugin();
