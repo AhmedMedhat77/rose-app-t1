@@ -1,78 +1,81 @@
 "use client";
 
-import { usePathname, useRouter } from "@/i18n/navigation";
-import { useSearchParams } from "next/navigation";
-import { useState } from "react";
-import { FILTER_KEYS } from "../lib/constants/filters.const";
+import { useEffect, useState } from "react";
+import { useFilterUrl } from "./use-filter-url";
+import { FILTER_KEYS, PRICE_DEFAULTS } from "../lib/constants/filters.const";
 
-const DEFAULT_MIN = "0";
-const DEFAULT_MAX = "1000000";
+const DEBOUNCE_MS = 400;
+
+// digits only, no leading zeros (blocks "-", "e", ".", letters)
+const sanitize = (v: string) => v.replace(/\D/g, "").replace(/^0+(?=\d)/, "");
+
+type Field = "from" | "to";
 
 export function usePriceFilter() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const { searchParams, update } = useFilterUrl();
 
-  const urlMin = searchParams.get(FILTER_KEYS.minPrice) ?? DEFAULT_MIN;
-  const urlMax = searchParams.get(FILTER_KEYS.maxPrice) ?? DEFAULT_MAX;
+  const urlMin = searchParams.get(FILTER_KEYS.MIN_PRICE) ?? PRICE_DEFAULTS.MIN;
+  const urlMax = searchParams.get(FILTER_KEYS.MAX_PRICE) ?? PRICE_DEFAULTS.MAX;
 
-  const [from, setFrom] = useState(urlMin);
-  const [to, setTo] = useState(urlMax);
+  const [from, setFromState] = useState<string>(urlMin);
+  const [to, setToState] = useState<string>(urlMax);
+  const [lastEdited, setLastEdited] = useState<Field>("from");
+  const [synced, setSynced] = useState({ min: urlMin, max: urlMax });
 
-  // آخر قيم URL عملنا لها sync
-  const [syncedMin, setSyncedMin] = useState(urlMin);
-  const [syncedMax, setSyncedMax] = useState(urlMax);
-
-  // لو الـ URL اتغير عن آخر sync، حدّث الـ state وقت الرسم
-  if (urlMin !== syncedMin || urlMax !== syncedMax) {
-    setSyncedMin(urlMin);
-    setSyncedMax(urlMax);
-    setFrom(urlMin);
-    setTo(urlMax);
+  // URL changed from outside (Reset All, back button...) -> sync local state
+  if (synced.min !== urlMin || synced.max !== urlMax) {
+    setSynced({ min: urlMin, max: urlMax });
+    setFromState(urlMin);
+    setToState(urlMax);
   }
 
-  const isActive =
-    searchParams.has(FILTER_KEYS.minPrice) ||
-    searchParams.has(FILTER_KEYS.maxPrice);
+  const isIncomplete = from === "" || to === "";
+  const isRangeInvalid = !isIncomplete && Number(from) >= Number(to);
 
-  const updateUrl = (nextFrom: string, nextTo: string) => {
-    const params = new URLSearchParams(searchParams.toString());
+  // Debounced URL write, only for valid values that differ from the URL
+  useEffect(() => {
+    if (isIncomplete || isRangeInvalid) return;
+    if (from === urlMin && to === urlMax) return;
 
-    if (nextFrom === DEFAULT_MIN) params.delete(FILTER_KEYS.minPrice);
-    else params.set(FILTER_KEYS.minPrice, nextFrom);
+    const id = setTimeout(() => {
+      update((p) => {
+        if (from === PRICE_DEFAULTS.MIN) p.delete(FILTER_KEYS.MIN_PRICE);
+        else p.set(FILTER_KEYS.MIN_PRICE, from);
 
-    if (nextTo === DEFAULT_MAX) params.delete(FILTER_KEYS.maxPrice);
-    else params.set(FILTER_KEYS.maxPrice, nextTo);
+        if (to === PRICE_DEFAULTS.MAX) p.delete(FILTER_KEYS.MAX_PRICE);
+        else p.set(FILTER_KEYS.MAX_PRICE, to);
+      });
+    }, DEBOUNCE_MS);
 
-    router.replace(params.size ? `${pathname}?${params}` : pathname, {
-      scroll: false,
-    });
-  };
-
-  const handleValuesChange = (newFrom: string, newTo: string) => {
-    setFrom(newFrom);
-    setTo(newTo);
-
-    const isValid =
-      newFrom !== "" && newTo !== "" && Number(newFrom) < Number(newTo);
-    if (isValid) updateUrl(newFrom, newTo);
-  };
+    return () => clearTimeout(id);
+  }, [from, to, urlMin, urlMax, isIncomplete, isRangeInvalid, update]);
 
   const reset = () => {
-    setFrom(DEFAULT_MIN);
-    setTo(DEFAULT_MAX);
-    updateUrl(DEFAULT_MIN, DEFAULT_MAX);
+    setFromState(PRICE_DEFAULTS.MIN);
+    setToState(PRICE_DEFAULTS.MAX);
+    update((p) => {
+      p.delete(FILTER_KEYS.MIN_PRICE);
+      p.delete(FILTER_KEYS.MAX_PRICE);
+    });
   };
-
-  const isInvalid = from === "" || to === "" || Number(from) >= Number(to);
 
   return {
     from,
     to,
-    setFrom: (val: string) => handleValuesChange(val, to),
-    setTo: (val: string) => handleValuesChange(from, val),
+    setFrom: (v: string) => {
+      setLastEdited("from");
+      setFromState(sanitize(v));
+    },
+    setTo: (v: string) => {
+      setLastEdited("to");
+      setToState(sanitize(v));
+    },
+    // empty field on blur -> back to its default
+    onBlurFrom: () => from === "" && setFromState(PRICE_DEFAULTS.MIN),
+    onBlurTo: () => to === "" && setToState(PRICE_DEFAULTS.MAX),
     reset,
-    isActive,
-    isInvalid,
+    isActive: from !== PRICE_DEFAULTS.MIN || to !== PRICE_DEFAULTS.MAX,
+    // the control the user just edited is the one that shows the error
+    errorField: isRangeInvalid ? lastEdited : null,
   };
 }

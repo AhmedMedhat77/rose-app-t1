@@ -9,7 +9,7 @@ const STARS = [1, 2, 3, 4, 5];
 
 export default function RatingFilter() {
   const t = useTranslations();
-  const { value, select, reset } = useFilterParam(FILTER_KEYS.rating);
+  const { value, select, reset } = useFilterParam(FILTER_KEYS.RATING);
 
   const rating = Number(value) || 0;
   //function handleselect
@@ -24,7 +24,7 @@ export default function RatingFilter() {
         <h3 className="text-text-plain text-lg leading-none font-semibold tracking-normal">
           {t("productFilter.filtersRating")}
         </h3>
-
+        {/*reset btn */}
         {rating > 0 && (
           <button
             type="button"

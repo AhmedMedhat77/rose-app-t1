@@ -1,6 +1,6 @@
 "use client";
 
-import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { fetchPaginatedListApi } from "@/features/products/api/filter.api";
 import { OCCASIONS_ENDPOINT } from "../product.endpoint";
@@ -10,7 +10,7 @@ import { FILTER_KEYS } from "../../lib/constants/filters.const";
 const OCCASIONS_PAGE_SIZE = 20;
 
 export function useOccasions() {
-  return useSuspenseInfiniteQuery({
+  return useInfiniteQuery({
     queryKey: [FILTER_KEYS.OCCASION, OCCASIONS_PAGE_SIZE],
 
     queryFn: ({ pageParam, signal }) =>
@@ -28,6 +28,9 @@ export function useOccasions() {
     getNextPageParam: ({ payload: { metadata } }) =>
       metadata.page < metadata.totalPages ? metadata.page + 1 : undefined,
 
-    select: (data) => data.pages.flatMap((page) => page.payload.data),
+    select: (data) =>
+      data.pages
+        .flatMap((page) => page.payload.data)
+        .sort((a, b) => a.title.localeCompare(b.title)),
   });
 }

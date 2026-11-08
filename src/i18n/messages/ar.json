@@ -108,6 +108,9 @@
     "filtersPriceTo": "إلى",
     "filtersReset": "إعادة تعيين",
     "filtersResetAll": "إعادة تعيين الكل",
-    "filtersRetry": "إعادة المحاولة"
+    "filtersRetry": "إعادة المحاولة",
+    "filtersPriceError": "قيمة \"من\" يجب أن تكون أقل من \"إلى\"",
+    "filtersError": "حدث خطأ ما. حاول مرة أخرى.",
+    "filtersEmpty": "لا توجد عناصر"
   }
 }

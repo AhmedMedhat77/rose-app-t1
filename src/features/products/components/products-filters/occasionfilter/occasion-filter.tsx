@@ -2,10 +2,8 @@
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import OccasionList from "./occasion-list";
-import { OccasionSkeleton } from "../../../skeletons/occasion-skelaton";
 import { useFilterParam } from "@/features/products/hooks/use-filter-param";
 import { FILTER_KEYS } from "@/features/products/lib/constants/filters.const";
-import { FilterBoundary } from "../../filter-boundary";
 
 export default function OccasionFilter() {
   const t = useTranslations();
@@ -31,10 +29,8 @@ export default function OccasionFilter() {
         )}
       </div>
 
-      {/*Occasion List with Suspense & Skeleton Fallback*/}
-      <FilterBoundary skeleton={<OccasionSkeleton />}>
-        <OccasionList />
-      </FilterBoundary>
+      {/*Occasion List */}
+      <OccasionList />
     </div>
   );
 }
