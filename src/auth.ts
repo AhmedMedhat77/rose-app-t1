@@ -28,16 +28,13 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    // can add secure data since it hash the data
     jwt: ({ token, user }) => {
       if (user) {
         token.accessToken = user.accessToken;
         token.user = user.user;
       }
-      // always return token data
       return token;
     },
-    // works on clint no secure data and works after jwt
     session: ({ token, session }) => {
       session.user = token.user;
       return session;

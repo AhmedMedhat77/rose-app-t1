@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 
 import { createResetPasswordSchema } from "@/features/auth/schemas";
 import { TResetPasswordFormValues } from "@/features/auth/types";
-import { resetPasswordAction } from "@/features/auth/actions/reset-password.action";
+import { useResetPassword } from "../hooks/use-reset-password";
 import { useRouter } from "@/i18n/navigation";
 import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
 import { Button } from "@/shared/ui/button";
@@ -17,13 +17,19 @@ import { addToast } from "@/shared/ui/toast";
 import FormDivider from "./shared/form-divider";
 
 export default function CreateNewPasswordForm({ token }: { token: string }) {
+  // Translation
   const t = useTranslations("ResetPassword");
+  // Navigation
   const router = useRouter();
 
+  // State
+  const { mutate: resetPassword, isPending } = useResetPassword();
+
+  // Form
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<TResetPasswordFormValues>({
     resolver: zodResolver(
       createResetPasswordSchema({
@@ -36,17 +42,20 @@ export default function CreateNewPasswordForm({ token }: { token: string }) {
     defaultValues: { newPassword: "", confirmPassword: "" },
   });
 
-  const onSubmit = handleSubmit(async (values) => {
-    const result = await resetPasswordAction(token, values);
-
-    if (result.success) {
-      addToast(TOAST_STATE.Successful, t("successToast"));
-      startTransition(() => {
-        router.push("/login");
-      });
-    } else {
-      addToast(TOAST_STATE.Unsuccessful, result.message);
-    }
+  // Functions
+  const onSubmit = handleSubmit((values) => {
+    resetPassword(
+      { ...values, token },
+      {
+        onSuccess: () => {
+          addToast(TOAST_STATE.Successful, t("successToast"));
+          startTransition(() => {
+            router.push("/login");
+          });
+        },
+        onError: (error) => addToast(TOAST_STATE.Unsuccessful, error.message),
+      },
+    );
   });
 
   return (
@@ -59,6 +68,7 @@ export default function CreateNewPasswordForm({ token }: { token: string }) {
       <Input
         label={t("password")}
         variant="password"
+        autoComplete="new-password"
         placeholder={t("passwordPlaceholder")}
         error={errors.newPassword?.message}
         {...register("newPassword")}
@@ -67,12 +77,13 @@ export default function CreateNewPasswordForm({ token }: { token: string }) {
       <Input
         label={t("confirmPassword")}
         variant="password"
+        autoComplete="new-password"
         placeholder={t("passwordPlaceholder")}
         error={errors.confirmPassword?.message}
         {...register("confirmPassword")}
       />
 
-      <Button className="w-full" type="submit" loading={isSubmitting}>
+      <Button className="w-full" type="submit" loading={isPending}>
         {t("submit")}
       </Button>
     </form>

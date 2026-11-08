@@ -19,6 +19,7 @@ import { notFound } from "next/navigation";
 import { routing } from "../../i18n/routing";
 import "../globals.css";
 
+import QueryProvider from "@/providers/query.provider";
 import NextAuthProvider from "@/providers/next-auth.provider";
 import { ThemeProvider } from "@/shared/context/theme.context";
 import { Toaster } from "@/shared/ui/toast";
@@ -66,14 +67,19 @@ export default async function RootLayout({
       className={`${sarabun.variable} ${tajawal.variable} ${geistMono.variable} ${monsieur.variable} ${greatVibes.variable} ${resolvedTheme} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        <NextAuthProvider>
-          <ThemeProvider initialTheme={theme} initialSystemTheme={systemTheme}>
-            <NextIntlClientProvider>
-              {children}
-              <Toaster />
-            </NextIntlClientProvider>
-          </ThemeProvider>
-        </NextAuthProvider>
+        <QueryProvider>
+          <NextAuthProvider>
+            <ThemeProvider
+              initialTheme={theme}
+              initialSystemTheme={systemTheme}
+            >
+              <NextIntlClientProvider>
+                {children}
+                <Toaster />
+              </NextIntlClientProvider>
+            </ThemeProvider>
+          </NextAuthProvider>
+        </QueryProvider>
       </body>
     </html>
   );
