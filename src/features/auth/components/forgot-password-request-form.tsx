@@ -50,7 +50,7 @@ export default function ForgotPasswordRequestForm({
       { ...values, redirectUrl },
       {
         onSuccess: () => onSent(values.email),
-        onError: (error) => addToast(TOAST_STATE.Unsuccessful, error.message),
+        onError: () => addToast(TOAST_STATE.Unsuccessful, t("errorToast")),
       },
     );
   });

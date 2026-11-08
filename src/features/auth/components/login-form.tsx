@@ -15,6 +15,7 @@ import FormTitle from "./shared/form-title";
 import FormDivider from "./shared/form-divider";
 import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
 import { addToast } from "@/shared/ui/toast";
+import { getSafeCallbackUrl } from "@/shared/lib/utils/safe-callback-url.util";
 
 export default function LoginForm() {
   // Translation
@@ -46,14 +47,13 @@ export default function LoginForm() {
     login(values, {
       onSuccess: () => {
         const searchParams = new URLSearchParams(window.location.search);
-        const callbackUrl = new URL(
-          searchParams.get("callbackUrl") || "/",
-          window.location.origin,
+        const safeCallbackUrl = getSafeCallbackUrl(
+          searchParams.get("callbackUrl"),
         );
-        window.location.href =
-          callbackUrl.origin === window.location.origin
-            ? callbackUrl.href
-            : "/";
+
+        if (safeCallbackUrl) {
+          window.location.href = safeCallbackUrl;
+        }
       },
       onError: () => {
         addToast(TOAST_STATE.Unsuccessful, t("invalidCredentials"));

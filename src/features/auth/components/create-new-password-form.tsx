@@ -53,7 +53,7 @@ export default function CreateNewPasswordForm({ token }: { token: string }) {
             router.push("/login");
           });
         },
-        onError: (error) => addToast(TOAST_STATE.Unsuccessful, error.message),
+        onError: () => addToast(TOAST_STATE.Unsuccessful, t("errorToast")),
       },
     );
   });
