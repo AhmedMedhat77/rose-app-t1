@@ -1,7 +1,7 @@
+import { getToken } from "next-auth/jwt";
 import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
 
-import { AUTH_COOKIE_NAME } from "./features/auth/constants";
 import { routing } from "./i18n/routing";
 
 // Handles locale detection, cookie syncing and locale-prefixed rewrites.
@@ -31,9 +31,12 @@ function generateURL(path: string, locale: string, request: NextRequest) {
   return url;
 }
 
-export default function proxy(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
-  const token = request.cookies.get(AUTH_COOKIE_NAME)?.value;
+  const token = await getToken({
+    req: request,
+    secret: process.env.NEXT_AUTH_SECRET,
+  });
 
   // Strip the locale (e.g. `/en/dashboard`) so auth checks are locale-agnostic,
   // and keep the locale so redirects stay within localized routing.

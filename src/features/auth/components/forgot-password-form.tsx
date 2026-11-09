@@ -16,16 +16,19 @@ import ResetPasswordSent from "./reset-password-sent";
  *                with a `?token=` query param.
  */
 export default function ForgotPasswordForm() {
+  // Navigation
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  // State
   const token = searchParams.get("token");
   // Step state lives in the URL so it survives locale switches, which
   // remount the page but carry the query through (see LocaleSwitcher).
   const sentEmail = searchParams.get("sent");
   const [email, setEmail] = useState("");
 
+  // Functions
   // Replace, not push: stepping back must not leave a history entry.
   const setSentEmail = (value: string | null) => {
     const params = new URLSearchParams(searchParams);

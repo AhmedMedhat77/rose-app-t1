@@ -10,11 +10,11 @@ export const authOptions: AuthOptions = {
   providers: [
     Credentials({
       credentials: {
-        email: {},
+        username: {},
         password: {},
       },
       authorize: async (credentials) => {
-        if (credentials?.email || !credentials?.password) {
+        if (!credentials?.username || !credentials?.password) {
           throw new Error("invalid credentials");
         }
         const data = await loginMutation(credentials);
@@ -28,16 +28,13 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    // can add secure data since it hash the data
     jwt: ({ token, user }) => {
       if (user) {
         token.accessToken = user.accessToken;
         token.user = user.user;
       }
-      // always return token data
       return token;
     },
-    // works on clint no secure data and works after jwt
     session: ({ token, session }) => {
       session.user = token.user;
       if (typeof token.accessToken === "string") {

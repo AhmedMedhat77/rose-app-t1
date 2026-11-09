@@ -194,14 +194,14 @@
   },
   "Login": {
     "title": "Welcome back!",
-    "email": "Email",
-    "emailPlaceholder": "user@example.com",
-    "emailInvalid": "Please enter a valid email address",
+    "username": "Username",
+    "usernamePlaceholder": "Enter your username",
+    "usernameRequired": "Please enter your username",
     "password": "Password",
     "passwordPlaceholder": "••••••••",
     "passwordRequired": "Please enter your password",
     "forgotPassword": "Forgot your password?",
-    "invalidCredentials": "Invalid email or password. Please try again.",
+    "invalidCredentials": "Invalid username or password. Please try again.",
     "submit": "Login",
     "noAccount": "Don't have an account?",
     "createAccount": "Create one now!"
@@ -216,6 +216,7 @@
     "back": "Go back"
   },
   "ForgotPassword": {
+    "errorToast": "We couldn't send the password reset email. Please try again.",
     "title": "Forgot Password?",
     "description": "Worry not, we'll send you instructions to help you reset it.",
     "email": "Email",
@@ -226,6 +227,7 @@
     "createAccount": "Create one now!"
   },
   "ResetPassword": {
+    "errorToast": "We couldn't reset your password. Please try again or request a new reset link.",
     "title": "Create a new password",
     "password": "Password",
     "confirmPassword": "Confirm Password",

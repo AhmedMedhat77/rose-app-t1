@@ -14,20 +14,15 @@ import {
 } from "@/shared/lib/utils/theme.util";
 import type { Metadata } from "next";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { LocaleSwitcher } from "@/shared/components/LocaleSwitcher";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { routing } from "../../i18n/routing";
 import "../globals.css";
 
+import QueryProvider from "@/providers/query.provider";
 import NextAuthProvider from "@/providers/next-auth.provider";
 import { ThemeProvider } from "@/shared/context/theme.context";
 import { Toaster } from "@/shared/ui/toast";
-
-import { ThemeMode } from "@/shared/components/ThemeMode";
-import QueryProvider from "@/shared/context/query.provider";
-import { Header } from "@/shared/layout/Header";
-import Footer from "@/shared/layout/Footer";
 
 export const metadata: Metadata = {
   title: "Rose App",
@@ -71,28 +66,20 @@ export default async function RootLayout({
       dir={dir}
       className={`${sarabun.variable} ${tajawal.variable} ${geistMono.variable} ${monsieur.variable} ${greatVibes.variable} ${resolvedTheme} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col" suppressHydrationWarning>
-        <NextAuthProvider>
-          <QueryProvider>
+      <body className="flex min-h-full flex-col">
+        <QueryProvider>
+          <NextAuthProvider>
             <ThemeProvider
               initialTheme={theme}
               initialSystemTheme={systemTheme}
             >
               <NextIntlClientProvider>
-                <header className="flex flex-wrap items-center justify-between">
-                  <LocaleSwitcher />
-                  <ThemeMode />
-                </header>
-                <Header />
-
-                <main className="flex-1">{children}</main>
-                <Footer />
-
+                {children}
                 <Toaster />
               </NextIntlClientProvider>
             </ThemeProvider>
-          </QueryProvider>
-        </NextAuthProvider>
+          </NextAuthProvider>
+        </QueryProvider>
       </body>
     </html>
   );
