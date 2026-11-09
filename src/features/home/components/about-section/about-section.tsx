@@ -1,8 +1,8 @@
 import { useTranslations } from "next-intl";
 import { ArrowRight, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import AboutImages from "./about-images";
+import { Button } from "@/shared/ui/button";
 
 const FEATURES = ["prices", "quality", "occasion", "delivery"] as const;
 export default function AboutSection() {
@@ -10,7 +10,6 @@ export default function AboutSection() {
 
   return (
     <section className="mx-auto flex max-w-7xl flex-wrap items-center gap-10 px-6 py-16">
-      {/* الصور: هنضيفها في الخطوة الجاية */}
       <AboutImages />
 
       <div className="min-w-80 flex-1">

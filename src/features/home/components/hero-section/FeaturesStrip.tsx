@@ -8,11 +8,11 @@ export function FeaturesStrip() {
     <div className="bg-bg-primary-fade dark:bg-bg-plain mx-6 mt-2.5 grid gap-6 rounded-xl p-6 sm:grid-cols-2 lg:grid-cols-4">
       {FEATURES.map(({ id, icon: Icon }) => (
         <div key={id} className="flex items-center gap-4">
-          <span className="bg-maroon-600 text-text-inverse dark:bg-bg-primary-saturated flex size-16 items-center justify-center rounded-full dark:text-zinc-700">
+          <span className="bg-maroon-600 text-text-inverse dark:bg-bg-primary-saturated dark:text-bg-plain flex size-16 items-center justify-center rounded-full">
             <Icon className="size-8" />
           </span>
           <div>
-            <p className="dark:text-soft-pink-200 text-maroon-600 text-[20px] font-semibold">
+            <p className="dark:text-bg-primary-saturated text-maroon-600 text-[1.25rem] font-semibold">
               {t(`${id}.title`)}
             </p>
             <p className="text-text-soft dark:text-text-soft text-xs">

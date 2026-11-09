@@ -1,7 +1,6 @@
 import { IApiResponse, IProduct, IProductsPayload } from "../types/product";
 
-const BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? "https://rose-app.elevate-bootcamp.cloud";
+const BASE_URL = "https://rose-app.elevate-bootcamp.cloud";
 
 export async function getProducts(): Promise<IProduct[]> {
   const res = await fetch(`${BASE_URL}/api/products?limit=100`);

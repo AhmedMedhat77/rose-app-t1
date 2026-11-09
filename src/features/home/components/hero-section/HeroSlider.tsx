@@ -11,10 +11,11 @@ import {
   CarouselApi,
   CarouselContent,
   CarouselItem,
-} from "@/components/ui/carousel";
+} from "@/shared/ui/carousel";
 import { cn } from "cn";
 import { SLIDES } from "../../constants/hero";
-const LIGHT_BUTTON = "w-fit bg-red-50 text-red-800 hover:bg-red-100";
+const LIGHT_BUTTON =
+  "w-fit bg-bg-danger-fade text-red-800 hover:bg-bg-danger-faint dark:bg-maroon-50";
 export function HeroSlider() {
   const t = useTranslations("Hero");
   const locale = useLocale();
@@ -39,7 +40,7 @@ export function HeroSlider() {
       <CarouselContent>
         {SLIDES.map((slide, i) => (
           <CarouselItem key={slide.id}>
-            <div className="relative h-110 overflow-hidden rounded-2xl text-white">
+            <div className="text-text-inverse dark:text-secondary-foreground relative h-110 overflow-hidden rounded-2xl">
               <Image
                 src={slide.image}
                 alt={t(`slides.${slide.id}.title`)}
@@ -52,7 +53,7 @@ export function HeroSlider() {
                 <h2 className="text-4xl font-semibold">
                   {t(`slides.${slide.id}.title`)}
                 </h2>
-                <p className="h-12 text-[16px]">
+                <p className="h-12 text-[1rem]">
                   {t(`slides.${slide.id}.subtitle`)}
                 </p>
                 <Button
@@ -74,12 +75,12 @@ export function HeroSlider() {
             key={s.id}
             onClick={() => api?.scrollTo(i)}
             aria-label={`${i + 1}`}
-            className={`h-1.5 rounded-full ${i === current ? "w-6 bg-red-700" : "w-1.5 bg-white"}`}
+            className={`h-1.5 rounded-full ${i === current ? "bg-bg-danger-saturated w-6" : "bg-bg-plain w-1.5"}`}
           />
         ))}
       </div>
 
-      <div className="absolute inset-e-6 bottom-5 flex h-[2.18rem] w-[4.6rem] gap-1 rounded-full bg-white p-1">
+      <div className="bg-bg-plain dark:bg-secondary-foreground absolute inset-e-6 bottom-5 flex h-[2.18rem] w-[4.6rem] gap-1 rounded-full p-1">
         <Button
           size="icon"
           onClick={() => api?.scrollPrev()}

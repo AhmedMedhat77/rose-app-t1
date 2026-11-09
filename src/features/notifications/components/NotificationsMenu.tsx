@@ -13,7 +13,6 @@ const ICON_BUTTON =
   "text-foreground hover:text-primary flex size-9 items-center justify-center transition-colors";
 
 export function NotificationsMenu({ label }: { label: string }) {
-  // Temporary mock data until the API is connected
   const [notifications, setNotifications] = useState<INotificationItem[]>([
     {
       id: "1",

@@ -17,12 +17,12 @@ export function Hero() {
   return (
     <section className="flex flex-col gap-6 px-6 py-4">
       <div className="grid gap-4 lg:grid-cols-[1fr_3fr]">
-        <div className="relative h-110 overflow-hidden rounded-2xl text-white">
+        <div className="text-text-inverse dark:text-secondary-foreground relative h-110 overflow-hidden rounded-2xl">
           <Image
             src="/images/red-gifts.png"
             alt=""
             fill
-            className="h-110 w-[18.8rem] object-cover"
+            className="h-110 object-cover"
           />
           <div className={OVERLAY} />
           <div className="absolute inset-0 flex flex-col justify-end gap-3 p-5">
@@ -42,18 +42,13 @@ export function Hero() {
         <HeroSlider />
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {CARDS.map((card) => (
           <div
             key={card.id}
-            className="relative h-[16.9rem] w-[25.6rem] overflow-hidden rounded-2xl text-white"
+            className="text-text-inverse dark:text-secondary-foreground relative h-[16.9rem] overflow-hidden rounded-2xl"
           >
-            <Image
-              src={card.image}
-              alt=""
-              fill
-              className="h-[16.9rem] w-[25.6rem] object-cover"
-            />
+            <Image src={card.image} alt="" fill className="object-cover" />
             <div className={OVERLAY} />
             <div className="absolute inset-0 flex flex-col justify-end gap-2 p-4">
               <HeroBadge>{t(`cards.${card.id}.badge`)}</HeroBadge>
