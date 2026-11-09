@@ -17,7 +17,11 @@ export const authOptions: AuthOptions = {
         if (!credentials?.username || !credentials?.password) {
           throw new Error("invalid credentials");
         }
-        const data = await loginMutation(credentials);
+
+        const data = await loginMutation({
+          username: credentials.username,
+          password: credentials.password,
+        });
 
         return {
           id: data.user.id,

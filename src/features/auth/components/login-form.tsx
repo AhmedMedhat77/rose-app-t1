@@ -47,6 +47,7 @@ export default function LoginForm() {
     login(values, {
       onSuccess: () => {
         const searchParams = new URLSearchParams(window.location.search);
+
         const safeCallbackUrl = getSafeCallbackUrl(
           searchParams.get("callbackUrl"),
         );
