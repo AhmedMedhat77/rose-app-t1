@@ -2,23 +2,29 @@
 
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import { fetchPaginatedListApi } from "@/features/products/api/filter.api";
-import { OCCASIONS_ENDPOINT } from "../product.endpoint";
-import { IOccasionsItem } from "../../types/occasions.types";
-import { FILTER_KEYS } from "../../lib/constants/filters.const";
+import { fetchPaginatedListApi } from "../lib/apis/filter.api";
 
-const OCCASIONS_PAGE_SIZE = 20;
+interface UseInfiniteFilterQueryParams {
+  queryKey: readonly unknown[];
+  endpoint: string;
+  pageSize: number;
+}
 
-export function useOccasions() {
+export function useInfiniteFilterQuery<T extends { title: string }>({
+  queryKey,
+  endpoint,
+  pageSize,
+}: UseInfiniteFilterQueryParams) {
+  // Query
   return useInfiniteQuery({
-    queryKey: [FILTER_KEYS.OCCASION, OCCASIONS_PAGE_SIZE],
+    queryKey,
 
     queryFn: ({ pageParam, signal }) =>
-      fetchPaginatedListApi<IOccasionsItem>(
+      fetchPaginatedListApi<T>(
         {
           page: pageParam,
-          limit: OCCASIONS_PAGE_SIZE,
-          endpoint: OCCASIONS_ENDPOINT,
+          limit: pageSize,
+          endpoint,
         },
         signal,
       ),

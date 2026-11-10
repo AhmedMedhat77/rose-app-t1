@@ -3,16 +3,17 @@
 import Image from "next/image";
 import { LoaderCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useOccasions } from "@/features/products/api/mutations/use-occasion";
 import FetchFeedback from "@/shared/components/fetch-feedback";
 import { useFilterParam } from "@/features/products/hooks/use-filter-param";
 import { useInfiniteSentinel } from "@/features/products/hooks/use-infinite-sentinel";
-import { FILTER_KEYS } from "@/features/products/lib/constants/filters.const";
-import { OccasionSkeleton } from "@/features/products/skeletons/occasion-skelaton";
+import { FILTER_KEYS } from "@/features/products/lib/constants/filters.constant";
+import { OccasionSkeleton } from "@/features/products/skeletons/occasion.skelaton";
+import { useOccasions } from "@/features/products/hooks/use-occasion";
 
 export default function OccasionList() {
+  // Translation
   const t = useTranslations();
-  //custom qurys
+  // Query
   const {
     data: occasions,
     isPending,
@@ -23,10 +24,10 @@ export default function OccasionList() {
     isFetchingNextPage,
     isFetchNextPageError,
   } = useOccasions();
-  //Custom hooks
-  const { value: selectedId, select } = useFilterParam(FILTER_KEYS.OCCASION);
+  // Hooks
+  const { value: selectedTitle, select } = useFilterParam(FILTER_KEYS.OCCASION);
 
-  // handell infinent scroll
+  // Hook handell infinent scroll
   const { rootRef, sentinelRef } = useInfiniteSentinel({
     onReach: fetchNextPage,
     enabled: !!hasNextPage && !isFetchingNextPage && !isFetchNextPageError,
@@ -56,7 +57,7 @@ export default function OccasionList() {
       className="grid max-h-60.5 [scrollbar-width:none] grid-cols-2 gap-2.5 overflow-y-auto [&::-webkit-scrollbar]:hidden"
     >
       {occasions.map((el) => {
-        const isActive = selectedId === el.title;
+        const isActive = selectedTitle === el.title;
 
         return (
           <button

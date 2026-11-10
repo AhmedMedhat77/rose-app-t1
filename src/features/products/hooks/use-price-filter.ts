@@ -1,81 +1,95 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useDebouncedCallback } from "use-debounce";
 import { useFilterUrl } from "./use-filter-url";
-import { FILTER_KEYS, PRICE_DEFAULTS } from "../lib/constants/filters.const";
+import { FILTER_KEYS, PRICE_DEFAULTS } from "../lib/constants/filters.constant";
 
 const DEBOUNCE_MS = 400;
 
-// digits only, no leading zeros (blocks "-", "e", ".", letters)
+type Field = "min" | "max";
+
+// Helpers
+// WHY: Allow digits only and prevent leading zeros.
 const sanitize = (v: string) => v.replace(/\D/g, "").replace(/^0+(?=\d)/, "");
 
-type Field = "from" | "to";
+const isRangeInvalid = (min: string, max: string) =>
+  min !== "" && max !== "" && Number(min) >= Number(max);
 
 export function usePriceFilter() {
+  // Hooks
   const { searchParams, update } = useFilterUrl();
+  const writeToUrl = useDebouncedCallback((min: string, max: string) => {
+    update((p) => {
+      if (min === PRICE_DEFAULTS.MIN) p.delete(FILTER_KEYS.MIN_PRICE);
+      else p.set(FILTER_KEYS.MIN_PRICE, min);
 
+      if (max === PRICE_DEFAULTS.MAX) p.delete(FILTER_KEYS.MAX_PRICE);
+      else p.set(FILTER_KEYS.MAX_PRICE, max);
+    });
+  }, DEBOUNCE_MS);
+
+  // State
   const urlMin = searchParams.get(FILTER_KEYS.MIN_PRICE) ?? PRICE_DEFAULTS.MIN;
   const urlMax = searchParams.get(FILTER_KEYS.MAX_PRICE) ?? PRICE_DEFAULTS.MAX;
 
-  const [from, setFromState] = useState<string>(urlMin);
-  const [to, setToState] = useState<string>(urlMax);
-  const [lastEdited, setLastEdited] = useState<Field>("from");
+  const [values, setValues] = useState({ min: urlMin, max: urlMax });
+  const [lastEdited, setLastEdited] = useState<Field>("min");
   const [synced, setSynced] = useState({ min: urlMin, max: urlMax });
 
-  // URL changed from outside (Reset All, back button...) -> sync local state
+  // WHY: Sync local state when URL changes externally (Reset All, browser navigation).
   if (synced.min !== urlMin || synced.max !== urlMax) {
     setSynced({ min: urlMin, max: urlMax });
-    setFromState(urlMin);
-    setToState(urlMax);
+    setValues({ min: urlMin, max: urlMax });
   }
 
-  const isIncomplete = from === "" || to === "";
-  const isRangeInvalid = !isIncomplete && Number(from) >= Number(to);
+  // Functions (handlers)
+  function commit(min: string, max: string) {
+    setValues({ min, max });
 
-  // Debounced URL write, only for valid values that differ from the URL
-  useEffect(() => {
-    if (isIncomplete || isRangeInvalid) return;
-    if (from === urlMin && to === urlMax) return;
+    if (min === "" || max === "" || isRangeInvalid(min, max)) {
+      writeToUrl.cancel();
+    } else {
+      writeToUrl(min, max);
+    }
+  }
 
-    const id = setTimeout(() => {
-      update((p) => {
-        if (from === PRICE_DEFAULTS.MIN) p.delete(FILTER_KEYS.MIN_PRICE);
-        else p.set(FILTER_KEYS.MIN_PRICE, from);
+  function setField(field: Field, value: string) {
+    setLastEdited(field);
+    const next = sanitize(value);
 
-        if (to === PRICE_DEFAULTS.MAX) p.delete(FILTER_KEYS.MAX_PRICE);
-        else p.set(FILTER_KEYS.MAX_PRICE, to);
-      });
-    }, DEBOUNCE_MS);
+    if (field === "min") commit(next, values.max);
+    else commit(values.min, next);
+  }
 
-    return () => clearTimeout(id);
-  }, [from, to, urlMin, urlMax, isIncomplete, isRangeInvalid, update]);
+  function resetField(field: Field) {
+    if (values[field] !== "") return;
 
-  const reset = () => {
-    setFromState(PRICE_DEFAULTS.MIN);
-    setToState(PRICE_DEFAULTS.MAX);
+    if (field === "min") commit(PRICE_DEFAULTS.MIN, values.max);
+    else commit(values.min, PRICE_DEFAULTS.MAX);
+  }
+
+  function reset() {
+    // WHY: Prevent pending debounced updates from overwriting the reset.
+    writeToUrl.cancel();
+
+    setValues({ min: PRICE_DEFAULTS.MIN, max: PRICE_DEFAULTS.MAX });
+
     update((p) => {
       p.delete(FILTER_KEYS.MIN_PRICE);
       p.delete(FILTER_KEYS.MAX_PRICE);
     });
-  };
+  }
 
   return {
-    from,
-    to,
-    setFrom: (v: string) => {
-      setLastEdited("from");
-      setFromState(sanitize(v));
-    },
-    setTo: (v: string) => {
-      setLastEdited("to");
-      setToState(sanitize(v));
-    },
-    // empty field on blur -> back to its default
-    onBlurFrom: () => from === "" && setFromState(PRICE_DEFAULTS.MIN),
-    onBlurTo: () => to === "" && setToState(PRICE_DEFAULTS.MAX),
+    min: values.min,
+    max: values.max,
+    setField,
+    onBlur: resetField,
     reset,
-    isActive: from !== PRICE_DEFAULTS.MIN || to !== PRICE_DEFAULTS.MAX,
-    // the control the user just edited is the one that shows the error
-    errorField: isRangeInvalid ? lastEdited : null,
+    isActive:
+      values.min !== PRICE_DEFAULTS.MIN || values.max !== PRICE_DEFAULTS.MAX,
+    // WHY: Display the error on the last edited field only.
+    errorField: isRangeInvalid(values.min, values.max) ? lastEdited : null,
   };
 }

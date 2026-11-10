@@ -23,7 +23,7 @@ import Footer from "@/shared/layout/Footer";
 import { Header } from "@/shared/layout/Header";
 
 import { Toaster } from "@/shared/ui/toast";
-import QueryProvider from "@/shared/context/query-provider";
+import QueryProvider from "@/providers/query-provider";
 
 export const metadata: Metadata = {
   title: "Rose App",

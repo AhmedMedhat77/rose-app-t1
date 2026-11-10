@@ -2,13 +2,14 @@
 import { X } from "lucide-react";
 import CategoryList from "./category-list";
 import { useTranslations } from "next-intl";
-import { FILTER_KEYS } from "@/features/products/lib/constants/filters.const";
+import { FILTER_KEYS } from "@/features/products/lib/constants/filters.constant";
 import { useFilterParam } from "@/features/products/hooks/use-filter-param";
 
 export default function CategoryFilter() {
+  // Translation
   const t = useTranslations();
-
-  const { value: selectedId, reset } = useFilterParam(FILTER_KEYS.OCCASION);
+  // Hooks
+  const { value: selectedTitle, reset } = useFilterParam(FILTER_KEYS.CATEGORY);
 
   return (
     <div className="border-border-subtle h-64.25 border-b">
@@ -17,7 +18,7 @@ export default function CategoryFilter() {
         <h3 className="text-text-plain text-lg leading-none font-semibold tracking-normal">
           {t("productFilter.filterCategory")}
         </h3>
-        {selectedId && (
+        {selectedTitle && (
           <button
             onClick={reset}
             type="button"

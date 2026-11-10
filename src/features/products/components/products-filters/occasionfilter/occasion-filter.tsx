@@ -3,11 +3,13 @@ import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import OccasionList from "./occasion-list";
 import { useFilterParam } from "@/features/products/hooks/use-filter-param";
-import { FILTER_KEYS } from "@/features/products/lib/constants/filters.const";
+import { FILTER_KEYS } from "@/features/products/lib/constants/filters.constant";
 
 export default function OccasionFilter() {
+  // Translation
   const t = useTranslations();
-  const { value: selectedId, reset } = useFilterParam(FILTER_KEYS.OCCASION);
+  // Hooks
+  const { value: selectedTitle, reset } = useFilterParam(FILTER_KEYS.OCCASION);
 
   return (
     <div className="border-border-subtle h-75 border-b">
@@ -16,7 +18,7 @@ export default function OccasionFilter() {
         <h3 className="text-text-plain text-lg leading-none font-semibold tracking-normal">
           {t("productFilter.filtersOccasion")}
         </h3>
-        {selectedId && (
+        {selectedTitle && (
           <button
             onClick={reset}
             type="button"

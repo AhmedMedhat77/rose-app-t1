@@ -8,7 +8,6 @@ export const FILTER_KEYS = {
 
 export const ALL_FILTER_KEYS = Object.values(FILTER_KEYS);
 
-// confirm the name with the grid owner
 export const PAGE_KEY = "page";
 
 export const PRICE_DEFAULTS = { MIN: "0", MAX: "1000000" } as const;

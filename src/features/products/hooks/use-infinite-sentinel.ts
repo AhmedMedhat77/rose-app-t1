@@ -8,12 +8,15 @@ interface Options {
 }
 
 export function useInfiniteSentinel({ onReach, enabled }: Options) {
+  // Ref
   const rootRef = useRef<HTMLDivElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
+  // Effects (rare, last)
   useEffect(() => {
     const root = rootRef.current;
     const sentinel = sentinelRef.current;
+
     if (!enabled || !root || !sentinel) return;
 
     const observer = new IntersectionObserver(
@@ -22,7 +25,9 @@ export function useInfiniteSentinel({ onReach, enabled }: Options) {
       },
       { root, rootMargin: "50px" },
     );
+
     observer.observe(sentinel);
+
     return () => observer.disconnect();
   }, [enabled, onReach]);
 

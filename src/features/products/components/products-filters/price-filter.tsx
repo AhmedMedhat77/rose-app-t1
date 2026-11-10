@@ -7,19 +7,15 @@ import { useTranslations } from "next-intl";
 import { usePriceFilter } from "../../hooks/use-price-filter";
 
 export default function PriceFilter() {
+  // Translation
   const t = useTranslations();
+
+  // Hooks
+  const { min, max, setField, onBlur, reset, isActive, errorField } =
+    usePriceFilter();
+
+  // Variables
   const errorId = useId();
-  const {
-    from,
-    to,
-    setFrom,
-    setTo,
-    onBlurFrom,
-    onBlurTo,
-    reset,
-    isActive,
-    errorField,
-  } = usePriceFilter();
 
   return (
     <div className="border-border-subtle border-b">
@@ -51,11 +47,11 @@ export default function PriceFilter() {
             className="w-33.75"
             type="text"
             inputMode="numeric"
-            value={from}
-            onChange={(e) => setFrom(e.target.value)}
-            onBlur={onBlurFrom}
-            aria-invalid={errorField === "from"}
-            aria-describedby={errorField === "from" ? errorId : undefined}
+            value={min}
+            onChange={(e) => setField("min", e.target.value)}
+            onBlur={() => onBlur("min")}
+            aria-invalid={errorField === "min"}
+            aria-describedby={errorField === "min" ? errorId : undefined}
           />
         </label>
         {/*input to */}
@@ -67,11 +63,11 @@ export default function PriceFilter() {
             className="w-33.75"
             type="text"
             inputMode="numeric"
-            value={to}
-            onChange={(e) => setTo(e.target.value)}
-            onBlur={onBlurTo}
-            aria-invalid={errorField === "to"}
-            aria-describedby={errorField === "to" ? errorId : undefined}
+            value={max}
+            onChange={(e) => setField("max", e.target.value)}
+            onBlur={() => onBlur("max")}
+            aria-invalid={errorField === "max"}
+            aria-describedby={errorField === "max" ? errorId : undefined}
           />
         </label>
       </div>

@@ -4,15 +4,15 @@ import Image from "next/image";
 import { LoaderCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
 import FetchFeedback from "@/shared/components/fetch-feedback";
-import { useCategories } from "@/features/products/api/mutations/use-category";
+import { useCategories } from "@/features/products/hooks/use-category";
 import { useFilterParam } from "@/features/products/hooks/use-filter-param";
 import { useInfiniteSentinel } from "@/features/products/hooks/use-infinite-sentinel";
-import { FILTER_KEYS } from "@/features/products/lib/constants/filters.const";
-import CategorySkeleton from "@/features/products/skeletons/category-skeleton";
+import { FILTER_KEYS } from "@/features/products/lib/constants/filters.constant";
+import CategorySkeleton from "@/features/products/skeletons/category.skeleton";
 
 export default function CategoryList() {
   const t = useTranslations();
-  //custom Query
+  // Query
   const {
     data: categorieslist,
     isPending,
@@ -23,8 +23,8 @@ export default function CategoryList() {
     isFetchingNextPage,
     isFetchNextPageError,
   } = useCategories();
-  //Custom hooks
-  const { value: selectedId, select } = useFilterParam(FILTER_KEYS.CATEGORY);
+  // Hooks
+  const { value: selectedTitle, select } = useFilterParam(FILTER_KEYS.CATEGORY);
   // handell infinent scroll
   const { rootRef, sentinelRef } = useInfiniteSentinel({
     onReach: fetchNextPage,
@@ -54,14 +54,14 @@ export default function CategoryList() {
       className="flex max-h-49.75 [scrollbar-width:none] flex-col gap-2.5 overflow-y-auto [&::-webkit-scrollbar]:hidden"
     >
       {categorieslist.map((el) => {
-        const isActive = selectedId === el.title;
+        const isActive = selectedTitle === el.title;
         return (
           <button
             key={el.id}
             type="button"
             onClick={() => select(el.title)}
             aria-pressed={isActive}
-            className={`flex h-7 shrink-0 items-center gap-2.5 rounded-sm hover:bg-zinc-300 hover:dark:bg-zinc-600 ${isActive ? "bg-bg-primary-fade dark:bg-secondary-faint" : "bg-bg-soft"}`}
+            className={`dark:bg-bg-subtle flex h-7 shrink-0 items-center gap-2.5 rounded-sm hover:bg-zinc-300 hover:dark:bg-zinc-600 ${isActive ? "bg-bg-primary-fade dark:bg-secondary-faint" : "bg-bg-soft"}`}
           >
             <div
               className={`flex h-full w-9 items-center justify-center rounded-s-sm hover:dark:bg-zinc-500 ${isActive ? "bg-maroon-600 dark:bg-bg-primary" : "bg-bg-default dark:bg-zinc-500"}`}

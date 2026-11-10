@@ -3,16 +3,18 @@
 import { Star, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useFilterParam } from "../../hooks/use-filter-param";
-import { FILTER_KEYS } from "../../lib/constants/filters.const";
+import { FILTER_KEYS } from "../../lib/constants/filters.constant";
 
 const STARS = [1, 2, 3, 4, 5];
 
 export default function RatingFilter() {
+  // Translation
   const t = useTranslations();
+  // Hooks
   const { value, select, reset } = useFilterParam(FILTER_KEYS.RATING);
-
+  // Variables
   const rating = Number(value) || 0;
-  //function handleselect
+  // Function handleselect
   const handleSelect = (next: number) => {
     if (next === rating) reset();
     else select(String(next));
