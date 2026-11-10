@@ -2,7 +2,7 @@ import {
   LEGAL_LINKS,
   MAIN_LINKS,
 } from "@/shared/lib/constants/navigation.constant";
-import NewsletterForm from "@/features/newsletter/components/NewsletterForm";
+import NewsletterForm from "@/features/newsletter/components/newsletter-form";
 import { Link } from "@/i18n/navigation";
 import { useFormatter, useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
