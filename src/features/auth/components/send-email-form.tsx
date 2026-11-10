@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 
 import { createSendEmailVerificationSchema } from "@/features/auth/schemas";
 import { TSendEmailVerificationValues } from "@/features/auth/types";
-import { sendEmailVerificationAction } from "@/features/auth/actions/send-email-verification.action";
 import { Link } from "@/i18n/navigation";
 import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
 import { Button } from "@/shared/ui/button";
@@ -14,6 +13,8 @@ import { Input } from "@/shared/ui/input";
 import { addToast } from "@/shared/ui/toast";
 
 import FormDivider from "./shared/form-divider";
+import { useSendEmailVerification } from "../hooks/use-send-email-verification";
+import { getRemainingSeconds } from "../lib/otp-cooldown";
 
 export default function SendEmailVerificationForm({
   onSent,
@@ -22,27 +23,34 @@ export default function SendEmailVerificationForm({
   onSent: (email: string) => void;
   defaultEmail?: string;
 }) {
+  // translation
   const t = useTranslations("SendEmailVerification");
+  // state
+  const { mutate, isPending } = useSendEmailVerification();
 
+  // Form
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<TSendEmailVerificationValues>({
     resolver: zodResolver(
       createSendEmailVerificationSchema({ emailInvalid: t("emailInvalid") }),
     ),
     defaultValues: { email: defaultEmail },
   });
-
-  const onSubmit = handleSubmit(async (values) => {
-    const result = await sendEmailVerificationAction(values);
-
-    if (result.success) {
+  // Functions
+  const onSubmit = handleSubmit((values) => {
+    // The code was already sent recently, continue without sending again
+    if (getRemainingSeconds(values.email) > 0) {
       onSent(values.email);
-    } else {
-      addToast(TOAST_STATE.Unsuccessful, result.message);
+      return;
     }
+
+    mutate(values, {
+      onSuccess: () => onSent(values.email),
+      onError: (error) => addToast(TOAST_STATE.Unsuccessful, error.message),
+    });
   });
 
   return (
@@ -55,7 +63,7 @@ export default function SendEmailVerificationForm({
         {...register("email")}
       />
 
-      <Button className="w-full" type="submit" loading={isSubmitting}>
+      <Button className="w-full" type="submit" loading={isPending}>
         {t("sendCode")}
       </Button>
 

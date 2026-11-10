@@ -14,9 +14,7 @@ export default async function AuthLayout({
   return (
     <main className="grid min-h-screen w-full grid-cols-1 md:grid-cols-2">
       {/* Left Column */}
-      <section className="relative flex min-h-screen flex-col justify-between px-6 py-2 sm:px-12 md:px-14 lg:px-20">
-        {/* Top bar with language switcher */}
-
+      <section className="relative flex min-h-screen flex-col justify-between px-6 py-6 sm:px-12 md:px-14 lg:px-20">
         {/* Center content container */}
         <div className="mx-auto my-auto flex w-full max-w-lg flex-col items-center justify-center py-6">
           <div className="flex w-full justify-end pb-10">
@@ -56,7 +54,7 @@ export default async function AuthLayout({
           fill
           priority
           sizes="50vw"
-          className="object-center"
+          className="object-cover object-center"
         />
       </aside>
     </main>

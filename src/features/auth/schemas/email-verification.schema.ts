@@ -7,14 +7,3 @@ export function createSendEmailVerificationSchema(messages: {
     email: z.email({ error: messages.emailInvalid }),
   });
 }
-
-export function createConfirmEmailVerificationSchema(messages: {
-  emailInvalid: string;
-  codeRequired: string;
-  codeLength: string;
-}) {
-  return z.object({
-    email: z.email({ error: messages.emailInvalid }),
-    code: z.string().length(6, messages.codeLength),
-  });
-}

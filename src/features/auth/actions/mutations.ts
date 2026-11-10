@@ -1,7 +1,7 @@
-"server-only";
+import "server-only";
 
 import { HEADERS } from "@/app/shared/constants/api.constant";
-import { BASE_URL } from "@/app/shared/constants/config";
+import { API_URL } from "@/app/shared/constants/config";
 import { IApiResponse } from "@/app/shared/types/api";
 import {
   ILoginResponse,
@@ -19,133 +19,63 @@ import {
   IResetPasswordResponse,
   TResetPasswordPayload,
 } from "@/features/auth/types/reset-password.types";
-
-// related to register flow
-import {
-  ISendEmailVerificationResponse,
-  TSendEmailVerificationValues,
-} from "@/features/auth/types/register.types";
-import {
-  IConfirmEmailVerificationResponse,
-  TConfirmEmailVerificationValues,
-} from "@/features/auth/types/register.types";
 import {
   IRegisterResponse,
+  ISendEmailVerificationResponse,
   TRegisterFormValues,
+  TSendEmailVerificationValues,
 } from "@/features/auth/types/register.types";
 
-export async function loginMutation(payload: TLoginFormValues) {
-  const response = await fetch(`${BASE_URL}/auth/login`, {
+async function postJson<T>(path: string, body: unknown): Promise<T> {
+  if (!API_URL) {
+    throw new Error("API_URL is not configured");
+  }
+
+  const response = await fetch(`${API_URL}${path}`, {
     method: "POST",
-    body: JSON.stringify(payload),
-    headers: {
-      ...HEADERS.JSON_HEADER,
-    },
+    body: JSON.stringify(body),
+    headers: HEADERS.JSON_HEADER,
   });
-  const data: IApiResponse<ILoginResponse> = await response.json();
-  // check if fails
+  const data: IApiResponse<T> = await response.json();
+
   if (!data.status) {
     throw new Error(data.message);
   }
+  if (!response.ok) {
+    throw new Error(data.message || `Request failed (${response.status})`);
+  }
+
   return data.payload;
+}
+
+export async function loginMutation(payload: TLoginFormValues) {
+  return postJson<ILoginResponse>("/auth/login", payload);
 }
 
 export async function confirmEmailMutation(payload: TConfirmEmailFormValues) {
-  const response = await fetch(`${BASE_URL}/auth/confirm-email-verification`, {
-    method: "POST",
-    body: JSON.stringify(payload),
-    headers: {
-      ...HEADERS.JSON_HEADER,
-    },
-  });
-  const data: IApiResponse<IConfirmEmailResponse> = await response.json();
-  // check if fails
-  if (!data.status) {
-    throw new Error(data.message);
-  }
-  return data.payload;
+  return postJson<IConfirmEmailResponse>(
+    "/auth/confirm-email-verification",
+    payload,
+  );
 }
 
 export async function forgotPasswordMutation(payload: TForgotPasswordPayload) {
-  const response = await fetch(`${BASE_URL}/auth/forgot-password`, {
-    method: "POST",
-    body: JSON.stringify(payload),
-    headers: {
-      ...HEADERS.JSON_HEADER,
-    },
-  });
-  const data: IApiResponse<IForgotPasswordResponse> = await response.json();
-  // check if fails
-  if (!data.status) {
-    throw new Error(data.message);
-  }
-  return data.payload;
+  return postJson<IForgotPasswordResponse>("/auth/forgot-password", payload);
 }
 
 export async function resetPasswordMutation(payload: TResetPasswordPayload) {
-  const response = await fetch(`${BASE_URL}/auth/reset-password`, {
-    method: "POST",
-    body: JSON.stringify(payload),
-    headers: {
-      ...HEADERS.JSON_HEADER,
-    },
-  });
-  const data: IApiResponse<IResetPasswordResponse> = await response.json();
-  // check if fails
-  if (!data.status) {
-    throw new Error(data.message);
-  }
-  return data.payload;
-}
-
-// related to register flow
-export async function sendEmailVerificationMutation(
-  payload: TSendEmailVerificationValues,
-) {
-  const response = await fetch(`${BASE_URL}/auth/send-email-verification`, {
-    method: "POST",
-    body: JSON.stringify(payload),
-    headers: {
-      ...HEADERS.JSON_HEADER,
-    },
-  });
-  const data: IApiResponse<ISendEmailVerificationResponse> =
-    await response.json();
-  if (!data.status) {
-    throw new Error(data.message);
-  }
-  return data.payload;
-}
-
-export async function confirmEmailVerificationMutation(
-  payload: TConfirmEmailVerificationValues,
-) {
-  const response = await fetch(`${BASE_URL}/auth/confirm-email-verification`, {
-    method: "POST",
-    body: JSON.stringify(payload),
-    headers: {
-      ...HEADERS.JSON_HEADER,
-    },
-  });
-  const data: IApiResponse<IConfirmEmailVerificationResponse> =
-    await response.json();
-  if (!data.status) {
-    throw new Error(data.message);
-  }
-  return data.payload;
+  return postJson<IResetPasswordResponse>("/auth/reset-password", payload);
 }
 
 export async function registerMutation(payload: TRegisterFormValues) {
-  const response = await fetch(`${BASE_URL}/auth/register`, {
-    method: "POST",
-    body: JSON.stringify(payload),
-    headers: {
-      ...HEADERS.JSON_HEADER,
-    },
-  });
-  const data: IApiResponse<IRegisterResponse> = await response.json();
-  if (!data.status) {
-    throw new Error(data.message);
-  }
-  return data.payload;
+  return postJson<IRegisterResponse>("/auth/register", payload);
+}
+
+export async function sendEmailVerificationMutation(
+  payload: TSendEmailVerificationValues,
+) {
+  return postJson<ISendEmailVerificationResponse>(
+    "/auth/send-email-verification",
+    payload,
+  );
 }

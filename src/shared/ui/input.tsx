@@ -171,8 +171,7 @@ function Input({
                   )
                 }
                 className={cn(
-                  "absolute inset-e-4 top-1/2 flex -translate-y-1/2 items-center justify-center",
-                  "text-text-muted",
+                  "text-text-muted absolute inset-e-3 top-1/2 flex -translate-y-1/2 items-center justify-center",
                 )}
                 aria-label={
                   passwordInput === "password"

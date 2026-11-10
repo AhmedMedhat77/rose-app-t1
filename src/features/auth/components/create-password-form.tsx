@@ -4,8 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 
-// عدل المسار والاسم حسب الـ action الحقيقي عندك
-import { registerAction } from "@/features/auth/actions/register.action";
+import { useRegister } from "@/features/auth/hooks/use-register";
 import { createPasswordSchema } from "@/features/auth/schemas";
 import type {
   TAccountDetailsValues,
@@ -37,7 +36,7 @@ export default function CreatePasswordForm({
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<TCreatePasswordValues>({
     resolver: zodResolver(
       createPasswordSchema({
@@ -54,14 +53,22 @@ export default function CreatePasswordForm({
     defaultValues: { password: "", confirmPassword: "" },
   });
 
-  const onSubmit = handleSubmit(async (values) => {
-    const result = await registerAction({ ...details, email, ...values });
+  const { mutate, isPending } = useRegister();
 
-    if (result.success) {
-      onRegistered();
-    } else {
-      addToast(TOAST_STATE.Unsuccessful, result.message);
-    }
+  const onSubmit = handleSubmit((values) => {
+    mutate(
+      { ...details, email, ...values },
+      {
+        onSuccess: () => {
+          onRegistered();
+        },
+        onError: (error) => {
+          const message =
+            error instanceof Error ? error.message : "An error occurred";
+          addToast(TOAST_STATE.Unsuccessful, message);
+        },
+      },
+    );
   });
 
   return (
@@ -76,7 +83,7 @@ export default function CreatePasswordForm({
           variant="ghost"
           type="button"
           onClick={onBack}
-          disabled={isSubmitting}
+          disabled={isPending}
         >
           {t("back")}
         </Button>
@@ -100,7 +107,7 @@ export default function CreatePasswordForm({
         {...register("confirmPassword")}
       />
 
-      <Button className="w-full" type="submit" loading={isSubmitting}>
+      <Button className="w-full" type="submit" loading={isPending}>
         {t("next")}
         <ArrowRight aria-hidden="true" className="size-4 rtl:rotate-180" />
       </Button>

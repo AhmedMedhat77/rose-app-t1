@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 export function createRegisterSchema(messages: {
   usernameRequired: string;
@@ -8,6 +9,8 @@ export function createRegisterSchema(messages: {
   passwordMismatch: string;
   firstNameRequired: string;
   lastNameRequired: string;
+  phoneRequired: string;
+  phoneInvalid: string;
   genderRequired: string;
 }) {
   return z
@@ -31,6 +34,16 @@ export function createRegisterSchema(messages: {
       firstName: z.string().trim().min(1, messages.firstNameRequired),
 
       lastName: z.string().trim().min(1, messages.lastNameRequired),
+
+      phone: z
+        .string()
+        .trim()
+        .min(1, messages.phoneRequired)
+        .refine((value) => {
+          const phoneNumber = parsePhoneNumberFromString(value);
+
+          return phoneNumber?.isValid() ?? false;
+        }, messages.phoneInvalid),
 
       gender: z.enum(["MALE", "FEMALE"], {
         error: messages.genderRequired,
@@ -58,7 +71,11 @@ export function createAccountDetailsSchema(messages: {
       .string()
       .trim()
       .min(1, messages.phoneRequired)
-      .regex(/^\+?[0-9]{10,15}$/, messages.phoneInvalid),
+      .refine((value) => {
+        const phoneNumber = parsePhoneNumberFromString(value);
+
+        return phoneNumber?.isValid() ?? false;
+      }, messages.phoneInvalid),
     gender: z.enum(["MALE", "FEMALE"], { error: messages.genderRequired }),
   });
 }

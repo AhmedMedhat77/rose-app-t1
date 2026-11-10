@@ -1,9 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { startTransition } from "react";
 import { useForm } from "react-hook-form";
 
 import { createLoginSchema } from "@/features/auth/schemas";
@@ -14,14 +12,17 @@ import { Input } from "@/shared/ui/input";
 import { TLoginFormValues } from "../types";
 import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
 import { addToast } from "@/shared/ui/toast";
+import { getSafeCallbackUrl } from "@/shared/lib/utils/safe-callback-url.util";
+import { useLogin } from "../hooks/use-login";
 
 export default function LoginForm() {
   const t = useTranslations("Login");
+  const { mutate: login, isPending } = useLogin();
 
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<TLoginFormValues>({
     resolver: zodResolver(
       createLoginSchema({
@@ -35,25 +36,23 @@ export default function LoginForm() {
     },
   });
 
-  const onSubmit = handleSubmit(async (values) => {
-    const response = await signIn("credentials", {
-      ...values,
-      redirect: false,
+  const onSubmit = handleSubmit((values) => {
+    login(values, {
+      onSuccess: () => {
+        const searchParams = new URLSearchParams(window.location.search);
+        const safeCallbackUrl = getSafeCallbackUrl(
+          searchParams.get("callbackUrl"),
+        );
+
+        if (safeCallbackUrl) {
+          window.location.href = safeCallbackUrl;
+        }
+      },
+      onError: () => {
+        addToast(TOAST_STATE.Unsuccessful, t("invalidCredentials"));
+      },
     });
-
-    if (response?.ok) {
-      const searchParams = new URLSearchParams(
-        typeof window !== "undefined" ? window.location.search : "",
-      );
-      const callbackUrl = searchParams.get("callbackUrl") || "/";
-      startTransition(() => {
-        window.location.href = callbackUrl;
-      });
-    } else {
-      addToast(TOAST_STATE.Unsuccessful, t("invalidCredentials"));
-    }
   });
-
   return (
     <form noValidate onSubmit={onSubmit} className="w-full space-y-4 p-4">
       <Input
@@ -83,7 +82,7 @@ export default function LoginForm() {
       </div>
 
       {/* Login Button */}
-      <Button className="w-full" type="submit" loading={isSubmitting}>
+      <Button className="w-full" type="submit" loading={isPending}>
         {t("submit")}
       </Button>
     </form>

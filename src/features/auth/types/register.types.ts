@@ -4,17 +4,11 @@ import {
   createPasswordSchema,
   createRegisterSchema,
 } from "../schemas/register.schema";
-import {
-  createSendEmailVerificationSchema,
-  createConfirmEmailVerificationSchema,
-} from "../schemas/email-verification.schema";
+import { createSendEmailVerificationSchema } from "../schemas/email-verification.schema";
 import { IUser } from "./auth.types";
 
 export type TSendEmailVerificationValues = z.infer<
   ReturnType<typeof createSendEmailVerificationSchema>
->;
-export type TConfirmEmailVerificationValues = z.infer<
-  ReturnType<typeof createConfirmEmailVerificationSchema>
 >;
 
 export type TAccountDetailsValues = z.infer<

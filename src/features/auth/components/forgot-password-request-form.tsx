@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 
 import { createForgotPasswordSchema } from "@/features/auth/schemas";
 import { TForgotPasswordFormValues } from "@/features/auth/types";
-import { forgotPasswordAction } from "@/features/auth/actions/forgot-password.action";
+import { useForgotPassword } from "../hooks/use-forgot-password";
 import { Link } from "@/i18n/navigation";
 import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
 import { Button } from "@/shared/ui/button";
@@ -22,13 +22,18 @@ export default function ForgotPasswordRequestForm({
   onSent: (email: string) => void;
   defaultEmail?: string;
 }) {
+  // Translation
   const t = useTranslations("ForgotPassword");
   const locale = useLocale();
 
+  // State
+  const { mutate: forgotPassword, isPending } = useForgotPassword();
+
+  // Form
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<TForgotPasswordFormValues>({
     resolver: zodResolver(
       createForgotPasswordSchema({ emailInvalid: t("emailInvalid") }),
@@ -36,17 +41,18 @@ export default function ForgotPasswordRequestForm({
     defaultValues: { email: defaultEmail },
   });
 
-  const onSubmit = handleSubmit(async (values) => {
+  // Functions
+  const onSubmit = handleSubmit((values) => {
     // Backend appends ?token=... to this URL for the reset link, landing the
     // user back on this same route where the new-password step is shown.
     const redirectUrl = `${window.location.origin}/${locale}/forgot-password`;
-    const result = await forgotPasswordAction(values, redirectUrl);
-
-    if (result.success) {
-      onSent(values.email);
-    } else {
-      addToast(TOAST_STATE.Unsuccessful, result.message);
-    }
+    forgotPassword(
+      { ...values, redirectUrl },
+      {
+        onSuccess: () => onSent(values.email),
+        onError: () => addToast(TOAST_STATE.Unsuccessful, t("errorToast")),
+      },
+    );
   });
 
   return (
@@ -65,7 +71,7 @@ export default function ForgotPasswordRequestForm({
         {...register("email")}
       />
 
-      <Button className="w-full" type="submit" loading={isSubmitting}>
+      <Button className="w-full" type="submit" loading={isPending}>
         {t("submit")}
       </Button>
 

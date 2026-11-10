@@ -1,11 +1,10 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { startTransition } from "react";
 import { useForm } from "react-hook-form";
 
+import { useLogin } from "../hooks/use-login";
 import { createLoginSchema } from "@/features/auth/schemas";
 import { Link } from "@/i18n/navigation";
 
@@ -16,14 +15,20 @@ import FormTitle from "./shared/form-title";
 import FormDivider from "./shared/form-divider";
 import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
 import { addToast } from "@/shared/ui/toast";
+import { getSafeCallbackUrl } from "@/shared/lib/utils/safe-callback-url.util";
 
 export default function LoginForm() {
+  // Translation
   const t = useTranslations("Login");
 
+  // State
+  const { mutate: login, isPending } = useLogin();
+
+  // Form
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<TLoginFormValues>({
     resolver: zodResolver(
       createLoginSchema({
@@ -37,22 +42,23 @@ export default function LoginForm() {
     },
   });
 
-  const onSubmit = handleSubmit(async (values) => {
-    const response = await signIn("credentials", {
-      ...values,
-      redirect: false,
+  // Functions
+  const onSubmit = handleSubmit((values) => {
+    login(values, {
+      onSuccess: () => {
+        const searchParams = new URLSearchParams(window.location.search);
+        const safeCallbackUrl = getSafeCallbackUrl(
+          searchParams.get("callbackUrl"),
+        );
+
+        if (safeCallbackUrl) {
+          window.location.href = safeCallbackUrl;
+        }
+      },
+      onError: () => {
+        addToast(TOAST_STATE.Unsuccessful, t("invalidCredentials"));
+      },
     });
-    if (response?.ok) {
-      const searchParams = new URLSearchParams(
-        typeof window !== "undefined" ? window.location.search : "",
-      );
-      const callbackUrl = searchParams.get("callbackUrl") || "/";
-      startTransition(() => {
-        window.location.href = callbackUrl;
-      });
-    } else {
-      addToast(TOAST_STATE.Unsuccessful, t("invalidCredentials"));
-    }
   });
 
   return (
@@ -64,6 +70,7 @@ export default function LoginForm() {
       <Input
         label={t("username")}
         type="text"
+        autoComplete="username"
         placeholder={t("usernamePlaceholder")}
         error={errors.username?.message}
         {...register("username")}
@@ -72,12 +79,12 @@ export default function LoginForm() {
       <Input
         label={t("password")}
         placeholder={t("passwordPlaceholder")}
-        type="password"
+        variant="password"
+        autoComplete="current-password"
         error={errors.password?.message}
         {...register("password")}
       />
 
-      {/* Forgot password */}
       <div className="flex justify-end pt-0.5">
         <Link
           href="/forgot-password"
@@ -87,15 +94,13 @@ export default function LoginForm() {
         </Link>
       </div>
 
-      {/* Login Button */}
-      <Button className="w-full" type="submit" loading={isSubmitting}>
+      <Button className="w-full" type="submit" loading={isPending}>
         {t("submit")}
       </Button>
 
-      {/* Divider & Create account link */}
       <FormDivider />
       <div className="pt-4 text-center">
-        <p className="zinc-800 text-sm font-medium dark:text-zinc-50">
+        <p className="text-sm font-medium text-zinc-800 dark:text-zinc-50">
           {t("noAccount")}{" "}
           <Link
             href="/register"

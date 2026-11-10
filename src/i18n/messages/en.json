@@ -127,6 +127,7 @@
     "back": "Go back"
   },
   "ForgotPassword": {
+    "errorToast": "We couldn't send the password reset email. Please try again.",
     "title": "Forgot Password?",
     "description": "Worry not, we'll send you instructions to help you reset it.",
     "email": "Email",
@@ -137,6 +138,7 @@
     "createAccount": "Create one now!"
   },
   "ResetPassword": {
+    "errorToast": "We couldn't reset your password. Please try again or request a new reset link.",
     "title": "Create a new password",
     "password": "Password",
     "confirmPassword": "Confirm Password",
@@ -218,6 +220,11 @@
     "passwordMismatch": "Passwords do not match",
     "back": "Back",
     "next": "Next "
+  },
+  "RegisterSuccess": {
+    "title": "Account created",
+    "description": "Your account is ready. Log in to get started.",
+    "login": "Log in"
   },
   "ContactUs": {
     "title": "Contact Us"

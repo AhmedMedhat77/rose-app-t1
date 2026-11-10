@@ -1,21 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { useTranslations } from "next-intl";
 import { Controller, useForm, useWatch } from "react-hook-form";
-import { confirmEmailVerificationAction } from "@/features/auth/actions/confirm-email-verification.action";
-import { sendEmailVerificationAction } from "@/features/auth/actions/send-email-verification.action";
-import { createConfirmEmailVerificationSchema } from "@/features/auth/schemas";
-import { TConfirmEmailVerificationValues } from "@/features/auth/types";
+
+import { useConfirmEmail } from "@/features/auth/hooks/use-confirm-email";
+import { useOtpCooldown } from "@/features/auth/hooks/use-otp-cooldown";
+import { useSendEmailVerification } from "@/features/auth/hooks/use-send-email-verification";
+import {
+  clearOtpSent,
+  getRemainingSeconds,
+} from "@/features/auth/lib/otp-cooldown";
+import { createConfirmEmailSchema } from "@/features/auth/schemas/confirm-email.schema";
+import { TConfirmEmailFormValues } from "@/features/auth/types/confirm-email.types";
 import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
 import { Button } from "@/shared/ui/button";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/shared/ui/input-otp";
 import { addToast } from "@/shared/ui/toast";
-import FormDivider from "./shared/form-divider";
 
-const RESEND_SECONDS = 60;
+import FormDivider from "./shared/form-divider";
 
 type Props = {
   onConfirmed: () => void;
@@ -28,26 +32,21 @@ export default function ConfirmEmailVerificationForm({
   onEdit,
   defaultEmail = "",
 }: Props) {
+  // Translation
   const t = useTranslations("ConfirmEmailVerification");
 
-  const [resendLoading, setResendLoading] = useState(false);
-  const [secondsLeft, setSecondsLeft] = useState(RESEND_SECONDS);
-
-  // الـ cooldown بيبدأ من أول ما الصفحة تفتح، لأن الكود اتبعت لتوه
-  useEffect(() => {
-    if (secondsLeft <= 0) return;
-    const id = setTimeout(() => setSecondsLeft((s) => s - 1), 1000);
-    return () => clearTimeout(id);
-  }, [secondsLeft]);
-
+  // State
+  const { secondsLeft, sync } = useOtpCooldown(defaultEmail);
+  const confirmMutation = useConfirmEmail();
+  const resendMutation = useSendEmailVerification();
   const {
     control,
     handleSubmit,
     resetField,
-    formState: { errors, isSubmitting },
-  } = useForm<TConfirmEmailVerificationValues>({
+    formState: { errors },
+  } = useForm<TConfirmEmailFormValues>({
     resolver: zodResolver(
-      createConfirmEmailVerificationSchema({
+      createConfirmEmailSchema({
         emailInvalid: t("emailInvalid"),
         codeRequired: t("codeRequired"),
         codeLength: t("codeLength"),
@@ -55,47 +54,47 @@ export default function ConfirmEmailVerificationForm({
     ),
     defaultValues: { email: defaultEmail, code: "" },
   });
+  const code = useWatch({ control, name: "code", defaultValue: "" });
 
-  const code = useWatch({
-    control,
-    name: "code",
-    defaultValue: "",
+  // Variables
+  const isResendDisabled = resendMutation.isPending || secondsLeft > 0;
+
+  // Functions
+  const onSubmit = handleSubmit((values) => {
+    confirmMutation.mutate(
+      { email: values.email, code: values.code },
+      {
+        onSuccess: () => {
+          clearOtpSent();
+          onConfirmed();
+        },
+        onError: (error) => {
+          addToast(TOAST_STATE.Unsuccessful, error.message);
+          resetField("code");
+        },
+      },
+    );
   });
-  const onSubmit = handleSubmit(async (values) => {
-    const result = await confirmEmailVerificationAction({
-      email: values.email,
-      code: values.code,
-    });
 
-    if (result.success) {
-      onConfirmed();
-    } else {
-      addToast(TOAST_STATE.Unsuccessful, result.message);
-      resetField("code");
-    }
-  });
+  function handleResend() {
+    if (getRemainingSeconds(defaultEmail) > 0) return;
 
-  async function handleResend() {
-    setResendLoading(true);
-    try {
-      const result = await sendEmailVerificationAction({ email: defaultEmail });
-      if (result.success) {
-        addToast(TOAST_STATE.Successful, t("codeResent"));
-        setSecondsLeft(RESEND_SECONDS);
-      } else {
-        addToast(TOAST_STATE.Unsuccessful, result.message);
-      }
-    } finally {
-      setResendLoading(false);
-    }
+    resendMutation.mutate(
+      { email: defaultEmail },
+      {
+        onSuccess: () => {
+          sync();
+          addToast(TOAST_STATE.Successful, t("codeResent"));
+        },
+        onError: (error) => {
+          addToast(TOAST_STATE.Unsuccessful, error.message);
+        },
+      },
+    );
   }
-
-  const resendDisabled = resendLoading || secondsLeft > 0;
 
   return (
     <form noValidate onSubmit={onSubmit} className="flex w-full flex-col gap-6">
-      {/*  edit */}
-
       <div className="flex flex-col">
         <p className="text-text-primary text-xl font-semibold">
           {t("enterOTPCode")}
@@ -105,7 +104,7 @@ export default function ConfirmEmailVerificationForm({
           <button
             type="button"
             onClick={onEdit}
-            className="cursor-pointer text-blue-600 underline"
+            className="text-text-primary cursor-pointer underline"
           >
             {t("edit")}
           </button>
@@ -113,7 +112,7 @@ export default function ConfirmEmailVerificationForm({
       </div>
 
       <FormDivider />
-      {/* OTP Input & Resend */}
+
       <div className="flex flex-col gap-2">
         <div dir="ltr" className="flex justify-center">
           <Controller
@@ -132,11 +131,11 @@ export default function ConfirmEmailVerificationForm({
                 onChange={field.onChange}
                 onBlur={field.onBlur}
                 ref={field.ref}
-                onComplete={() => onSubmit()} // يبعت تلقائي لما يكمل 6 أرقام
+                onComplete={() => onSubmit()}
               >
                 <InputOTPGroup>
-                  {Array.from({ length: 6 }, (_, i) => (
-                    <InputOTPSlot key={i} index={i} />
+                  {Array.from({ length: 6 }, (_, index) => (
+                    <InputOTPSlot key={index} index={index} />
                   ))}
                 </InputOTPGroup>
               </InputOTP>
@@ -148,19 +147,20 @@ export default function ConfirmEmailVerificationForm({
           <p
             id="code-error"
             role="alert"
-            className="text-destructive text-center text-sm"
+            className="text-text-danger text-center text-sm"
           >
             {errors.code.message}
           </p>
         )}
+
         <Button
-          variant={"ghost"}
+          variant="ghost"
           type="button"
           onClick={handleResend}
-          disabled={resendDisabled}
+          disabled={isResendDisabled}
           className="ms-auto block"
         >
-          {resendLoading
+          {resendMutation.isPending
             ? t("sending")
             : secondsLeft > 0
               ? t("resendIn", { seconds: secondsLeft })
@@ -171,8 +171,8 @@ export default function ConfirmEmailVerificationForm({
       <Button
         className="w-full"
         type="submit"
-        loading={isSubmitting}
-        disabled={code.length !== 6 || isSubmitting}
+        loading={confirmMutation.isPending}
+        disabled={code.length !== 6 || confirmMutation.isPending}
       >
         {t("verifyCode")}
       </Button>
