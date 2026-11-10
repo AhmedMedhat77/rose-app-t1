@@ -1,5 +1,5 @@
 ---
-description: Forms — Zod schema definitions, React Hook Form patterns, shadcn Form components
+description: Forms — Zod schemas, React Hook Form with Controller, and shadcn Field
 paths:
   - "src/features/**/lib/schemas/**"
   - "src/features/**/components/**"
@@ -11,14 +11,14 @@ paths:
 
 ## Schema First
 
-Always define the Zod schema in `features/<feature-name>/lib/schemas/<scope-name>.schema.ts` before writing the form (`features/auth/schemas/` for auth, `shared/lib/schemas/` only for schemas shared across features). Derive the form values type from that schema with `z.infer`. Do not write the same fields again by hand.
+Always define the Zod schema in `features/<feature-name>/lib/schemas/<scope-name>.schema.ts` before writing the form (`shared/lib/schemas/` only for schemas shared across features). Derive the form values type from that schema with `z.infer`. Do not write the same fields again by hand.
 
 Put the derived type in the feature `types/` folder. A field that is not part of the schema, such as `redirectUrl`, goes on a second type that extends the inferred one.
 
 > This file uses **Zod 4** syntax (`z.email()`, `error` instead of `message`). With `@hookform/resolvers`, use v7 or later.
 
 ```typescript
-// features/auth/lib/schemas/auth.schema.ts
+// features/auth/lib/schemas/register.schema.ts
 import { z } from "zod";
 
 export const registerSchema = z
@@ -34,7 +34,7 @@ export const registerSchema = z
     path: ["rePassword"],
   });
 
-// features/auth/types/register.types.ts
+// features/auth/lib/types/register.types.ts
 // The schema above is a const, so `typeof` is the schema object.
 export type TRegisterFormValues = z.infer<typeof registerSchema>;
 
@@ -56,102 +56,74 @@ export type TLoginFormValues = z.infer<ReturnType<typeof createLoginSchema>>;
 
 ---
 
-## shadcn Form Components
+## React Hook Form and Field
 
-Always use shadcn `<Form>` components with React Hook Form. Never wire up raw native HTML forms.
+Follow the [shadcn React Hook Form guide](https://ui.shadcn.com/docs/forms/react-hook-form). Build each input with `Controller` and `Field` from `@/shared/ui/field`. Do not use the old shadcn `<Form>` / `<FormField>` components.
 
-The shadcn `<Form>` setup provides accessibility, consistent error display, and clean integration with `react-hook-form`'s `control`.
-
-Place form components in `features/<feature-name>/components/<component-name>.tsx`. shadcn's `<Form>` wrapper still works but is no longer actively developed, so keep using it for consistency and don't mix it with `<Field>` in the same project.
+Place the form in `features/<feature-name>/components/<component-name>.tsx` (kebab-case file, PascalCase function).
 
 ```typescript
+// features/auth/components/login-form.tsx
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/shared/ui/form";
-import { Input } from "@/shared/ui/input";
+import { createLoginSchema } from "@/features/auth/schemas";
+import type { TLoginFormValues } from "@/features/auth/types";
 import { Button } from "@/shared/ui/button";
-import { loginSchema, type LoginFields } from "@/features/auth/lib/schemas/auth.schema";
+import { Field, FieldError, FieldGroup, FieldLabel } from "@/shared/ui/field";
+import { Input } from "@/shared/ui/input";
 
 export function LoginForm() {
   // Translation
-  const t = useTranslations("auth");
+  const t = useTranslations("Login");
 
   // Form
-  const form = useForm<LoginFields>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+  const form = useForm<TLoginFormValues>({
+    resolver: zodResolver(
+      createLoginSchema({
+        usernameRequired: t("usernameRequired"),
+        passwordRequired: t("passwordRequired"),
+      }),
+    ),
+    defaultValues: { username: "", password: "" },
   });
 
   // Functions
-  function onSubmit(values: LoginFields) {
-    // Pass to mutation hook
+  function onSubmit(values: TLoginFormValues) {
+    // Pass to the mutation hook
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-
-        {/* Email */}
-        <FormField
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <FieldGroup>
+        {/* Username */}
+        <Controller
+          name="username"
           control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("email-label")}</FormLabel>
-              <FormControl>
-                <Input
-                  type="email"
-                  placeholder={t("email-placeholder")}
-                  autoComplete="email"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="login-username">{t("username")}</FieldLabel>
+              <Input
+                {...field}
+                id="login-username"
+                aria-invalid={fieldState.invalid}
+                autoComplete="username"
+              />
+              {fieldState.invalid && (
+                <FieldError errors={[fieldState.error]} />
+              )}
+            </Field>
           )}
         />
 
-        {/* Password */}
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("password-label")}</FormLabel>
-              <FormControl>
-                <Input
-                  type="password"
-                  placeholder={t("password-placeholder")}
-                  autoComplete="current-password"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Submit */}
-        <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+        <Button type="submit" disabled={form.formState.isSubmitting}>
           {t("login")}
         </Button>
-
-      </form>
-    </Form>
+      </FieldGroup>
+    </form>
   );
 }
 ```
@@ -160,26 +132,22 @@ export function LoginForm() {
 
 ## Field Comment Structure
 
-Every form field must follow this comment structure:
-
 ```typescript
 {/* Field name */}
-<FormField
-  control={form.control}
+<Controller
   name="fieldName"
-  render={({ field }) => (
-    <FormItem>
+  control={form.control}
+  render={({ field, fieldState }) => (
+    <Field data-invalid={fieldState.invalid}>
       {/* Label */}
-      <FormLabel>{t("label")}</FormLabel>
+      <FieldLabel htmlFor={field.name}>{t("label")}</FieldLabel>
 
       {/* Field */}
-      <FormControl>
-        <Input {...field} />
-      </FormControl>
+      <Input {...field} id={field.name} aria-invalid={fieldState.invalid} />
 
       {/* Feedback */}
-      <FormMessage />
-    </FormItem>
+      {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+    </Field>
   )}
 />
 ```
@@ -191,31 +159,35 @@ Every form field must follow this comment structure:
 ```typescript
 export function RegisterForm() {
   // Translation
-  const t = useTranslations("auth");
+  const t = useTranslations("Register");
 
   // Hooks
-  const { isPending, register } = useRegister();
+  const { isPending, register: submitRegister } = useRegister();
 
   // Form
-  const form = useForm<RegistrationFields>({
+  const form = useForm<TRegisterFormValues>({
     resolver: zodResolver(registerSchema),
-    defaultValues: { firstName: "", lastName: "", email: "", password: "", rePassword: "" },
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      rePassword: "",
+    },
   });
 
   // Functions
-  function onSubmit(values: RegistrationFields) {
-    register(values);
+  function onSubmit(values: TRegisterFormValues) {
+    submitRegister(values);
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        {/* fields */}
-        <Button type="submit" disabled={isPending}>
-          {isPending ? t("submitting") : t("submit")}
-        </Button>
-      </form>
-    </Form>
+    <form onSubmit={form.handleSubmit(onSubmit)}>
+      {/* Controller fields */}
+      <Button type="submit" disabled={isPending}>
+        {isPending ? t("submitting") : t("submit")}
+      </Button>
+    </form>
   );
 }
 ```
@@ -224,11 +196,11 @@ export function RegisterForm() {
 
 ## Rules Summary
 
-- ✅ All schemas go in `features/<feature-name>/lib/schemas/<scope-name>.schema.ts`
+- ✅ All features schemas live in `features/<feature-name>/lib/schemas/<scope-name>.schema.ts` (`shared/lib/schemas/` only for schemas shared across features).
 - ✅ Derive form values with `z.infer<typeof schema>`. For a schema factory, use `z.infer<ReturnType<typeof createSchema>>`
-- ✅ Always use shadcn `<Form>` + `<FormField>` — never raw HTML forms
-- ✅ Always use `zodResolver` — never manual validation
-- ✅ Use `form.formState.isSubmitting` or mutation `isPending` to disable submit
-- ✅ Server-side errors go to mutation `onError` callback
+- ✅ Use `Controller` and `Field` from `@/shared/ui/field`. Do not use shadcn `<Form>` or `<FormField>`
+- ✅ Always use `zodResolver`
+- ✅ Disable submit with `form.formState.isSubmitting` or the mutation `isPending`
+- ✅ Server-side errors go to the mutation `onError` callback
 - ❌ Never use `useState` to track form field values
-- ❌ Never access `register()` directly — always use `<FormField>` with `control`
+- ❌ Never call React Hook Form's `register()`. Connect inputs with `Controller` and `control`
