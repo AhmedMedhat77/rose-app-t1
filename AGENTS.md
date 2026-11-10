@@ -201,7 +201,7 @@ Read the matching file before working on that topic.
 - [Clean code](.agents/rules/clean-code.md) — read before writing any component, hook, or function; component internal order lives here
 - [Next.js](.agents/rules/nextjs.md) — read before writing pages, layouts, route handlers, metadata, or any data fetching; Server vs Client components
 - [Mutations](.agents/rules/mutations.md) — read before writing Server Actions, React Query mutation hooks, or cache invalidation
-- [Forms](.agents/rules/forms.md) — read before writing Zod schemas or any form with React Hook Form and shadcn `<Form>`
+- [Forms](.agents/rules/forms.md) — read before writing Zod schemas or a React Hook Form form with shadcn `Field` and `Controller`
 - [Components](.agents/rules/components.md) — read before creating a component, skeleton, dialog, or loading/error/empty state
 - [i18n](.agents/rules/i18n.md) — read before touching translations, locale routing, navigation imports, or RTL layout
 - [Auth](.agents/rules/auth.md) — read before touching NextAuth v4 config, session types, or route protection in `proxy.ts`
