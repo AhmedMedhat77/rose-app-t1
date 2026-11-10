@@ -70,7 +70,7 @@ export default function CategoryList() {
                 <Image
                   src={el.image}
                   alt=""
-                  width={21}
+                  width={20}
                   height={20}
                   className="h-5 w-5 object-contain"
                 />

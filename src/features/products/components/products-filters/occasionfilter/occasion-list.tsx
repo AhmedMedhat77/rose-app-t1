@@ -68,7 +68,14 @@ export default function OccasionList() {
             className="relative h-18.5 w-33.25 overflow-hidden rounded-lg"
           >
             {el.image && (
-              <Image src={el.image} alt="" fill className="object-cover" />
+              <Image
+                src={el.image}
+                alt=""
+                fill
+                sizes="(max-width: 768px) 100vw, 300px"
+                loading="eager"
+                className="object-cover"
+              />
             )}
             <div
               className={`absolute inset-0 flex items-center justify-center p-2 hover:bg-[linear-gradient(180deg,rgba(0,0,0,0.25)_0%,rgba(0,0,0,0.5)_100%)] ${

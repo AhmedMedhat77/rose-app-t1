@@ -113,6 +113,7 @@
     "filtersPriceError": "'From' must be less than 'To'",
     "filtersError": "Something went wrong. Please try again.",
     "filtersEmpty": "No items found"
+  },
   "Auth": {
     "heroImageAlt": "Gift boxes with ribbons"
   },

@@ -1,4 +1,4 @@
-import CategoryFilter from "./CategoryFilters/category-filter";
+import CategoryFilter from "./categoryfilters/category-filter";
 import OccasionFilter from "./occasionfilter/occasion-filter";
 import PriceFilter from "./price-filter";
 import RatingFilter from "./rating-filter";
