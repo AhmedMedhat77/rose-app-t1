@@ -6,7 +6,7 @@ export default async function getAllOccasions(): Promise<IOccasion[]> {
   const baseUrl = API_URL;
 
   if (!baseUrl) {
-    throw new Error("NEXT_PUBLIC_BASE_URL is not defined");
+    throw new Error("base url is not defined");
   }
 
   const response = await fetch(`${baseUrl}/occasions?page=1&limit=20`, {

@@ -7,7 +7,7 @@ export default async function getMostPopularProducts(
   const baseUrl = API_URL;
 
   if (!baseUrl) {
-    throw new Error("NEXT_PUBLIC_BASE_URL is not defined");
+    throw new Error("base url is not defined");
   }
 
   const params = new URLSearchParams({
