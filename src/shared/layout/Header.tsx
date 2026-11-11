@@ -8,10 +8,10 @@ import { NotificationsMenu } from "@/features/notifications/components/Notificat
 import { NotificationToggle } from "@/features/notifications/components/NotificationToggle";
 import { Input } from "@/shared/ui/input";
 import { Suspense } from "react";
-import { ProductsSearch } from "@/features/products/components/ProductsSearch";
+import { SearchBar } from "@/features/search/components/searchBar";
 
 const ICON_BUTTON =
-  "text-foreground hover:text-primary flex size-9 items-center justify-center rounded-md transition-colors";
+  "text-zinc-700  dark:text-text-plain flex size-9 items-center justify-center rounded-md transition-colors";
 
 export function Header() {
   const t = useTranslations("Header");
@@ -19,7 +19,7 @@ export function Header() {
   return (
     <header>
       {/* Top bar */}
-      <div className="bg-background">
+      <div className="bg-background dark:bg-bg-subtle">
         <div className="mx-auto flex items-center gap-6 px-6 py-3">
           <Link href="/" className="shrink-0">
             <Image
@@ -46,14 +46,14 @@ export function Header() {
                 </div>
               }
             >
-              <ProductsSearch />
+              <SearchBar />
             </Suspense>
           </div>
 
           <div className="flex shrink-0 items-center gap-4">
             <Link
               href="/login"
-              className="text-foreground hover:text-primary flex items-center gap-2 text-sm transition-colors"
+              className="dark:text-text-plain flex items-center gap-2 text-sm text-[16px] text-zinc-700 transition-colors"
             >
               <User width={20} height={20} />
               {t("login")}

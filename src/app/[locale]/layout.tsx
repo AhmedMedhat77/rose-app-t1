@@ -23,6 +23,7 @@ import Footer from "@/shared/layout/Footer";
 import { Header } from "@/shared/layout/Header";
 
 import { Toaster } from "@/shared/ui/toast";
+import { QueryProvider } from "@/shared/providers/query-provider";
 
 export const metadata: Metadata = {
   title: "Rose App",
@@ -67,7 +68,7 @@ export default async function RootLayout({
       className={`${sarabun.variable} ${tajawal.variable} ${geistMono.variable} ${resolvedTheme} h-full antialiased`}
     >
       <body
-        className="dark:bg-bg-muted flex min-h-full flex-col"
+        className="dark:bg-bg-subtle flex min-h-full flex-col"
         suppressHydrationWarning
       >
         <ThemeProvider initialTheme={theme} initialSystemTheme={systemTheme}>
@@ -76,9 +77,11 @@ export default async function RootLayout({
               <LocaleSwitcher />
               <ThemeMode />
             </header>
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
+            <QueryProvider>
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </QueryProvider>
             <Toaster />
           </NextIntlClientProvider>
         </ThemeProvider>

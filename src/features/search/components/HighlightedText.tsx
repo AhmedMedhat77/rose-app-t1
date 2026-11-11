@@ -1,3 +1,6 @@
+const escapeRegExp = (value: string) =>
+  value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
 export function HighlightedText({
   text,
   query,
@@ -5,9 +8,10 @@ export function HighlightedText({
   text: string;
   query: string;
 }) {
-  if (!query.trim()) return text;
+  const trimmedQuery = query.trim();
+  if (!trimmedQuery) return text;
 
-  const parts = text.split(new RegExp(`(${query.trim()})`, "gi"));
+  const parts = text.split(new RegExp(`(${escapeRegExp(trimmedQuery)})`, "gi"));
 
   return parts.map((part, i) =>
     i % 2 === 1 ? (

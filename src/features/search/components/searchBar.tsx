@@ -3,10 +3,10 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
-import { useDebouncedCallback } from "use-debounce";
-import { Input } from "@/shared/ui/input";
 import { Star } from "lucide-react";
+import { useDebouncedCallback } from "use-debounce";
+import { Link } from "@/i18n/navigation";
+import { Input } from "@/shared/ui/input";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,10 +15,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
-import { HighlightedText } from "./HighlightedText";
-import { IProduct } from "@/features/products/types/product";
 
-export function SearchBar({ products }: { products: IProduct[] }) {
+import { HighlightedText } from "./HighlightedText";
+import { useProductsSearch } from "../lib/hooks/use-products-search";
+
+export function SearchBar() {
   const t = useTranslations("Header");
   const tSearch = useTranslations("Search");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -27,24 +28,28 @@ export function SearchBar({ products }: { products: IProduct[] }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const updateDebouncedQuery = useDebouncedCallback((value: string) => {
-    setDebouncedQuery(value.trim().toLowerCase());
+    setDebouncedQuery(value.trim());
   }, 300);
 
-  const filtered = products.filter((p) =>
-    p.title.toLowerCase().includes(debouncedQuery),
+  const { data, isFetching, isError } = useProductsSearch(
+    debouncedQuery,
+    isOpen,
   );
 
+  const isSearching = debouncedQuery.length > 0;
+  const products = data ?? [];
+  const showTitle = !isSearching && products.length > 0;
+  const showEmpty = !isFetching && !isError && products.length === 0;
   return (
     <DropdownMenu
       open={isOpen}
       modal={false}
       onOpenChange={(open, details) => {
         if (!open && details.reason === "trigger-press") return;
-
         setIsOpen(open);
       }}
-      onOpenChangeComplete={() => {
-        inputRef.current?.focus();
+      onOpenChangeComplete={(open) => {
+        if (open) inputRef.current?.focus();
       }}
     >
       <DropdownMenuTrigger
@@ -70,18 +75,23 @@ export function SearchBar({ products }: { products: IProduct[] }) {
           className="h-11 w-full rounded-lg text-sm"
         />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="max-h-96 p-0">
-        <DropdownMenuGroup>
-          <DropdownMenuLabel className="text-primary px-4 py-3 text-base">
-            {filtered.length === 0 && tSearch("title")}
-          </DropdownMenuLabel>
-        </DropdownMenuGroup>
 
-        {filtered.length === 0 && (
-          <p className="px-4 py-3 text-sm">{tSearch("empty")}</p>
+      <DropdownMenuContent className="max-h-96 p-0">
+        {showTitle && (
+          <DropdownMenuGroup>
+            <DropdownMenuLabel className="text-primary px-4 py-3 text-base">
+              {tSearch("title")}
+            </DropdownMenuLabel>
+          </DropdownMenuGroup>
         )}
 
-        {filtered.map((product) => (
+        {isSearching && isFetching && (
+          <p className="px-4 py-3 text-sm">{tSearch("loading")}</p>
+        )}
+        {isError && <p className="px-4 py-3 text-sm">{tSearch("error")}</p>}
+        {showEmpty && <p className="px-4 py-3 text-sm">{tSearch("empty")}</p>}
+
+        {products.map((product) => (
           <DropdownMenuItem
             key={product.id}
             className="border-t p-3"

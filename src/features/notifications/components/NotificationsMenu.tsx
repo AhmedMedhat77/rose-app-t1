@@ -10,7 +10,7 @@ import NotificationsPanel from "./NotificationsPanel";
 import { INotificationItem } from "../lib/types/notification";
 
 const ICON_BUTTON =
-  "text-foreground hover:text-primary flex size-9 items-center justify-center transition-colors";
+  "text-zinc-700 dark:text-text-plain  flex size-9 items-center justify-center transition-colors";
 
 export function NotificationsMenu({ label }: { label: string }) {
   const [notifications, setNotifications] = useState<INotificationItem[]>([
@@ -60,7 +60,7 @@ export function NotificationsMenu({ label }: { label: string }) {
       >
         <BellIcon />
         {unreadCount > 0 && (
-          <Badge className="absolute -inset-e-1 -top-1 h-4 px-1 text-[10px]">
+          <Badge className="bg-bg-danger dark:bg-bg-danger text-text-inverse dark:text-secondary-foreground absolute inset-e-0 -top-1 flex size-3.5 items-center justify-center rounded-full">
             {unreadCount}
           </Badge>
         )}
