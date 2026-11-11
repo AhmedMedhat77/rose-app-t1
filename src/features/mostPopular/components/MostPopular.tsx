@@ -1,6 +1,4 @@
 "use client";
-
-import PopularLabel from "@/shared/components/popularLabel";
 import { useTranslations, useLocale } from "next-intl";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MostPopularProps } from "../types/mostPopular";
@@ -11,6 +9,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "cn";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import ProductCard from "@/shared/components/ProductCard";
+import SectionsTitle from "@/shared/components/SectionsTitle";
 
 export default function MostPopular({
   occasions,
@@ -38,10 +37,7 @@ export default function MostPopular({
     <div className="my-20">
       <div className="mx-auto my-15 w-[80rem]">
         <div className="flex items-center justify-between">
-          <PopularLabel className="font-primary align-middle text-[36px] leading-none font-bold tracking-normal">
-            {t("mostPopular.label")}
-          </PopularLabel>
-
+          <SectionsTitle mainTitle={`${t("mostPopular.label")}`} />
           <Tabs
             value={selectedOccasionId}
             onValueChange={setSelectedOccasionId}

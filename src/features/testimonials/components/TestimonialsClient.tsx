@@ -15,7 +15,7 @@ export default function TestimonialsClient({
 
   return (
     <div>
-      <section className="bg-bg-primary-fade dark:bg-bg-plain w-full overflow-hidden px-6 py-20">
+      <section className="bg-bg-primary-fade dark:bg-bg-plain mt-10 w-full overflow-hidden px-6 py-20">
         <div className="mx-auto max-w-6xl">
           <div className="w-full overflow-hidden">
             <div
