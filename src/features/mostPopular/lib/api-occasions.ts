@@ -1,8 +1,9 @@
+import { API_URL } from "@/app/shared/constants/config";
 import { IOccasion } from "../types/mostPopular";
 import { IOccasionsResponse } from "../types/occasions";
 
 export default async function getAllOccasions(): Promise<IOccasion[]> {
-  const baseUrl = process.env.API_URL;
+  const baseUrl = API_URL;
 
   if (!baseUrl) {
     throw new Error("NEXT_PUBLIC_BASE_URL is not defined");

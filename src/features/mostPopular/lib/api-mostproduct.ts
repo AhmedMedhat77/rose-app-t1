@@ -1,9 +1,10 @@
+import { API_URL } from "@/app/shared/constants/config";
 import { IMostPopularProduct, Product } from "../types/mostPopular";
 
 export default async function getMostPopularProducts(
   occasionId = "",
 ): Promise<Product[]> {
-  const baseUrl = process.env.API_URL;
+  const baseUrl = API_URL;
 
   if (!baseUrl) {
     throw new Error("NEXT_PUBLIC_BASE_URL is not defined");
