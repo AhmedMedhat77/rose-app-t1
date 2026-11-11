@@ -19,7 +19,7 @@ import { useDeleteAccount } from "../hooks/use-delete-account";
 export function DeleteAccountDialog() {
   const t = useTranslations("accountSettings.Profile");
   const [open, setOpen] = useState(false);
-  const { mutate: deleteAccount, isPending } = useDeleteAccount();
+  const { deleteAccount, isPending } = useDeleteAccount();
 
   return (
     <AlertDialog
@@ -49,12 +49,12 @@ export function DeleteAccountDialog() {
         <Button
           variant="ghost"
           size="icon-xs"
-          className="text-text-soft hover:text-text-plain absolute top-4 right-4 bg-transparent transition-opacity hover:bg-transparent"
+          className="text-text-soft hover:text-text-plain absolute end-4 top-4 bg-transparent transition-opacity hover:bg-transparent"
           onClick={() => setOpen(false)}
           disabled={isPending}
         >
           <X className="size-6" aria-hidden="true" />
-          <span className="sr-only">Close</span>
+          <span className="sr-only">{t("deleteDialog.close")}</span>
         </Button>
         <div className="flex flex-col items-center gap-6 text-center">
           <div className="bg-bg-inverse/5 flex size-26 items-center justify-center rounded-full">

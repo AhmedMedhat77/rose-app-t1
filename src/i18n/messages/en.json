@@ -135,7 +135,8 @@
         "description": "This action is permanent and cannot be undone.",
         "cancel": "Nope, not doing it",
         "confirm": "Yes, delete",
-        "confirming": "Deleting..."
+        "confirming": "Deleting...",
+        "close": "Close"
       },
       "toasts": {
         "updateSuccess": "Profile updated successfully",

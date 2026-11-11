@@ -11,7 +11,7 @@ import {
   ACCEPTED_IMAGE_TYPES,
   MAX_FILE_SIZE,
 } from "../lib/constants/account-settings.constant";
-import type { ProfileFormValues } from "../lib/schemas/profile.schema";
+import type { ProfileFormValues } from "../lib/types/profile.types";
 
 const ACCEPT = ".jpg,.jpeg,.png,.gif";
 
@@ -92,11 +92,7 @@ export function ProfilePhotoUpload({
       <div className="flex flex-col gap-2 text-center sm:text-start">
         <h2 className="text-lg font-semibold">{t("photo.title")}</h2>
         <p className="text-muted-foreground text-sm">{t("photo.hint")}</p>
-        {errorMessage && (
-          <FieldError
-            errors={[{ message: t(errorMessage as Parameters<typeof t>[0]) }]}
-          />
-        )}
+        {errorMessage && <FieldError errors={[{ message: errorMessage }]} />}
       </div>
     </div>
   );

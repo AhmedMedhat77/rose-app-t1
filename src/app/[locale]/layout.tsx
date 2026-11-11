@@ -23,6 +23,8 @@ import QueryProvider from "@/providers/query.provider";
 import NextAuthProvider from "@/providers/next-auth.provider";
 import { ThemeProvider } from "@/shared/context/theme.context";
 import { Toaster } from "@/shared/ui/toast";
+import { Header } from "@/shared/layout/Header";
+import Footer from "@/shared/layout/Footer";
 
 export const metadata: Metadata = {
   title: "Rose App",
@@ -74,7 +76,9 @@ export default async function RootLayout({
               initialSystemTheme={systemTheme}
             >
               <NextIntlClientProvider>
-                {children}
+                <Header />
+                <main className="flex-1">{children}</main>
+                <Footer />
                 <Toaster />
               </NextIntlClientProvider>
             </ThemeProvider>

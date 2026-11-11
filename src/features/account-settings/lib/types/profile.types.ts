@@ -1,6 +1,11 @@
-import type { GENDER_VALUES } from "../schemas/profile.schema";
+import type { z } from "zod";
+
+import type { GENDER_VALUES } from "../constants/account-settings.constant";
+import type { createProfileSchema } from "../schemas/profile.schema";
 
 export type Gender = (typeof GENDER_VALUES)[number];
+
+export type ProfileFormValues = z.infer<ReturnType<typeof createProfileSchema>>;
 
 /** Shape of `payload.user` returned by GET/PATCH /api/users/profile. */
 export interface UserProfile {
@@ -19,7 +24,7 @@ export interface UserProfile {
   updatedAt: string;
 }
 
-/** Body of PATCH /api/users/profile. `photo` is the temp URL returned by POST /api/upload. */
+/** Body of PATCH /api/users/profile. `photo` is the temp path returned by POST /api/upload. */
 export interface UpdateProfilePayload {
   firstName: string;
   lastName: string;
@@ -27,11 +32,19 @@ export interface UpdateProfilePayload {
   photo?: string;
 }
 
-export interface ApiEnvelope<T> {
-  status: boolean;
-  code: number;
-  payload: T;
-}
+export type UpdateProfileActionResult =
+  | { success: true; user: UserProfile }
+  | { success: false; message: string; code?: number };
 
-export type ProfileResponse = ApiEnvelope<{ user: UserProfile }>;
-export type UploadResponse = ApiEnvelope<{ url: string }>;
+export type DeleteAccountActionResult =
+  { success: true } | { success: false; message: string; code?: number };
+
+export class ProfileActionError extends Error {
+  readonly code?: number;
+
+  constructor(message: string, code?: number) {
+    super(message);
+    this.name = "ProfileActionError";
+    this.code = code;
+  }
+}

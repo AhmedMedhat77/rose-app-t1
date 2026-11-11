@@ -2,11 +2,10 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { Controller, useForm, useWatch } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+
 import { Button } from "@/shared/ui/button";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/shared/ui/field";
-// ASSUMPTION: PhoneNumberInput is exported from the same file as Input. It must accept the
-// props used below; see PHONE_INPUT_RECOMMENDATIONS.md.
 import { Input, PhoneNumberInput } from "@/shared/ui/input";
 import {
   Select,
@@ -15,21 +14,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/ui/select";
-import { useProfile } from "../hooks/use-profile";
+
 import { useUpdateProfile } from "../hooks/use-update-profile";
-import {
-  GENDER_VALUES,
-  profileSchema,
-  type ProfileFormValues,
-} from "../lib/schemas/profile.schema";
-import type { UserProfile } from "../lib/types/profile.types";
+import { GENDER_VALUES } from "../lib/constants/account-settings.constant";
+import { createProfileSchema } from "../lib/schemas/profile.schema";
+import type {
+  ProfileFormValues,
+  UserProfile,
+} from "../lib/types/profile.types";
 import { DeleteAccountDialog } from "./delete-account-dialog";
-import { ProfileFormSkeleton } from "./profile-form-skeleton";
 import { ProfilePhotoUpload } from "./profile-photo-upload";
 
-const INPUT_CLASS = "h-12 rounded-xl disabled:bg-bg-muted shadow-none";
+const INPUT_CLASS = "h-12 rounded-xl shadow-none disabled:bg-bg-muted";
 
-function toFormValues(user: UserProfile): Partial<ProfileFormValues> {
+interface ProfileFormProps {
+  profile: UserProfile;
+}
+
+function toFormValues(user: UserProfile): ProfileFormValues {
   return {
     firstName: user.firstName,
     lastName: user.lastName,
@@ -38,135 +40,122 @@ function toFormValues(user: UserProfile): Partial<ProfileFormValues> {
   };
 }
 
-export function ProfileForm() {
+export function ProfileForm({ profile }: ProfileFormProps) {
+  // Translation
   const t = useTranslations("accountSettings.Profile");
-  const {
-    data: profile,
-    isPending,
-    isError,
-    refetch,
-    isRefetching,
-  } = useProfile();
 
-  if (isPending) return <ProfileFormSkeleton />;
+  // Hooks
+  const { isPending, updateProfile } = useUpdateProfile();
 
-  if (isError || !profile) {
-    return (
-      <div role="alert" className="flex flex-col items-start gap-3">
-        <h2 className="text-lg font-semibold">{t("loadError.title")}</h2>
-        <p className="text-muted-foreground text-sm">
-          {t("loadError.description")}
-        </p>
-        <Button
-          type="button"
-          variant="outline"
-          disabled={isRefetching}
-          onClick={() => refetch()}
-        >
-          {t("loadError.retry")}
-        </Button>
-      </div>
-    );
-  }
-
-  return <ProfileFormFields profile={profile} />;
-}
-
-function ProfileFormFields({ profile }: { profile: UserProfile }) {
-  const t = useTranslations("accountSettings.Profile");
-  const { mutate: saveProfile, isPending } = useUpdateProfile();
-
-  const {
-    control,
-    handleSubmit,
-    reset,
-    register,
-    formState: { errors },
-  } = useForm<ProfileFormValues>({
-    resolver: zodResolver(profileSchema),
+  // Form
+  const form = useForm<ProfileFormValues>({
+    resolver: zodResolver(
+      createProfileSchema({
+        firstNameRequired: t("errors.firstNameRequired"),
+        firstNameTooShort: t("errors.firstNameTooShort"),
+        firstNameTooLong: t("errors.firstNameTooLong"),
+        lastNameRequired: t("errors.lastNameRequired"),
+        lastNameTooShort: t("errors.lastNameTooShort"),
+        lastNameTooLong: t("errors.lastNameTooLong"),
+        phoneInvalid: t("errors.phoneInvalid"),
+        fileSizeExceeded: t("errors.fileSizeExceeded"),
+        invalidFileType: t("errors.invalidFileType"),
+      }),
+    ),
     defaultValues: toFormValues(profile),
-    mode: "onChange", // also validates the photo as soon as a file is picked
+    mode: "onChange",
   });
 
-  const [firstName, lastName] = useWatch({
-    control,
-    name: ["firstName", "lastName"],
-  });
-  const initials =
-    `${firstName?.[0] ?? ""}${lastName?.[0] ?? ""}`.toUpperCase();
-
-  // Base UI Select shows the raw value unless it's given value/label pairs.
+  // Variables
   const genderItems = GENDER_VALUES.map((value) => ({
     value,
-    label: t(`gender.${value}`),
+    label: value === "MALE" ? t("gender.MALE") : t("gender.FEMALE"),
   }));
 
-  // Schema messages are i18n keys (e.g. "errors.firstNameTooShort").
-  const translateError = (message?: string) =>
-    message ? t(message as Parameters<typeof t>[0]) : undefined;
-
-  const onSubmit = (values: ProfileFormValues) => {
-    saveProfile(values, {
-      onSuccess: (user) => reset(toFormValues(user)),
+  // Functions
+  function onSubmit(values: ProfileFormValues) {
+    updateProfile(values, {
+      onSuccess: (user) => {
+        form.reset(toFormValues(user));
+      },
     });
-  };
+  }
 
   return (
     <form
       noValidate
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={form.handleSubmit(onSubmit)}
       className="flex flex-col gap-8"
     >
       <ProfilePhotoUpload
-        control={control}
+        control={form.control}
         currentPhotoUrl={profile.photo}
-        initials={initials}
+        initials={`${profile.firstName[0] ?? ""}${profile.lastName[0] ?? ""}`.toUpperCase()}
       />
 
-      <FieldGroup className="gap-5">
-        <div className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
-          <Field>
-            <Input
-              {...register("firstName")}
-              id="profile-first-name"
-              type="text"
-              autoComplete="given-name"
-              className={INPUT_CLASS}
-              label={t("fields.firstName")}
-              error={translateError(errors.firstName?.message)}
-            />
-          </Field>
+      <FieldGroup className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+        {/* First name */}
+        <Controller
+          name="firstName"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="profile-first-name">
+                {t("fields.firstName")}
+              </FieldLabel>
+              <Input
+                {...field}
+                id="profile-first-name"
+                type="text"
+                autoComplete="given-name"
+                aria-invalid={fieldState.invalid}
+                className={INPUT_CLASS}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
 
-          <Field>
-            <Input
-              {...register("lastName")}
-              id="profile-last-name"
-              type="text"
-              autoComplete="family-name"
-              className={INPUT_CLASS}
-              label={t("fields.lastName")}
-              error={translateError(errors.lastName?.message)}
-            />
-          </Field>
-        </div>
+        {/* Last name */}
+        <Controller
+          name="lastName"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="profile-last-name">
+                {t("fields.lastName")}
+              </FieldLabel>
+              <Input
+                {...field}
+                id="profile-last-name"
+                type="text"
+                autoComplete="family-name"
+                aria-invalid={fieldState.invalid}
+                className={INPUT_CLASS}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
 
-        {/* Email is shown read-only: changing it requires the verify-by-code flow
-            (POST /api/users/email/request), which has no design or spec yet. */}
+        {/* Email is read-only */}
         <Field>
+          <FieldLabel htmlFor="profile-email">{t("fields.email")}</FieldLabel>
           <Input
             id="profile-email"
             value={profile.email}
             type="email"
             disabled
             readOnly
+            autoComplete="email"
             className={INPUT_CLASS}
-            label={t("fields.email")}
           />
         </Field>
 
+        {/* Phone */}
         <Controller
           name="phone"
-          control={control}
+          control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="profile-phone">
@@ -179,26 +168,15 @@ function ProfileFormFields({ profile }: { profile: UserProfile }) {
                 onBlur={field.onBlur}
                 invalid={fieldState.invalid}
               />
-              {fieldState.invalid && (
-                <FieldError
-                  errors={
-                    fieldState.error?.message
-                      ? [{ message: translateError(fieldState.error.message) }]
-                      : undefined
-                  }
-                />
-              )}
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
 
+        {/* Gender is read-only */}
         <Field>
-          <Select
-            disabled
-            readOnly
-            items={genderItems}
-            value={profile.gender ?? null}
-          >
+          <FieldLabel htmlFor="profile-gender">{t("fields.gender")}</FieldLabel>
+          <Select disabled items={genderItems} value={profile.gender ?? null}>
             <SelectTrigger
               id="profile-gender"
               className="disabled:bg-bg-muted w-full rounded-xl data-[size=default]:h-12"
