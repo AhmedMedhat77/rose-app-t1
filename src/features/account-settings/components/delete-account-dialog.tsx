@@ -17,18 +17,30 @@ import { Button } from "@/shared/ui/button";
 import { useDeleteAccount } from "../hooks/use-delete-account";
 
 export function DeleteAccountDialog() {
+  // Translation
   const t = useTranslations("accountSettings.Profile");
+
+  // State
   const [open, setOpen] = useState(false);
+
+  // Hooks
   const { deleteAccount, isPending } = useDeleteAccount();
 
+  // Functions
+  function handleOpenChange(next: boolean) {
+    // Don't let the dialog close mid-request.
+    if (!isPending) setOpen(next);
+  }
+
+  function handleConfirm(event: React.MouseEvent<HTMLButtonElement>) {
+    // Keep the dialog open until the request settles; the account is only
+    // deleted from this explicit confirm click.
+    event.preventDefault();
+    deleteAccount(undefined, { onError: () => setOpen(false) });
+  }
+
   return (
-    <AlertDialog
-      open={open}
-      // Don't let the dialog close mid-request.
-      onOpenChange={(next) => {
-        if (!isPending) setOpen(next);
-      }}
-    >
+    <AlertDialog open={open} onOpenChange={handleOpenChange}>
       <AlertDialogTrigger
         render={
           <Button
@@ -87,12 +99,7 @@ export function DeleteAccountDialog() {
           <AlertDialogAction
             className="bg-bg-danger text-text-inverse flex-1 px-4 py-3"
             disabled={isPending}
-            onClick={(event) => {
-              // Keep the dialog open until the request settles; the account is only
-              // deleted from this explicit confirm click.
-              event.preventDefault();
-              deleteAccount(undefined, { onError: () => setOpen(false) });
-            }}
+            onClick={handleConfirm}
           >
             {isPending
               ? t("deleteDialog.confirming")

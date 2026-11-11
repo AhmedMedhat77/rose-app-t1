@@ -26,35 +26,42 @@ export function ProfilePhotoUpload({
   currentPhotoUrl,
   initials,
 }: ProfilePhotoFieldProps) {
+  // Translation
   const t = useTranslations("accountSettings.Profile");
+
+  // Ref
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Hooks
   const { field, fieldState } = useController({ control, name: "photo" });
+  const previewUrl = useMemo(() => {
+    const file = field.value;
+    // Only preview files that pass the same rules as the schema (avoids a flash before validation).
+    const isValidFile =
+      !!file &&
+      file.size <= MAX_FILE_SIZE &&
+      ACCEPTED_IMAGE_TYPES.includes(file.type);
 
-  const file = field.value;
-  // Only preview files that pass the same rules as the schema (avoids a flash before validation).
-  const isValidFile =
-    !!file &&
-    file.size <= MAX_FILE_SIZE &&
-    ACCEPTED_IMAGE_TYPES.includes(file.type);
+    return file && isValidFile ? URL.createObjectURL(file) : undefined;
+  }, [field.value]);
 
-  const previewUrl = useMemo(
-    () => (file && isValidFile ? URL.createObjectURL(file) : undefined),
-    [file, isValidFile],
-  );
+  // Variables
+  const errorMessage = fieldState.error?.message;
+
+  // Functions
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const selected = event.target.files?.[0];
+    if (selected) field.onChange(selected);
+    // Reset so choosing the same file again still fires onChange.
+    event.target.value = "";
+  }
+
+  // Effects
   useEffect(() => {
     return () => {
       if (previewUrl) URL.revokeObjectURL(previewUrl);
     };
   }, [previewUrl]);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selected = event.target.files?.[0];
-    if (selected) field.onChange(selected);
-    // Reset so choosing the same file again still fires onChange.
-    event.target.value = "";
-  };
-
-  const errorMessage = fieldState.error?.message;
 
   return (
     <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6">

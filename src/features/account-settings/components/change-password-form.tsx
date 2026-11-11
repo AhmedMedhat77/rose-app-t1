@@ -2,33 +2,43 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+
 import { Button } from "@/shared/ui/button";
+import { Field, FieldError, FieldGroup, FieldLabel } from "@/shared/ui/field";
 import { Input } from "@/shared/ui/input";
+
 import { useChangePassword } from "../hooks/use-change-password";
-import {
-  changePasswordSchema,
-  type ChangePasswordFormValues,
-} from "../lib/schemas/change-password.schema";
+import { createChangePasswordSchema } from "../lib/schemas/change-password.schema";
 import {
   ChangePasswordRequestError,
-  fieldErrorKey,
+  type ChangePasswordFormValues,
 } from "../lib/types/change-password.types";
+import { fieldErrorKey } from "../lib/utils/change-password.util";
 
 const INPUT_CLASS = "h-12 rounded-xl shadow-none";
 
 export function ChangePasswordForm() {
+  // Translation
   const t = useTranslations("accountSettings.changePasswordContent");
-  const { mutate, isPending } = useChangePassword();
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setError,
-    formState: { errors },
-  } = useForm<ChangePasswordFormValues>({
-    resolver: zodResolver(changePasswordSchema),
+  // Hooks
+  const { changePassword, isPending } = useChangePassword();
+
+  // Form
+  const form = useForm<ChangePasswordFormValues>({
+    resolver: zodResolver(
+      createChangePasswordSchema({
+        required: t("validation.required"),
+        passwordMinLength: t("validation.password_min_length"),
+        passwordUppercase: t("validation.password_uppercase"),
+        passwordLowercase: t("validation.password_lowercase"),
+        passwordNumber: t("validation.password_number"),
+        passwordSpecial: t("validation.password_special"),
+        passwordSameAsOld: t("validation.password_same_as_old"),
+        passwordsDoNotMatch: t("validation.passwords_do_not_match"),
+      }),
+    ),
     defaultValues: {
       oldPassword: "",
       newPassword: "",
@@ -36,68 +46,98 @@ export function ChangePasswordForm() {
     },
   });
 
-  const translateError = (message?: string) =>
-    message ? t(message as Parameters<typeof t>[0]) : undefined;
-
-  const onSubmit = (values: ChangePasswordFormValues) => {
-    mutate(values, {
-      onSuccess: () => reset(),
+  // Functions
+  function onSubmit(values: ChangePasswordFormValues) {
+    changePassword(values, {
+      onSuccess: () => form.reset(),
       onError: (error) => {
         if (!(error instanceof ChangePasswordRequestError)) return;
 
         for (const field of error.fields) {
-          setError(field, { message: fieldErrorKey(field) });
+          form.setError(field, { message: t(fieldErrorKey(field)) });
         }
       },
     });
-  };
+  }
 
   return (
     <form
       noValidate
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={form.handleSubmit(onSubmit)}
       className="flex min-h-[32rem] flex-col md:min-h-[40rem]"
     >
-      <div className="flex flex-col gap-6">
-        <Input
-          {...register("oldPassword")}
-          id="change-password-old"
-          variant="password"
-          autoComplete="current-password"
-          className={INPUT_CLASS}
-          label={t("form.oldPassword")}
-          placeholder="********"
-          error={translateError(errors.oldPassword?.message)}
-          isError={Boolean(errors.oldPassword)}
-          aria-invalid={Boolean(errors.oldPassword) || undefined}
-        />
-        <hr className="bg-bg-soft" />
-        <Input
-          {...register("newPassword")}
-          id="change-password-new"
-          variant="password"
-          placeholder="********"
-          autoComplete="new-password"
-          className={INPUT_CLASS}
-          label={t("form.newPassword")}
-          error={translateError(errors.newPassword?.message)}
-          isError={Boolean(errors.newPassword)}
-          aria-invalid={Boolean(errors.newPassword) || undefined}
+      <FieldGroup className="flex flex-col gap-6">
+        {/* Old password */}
+        <Controller
+          name="oldPassword"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="change-password-old">
+                {t("form.oldPassword")}
+              </FieldLabel>
+              <Input
+                {...field}
+                id="change-password-old"
+                variant="password"
+                autoComplete="current-password"
+                placeholder="********"
+                aria-invalid={fieldState.invalid}
+                className={INPUT_CLASS}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
         />
 
-        <Input
-          {...register("confirmNewPassword")}
-          id="change-password-confirm"
-          variant="password"
-          placeholder="********"
-          autoComplete="new-password"
-          className={INPUT_CLASS}
-          label={t("form.confirmPassword")}
-          error={translateError(errors.confirmNewPassword?.message)}
-          isError={Boolean(errors.confirmNewPassword)}
-          aria-invalid={Boolean(errors.confirmNewPassword) || undefined}
+        <hr className="bg-bg-soft" />
+
+        {/* New password */}
+        <Controller
+          name="newPassword"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="change-password-new">
+                {t("form.newPassword")}
+              </FieldLabel>
+              <Input
+                {...field}
+                id="change-password-new"
+                variant="password"
+                autoComplete="new-password"
+                placeholder="********"
+                aria-invalid={fieldState.invalid}
+                className={INPUT_CLASS}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
         />
-      </div>
+
+        {/* Confirm password */}
+        <Controller
+          name="confirmNewPassword"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="change-password-confirm">
+                {t("form.confirmPassword")}
+              </FieldLabel>
+              <Input
+                {...field}
+                id="change-password-confirm"
+                variant="password"
+                autoComplete="new-password"
+                placeholder="********"
+                aria-invalid={fieldState.invalid}
+                className={INPUT_CLASS}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+      </FieldGroup>
 
       <div className="flex justify-end pt-15">
         <Button

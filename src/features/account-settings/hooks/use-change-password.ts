@@ -3,40 +3,41 @@
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { addToast } from "@/shared/ui/toast";
+
 import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
-import { changePassword } from "../lib/apis/change-password.api";
-import type { ChangePasswordFormValues } from "../lib/schemas/change-password.schema";
+import { addToast } from "@/shared/ui/toast";
+
+import { changePasswordAction } from "../lib/actions/change-password.action";
 import {
   ChangePasswordRequestError,
-  toChangePasswordPayload,
+  type ChangePasswordFormValues,
 } from "../lib/types/change-password.types";
 
 export function useChangePassword() {
+  // Translation
   const t = useTranslations("accountSettings");
-  const { data: session, update } = useSession();
 
-  return useMutation({
+  // Hooks
+  const { update } = useSession();
+
+  // Mutation
+  const { isPending, mutate } = useMutation({
     mutationFn: async (values: ChangePasswordFormValues) => {
-      const accessToken =
-        session?.accessToken ?? process.env.NEXT_PUBLIC_DEV_TOKEN;
-
-      if (!accessToken) {
-        throw new ChangePasswordRequestError("generic");
+      const result = await changePasswordAction(values);
+      if (!result.success) {
+        throw new ChangePasswordRequestError(result.code, result.fields);
       }
 
-      await changePassword(toChangePasswordPayload(values), accessToken);
-      // Re-read the NextAuth session so the app does not keep stale session data.
-      // The password change does not sign the user out.
-      await update();
+      return result.accessToken;
     },
-    onSuccess: () => {
+    onSuccess: async (accessToken) => {
+      await update(accessToken ? { accessToken } : undefined);
       addToast(TOAST_STATE.Successful, t("toasts.passwordUpdatedSuccess"));
     },
     onError: (error) => {
       if (
         error instanceof ChangePasswordRequestError &&
-        error.reason !== "generic"
+        error.fields.length > 0
       ) {
         return;
       }
@@ -44,4 +45,6 @@ export function useChangePassword() {
       addToast(TOAST_STATE.Unsuccessful, t("toasts.passwordUpdatedError"));
     },
   });
+
+  return { isPending, changePassword: mutate };
 }

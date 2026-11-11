@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth";
 import { ChangePasswordForm } from "@/features/account-settings/components/change-password-form";
 import { ProfileForm } from "@/features/account-settings/components/profile-form";
+import { ProfileLoadError } from "@/features/account-settings/components/profile-load-error";
 import { getProfile } from "@/features/account-settings/lib/apis/profile.api";
 import { ProfileFormSkeleton } from "@/features/account-settings/skeletons/profile-form-skeleton";
 import { redirect } from "@/i18n/navigation";
@@ -13,7 +14,20 @@ interface AccountSettingsPageProps {
   searchParams: Promise<{ tab?: string }>;
 }
 
-export default async function AccountSettingsPage({
+export default function AccountSettingsPage({
+  params,
+  searchParams,
+}: AccountSettingsPageProps) {
+  return (
+    <section>
+      <Suspense fallback={<ProfileFormSkeleton />}>
+        <AccountSettingsContent params={params} searchParams={searchParams} />
+      </Suspense>
+    </section>
+  );
+}
+
+async function AccountSettingsContent({
   params,
   searchParams,
 }: AccountSettingsPageProps) {
@@ -29,30 +43,11 @@ export default async function AccountSettingsPage({
   }
 
   if (tab === "change-password") {
-    return (
-      <section>
-        <ChangePasswordForm />
-      </section>
-    );
+    return <ChangePasswordForm />;
   }
 
-  return (
-    <section>
-      <Suspense fallback={<ProfileFormSkeleton />}>
-        <ProfileSection accessToken={accessToken} userId={userId} />
-      </Suspense>
-    </section>
-  );
-}
-
-async function ProfileSection({
-  accessToken,
-  userId,
-}: {
-  accessToken: string;
-  userId: string;
-}) {
-  const profile = await getProfile(accessToken, userId);
+  const profile = await getProfile(accessToken, userId).catch(() => null);
+  if (!profile) return <ProfileLoadError />;
 
   return <ProfileForm profile={profile} />;
 }

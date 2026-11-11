@@ -2,19 +2,29 @@
 
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { useTranslations } from "next-intl";
-import { UserRoundPen, Lock, LogOut } from "lucide-react";
-import { Link } from "@/i18n/navigation";
-import { Button } from "@/shared/ui/button";
+
 import { cn } from "cn";
+import { Lock, LogOut, UserRoundPen } from "lucide-react";
+import { signOut } from "next-auth/react";
+import { useTranslations } from "next-intl";
+
+import { Link, useRouter } from "@/i18n/navigation";
 import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
+import { Button } from "@/shared/ui/button";
 import { addToast } from "@/shared/ui/toast";
 
 function SidebarContent() {
+  // Translation
   const t = useTranslations("accountSettings");
-  const searchParams = useSearchParams();
-  const currentTab = searchParams.get("tab") || "profile";
 
+  // Navigation
+  const router = useRouter();
+
+  // Hooks
+  const searchParams = useSearchParams();
+
+  // Variables
+  const currentTab = searchParams.get("tab") || "profile";
   const navItems = [
     {
       id: "profile",
@@ -33,10 +43,16 @@ function SidebarContent() {
     },
   ];
 
-  const handleLogout = async () => {
-    // TODO: Implement logout logic and navigate back to home page
-    addToast(TOAST_STATE.Successful, t("toasts.logoutSuccess"));
-  };
+  // Functions
+  async function handleLogout() {
+    try {
+      await signOut({ redirect: false });
+      addToast(TOAST_STATE.Successful, t("toasts.logoutSuccess"));
+      router.replace("/");
+    } catch {
+      addToast(TOAST_STATE.Unsuccessful, t("toasts.logoutError"));
+    }
+  }
 
   return (
     <aside className="bg-bg-subtle border-border-muted flex h-full min-h-[720px] w-75 flex-col justify-between rounded-lg border p-4">

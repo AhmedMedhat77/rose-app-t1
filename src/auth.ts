@@ -32,11 +32,21 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    jwt: ({ token, user }) => {
+    jwt: ({ token, user, trigger, session }) => {
       if (user) {
         token.accessToken = user.accessToken;
         token.user = user.user;
       }
+
+      // `update({ accessToken })` is the only path that replaces the login token.
+      if (
+        trigger === "update" &&
+        session &&
+        typeof session.accessToken === "string"
+      ) {
+        token.accessToken = session.accessToken;
+      }
+
       return token;
     },
     session: ({ token, session }) => {

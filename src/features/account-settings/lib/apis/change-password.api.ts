@@ -1,42 +1,57 @@
+import "server-only";
+
+import { HEADERS } from "@/app/shared/constants/api.constant";
+import { API_URL } from "@/app/shared/constants/config";
+
 import {
-  toChangePasswordError,
+  ChangePasswordRequestError,
   type ChangePasswordPayload,
 } from "../types/change-password.types";
+import { toChangePasswordError } from "../utils/change-password.util";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
+async function readBody(response: Response): Promise<unknown> {
+  const text = await response.text();
+  if (!text) return undefined;
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    return undefined;
+  }
+}
 
 export async function changePassword(
-  payload: ChangePasswordPayload,
   accessToken: string,
-): Promise<void> {
-  const response = await fetch(`${BASE_URL}/api/users/change-password`, {
+  payload: ChangePasswordPayload,
+): Promise<string | undefined> {
+  if (!API_URL) {
+    throw new ChangePasswordRequestError(500);
+  }
+
+  const response = await fetch(`${API_URL}/users/change-password`, {
     method: "POST",
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json",
+      ...HEADERS.JSON_HEADER,
       Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(payload),
   });
 
-  const text = await response.text();
-  let data: unknown;
-  try {
-    data = text ? JSON.parse(text) : undefined;
-  } catch {
-    data = undefined;
-  }
-
+  const data = await readBody(response);
   const body = data as
     | {
         status?: boolean;
         code?: number;
-        message?: string;
         errors?: { path?: string }[];
+        payload?: { token?: unknown };
       }
     | undefined;
 
   if (!response.ok || body?.status === false) {
     throw toChangePasswordError(response.status, body);
   }
+
+  const token = body?.payload?.token;
+  return typeof token === "string" ? token : undefined;
 }
