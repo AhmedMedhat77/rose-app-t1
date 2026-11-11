@@ -23,7 +23,10 @@ export default function TestimonialsClient({
                 isArabic ? "animate-marquee-rtl" : "animate-marquee-ltr"
               }`}
             >
-              {allTestimonials?.payload?.data?.map((item, index) => (
+              {[
+                ...allTestimonials?.payload?.data,
+                ...allTestimonials?.payload?.data,
+              ].map((item, index) => (
                 <article
                   key={`${item.id}-${index}`}
                   className="relative mt-9 w-[21.4rem] shrink-0 rounded-xl bg-white px-6 pt-9 pb-6 text-center shadow-[0_8px_30px_rgba(0,0,0,0.06)]"

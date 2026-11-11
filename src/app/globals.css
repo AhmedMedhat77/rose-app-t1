@@ -107,6 +107,7 @@
   --text-maron: var(--color-maroon-600);
   --text-maron-700: var(--color-maroon-700);
   --text-soft-pink-500: #ff668b;
+  --text-zinc-700: var(--color-zinc-700);
   /* --color-pink-500: #f82ba9; */
 
   --bg-plain: var(--color-white);
@@ -437,6 +438,7 @@
   --color-text-maron: var(--text-maron);
   --color-text-maron-700: var(--text-maron-700);
   --color-soft-pink-500: var(--text-soft-pink-500);
+  --text-zinc-700: var(--color-zinc-700);
 
   --color-bg-plain: var(--bg-plain);
   --color-bg-subtle: var(--bg-subtle);
@@ -600,5 +602,11 @@
     to {
       transform: translateX(0);
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none !important;
   }
 }

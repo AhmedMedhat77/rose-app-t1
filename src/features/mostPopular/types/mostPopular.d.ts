@@ -39,3 +39,9 @@ export interface IMostPopularProduct {
   code: number;
   payload: IPayload;
 }
+
+export interface MostPopularProps {
+  occasions: IOccasion[];
+  initialProducts: Product[];
+  initialOccasionId: string;
+}

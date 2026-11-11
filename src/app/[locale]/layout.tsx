@@ -21,7 +21,7 @@ import "../globals.css";
 import { ThemeMode } from "@/shared/components/ThemeMode";
 import Footer from "@/shared/layout/Footer";
 import { Header } from "@/shared/layout/Header";
-
+import QueryProvider from "@/providers/query-provider/query-provider";
 import { Toaster } from "@/shared/ui/toast";
 
 export const metadata: Metadata = {
@@ -69,17 +69,19 @@ export default async function RootLayout({
       <body className="flex min-h-full flex-col" suppressHydrationWarning>
         <ThemeProvider initialTheme={theme} initialSystemTheme={systemTheme}>
           <NextIntlClientProvider>
-            <header className="flex flex-wrap items-center justify-between">
-              <LocaleSwitcher />
-              <ThemeMode />
-            </header>
-            <Header />
+            <QueryProvider>
+              <header className="flex flex-wrap items-center justify-between">
+                <LocaleSwitcher />
+                <ThemeMode />
+              </header>
+              <Header />
 
-            <main className="flex-1">{children}</main>
+              <main className="flex-1">{children}</main>
 
-            <Footer />
+              <Footer />
 
-            <Toaster />
+              <Toaster />
+            </QueryProvider>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

@@ -1,4 +1,5 @@
 "use client";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/shared/ui/button";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
@@ -27,10 +28,16 @@ export default function BestSellingExploreGift() {
         </p>
       </div>
 
-      <Button className="text-text-inverse bg-bg-maron-secondary flex w-fit align-middle">
-        {" "}
-        <p> {t("bestSelling.exploreGift")} </p>{" "}
-        {locale === "ar" ? <ArrowLeftIcon /> : <ArrowRightIcon />}{" "}
+      <Button className="text-text-inverse bg-bg-maron-secondary w-fit">
+        <Link href="/products" className="align-items flex justify-between">
+          {" "}
+          <p className=""> {t("bestSelling.exploreGift")} </p>{" "}
+          {locale === "ar" ? (
+            <ArrowLeftIcon className="translate-y-[25%]" />
+          ) : (
+            <ArrowRightIcon className="translate-y-[25%]" />
+          )}{" "}
+        </Link>
       </Button>
     </div>
   );

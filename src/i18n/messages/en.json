@@ -125,5 +125,14 @@
     "trustedOver": "Trusted by over",
     "increasedAmount": "4.5k+",
     "Companies": "Companies"
+  },
+  "ViewMore": {
+    "ViewMore": "View more"
+  },
+  "Product": {
+    "outOfStock": "OUT OF STOCK",
+    "new": "NEW",
+    "hot": "HOT",
+    "currency": "EGP"
   }
 }
