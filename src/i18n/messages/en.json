@@ -256,5 +256,41 @@
     "orders": "Orders",
     "dashboard": "Dashboard",
     "logout": "Log out"
+  },
+  "bestSelling": {
+    "label": "BEST SELLING",
+    "title": {
+      "highlight": "Discover",
+      "chosen": "Buying",
+      "text": "What Everyone’s",
+      "now": "Right Now"
+    },
+    "description": "Not sure what to choose? Start with our best sellers, these are the gifts our customers keep coming back for. Whether you're celebrating a birthday, anniversary or wedding, our top picks are guaranteed to leave a lasting impression.",
+    "exploreGift": "Explore gifts"
+  },
+  "mostPopular": {
+    "label": "Most Popular"
+  },
+  "Gallery": {
+    "label": "Gallery",
+    "text": "Check Out our Wonderful Gallery"
+  },
+  "Testimonials": {
+    "label": "Testimonials",
+    "text": "Real Words from our Happy Customers"
+  },
+  "TrustedCompanies": {
+    "trustedOver": "Trusted by over",
+    "increasedAmount": "4.5k+",
+    "Companies": "Companies"
+  },
+  "ViewMore": {
+    "ViewMore": "View more"
+  },
+  "Product": {
+    "outOfStock": "OUT OF STOCK",
+    "new": "NEW",
+    "hot": "HOT",
+    "currency": "EGP"
   }
 }
