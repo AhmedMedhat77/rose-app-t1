@@ -44,7 +44,7 @@ export default function PriceFilter() {
             {t("productFilter.filtersPriceFrom")}
           </span>
           <Input
-            className="w-33.75"
+            className={`text w-33.75 shadow-none ${min === "0" ? "text-zinc-400" : "text-zinc-900"}`}
             type="text"
             inputMode="numeric"
             value={min}
@@ -60,7 +60,7 @@ export default function PriceFilter() {
             {t("productFilter.filtersPriceTo")}
           </span>
           <Input
-            className="w-33.75"
+            className={`w-33.75 shadow-none ${max === "1000000" ? "text-zinc-400" : "text-zinc-900"}`}
             type="text"
             inputMode="numeric"
             value={max}

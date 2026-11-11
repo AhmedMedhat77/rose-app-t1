@@ -12,59 +12,44 @@ const FILTER_ENDPOINTS = {
   occasions: OCCASIONS_ENDPOINT,
 } as const;
 
-type FilterType = keyof typeof FILTER_ENDPOINTS;
+const fail = (message: string, status: number) =>
+  NextResponse.json({ status: false, message }, { status });
 
-interface RouteContext {
-  params: Promise<{ type: string }>;
-}
+const toPositiveInt = (value: string | null) => {
+  const n = Number(value);
+  return Number.isInteger(n) && n >= 1 ? n : null;
+};
 
-export async function GET(request: NextRequest, { params }: RouteContext) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ type: string }> },
+) {
   const { type } = await params;
 
   if (!Object.hasOwn(FILTER_ENDPOINTS, type)) {
-    return NextResponse.json(
-      { status: false, message: "Invalid filter type" },
-      { status: 404 },
-    );
+    return fail("Invalid filter type", 404);
   }
 
-  const page = request.nextUrl.searchParams.get("page");
-  const limit = request.nextUrl.searchParams.get("limit");
+  const { searchParams } = request.nextUrl;
+  const page = toPositiveInt(searchParams.get("page"));
+  const limit = toPositiveInt(searchParams.get("limit"));
 
-  if (
-    !page ||
-    !limit ||
-    !Number.isInteger(Number(page)) ||
-    !Number.isInteger(Number(limit)) ||
-    Number(page) < 1 ||
-    Number(limit) < 1
-  ) {
-    return NextResponse.json(
-      { status: false, message: "Invalid pagination parameters" },
-      { status: 400 },
-    );
-  }
+  if (!page || !limit) return fail("Invalid pagination parameters", 400);
 
-  const apiUrl = process.env.API_URL;
+  const apiUrl = process.env.API_URL?.replace(/\/+$/, "");
+  if (!apiUrl) return fail("API URL is not configured", 500);
 
-  if (!apiUrl) {
-    return NextResponse.json(
-      { status: false, message: "API URL is not configured" },
-      { status: 500 },
-    );
-  }
-
-  const endpoint = FILTER_ENDPOINTS[type as FilterType];
-  const query = new URLSearchParams({ page, limit });
+  const endpoint = FILTER_ENDPOINTS[type as keyof typeof FILTER_ENDPOINTS];
+  const query = new URLSearchParams({
+    page: String(page),
+    limit: String(limit),
+  });
 
   try {
-    const response = await fetch(
-      `${apiUrl.replace(/\/+$/, "")}/${endpoint}?${query}`,
-      {
-        headers: HEADERS.ACCEPT_JSON,
-        signal: request.signal,
-      },
-    );
+    const response = await fetch(`${apiUrl}/${endpoint}?${query}`, {
+      headers: HEADERS.ACCEPT_JSON,
+      signal: request.signal,
+    });
 
     return new Response(response.body, {
       status: response.status,
@@ -74,13 +59,8 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
       },
     });
   } catch (error) {
-    if (error instanceof Error && error.name === "AbortError") {
-      throw error;
-    }
-
-    return NextResponse.json(
-      { status: false, message: "Unable to reach the backend API" },
-      { status: 502 },
-    );
+    if (error instanceof Error && error.name === "AbortError") throw error;
+    console.error("[filters] upstream fetch failed:", error);
+    return fail("Unable to reach the backend API", 502);
   }
 }
