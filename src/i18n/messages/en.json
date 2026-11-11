@@ -100,6 +100,20 @@
     "profile": "Profile",
     "settings": "Settings"
   },
+  "productFilter": {
+    "filterCategory": "Category",
+    "filtersOccasion": "Occasion",
+    "filtersRating": "Rating",
+    "filtersPrice": "Price",
+    "filtersPriceFrom": "from",
+    "filtersPriceTo": "to",
+    "filtersReset": "Reset",
+    "filtersResetAll": "Reset All",
+    "filtersRetry": "Retry",
+    "filtersPriceError": "'From' must be less than 'To'",
+    "filtersError": "Something went wrong. Please try again.",
+    "filtersEmpty": "No items found"
+  },
   "Auth": {
     "heroImageAlt": "Gift boxes with ribbons"
   },
