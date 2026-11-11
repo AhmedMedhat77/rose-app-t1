@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
+import { API_URL } from "@/app/shared/constants/config";
 
 export async function GET(request: NextRequest) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const baseUrl = API_URL;
 
   if (!baseUrl) {
     return NextResponse.json(
-      { message: "NEXT_PUBLIC_BASE_URL is not defined" },
+      { message: "base url is not defined" },
       { status: 500 },
     );
   }
@@ -20,15 +21,12 @@ export async function GET(request: NextRequest) {
   });
 
   try {
-    const response = await fetch(
-      `${baseUrl}api/products?${params.toString()}`,
-      {
-        method: "GET",
-        next: {
-          revalidate: 300,
-        },
+    const response = await fetch(`${baseUrl}/products?${params.toString()}`, {
+      method: "GET",
+      next: {
+        revalidate: 300,
       },
-    );
+    });
 
     if (!response.ok) {
       return NextResponse.json(
