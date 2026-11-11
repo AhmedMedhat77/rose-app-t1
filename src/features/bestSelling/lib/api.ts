@@ -2,7 +2,7 @@ import { IBestSelling } from "./types/bestSelling";
 
 export default async function getAllProducts() {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}api/products?sortBy=bestSelling`,
+    `${process.env.API_URL}/products?sortBy=bestSelling`,
     {
       method: "GET",
       next: {

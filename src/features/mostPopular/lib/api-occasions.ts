@@ -2,13 +2,13 @@ import { IOccasion } from "../types/mostPopular";
 import { IOccasionsResponse } from "../types/occasions";
 
 export default async function getAllOccasions(): Promise<IOccasion[]> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const baseUrl = process.env.API_URL;
 
   if (!baseUrl) {
     throw new Error("NEXT_PUBLIC_BASE_URL is not defined");
   }
 
-  const response = await fetch(`${baseUrl}api/occasions?page=1&limit=20`, {
+  const response = await fetch(`${baseUrl}/occasions?page=1&limit=20`, {
     method: "GET",
     next: {
       revalidate: 300,

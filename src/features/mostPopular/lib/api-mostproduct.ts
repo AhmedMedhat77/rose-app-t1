@@ -3,7 +3,7 @@ import { IMostPopularProduct, Product } from "../types/mostPopular";
 export default async function getMostPopularProducts(
   occasionId = "",
 ): Promise<Product[]> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const baseUrl = process.env.API_URL;
 
   if (!baseUrl) {
     throw new Error("NEXT_PUBLIC_BASE_URL is not defined");
@@ -15,7 +15,7 @@ export default async function getMostPopularProducts(
     limit: "12",
   });
 
-  const response = await fetch(`${baseUrl}api/products?${params.toString()}`, {
+  const response = await fetch(`${baseUrl}/products?${params.toString()}`, {
     method: "GET",
     next: {
       revalidate: 300,

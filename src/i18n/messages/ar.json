@@ -45,7 +45,6 @@
     "markAsRead": "تحديد كمقروء",
     "delete": "حذف الإشعار"
   },
-
   "Footer": {
     "discover": "اكتشف موقعنا",
     "brand": "تطبيق روز للتجارة الإلكترونية",
@@ -84,7 +83,9 @@
     "searchPlaceholder": "ابحث...",
     "numberPlaceholder": "اختر رقماً",
     "phoneNumber": "ادخل رقم الهاتف",
-    "fileRequired": "من فضلك اختر ملفاً"
+    "fileRequired": "من فضلك اختر ملفاً",
+    "showPassword": "إظهار كلمة المرور",
+    "hidePassword": "إخفاء كلمة المرور"
   },
   "select": {
     "label": "اختر",
@@ -98,6 +99,165 @@
     "logout": "تسجيل الخروج",
     "profile": "الملف الشخصي",
     "settings": "الإعدادات"
+  },
+  "productFilter": {
+    "filterCategory": "التصنيف",
+    "filtersOccasion": "المناسبة",
+    "filtersRating": "التقييم",
+    "filtersPrice": "السعر",
+    "filtersPriceFrom": "من",
+    "filtersPriceTo": "إلى",
+    "filtersReset": "إعادة تعيين",
+    "filtersResetAll": "إعادة تعيين الكل",
+    "filtersRetry": "إعادة المحاولة",
+    "filtersPriceError": "قيمة \"من\" يجب أن تكون أقل من \"إلى\"",
+    "filtersError": "حدث خطأ ما. حاول مرة أخرى.",
+    "filtersEmpty": "لا توجد عناصر"
+  },
+  "Auth": {
+    "heroImageAlt": "صناديق هدايا مزينة بشرائط"
+  },
+  "Login": {
+    "title": "مرحبًا بعودتك!",
+    "username": "اسم المستخدم",
+    "usernamePlaceholder": "أدخل اسم المستخدم",
+    "usernameRequired": "يرجى إدخال اسم المستخدم",
+    "password": "كلمة المرور",
+    "passwordPlaceholder": "••••••••",
+    "passwordRequired": "يرجى إدخال كلمة المرور",
+    "forgotPassword": "هل نسيت كلمة المرور؟",
+    "invalidCredentials": "اسم المستخدم أو كلمة المرور غير صحيح. يرجى المحاولة مرة أخرى.",
+    "submit": "تسجيل الدخول",
+    "noAccount": "ليس لديك حساب؟",
+    "createAccount": "أنشئ حسابًا الآن!"
+  },
+  "ResetPasswordSent": {
+    "title": "تم إرسال إعادة تعيين كلمة المرور",
+    "sentTo": "لقد أرسلنا رابط إعادة تعيين كلمة المرور إلى:",
+    "accountExists": "إذا كان هناك حساب مرتبط بهذا البريد الإلكتروني، فقد أرسلنا تعليمات إعادة تعيين كلمة المرور. إذا لم تستلم البريد خلال بضع دقائق، تحقق من مجلد البريد العشوائي.",
+    "checkSpam": "إذا لم تجد البريد خلال بضع دقائق، تحقق من مجلد البريد العشوائي.",
+    "needHelp": "تحتاج مساعدة؟",
+    "contactUs": "تواصل معنا",
+    "back": "رجوع"
+  },
+  "ForgotPassword": {
+    "errorToast": "تعذّر إرسال رسالة إعادة تعيين كلمة المرور. يرجى المحاولة مرة أخرى.",
+    "title": "هل نسيت كلمة المرور؟",
+    "description": "لا تقلق، سنرسل لك التعليمات لمساعدتك في إعادة تعيينها.",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "user@example.com",
+    "emailInvalid": "يرجى إدخال عنوان بريد إلكتروني صالح",
+    "submit": "التالي",
+    "noAccount": "ليس لديك حساب؟",
+    "createAccount": "أنشئ حسابًا الآن!"
+  },
+  "ResetPassword": {
+    "errorToast": "تعذّرت إعادة تعيين كلمة المرور. يرجى المحاولة مرة أخرى أو طلب رابط جديد.",
+    "title": "إنشاء كلمة مرور جديدة",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "passwordPlaceholder": "••••••••",
+    "passwordRequired": "يرجى إدخال كلمة المرور",
+    "passwordMin": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+    "confirmRequired": "يرجى تأكيد كلمة المرور",
+    "passwordsMismatch": "كلمتا المرور غير متطابقتين",
+    "submit": "إعادة تعيين كلمة المرور",
+    "successToast": "تم إعادة تعيين كلمة المرور بنجاح."
+  },
+  "RegisterFlow": {
+    "header": "كن جزءاً من عائلتنا!",
+    "title": "إنشاء حساب",
+    "needHelp": "تحتاج مساعدة؟",
+    "contactUs": "تواصل معنا"
+  },
+  "SendEmailVerification": {
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "user@example.com",
+    "emailInvalid": "يرجى إدخال عنوان بريد إلكتروني صالح",
+    "sendCode": "التالي",
+    "alreadyHaveAccount": " لديك حساب بالفعل؟",
+    "login": "تسجيل الدخول"
+  },
+  "ConfirmEmailVerification": {
+    "enterOTPCode": "أدخل رمز التحقق",
+    "weHaveSentCode": "أرسلنا رمزاً مكوناً من 6 أرقام إلى",
+    "edit": "تعديل",
+    "codeResent": "تم إرسال رمز جديد",
+    "emailInvalid": "من فضلك أدخل بريداً إلكترونياً صالحاً",
+    "codeRequired": "من فضلك أدخل رمز التحقق",
+    "codeLength": "يجب أن يتكون الرمز من 6 أرقام",
+    "verifyCode": "تأكيد الرمز",
+    "sendANewCode": "إرسال رمز جديد",
+    "sending": "جاري الإرسال...",
+    "resendIn": "إعادة الإرسال بعد {seconds} ث",
+    "contactUs": "تواصل معنا",
+    "needHelp": "تحتاج مساعدة؟"
+  },
+  "AccountDetails": {
+    "enterYourDetails": "حدثنا عن نفسك",
+    "weNeedFewDetails": "بعض البيانات للبدء",
+    "firstName": "الاسم الأول",
+    "firstNamePlaceholder": "zoe",
+    "lastNamePlaceholder": "jonathan",
+    "lastName": "اسم العائلة",
+    "username": "اسم المستخدم",
+    "usernamePlaceholder": "zoe123",
+    "phone": "رقم الهاتف",
+    "phonePlaceholder": "1012345678",
+    "phoneRequired": "من فضلك أدخل رقم الهاتف",
+    "phoneInvalid": "من فضلك أدخل رقم هاتف صالح",
+    "gender": "النوع",
+    "selectGender": "اختر النوع",
+    "male": "ذكر",
+    "female": "أنثى",
+    "next": "التالي",
+    "firstNameRequired": "من فضلك أدخل اسمك الأول",
+    "lastNameRequired": "من فضلك أدخل اسم العائلة",
+    "usernameRequired": "من فضلك أدخل اسم المستخدم",
+    "genderRequired": "من فضلك اختر النوع"
+  },
+  "CreatePassword": {
+    "createStrongPassword": "أنشئ كلمة مرور قوية",
+    "chooseSecurePassword": "اختر كلمة مرور آمنة لحماية حسابك",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "passwordPlaceholder": "********",
+    "confirmRequired": "يرجى تأكيد كلمة المرور",
+    "passwordsMismatch": "كلمتا المرور غير متطابقتين",
+    "passwordRules": "استخدم 8 أحرف على الأقل، مع حرف كبير وحرف صغير ورقم ورمز خاص",
+    "accountCreated": "تم إنشاء حسابك بنجاح",
+    "passwordRequired": "يرجى إدخال كلمة المرور",
+    "passwordMin": "يجب ألا تقل كلمة المرور عن 8 أحرف",
+    "passwordUppercase": "يجب أن تحتوي على حرف كبير واحد على الأقل",
+    "passwordLowercase": "يجب أن تحتوي على حرف صغير واحد على الأقل",
+    "passwordNumber": "يجب أن تحتوي على رقم واحد على الأقل",
+    "passwordSpecial": "يجب أن تحتوي على رمز خاص واحد على الأقل",
+    "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
+    "passwordMismatch": "كلمتا المرور غير متطابقتين",
+    "next": "التالي",
+    "back": "السابق"
+  },
+  "RegisterSuccess": {
+    "title": "تم إنشاء الحساب",
+    "description": "حسابك جاهز. سجّل الدخول للبدء.",
+    "login": "تسجيل الدخول"
+  },
+  "ContactUs": {
+    "title": "تواصل معنا"
+  },
+  "LoginPopover": {
+    "tabsLabel": "تبويبات المصادقة",
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب"
+  },
+  "UserDropdown": {
+    "hello": "مرحباً",
+    "myAccount": "حسابي",
+    "account": "الحساب",
+    "addresses": "العناوين",
+    "orders": "الطلبات",
+    "dashboard": "لوحة التحكم",
+    "logout": "تسجيل الخروج"
   },
   "bestSelling": {
     "label": "الأكثر مبيعًا",

@@ -78,13 +78,14 @@
     "label": "Label",
     "placeholder": "Placeholder"
   },
-
   "Input": {
     "uploadFile": "Upload File",
     "searchPlaceholder": "Search...",
     "numberPlaceholder": "Select Number",
     "phoneNumber": "Entry Phone Number",
-    "fileRequired": "Please select a file"
+    "fileRequired": "Please select a file",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
   },
   "select": {
     "label": "Select",
@@ -98,6 +99,163 @@
     "logout": "Logout",
     "profile": "Profile",
     "settings": "Settings"
+  },
+  "productFilter": {
+    "filterCategory": "Category",
+    "filtersOccasion": "Occasion",
+    "filtersRating": "Rating",
+    "filtersPrice": "Price",
+    "filtersPriceFrom": "from",
+    "filtersPriceTo": "to",
+    "filtersReset": "Reset",
+    "filtersResetAll": "Reset All",
+    "filtersRetry": "Retry",
+    "filtersPriceError": "'From' must be less than 'To'",
+    "filtersError": "Something went wrong. Please try again.",
+    "filtersEmpty": "No items found"
+  },
+  "Auth": {
+    "heroImageAlt": "Gift boxes with ribbons"
+  },
+  "Login": {
+    "title": "Welcome back!",
+    "username": "Username",
+    "usernamePlaceholder": "Enter your username",
+    "usernameRequired": "Please enter your username",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "passwordRequired": "Please enter your password",
+    "forgotPassword": "Forgot your password?",
+    "invalidCredentials": "Invalid username or password. Please try again.",
+    "submit": "Login",
+    "noAccount": "Don't have an account?",
+    "createAccount": "Create one now!"
+  },
+  "ResetPasswordSent": {
+    "title": "Password Reset Sent",
+    "sentTo": "We have sent a password reset link to:",
+    "accountExists": "If an account exists for this email address, we've sent password reset instructions. If you don't receive the email within a few minutes, check your spam or junk folder.",
+    "checkSpam": "If you don't see the email within a few minutes, check your spam or junk folder.",
+    "needHelp": "Need help?",
+    "contactUs": "Contact us",
+    "back": "Go back"
+  },
+  "ForgotPassword": {
+    "errorToast": "We couldn't send the password reset email. Please try again.",
+    "title": "Forgot Password?",
+    "description": "Worry not, we'll send you instructions to help you reset it.",
+    "email": "Email",
+    "emailPlaceholder": "user@example.com",
+    "emailInvalid": "Please enter a valid email address",
+    "submit": "Next",
+    "noAccount": "Don't have an account?",
+    "createAccount": "Create one now!"
+  },
+  "ResetPassword": {
+    "errorToast": "We couldn't reset your password. Please try again or request a new reset link.",
+    "title": "Create a new password",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "passwordPlaceholder": "••••••••",
+    "passwordRequired": "Please enter your password",
+    "passwordMin": "Password must be at least 8 characters",
+    "confirmRequired": "Please confirm your password",
+    "passwordsMismatch": "Passwords do not match",
+    "submit": "Reset Password",
+    "successToast": "Your password has been successfully reset."
+  },
+  "RegisterFlow": {
+    "header": "Become part of our family!",
+    "title": "Create Account",
+    "needHelp": "Need help?",
+    "contactUs": "Contact us"
+  },
+  "SendEmailVerification": {
+    "email": "Email",
+    "emailPlaceholder": "user@example.com",
+    "emailInvalid": "Please enter a valid email address",
+    "sendCode": "Next",
+    "alreadyHaveAccount": "Already have an account?",
+    "login": "Login"
+  },
+  "ConfirmEmailVerification": {
+    "enterOTPCode": "Enter the OTP Code",
+    "weHaveSentCode": "We have sent a 6-digit code to",
+    "edit": "Edit",
+    "codeResent": "A new code has been sent",
+    "emailInvalid": "Please enter a valid email address",
+    "codeRequired": "Please enter the verification code",
+    "codeLength": "Code must be 6 digits",
+    "verifyCode": "Verify Code",
+    "sendANewCode": "Send a new code",
+    "sending": "Sending...",
+    "resendIn": "Resend in {seconds}s"
+  },
+  "AccountDetails": {
+    "enterYourDetails": "Tell us about yourself",
+    "weNeedFewDetails": "A few details to get started",
+    "firstName": "First name",
+    "firstNamePlaceholder": "Zoe",
+    "lastNamePlaceholder": "Jonathan",
+    "lastName": "Last name",
+    "username": "Username",
+    "usernamePlaceholder": "zoe123",
+    "phone": "Phone",
+    "phonePlaceholder": "1012345678",
+    "phoneRequired": "Please enter your phone number",
+    "phoneInvalid": "Please enter a valid phone number",
+    "gender": "Gender",
+    "selectGender": "Select gender",
+    "male": "Male",
+    "female": "Female",
+    "next": "Next",
+    "firstNameRequired": "Please enter your first name",
+    "lastNameRequired": "Please enter your last name",
+    "usernameRequired": "Please enter a username",
+    "genderRequired": "Please select your gender"
+  },
+  "CreatePassword": {
+    "createStrongPassword": "Create a strong password",
+    "chooseSecurePassword": "Choose a secure password to protect your account",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "passwordPlaceholder": "********",
+    "confirmRequired": "Please confirm your password",
+    "passwordsMismatch": "Passwords do not match",
+    "passwordRules": "Use at least 8 characters, with uppercase and lowercase letters, a number and a special character",
+    "accountCreated": "Your account has been created",
+    "passwordRequired": "Please enter your password",
+    "passwordMin": "Password must be at least 8 characters",
+    "passwordUppercase": "Must contain an uppercase letter",
+    "passwordLowercase": "Must contain a lowercase letter",
+    "passwordNumber": "Must contain a number",
+    "passwordSpecial": "Must contain a special character",
+    "confirmPasswordRequired": "Please confirm your password",
+    "passwordMismatch": "Passwords do not match",
+    "back": "Back",
+    "next": "Next "
+  },
+  "RegisterSuccess": {
+    "title": "Account created",
+    "description": "Your account is ready. Log in to get started.",
+    "login": "Log in"
+  },
+  "ContactUs": {
+    "title": "Contact Us"
+  },
+  "LoginPopover": {
+    "tabsLabel": "Authentication tabs",
+    "login": "Login",
+    "register": "Register"
+  },
+  "UserDropdown": {
+    "hello": "Hello",
+    "myAccount": "My Account",
+    "account": "Account",
+    "addresses": "Addresses",
+    "orders": "Orders",
+    "dashboard": "Dashboard",
+    "logout": "Log out"
   },
   "bestSelling": {
     "label": "BEST SELLING",

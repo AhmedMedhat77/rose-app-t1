@@ -14,13 +14,14 @@ const nextConfig: NextConfig = {
       },
     },
   },
-
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "rose-app.elevate-bootcamp.cloud",
-        pathname: "/storage/entities/product/**",
+        hostname:
+          process.env.NEXT_PUBLIC_IMAGE_DOMAIN ||
+          "rose-app.elevate-bootcamp.cloud",
+        pathname: "/**",
       },
     ],
   },
