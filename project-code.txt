@@ -2297,7 +2297,7 @@ export default function NotificationsPanel({
     "subscribeSuccess": "تم الاشتراك بنجاح",
     "subscribeAlready": "هذا البريد مشترك بالفعل",
     "subscribeError": "حدث خطأ، حاول مرة أخرى"
-  }
+  },
 }
 
 === FILE: src/i18n/messages/en.json ===
@@ -2343,7 +2343,7 @@ export default function NotificationsPanel({
     "subscribeSuccess": "Subscribed successfully",
     "subscribeAlready": "This email is already subscribed",
     "subscribeError": "Something went wrong, please try again"
-  }
+  },
 }
 
 === FILE: src/i18n/navigation.ts ===

@@ -100,6 +100,20 @@
     "profile": "الملف الشخصي",
     "settings": "الإعدادات"
   },
+  "productFilter": {
+    "filterCategory": "التصنيف",
+    "filtersOccasion": "المناسبة",
+    "filtersRating": "التقييم",
+    "filtersPrice": "السعر",
+    "filtersPriceFrom": "من",
+    "filtersPriceTo": "إلى",
+    "filtersReset": "إعادة تعيين",
+    "filtersResetAll": "إعادة تعيين الكل",
+    "filtersRetry": "إعادة المحاولة",
+    "filtersPriceError": "قيمة \"من\" يجب أن تكون أقل من \"إلى\"",
+    "filtersError": "حدث خطأ ما. حاول مرة أخرى.",
+    "filtersEmpty": "لا توجد عناصر"
+  },
   "Auth": {
     "heroImageAlt": "صناديق هدايا مزينة بشرائط"
   },
