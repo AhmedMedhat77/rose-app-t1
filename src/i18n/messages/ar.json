@@ -190,6 +190,20 @@
       "logoutError": "فشل تسجيل الخروج."
     }
   },
+  "productFilter": {
+    "filterCategory": "التصنيف",
+    "filtersOccasion": "المناسبة",
+    "filtersRating": "التقييم",
+    "filtersPrice": "السعر",
+    "filtersPriceFrom": "من",
+    "filtersPriceTo": "إلى",
+    "filtersReset": "إعادة تعيين",
+    "filtersResetAll": "إعادة تعيين الكل",
+    "filtersRetry": "إعادة المحاولة",
+    "filtersPriceError": "قيمة \"من\" يجب أن تكون أقل من \"إلى\"",
+    "filtersError": "حدث خطأ ما. حاول مرة أخرى.",
+    "filtersEmpty": "لا توجد عناصر"
+  },
   "Auth": {
     "heroImageAlt": "صناديق هدايا مزينة بشرائط"
   },
@@ -240,7 +254,135 @@
     "submit": "إعادة تعيين كلمة المرور",
     "successToast": "تم إعادة تعيين كلمة المرور بنجاح."
   },
+  "RegisterFlow": {
+    "header": "كن جزءاً من عائلتنا!",
+    "title": "إنشاء حساب",
+    "needHelp": "تحتاج مساعدة؟",
+    "contactUs": "تواصل معنا"
+  },
+  "SendEmailVerification": {
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "user@example.com",
+    "emailInvalid": "يرجى إدخال عنوان بريد إلكتروني صالح",
+    "sendCode": "التالي",
+    "alreadyHaveAccount": " لديك حساب بالفعل؟",
+    "login": "تسجيل الدخول"
+  },
+  "ConfirmEmailVerification": {
+    "enterOTPCode": "أدخل رمز التحقق",
+    "weHaveSentCode": "أرسلنا رمزاً مكوناً من 6 أرقام إلى",
+    "edit": "تعديل",
+    "codeResent": "تم إرسال رمز جديد",
+    "emailInvalid": "من فضلك أدخل بريداً إلكترونياً صالحاً",
+    "codeRequired": "من فضلك أدخل رمز التحقق",
+    "codeLength": "يجب أن يتكون الرمز من 6 أرقام",
+    "verifyCode": "تأكيد الرمز",
+    "sendANewCode": "إرسال رمز جديد",
+    "sending": "جاري الإرسال...",
+    "resendIn": "إعادة الإرسال بعد {seconds} ث",
+    "contactUs": "تواصل معنا",
+    "needHelp": "تحتاج مساعدة؟"
+  },
+  "AccountDetails": {
+    "enterYourDetails": "حدثنا عن نفسك",
+    "weNeedFewDetails": "بعض البيانات للبدء",
+    "firstName": "الاسم الأول",
+    "firstNamePlaceholder": "zoe",
+    "lastNamePlaceholder": "jonathan",
+    "lastName": "اسم العائلة",
+    "username": "اسم المستخدم",
+    "usernamePlaceholder": "zoe123",
+    "phone": "رقم الهاتف",
+    "phonePlaceholder": "1012345678",
+    "phoneRequired": "من فضلك أدخل رقم الهاتف",
+    "phoneInvalid": "من فضلك أدخل رقم هاتف صالح",
+    "gender": "النوع",
+    "selectGender": "اختر النوع",
+    "male": "ذكر",
+    "female": "أنثى",
+    "next": "التالي",
+    "firstNameRequired": "من فضلك أدخل اسمك الأول",
+    "lastNameRequired": "من فضلك أدخل اسم العائلة",
+    "usernameRequired": "من فضلك أدخل اسم المستخدم",
+    "genderRequired": "من فضلك اختر النوع"
+  },
+  "CreatePassword": {
+    "createStrongPassword": "أنشئ كلمة مرور قوية",
+    "chooseSecurePassword": "اختر كلمة مرور آمنة لحماية حسابك",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "passwordPlaceholder": "********",
+    "confirmRequired": "يرجى تأكيد كلمة المرور",
+    "passwordsMismatch": "كلمتا المرور غير متطابقتين",
+    "passwordRules": "استخدم 8 أحرف على الأقل، مع حرف كبير وحرف صغير ورقم ورمز خاص",
+    "accountCreated": "تم إنشاء حسابك بنجاح",
+    "passwordRequired": "يرجى إدخال كلمة المرور",
+    "passwordMin": "يجب ألا تقل كلمة المرور عن 8 أحرف",
+    "passwordUppercase": "يجب أن تحتوي على حرف كبير واحد على الأقل",
+    "passwordLowercase": "يجب أن تحتوي على حرف صغير واحد على الأقل",
+    "passwordNumber": "يجب أن تحتوي على رقم واحد على الأقل",
+    "passwordSpecial": "يجب أن تحتوي على رمز خاص واحد على الأقل",
+    "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
+    "passwordMismatch": "كلمتا المرور غير متطابقتين",
+    "next": "التالي",
+    "back": "السابق"
+  },
+  "RegisterSuccess": {
+    "title": "تم إنشاء الحساب",
+    "description": "حسابك جاهز. سجّل الدخول للبدء.",
+    "login": "تسجيل الدخول"
+  },
   "ContactUs": {
     "title": "تواصل معنا"
+  },
+  "LoginPopover": {
+    "tabsLabel": "تبويبات المصادقة",
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب"
+  },
+  "UserDropdown": {
+    "hello": "مرحباً",
+    "myAccount": "حسابي",
+    "account": "الحساب",
+    "addresses": "العناوين",
+    "orders": "الطلبات",
+    "dashboard": "لوحة التحكم",
+    "logout": "تسجيل الخروج"
+  },
+  "bestSelling": {
+    "label": "الأكثر مبيعًا",
+    "title": {
+      "highlight": "اكتشف",
+      "chosen": "ما يختاره",
+      "text": " الجميع ",
+      "now": "الآن"
+    },
+    "description": "لست متأكدًا مما تختار؟ ابدأ باكتشاف منتجاتنا الأكثر مبيعًا، فهي الهدايا التي يعود عملاؤنا لاختيارها مرارًا وتكرارًا. سواء كنت تحتفل بعيد ميلاد أو ذكرى سنوية أو حفل زفاف، فإن اختياراتنا المميزة تضمن لك ترك انطباع لا يُنسى.",
+    "exploreGift": "استكشف الهدايا"
+  },
+  "mostPopular": {
+    "label": "الأكثر شعبية"
+  },
+  "Gallery": {
+    "label": "معرض الصور",
+    "text": "تصفّح معرضنا الرائع."
+  },
+  "Testimonials": {
+    "label": "آراء العملاء",
+    "text": "كلمات حقيقية من عملائنا السعداء"
+  },
+  "TrustedCompanies": {
+    "trustedOver": "موثوق به من أكثر من",
+    "increasedAmount": "4.5 ألف",
+    "Companies": "شركة"
+  },
+  "ViewMore": {
+    "ViewMore": "مشاهدة المزيد"
+  },
+  "Product": {
+    "outOfStock": "نفد المخزون",
+    "new": "جديد",
+    "hot": "الأكثر رواجًا",
+    "currency": "جنيه مصري"
   }
 }

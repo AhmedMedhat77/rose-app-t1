@@ -8,9 +8,8 @@ import * as React from "react";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import "react-phone-input-2/lib/style.css";
-
 const defaultInputStyle = cn(
-  "rounded-lg min-h-[1rem]",
+  "rounded-lg min-h-4",
   "border border-border-soft",
   "p-4",
   "gap-2",
@@ -20,24 +19,18 @@ const defaultInputStyle = cn(
   "focus:border-border-primary focus-visible:border-border-primary focus-visible:ring-ring-default focus-visible:ring-3",
   "aria-invalid:border-border-danger aria-invalid:ring-ring-danger aria-invalid:hover:border-border-danger aria-invalid:focus:border-border-danger aria-invalid:focus-visible:border-border-danger aria-invalid:ring-3",
 );
-
 const errorInputStyle = cn(
   "text-text-danger border-border-danger ring-ring-danger ring-3 hover:border-danger hover:ring-ring-danger hover:ring-3 dark:shadow-[0_0_0_3px_border-border-danger-faint]",
 );
-
 const inputVariants = cva(
   "flex w-full  rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {
         default: defaultInputStyle,
-
         search: defaultInputStyle,
-
         number: defaultInputStyle,
-
         upload: defaultInputStyle,
-
         password: defaultInputStyle,
       },
       inputSize: {
@@ -52,20 +45,17 @@ const inputVariants = cva(
     },
   },
 );
-
 export interface InputProps
   extends
     React.ComponentProps<"input">,
     VariantProps<typeof inputVariants>,
     sideEffect {}
-
 interface sideEffect {
   label?: string;
   isError?: boolean;
   isDisabled?: boolean;
   error?: string;
 }
-
 function Input({
   className,
   type,
@@ -77,13 +67,9 @@ function Input({
   ...props
 }: InputProps) {
   const fileRef = React.useRef<HTMLInputElement>(null);
-
   const t = useTranslations("Input");
-
   const [passwordInput, setPasswordInput] = React.useState<string>("password");
-
   const [fileName, setFileName] = React.useState<File | undefined>();
-
   return (
     <div className="space-y-1.5">
       {label && (
@@ -100,7 +86,6 @@ function Input({
           {label}
         </p>
       )}
-
       <div className="relative">
         {variant === "search" && (
           <Search
@@ -110,7 +95,6 @@ function Input({
             )}
           />
         )}
-
         {variant === "upload" ? (
           <div
             className={cn(
@@ -128,7 +112,6 @@ function Input({
                 if (file) setFileName(file);
               }}
             />
-
             <Button
               type="button"
               className="text-text-primary flex shrink-0 cursor-pointer items-center gap-2"
@@ -137,7 +120,6 @@ function Input({
               <Upload size={18} />
               <span>{t("uploadFile")}</span>
             </Button>
-
             {fileName && (
               <p className="text-text-muted min-w-0 truncate text-sm">
                 {fileName.name}
@@ -180,7 +162,6 @@ function Input({
               )}
               {...props}
             />
-
             {variant === "password" && (
               <button
                 type="button"
@@ -214,7 +195,6 @@ function Input({
     </div>
   );
 }
-
 interface PhoneNumberInputProps {
   value?: string; // E.164, e.g. "+201012345678"
   onChange?: (value: string) => void;
@@ -224,7 +204,6 @@ interface PhoneNumberInputProps {
   disabled?: boolean;
   className?: string;
 }
-
 function PhoneNumberInput({
   value = "",
   onChange,
@@ -237,7 +216,6 @@ function PhoneNumberInput({
   const t = useTranslations("Input");
   const locale = useLocale();
   const isArabic = locale === "ar";
-
   return (
     <PhoneInput
       defaultCountry="eg"
@@ -247,7 +225,7 @@ function PhoneNumberInput({
       placeholder={t("phoneNumber")}
       inputProps={{ id, onBlur, "aria-invalid": invalid, dir: "ltr" }}
       className={cn(
-        "!relative !h-[3rem] !w-[20.4rem] !rounded-xl",
+        "!relative !h-[3rem] !rounded-xl",
         "border-border-soft !bg-background border",
         "hover:ring-ring-default hover:border-border-default hover:ring-3",
         "focus:border-border-primary focus-visible:border-border-primary focus-visible:ring-ring-default focus-visible:ring-3",
@@ -274,7 +252,6 @@ function PhoneNumberInput({
           isArabic ? "!-translate-x-1" : "!translate-x-1",
         ),
         dropdownArrowClassName: "ms-1 !text-muted-foreground",
-
         dropdownStyleProps: {
           className: cn(
             "!z-[9999] !rounded-lg",
@@ -287,5 +264,4 @@ function PhoneNumberInput({
     />
   );
 }
-
 export { Input, inputVariants, PhoneNumberInput };
