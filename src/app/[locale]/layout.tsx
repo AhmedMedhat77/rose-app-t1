@@ -19,13 +19,14 @@ import { notFound } from "next/navigation";
 import { routing } from "../../i18n/routing";
 import "../globals.css";
 
-import QueryProvider from "@/providers/query.provider";
 import NextAuthProvider from "@/providers/next-auth.provider";
 import { ThemeProvider } from "@/shared/context/theme.context";
 import { Toaster } from "@/shared/ui/toast";
-import { Header } from "@/shared/layout/Header";
+import { QueryProvider } from "@/shared/providers/query-provider";
 import Footer from "@/shared/layout/Footer";
-
+import { Header } from "@/shared/layout/Header";
+import { ThemeMode } from "@/shared/components/theme-mode";
+import { LocaleSwitcher } from "@/shared/components/locale-switcher";
 export const metadata: Metadata = {
   title: "Rose App",
   description: "Rose Application",
@@ -68,22 +69,26 @@ export default async function RootLayout({
       dir={dir}
       className={`${sarabun.variable} ${tajawal.variable} ${geistMono.variable} ${monsieur.variable} ${greatVibes.variable} ${resolvedTheme} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">
-        <QueryProvider>
-          <NextAuthProvider>
-            <ThemeProvider
-              initialTheme={theme}
-              initialSystemTheme={systemTheme}
-            >
-              <NextIntlClientProvider>
+      <body
+        className="dark:bg-bg-subtle flex min-h-full flex-col"
+        suppressHydrationWarning
+      >
+        <NextAuthProvider>
+          <ThemeProvider initialTheme={theme} initialSystemTheme={systemTheme}>
+            <NextIntlClientProvider>
+              <header className="flex flex-wrap items-center justify-between">
+                <LocaleSwitcher />
+                <ThemeMode />
+              </header>
+              <QueryProvider>
                 <Header />
                 <main className="flex-1">{children}</main>
                 <Footer />
-                <Toaster />
-              </NextIntlClientProvider>
-            </ThemeProvider>
-          </NextAuthProvider>
-        </QueryProvider>
+              </QueryProvider>
+              <Toaster />
+            </NextIntlClientProvider>
+          </ThemeProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );

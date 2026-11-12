@@ -27,7 +27,7 @@ function LocaleSwitcherLinks({ query }: { query: string }) {
           locale={nextLocale}
           lang={nextLocale}
           dir={nextLocale === "ar" ? "rtl" : "ltr"}
-          className={`text-primary focus-visible:outline-ring rounded-sm px-2 py-1 underline-offset-4 hover:underline focus-visible:outline-2 ${nextLocale === "ar" ? "font-arabic" : "font-english"}`}
+          className={`dark:text-text-plain focus-visible:outline-ring rounded-sm px-2 py-1 text-zinc-700 underline-offset-4 hover:underline focus-visible:outline-2 ${nextLocale === "ar" ? "font-arabic" : "font-english"}`}
         >
           {localeNames[nextLocale]}
         </Link>

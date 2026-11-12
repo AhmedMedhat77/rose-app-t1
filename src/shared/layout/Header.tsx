@@ -1,17 +1,18 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { LocaleSwitcher } from "@/shared/components/locale-switcher";
-
 import { Link } from "@/i18n/navigation";
 import { NavBar } from "./NavBar";
-import { HeartIcon, Search, ShoppingCartIcon } from "lucide-react";
+import { HeartIcon, ShoppingCartIcon } from "lucide-react";
 import { NotificationsMenu } from "@/features/notifications/components/NotificationsMenu";
 import { NotificationToggle } from "@/features/notifications/components/NotificationToggle";
 import { Input } from "@/shared/ui/input";
+import { Suspense } from "react";
+import { SearchBar } from "@/features/search/components/searchBar";
 import AuthMenu from "../components/auth-menu";
 
 const ICON_BUTTON =
-  "text-foreground hover:text-primary flex size-9 items-center justify-center rounded-md transition-colors";
+  "text-zinc-700  dark:text-text-plain flex size-9 items-center justify-center rounded-md transition-colors";
 
 export function Header() {
   const t = useTranslations("Header");
@@ -19,7 +20,7 @@ export function Header() {
   return (
     <header>
       {/* Top bar */}
-      <div className="bg-background">
+      <div className="bg-background dark:bg-bg-subtle">
         <div className="mx-auto flex items-center gap-6 px-6 py-3">
           <Link href="/" className="shrink-0">
             <Image
@@ -33,13 +34,21 @@ export function Header() {
           </Link>
 
           <div className="relative flex-1">
-            <Search className="text-muted-foreground pointer-events-none absolute inset-y-0 inset-s-3 my-auto size-4" />
-            <Input
-              type="search"
-              placeholder={t("searchPlaceholder")}
-              aria-label={t("searchLabel")}
-              className="h-11 w-full rounded-lg ps-10 pe-4 text-sm"
-            />
+            <Suspense
+              fallback={
+                <div className="h-11 flex-1">
+                  <Input
+                    type="search"
+                    placeholder={t("searchPlaceholder")}
+                    aria-label={t("searchLabel")}
+                    autoComplete="off"
+                    className="h-11 w-full rounded-lg text-sm"
+                  />
+                </div>
+              }
+            >
+              <SearchBar />
+            </Suspense>
           </div>
 
           <div className="flex shrink-0 items-center gap-4">
