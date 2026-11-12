@@ -30,14 +30,14 @@ function SidebarContent() {
       id: "profile",
       label: t("sidebar.profile"),
       icon: UserRoundPen,
-      href: { pathname: "/account-settings", query: { tab: "profile" } },
+      href: { pathname: "/account", query: { tab: "profile" } },
     },
     {
       id: "change-password",
       label: t("sidebar.changePassword"),
       icon: Lock,
       href: {
-        pathname: "/account-settings",
+        pathname: "/account",
         query: { tab: "change-password" },
       },
     },

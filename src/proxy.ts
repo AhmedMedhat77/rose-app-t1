@@ -13,7 +13,7 @@ const localePrefix = new RegExp(`^/(${routing.locales.join("|")})(?=/|$)`);
 // Locale-stripped paths that require authentication. Add routes here to
 // protect them. A request is protected when its pathname equals a listed
 // route or starts with `<route>/`. Everything not listed is public.
-const PROTECTED_ROUTES: string[] = ["/account-settings"];
+const PROTECTED_ROUTES: string[] = ["/account"];
 
 function isProtectedRoute(pathname: string) {
   return PROTECTED_ROUTES.some(
