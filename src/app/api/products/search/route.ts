@@ -17,6 +17,7 @@ export async function GET(request: NextRequest) {
   const search = (searchParams.get("search") ?? "")
     .trim()
     .slice(0, MAX_SEARCH_LENGTH);
+  const categoryId = searchParams.get("categoryId")?.trim();
   const requestedLimit = Number(searchParams.get("limit") ?? DEFAULT_LIMIT);
   const limit = Number.isInteger(requestedLimit)
     ? Math.min(Math.max(requestedLimit, 1), MAX_LIMIT)
@@ -25,6 +26,7 @@ export async function GET(request: NextRequest) {
   const url = new URL("/api/products", API_URL);
   url.searchParams.set("limit", String(limit));
   if (search) url.searchParams.set("search", search);
+  if (categoryId) url.searchParams.set("categoryId", categoryId);
 
   try {
     const response = await fetch(url, { cache: "no-store" });

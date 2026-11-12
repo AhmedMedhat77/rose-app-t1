@@ -18,10 +18,14 @@ export async function GET(
   }
 
   try {
-    const response = await fetch(
-      `${apiUrl}/${PRODUCT_ENDPOINT}/${encodeURIComponent(id)}`,
-      { headers: HEADERS.ACCEPT_JSON, signal: request.signal },
+    const endpoint = new URL(
+      `/api/${PRODUCT_ENDPOINT}/${encodeURIComponent(id)}`,
+      apiUrl,
     );
+    const response = await fetch(endpoint, {
+      headers: HEADERS.ACCEPT_JSON,
+      signal: request.signal,
+    });
 
     return new Response(response.body, {
       status: response.status,
