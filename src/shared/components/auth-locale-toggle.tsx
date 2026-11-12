@@ -2,10 +2,8 @@
 
 import { Link, usePathname } from "@/i18n/navigation";
 import { useLocale } from "next-intl";
-import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
 
-function AuthLocaleToggleLink({ query = "" }: { query?: string }) {
+export function AuthLocaleToggle() {
   const locale = useLocale();
   const pathname = usePathname();
   const targetLocale = locale === "en" ? "ar" : "en";
@@ -13,10 +11,7 @@ function AuthLocaleToggleLink({ query = "" }: { query?: string }) {
 
   return (
     <Link
-      href={{
-        pathname,
-        query: Object.fromEntries(new URLSearchParams(query).entries()),
-      }}
+      href={pathname}
       locale={targetLocale}
       className={`text-zinc600 dark:text-zinc-90 transition-colors hover:opacity-85 ${
         targetLocale === "ar" ? "font-arabic" : "font-english"
@@ -24,18 +19,5 @@ function AuthLocaleToggleLink({ query = "" }: { query?: string }) {
     >
       {label}
     </Link>
-  );
-}
-
-function AuthLocaleToggleWithQuery() {
-  const searchParams = useSearchParams();
-  return <AuthLocaleToggleLink query={searchParams.toString()} />;
-}
-
-export function AuthLocaleToggle() {
-  return (
-    <Suspense fallback={<AuthLocaleToggleLink />}>
-      <AuthLocaleToggleWithQuery />
-    </Suspense>
   );
 }

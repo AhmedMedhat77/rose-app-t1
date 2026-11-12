@@ -102,6 +102,14 @@
 /* Semantic roles: bg-*, text-*, and border-* remain independent. */
 :root {
   color-scheme: light;
+  --bg-maron: var(--color-maroon-500);
+  --bg-maron-secondary: var(--color-maroon-600);
+  --text-maron: var(--color-maroon-600);
+  --text-maron-700: var(--color-maroon-700);
+  --text-soft-pink-500: #ff668b;
+  --text-zinc-700: var(--color-zinc-700);
+  /* --color-pink-500: #f82ba9; */
+
   --bg-plain: var(--color-white);
   --bg-subtle: var(--color-zinc-50);
   --bg-muted: var(--color-zinc-100);
@@ -226,6 +234,14 @@
 /* Explicit .light overrides the system preference; .dark forces dark mode. */
 .dark {
   color-scheme: dark;
+  --bg-maron: var(--color-maroon-500);
+  --bg-maron-secondary: var(--color-pink-200);
+  --text-maron: var(--color-soft-pink-200);
+  --text-maron-700: var(--color-soft-pink-200);
+  --text-soft-pink-500: var(
+    --color-maroon-400
+  ); /* --bg-primary-fade: var(--color-zinc-700); */
+
   --bg-plain: var(--color-zinc-700);
   --bg-subtle: var(--color-zinc-800);
   --bg-muted: var(--color-zinc-900);
@@ -417,6 +433,13 @@
 }
 
 @theme inline {
+  --color-bg-maron: var(--bg-maron);
+  --color-bg-maron-secondary: var(--bg-maron-secondary);
+  --color-text-maron: var(--text-maron);
+  --color-text-maron-700: var(--text-maron-700);
+  --color-soft-pink-500: var(--text-soft-pink-500);
+  --text-zinc-700: var(--color-zinc-700);
+
   --color-bg-plain: var(--bg-plain);
   --color-bg-subtle: var(--bg-subtle);
   --color-bg-muted: var(--bg-muted);
@@ -558,5 +581,34 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body), Arial, Helvetica, sans-serif;
+  }
+}
+
+@theme {
+  --animate-marquee-ltr: marquee-ltr 25s linear infinite;
+  --animate-marquee-rtl: marquee-rtl 25s linear infinite;
+
+  @keyframes marquee-ltr {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes marquee-rtl {
+    from {
+      transform: translateX(50%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none !important;
   }
 }

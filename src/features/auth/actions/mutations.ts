@@ -19,6 +19,12 @@ import {
   IResetPasswordResponse,
   TResetPasswordPayload,
 } from "@/features/auth/types/reset-password.types";
+import {
+  IRegisterResponse,
+  ISendEmailVerificationResponse,
+  TRegisterFormValues,
+  TSendEmailVerificationValues,
+} from "@/features/auth/types/register.types";
 
 async function postJson<T>(path: string, body: unknown): Promise<T> {
   if (!API_URL) {
@@ -59,4 +65,17 @@ export async function forgotPasswordMutation(payload: TForgotPasswordPayload) {
 
 export async function resetPasswordMutation(payload: TResetPasswordPayload) {
   return postJson<IResetPasswordResponse>("/auth/reset-password", payload);
+}
+
+export async function registerMutation(payload: TRegisterFormValues) {
+  return postJson<IRegisterResponse>("/auth/register", payload);
+}
+
+export async function sendEmailVerificationMutation(
+  payload: TSendEmailVerificationValues,
+) {
+  return postJson<ISendEmailVerificationResponse>(
+    "/auth/send-email-verification",
+    payload,
+  );
 }

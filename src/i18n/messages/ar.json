@@ -181,6 +181,110 @@
     "profile": "الملف الشخصي",
     "settings": "الإعدادات"
   },
+  "accountSettings": {
+    "title": "إعدادات الحساب",
+    "sidebar": {
+      "profile": "الملف الشخصي",
+      "changePassword": "تغيير كلمة المرور",
+      "logout": "تسجيل الخروج"
+    },
+    "Profile": {
+      "photo": {
+        "title": "رفع صورة",
+        "hint": "يمكنك رفع صورة بصيغة JPG أو PNG أو GIF بحجم أقصى 5 ميجابايت.",
+        "changeAriaLabel": "تغيير الصورة الشخصية"
+      },
+      "fields": {
+        "firstName": "الاسم الأول",
+        "lastName": "اسم العائلة",
+        "email": "البريد الإلكتروني",
+        "phone": "رقم الهاتف",
+        "gender": "الجنس",
+        "genderPlaceholder": "اختر الجنس"
+      },
+      "gender": {
+        "MALE": "ذكر",
+        "FEMALE": "أنثى"
+      },
+      "actions": {
+        "save": "حفظ التغييرات",
+        "saving": "جارٍ الحفظ...",
+        "delete": "حذف حسابي"
+      },
+      "deleteDialog": {
+        "title": "هل أنت متأكد من حذف حسابك؟",
+        "description": "هذا الإجراء دائم ولا يمكن التراجع عنه.",
+        "cancel": "لا، لا أريد ذلك",
+        "confirm": "نعم، حذف",
+        "confirming": "جارٍ الحذف...",
+        "close": "إغلاق"
+      },
+      "toasts": {
+        "updateSuccess": "تم تحديث الملف الشخصي بنجاح",
+        "updateError": "تعذّر تحديث ملفك الشخصي. يرجى المحاولة مرة أخرى.",
+        "deleteError": "تعذّر حذف حسابك. يرجى المحاولة مرة أخرى.",
+        "deleteForbidden": "لا يمكن حذف حسابات المشرف العام."
+      },
+      "loadError": {
+        "title": "تعذّر تحميل ملفك الشخصي",
+        "description": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+        "retry": "إعادة المحاولة"
+      },
+      "errors": {
+        "firstNameRequired": "الاسم الأول مطلوب",
+        "firstNameTooShort": "يجب ألا يقل الاسم الأول عن حرفين",
+        "firstNameTooLong": "يجب ألا يتجاوز الاسم الأول 50 حرف",
+        "lastNameRequired": "اسم العائلة مطلوب",
+        "lastNameTooShort": "يجب ألا يقل اسم العائلة عن حرفين",
+        "lastNameTooLong": "يجب ألا يتجاوز اسم العائلة 50 حرف",
+        "phoneInvalid": "يرجى إدخال رقم هاتف صحيح",
+        "fileSizeExceeded": "يجب ألا يتجاوز حجم الصورة 5 ميجابايت",
+        "invalidFileType": "الصيغ المسموح بها: JPG وPNG وGIF فقط"
+      }
+    },
+    "changePasswordContent": {
+      "form": {
+        "oldPassword": "كلمة المرور القديمة",
+        "newPassword": "كلمة المرور الجديدة",
+        "confirmPassword": "تأكيد كلمة المرور الجديدة",
+        "submit": "تغيير كلمة المرور",
+        "submitting": "جارٍ التغيير...",
+        "oldPasswordError": "كلمة المرور القديمة غير صحيحة.",
+        "passwordMismatchError": "كلمات المرور الجديدة غير متطابقة."
+      },
+      "validation": {
+        "required": "هذا الحقل مطلوب",
+        "password_min_length": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+        "password_uppercase": "يجب أن تحتوي كلمة المرور على حرف كبير",
+        "password_lowercase": "يجب أن تحتوي كلمة المرور على حرف صغير",
+        "password_number": "يجب أن تحتوي كلمة المرور على رقم",
+        "password_special": "يجب أن تحتوي كلمة المرور على رمز خاص",
+        "password_same_as_old": "يجب أن تختلف كلمة المرور الجديدة عن كلمة المرور القديمة",
+        "passwords_do_not_match": "كلمات المرور الجديدة غير متطابقة.",
+        "invalid": "يرجى التحقق من هذا الحقل"
+      }
+    },
+    "toasts": {
+      "passwordUpdatedSuccess": "تم تغيير كلمة المرور بنجاح.",
+      "passwordUpdatedError": "فشل تغيير كلمة المرور.",
+      "logoutSuccess": "تم تسجيل الخروج بنجاح.",
+      "logoutError": "فشل تسجيل الخروج."
+    }
+  },
+  "productFilter": {
+    "filterCategory": "التصنيف",
+    "filtersOccasion": "المناسبة",
+    "filtersRating": "التقييم",
+    "filtersPrice": "السعر",
+    "filtersPriceFrom": "من",
+    "filtersPriceTo": "إلى",
+    "filtersReset": "إعادة تعيين",
+    "filtersResetAll": "إعادة تعيين الكل",
+    "filtersRetry": "إعادة المحاولة",
+    "filtersPriceError": "قيمة \"من\" يجب أن تكون أقل من \"إلى\"",
+    "filtersError": "حدث خطأ ما. حاول مرة أخرى.",
+    "filtersEmpty": "لا توجد عناصر"
+  },
   "Auth": {
     "heroImageAlt": "صناديق هدايا مزينة بشرائط"
   },
@@ -231,7 +335,135 @@
     "submit": "إعادة تعيين كلمة المرور",
     "successToast": "تم إعادة تعيين كلمة المرور بنجاح."
   },
+  "RegisterFlow": {
+    "header": "كن جزءاً من عائلتنا!",
+    "title": "إنشاء حساب",
+    "needHelp": "تحتاج مساعدة؟",
+    "contactUs": "تواصل معنا"
+  },
+  "SendEmailVerification": {
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "user@example.com",
+    "emailInvalid": "يرجى إدخال عنوان بريد إلكتروني صالح",
+    "sendCode": "التالي",
+    "alreadyHaveAccount": " لديك حساب بالفعل؟",
+    "login": "تسجيل الدخول"
+  },
+  "ConfirmEmailVerification": {
+    "enterOTPCode": "أدخل رمز التحقق",
+    "weHaveSentCode": "أرسلنا رمزاً مكوناً من 6 أرقام إلى",
+    "edit": "تعديل",
+    "codeResent": "تم إرسال رمز جديد",
+    "emailInvalid": "من فضلك أدخل بريداً إلكترونياً صالحاً",
+    "codeRequired": "من فضلك أدخل رمز التحقق",
+    "codeLength": "يجب أن يتكون الرمز من 6 أرقام",
+    "verifyCode": "تأكيد الرمز",
+    "sendANewCode": "إرسال رمز جديد",
+    "sending": "جاري الإرسال...",
+    "resendIn": "إعادة الإرسال بعد {seconds} ث",
+    "contactUs": "تواصل معنا",
+    "needHelp": "تحتاج مساعدة؟"
+  },
+  "AccountDetails": {
+    "enterYourDetails": "حدثنا عن نفسك",
+    "weNeedFewDetails": "بعض البيانات للبدء",
+    "firstName": "الاسم الأول",
+    "firstNamePlaceholder": "zoe",
+    "lastNamePlaceholder": "jonathan",
+    "lastName": "اسم العائلة",
+    "username": "اسم المستخدم",
+    "usernamePlaceholder": "zoe123",
+    "phone": "رقم الهاتف",
+    "phonePlaceholder": "1012345678",
+    "phoneRequired": "من فضلك أدخل رقم الهاتف",
+    "phoneInvalid": "من فضلك أدخل رقم هاتف صالح",
+    "gender": "النوع",
+    "selectGender": "اختر النوع",
+    "male": "ذكر",
+    "female": "أنثى",
+    "next": "التالي",
+    "firstNameRequired": "من فضلك أدخل اسمك الأول",
+    "lastNameRequired": "من فضلك أدخل اسم العائلة",
+    "usernameRequired": "من فضلك أدخل اسم المستخدم",
+    "genderRequired": "من فضلك اختر النوع"
+  },
+  "CreatePassword": {
+    "createStrongPassword": "أنشئ كلمة مرور قوية",
+    "chooseSecurePassword": "اختر كلمة مرور آمنة لحماية حسابك",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "passwordPlaceholder": "********",
+    "confirmRequired": "يرجى تأكيد كلمة المرور",
+    "passwordsMismatch": "كلمتا المرور غير متطابقتين",
+    "passwordRules": "استخدم 8 أحرف على الأقل، مع حرف كبير وحرف صغير ورقم ورمز خاص",
+    "accountCreated": "تم إنشاء حسابك بنجاح",
+    "passwordRequired": "يرجى إدخال كلمة المرور",
+    "passwordMin": "يجب ألا تقل كلمة المرور عن 8 أحرف",
+    "passwordUppercase": "يجب أن تحتوي على حرف كبير واحد على الأقل",
+    "passwordLowercase": "يجب أن تحتوي على حرف صغير واحد على الأقل",
+    "passwordNumber": "يجب أن تحتوي على رقم واحد على الأقل",
+    "passwordSpecial": "يجب أن تحتوي على رمز خاص واحد على الأقل",
+    "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
+    "passwordMismatch": "كلمتا المرور غير متطابقتين",
+    "next": "التالي",
+    "back": "السابق"
+  },
+  "RegisterSuccess": {
+    "title": "تم إنشاء الحساب",
+    "description": "حسابك جاهز. سجّل الدخول للبدء.",
+    "login": "تسجيل الدخول"
+  },
   "ContactUs": {
     "title": "تواصل معنا"
+  },
+  "LoginPopover": {
+    "tabsLabel": "تبويبات المصادقة",
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب"
+  },
+  "UserDropdown": {
+    "hello": "مرحباً",
+    "myAccount": "حسابي",
+    "account": "الحساب",
+    "addresses": "العناوين",
+    "orders": "الطلبات",
+    "dashboard": "لوحة التحكم",
+    "logout": "تسجيل الخروج"
+  },
+  "bestSelling": {
+    "label": "الأكثر مبيعًا",
+    "title": {
+      "highlight": "استكشف",
+      "chosen": "ما يختاره",
+      "text": " الجميع ",
+      "now": "الآن"
+    },
+    "description": "لست متأكدًا مما تختار؟ ابدأ باكتشاف منتجاتنا الأكثر مبيعًا، فهي الهدايا التي يعود عملاؤنا لاختيارها مرارًا وتكرارًا. سواء كنت تحتفل بعيد ميلاد أو ذكرى سنوية أو حفل زفاف، فإن اختياراتنا المميزة تضمن لك ترك انطباع لا يُنسى.",
+    "exploreGift": "استكشف الهدايا"
+  },
+  "mostPopular": {
+    "label": "الأكثر شعبية"
+  },
+  "Gallery": {
+    "label": "معرض الصور",
+    "text": "تصفّح معرضنا الرائع."
+  },
+  "Testimonials": {
+    "label": "آراء العملاء",
+    "text": "كلمات حقيقية من عملائنا السعداء"
+  },
+  "TrustedCompanies": {
+    "trustedOver": "موثوق به من أكثر من",
+    "increasedAmount": "4.5 ألف",
+    "Companies": "شركة"
+  },
+  "ViewMore": {
+    "ViewMore": "مشاهدة المزيد"
+  },
+  "Product": {
+    "outOfStock": "نفد المخزون",
+    "new": "جديد",
+    "hot": "الأكثر رواجًا",
+    "currency": "جنيه مصري"
   }
 }

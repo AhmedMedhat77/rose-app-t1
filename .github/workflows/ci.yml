@@ -67,6 +67,7 @@ jobs:
         env:
           NODE_ENV: production
           NEXT_TELEMETRY_DISABLED: 1
+          API_URL: https://rose-app.elevate-bootcamp.cloud/api
 
       - name: 📊 Generate CI Summary
         if: always()

@@ -3,12 +3,13 @@ import { useTranslations } from "next-intl";
 import { LocaleSwitcher } from "@/shared/components/locale-switcher";
 import { Link } from "@/i18n/navigation";
 import { NavBar } from "./NavBar";
-import { HeartIcon, ShoppingCartIcon, User } from "lucide-react";
+import { HeartIcon, ShoppingCartIcon } from "lucide-react";
 import { NotificationsMenu } from "@/features/notifications/components/NotificationsMenu";
 import { NotificationToggle } from "@/features/notifications/components/NotificationToggle";
 import { Input } from "@/shared/ui/input";
 import { Suspense } from "react";
 import { SearchBar } from "@/features/search/components/searchBar";
+import AuthMenu from "../components/auth-menu";
 
 const ICON_BUTTON =
   "text-zinc-700  dark:text-text-plain flex size-9 items-center justify-center rounded-md transition-colors";
@@ -51,13 +52,7 @@ export function Header() {
           </div>
 
           <div className="flex shrink-0 items-center gap-4">
-            <Link
-              href="/login"
-              className="dark:text-text-plain flex items-center gap-2 text-sm text-[16px] text-zinc-700 transition-colors"
-            >
-              <User width={20} height={20} />
-              {t("login")}
-            </Link>
+            <AuthMenu loginLabel={t("login")} />
 
             <div className="border-border flex items-center gap-1 border-s ps-4">
               <Link

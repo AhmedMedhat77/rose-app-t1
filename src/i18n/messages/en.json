@@ -170,6 +170,110 @@
     "profile": "Profile",
     "settings": "Settings"
   },
+  "accountSettings": {
+    "title": "Account Settings",
+    "sidebar": {
+      "profile": "Profile",
+      "changePassword": "Change Password",
+      "logout": "Logout"
+    },
+    "Profile": {
+      "photo": {
+        "title": "Upload Photo",
+        "hint": "You can upload a .jpg, .png, or .gif photo with max size of 5MB.",
+        "changeAriaLabel": "Change profile photo"
+      },
+      "fields": {
+        "firstName": "First name",
+        "lastName": "Last name",
+        "email": "Email",
+        "phone": "Phone",
+        "gender": "Gender",
+        "genderPlaceholder": "Select gender"
+      },
+      "gender": {
+        "MALE": "Male",
+        "FEMALE": "Female"
+      },
+      "actions": {
+        "save": "Save Changes",
+        "saving": "Saving...",
+        "delete": "Delete My Account"
+      },
+      "deleteDialog": {
+        "title": "Are you sure you want to delete your account?",
+        "description": "This action is permanent and cannot be undone.",
+        "cancel": "Nope, not doing it",
+        "confirm": "Yes, delete",
+        "confirming": "Deleting...",
+        "close": "Close"
+      },
+      "toasts": {
+        "updateSuccess": "Profile updated successfully",
+        "updateError": "Couldn't update your profile. Please try again.",
+        "deleteError": "Couldn't delete your account. Please try again.",
+        "deleteForbidden": "Super admin accounts can't be deleted."
+      },
+      "loadError": {
+        "title": "Couldn't load your profile",
+        "description": "Something went wrong. Please try again.",
+        "retry": "Try again"
+      },
+      "errors": {
+        "firstNameRequired": "First name is required",
+        "firstNameTooShort": "First name must be at least 2 characters",
+        "firstNameTooLong": "First name must be less than 50 characters",
+        "lastNameRequired": "Last name is required",
+        "lastNameTooShort": "Last name must be at least 2 characters",
+        "lastNameTooLong": "Last name must be less than 50 characters",
+        "phoneInvalid": "Please enter a valid phone number",
+        "fileSizeExceeded": "Photo must be 5 MB or smaller",
+        "invalidFileType": "Only JPG, PNG, or GIF images are allowed"
+      }
+    },
+    "changePasswordContent": {
+      "form": {
+        "oldPassword": "Old Password",
+        "newPassword": "New Password",
+        "confirmPassword": "Confirm New Password",
+        "submit": "Change Password",
+        "submitting": "Changing...",
+        "oldPasswordError": "Old password is incorrect.",
+        "passwordMismatchError": "New passwords do not match."
+      },
+      "validation": {
+        "required": "This field is required",
+        "password_min_length": "Password must be at least 8 characters",
+        "password_uppercase": "Password must include an uppercase letter",
+        "password_lowercase": "Password must include a lowercase letter",
+        "password_number": "Password must include a number",
+        "password_special": "Password must include a special character",
+        "password_same_as_old": "New password must be different from the old password",
+        "passwords_do_not_match": "New passwords do not match.",
+        "invalid": "Please check this field"
+      }
+    },
+    "toasts": {
+      "passwordUpdatedSuccess": "Password updated successfully.",
+      "passwordUpdatedError": "Failed to update password.",
+      "logoutSuccess": "Logged out successfully.",
+      "logoutError": "Failed to logout."
+    }
+  },
+  "productFilter": {
+    "filterCategory": "Category",
+    "filtersOccasion": "Occasion",
+    "filtersRating": "Rating",
+    "filtersPrice": "Price",
+    "filtersPriceFrom": "from",
+    "filtersPriceTo": "to",
+    "filtersReset": "Reset",
+    "filtersResetAll": "Reset All",
+    "filtersRetry": "Retry",
+    "filtersPriceError": "'From' must be less than 'To'",
+    "filtersError": "Something went wrong. Please try again.",
+    "filtersEmpty": "No items found"
+  },
   "Auth": {
     "heroImageAlt": "Gift boxes with ribbons"
   },
@@ -220,7 +324,133 @@
     "submit": "Reset Password",
     "successToast": "Your password has been successfully reset."
   },
+  "RegisterFlow": {
+    "header": "Become part of our family!",
+    "title": "Create Account",
+    "needHelp": "Need help?",
+    "contactUs": "Contact us"
+  },
+  "SendEmailVerification": {
+    "email": "Email",
+    "emailPlaceholder": "user@example.com",
+    "emailInvalid": "Please enter a valid email address",
+    "sendCode": "Next",
+    "alreadyHaveAccount": "Already have an account?",
+    "login": "Login"
+  },
+  "ConfirmEmailVerification": {
+    "enterOTPCode": "Enter the OTP Code",
+    "weHaveSentCode": "We have sent a 6-digit code to",
+    "edit": "Edit",
+    "codeResent": "A new code has been sent",
+    "emailInvalid": "Please enter a valid email address",
+    "codeRequired": "Please enter the verification code",
+    "codeLength": "Code must be 6 digits",
+    "verifyCode": "Verify Code",
+    "sendANewCode": "Send a new code",
+    "sending": "Sending...",
+    "resendIn": "Resend in {seconds}s"
+  },
+  "AccountDetails": {
+    "enterYourDetails": "Tell us about yourself",
+    "weNeedFewDetails": "A few details to get started",
+    "firstName": "First name",
+    "firstNamePlaceholder": "Zoe",
+    "lastNamePlaceholder": "Jonathan",
+    "lastName": "Last name",
+    "username": "Username",
+    "usernamePlaceholder": "zoe123",
+    "phone": "Phone",
+    "phonePlaceholder": "1012345678",
+    "phoneRequired": "Please enter your phone number",
+    "phoneInvalid": "Please enter a valid phone number",
+    "gender": "Gender",
+    "selectGender": "Select gender",
+    "male": "Male",
+    "female": "Female",
+    "next": "Next",
+    "firstNameRequired": "Please enter your first name",
+    "lastNameRequired": "Please enter your last name",
+    "usernameRequired": "Please enter a username",
+    "genderRequired": "Please select your gender"
+  },
+  "CreatePassword": {
+    "createStrongPassword": "Create a strong password",
+    "chooseSecurePassword": "Choose a secure password to protect your account",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "passwordPlaceholder": "********",
+    "confirmRequired": "Please confirm your password",
+    "passwordsMismatch": "Passwords do not match",
+    "passwordRules": "Use at least 8 characters, with uppercase and lowercase letters, a number and a special character",
+    "accountCreated": "Your account has been created",
+    "passwordRequired": "Please enter your password",
+    "passwordMin": "Password must be at least 8 characters",
+    "passwordUppercase": "Must contain an uppercase letter",
+    "passwordLowercase": "Must contain a lowercase letter",
+    "passwordNumber": "Must contain a number",
+    "passwordSpecial": "Must contain a special character",
+    "confirmPasswordRequired": "Please confirm your password",
+    "passwordMismatch": "Passwords do not match",
+    "back": "Back",
+    "next": "Next "
+  },
+  "RegisterSuccess": {
+    "title": "Account created",
+    "description": "Your account is ready. Log in to get started.",
+    "login": "Log in"
+  },
   "ContactUs": {
     "title": "Contact Us"
+  },
+  "LoginPopover": {
+    "tabsLabel": "Authentication tabs",
+    "login": "Login",
+    "register": "Register"
+  },
+  "UserDropdown": {
+    "hello": "Hello",
+    "myAccount": "My Account",
+    "account": "Account",
+    "addresses": "Addresses",
+    "orders": "Orders",
+    "dashboard": "Dashboard",
+    "logout": "Log out"
+  },
+  "bestSelling": {
+    "label": "BEST SELLING",
+    "title": {
+      "highlight": "Check Out",
+      "chosen": "Buying",
+      "text": "What Everyone’s",
+      "now": "Right Now"
+    },
+    "description": "Not sure what to choose? Start with our best sellers, these are the gifts our customers keep coming back for. Whether you're celebrating a birthday, anniversary or wedding, our top picks are guaranteed to leave a lasting impression.",
+    "exploreGift": "Explore gifts"
+  },
+  "mostPopular": {
+    "label": "Most Popular"
+  },
+  "Gallery": {
+    "label": "Gallery",
+    "text": "Check Out our Wonderful Gallery"
+  },
+  "Testimonials": {
+    "label": "Testimonials",
+    "text": "Real Words from our Happy Customers"
+  },
+  "TrustedCompanies": {
+    "trustedOver": "Trusted by over",
+    "increasedAmount": "4.5k+",
+    "Companies": "Companies"
+  },
+  "ViewMore": {
+    "ViewMore": "View more"
+  },
+  "Product": {
+    "outOfStock": "OUT OF STOCK",
+    "new": "NEW",
+    "hot": "HOT",
+    "currency": "EGP"
   }
 }
