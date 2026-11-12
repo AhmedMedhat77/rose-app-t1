@@ -464,6 +464,21 @@
     "outOfStock": "نفد المخزون",
     "new": "جديد",
     "hot": "الأكثر رواجًا",
-    "currency": "جنيه مصري"
+    "currency": "جنيه مصري",
+    "stockLeft": "متبقي {count} في المخزون",
+    "rating": "التقييم: {rating}/5 ({count} تقييمات)",
+    "addToCart": "أضف إلى السلة",
+    "addToWishlist": "أضف إلى المفضلة",
+    "addedToCart": "تمت إضافة المنتج إلى السلة بنجاح",
+    "quantityIncreased": "تمت زيادة الكمية",
+    "relatedProducts": "منتجات ذات صلة",
+    "previousProducts": "المنتجات السابقة",
+    "nextProducts": "المنتجات التالية",
+    "loadError": "تعذر تحميل المنتج. حاول مرة أخرى.",
+    "galleryLabel": "صور المنتج",
+    "imageUnavailable": "لا توجد صورة متاحة",
+    "viewImage": "عرض صورة المنتج رقم {number}",
+    "previousImages": "صور المنتج السابقة",
+    "nextImages": "صور المنتج التالية"
   }
 }
