@@ -72,7 +72,7 @@ export function SearchBar() {
           placeholder={t("searchPlaceholder")}
           aria-label={t("searchLabel")}
           autoComplete="off"
-          className="h-11 w-full rounded-lg text-sm"
+          className="h-11 w-full rounded-lg text-sm shadow-none"
         />
       </DropdownMenuTrigger>
 
