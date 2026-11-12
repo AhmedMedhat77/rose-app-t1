@@ -612,3 +612,8 @@
     animation: none !important;
   }
 }
+
+.container {
+  width: max(90vw, 90%);
+  margin-inline: auto;
+}
