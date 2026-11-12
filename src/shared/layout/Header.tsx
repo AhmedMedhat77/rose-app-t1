@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { LocaleSwitcher } from "@/shared/components/LocaleSwitcher";
+import { LocaleSwitcher } from "@/shared/components/locale-switcher";
 import { Link } from "@/i18n/navigation";
 import { NavBar } from "./NavBar";
 import { HeartIcon, ShoppingCartIcon, User } from "lucide-react";

@@ -26,8 +26,7 @@ import { QueryProvider } from "@/shared/providers/query-provider";
 import Footer from "@/shared/layout/Footer";
 import { Header } from "@/shared/layout/Header";
 import { ThemeMode } from "@/shared/components/theme-mode";
-import { LocaleSwitcher } from "@/shared/components/LocaleSwitcher";
-
+import { LocaleSwitcher } from "@/shared/components/locale-switcher";
 export const metadata: Metadata = {
   title: "Rose App",
   description: "Rose Application",
