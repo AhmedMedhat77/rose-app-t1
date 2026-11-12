@@ -75,14 +75,9 @@ src/
 │       │   └── <screen-name>.tsx
 │       ├── hooks?/
 │       │   └── use-<hook-name>.ts
-│       ├── actions?/                    # used by auth, beside the feature root
-│       │   └── <scope-name>.action.ts
-│       ├── schemas?/
-│       │   └── <scope-name>.schema.ts
-│       └── types?/
-│       │   ├── <scope-name>.types.ts
-│       │   └── <scope-name>.d.ts
 │       └── lib?/
+│           ├── actions/
+│           |   └── <scope-name>.action.ts      # feature-specific server actions
 │           ├── apis/
 │           │   └── <scope-name>.api.ts
 │           ├── constants/
