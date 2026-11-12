@@ -6,7 +6,7 @@ export default function ProductImage({ image }: { image: string }) {
       src={image}
       alt="Product photo"
       fill
-      priority
+      loading="eager"
       sizes="(max-width: 768px) 100vw, 50vw"
       className="object-cover"
     />
