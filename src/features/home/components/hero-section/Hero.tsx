@@ -15,7 +15,7 @@ export function Hero() {
   const t = useTranslations("Hero");
 
   return (
-    <section className="flex flex-col gap-6 px-6 py-4">
+    <section className="container flex flex-col gap-6 py-4 pt-11 pb-10">
       <div className="grid gap-4 lg:grid-cols-[1fr_3fr]">
         <div className="text-text-inverse dark:text-secondary-foreground relative h-110 overflow-hidden rounded-2xl">
           <Image

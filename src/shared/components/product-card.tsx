@@ -123,8 +123,8 @@ export default function ProductCard({
           className={cn(
             "font-primary truncate leading-none font-semibold",
             isPopular
-              ? "text-text-maron-700 text-[18px]"
-              : "text-text-primary text-[16px]",
+              ? "text-text-maron-700 text-lg"
+              : "text-text-primary text-base",
           )}
         >
           {product.title}
@@ -148,11 +148,11 @@ export default function ProductCard({
             type="button"
             aria-label="Add to cart"
             className={cn(
-              "bg-bg-maron flex items-center justify-center rounded-full text-white",
-              isPopular ? "translate-y-[50%] p-2" : "size-9",
+              "bg-bg-maron-secondary flex items-center justify-center rounded-full text-white",
+              isPopular ? "translate-y-[50%] p-2" : "size-10",
             )}
           >
-            <ShoppingCart size={isPopular ? "1.625rem" : 19} />
+            <ShoppingCart className="size-5" />
           </button>
         </div>
 

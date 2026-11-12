@@ -6,7 +6,7 @@ import { cn } from "cn";
 
 import { Badge } from "@/shared/ui/badge";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
-import NotificationsPanel from "./NotificationsPanel";
+import NotificationsPanel from "./notifications-panel";
 import { INotificationItem } from "../lib/types/notification";
 
 const ICON_BUTTON =

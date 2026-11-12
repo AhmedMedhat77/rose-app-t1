@@ -8,21 +8,21 @@ import imageSix from "@/assets/6.png";
 
 export default function PhotoGallery() {
   return (
-    <section className="mx-auto w-full max-w-[80rem] px-4 py-10">
-      <div className="grid grid-cols-1 gap-2 overflow-hidden sm:grid-cols-3">
+    <section className="mx-auto w-full py-10">
+      <div className="grid grid-cols-1 gap-2.5 overflow-hidden sm:grid-cols-3">
         {/* First Column */}
-        <div className="flex flex-col gap-2">
-          <div className="relative h-[390px] overflow-hidden rounded-lg">
+        <div className="flex flex-col gap-2.5">
+          <div className="relative h-97.5 overflow-hidden">
             <Image
               src={imageOne}
               alt="Beautiful Rose"
               fill
               sizes=" 100vw, 33vw"
-              className="object-fit h-[38.5625rem] w-[26.125rem] transition-transform duration-500 hover:scale-105"
+              className="object-fit h-154.25 w-104.5 transition-transform duration-500 hover:scale-105"
             />
           </div>
 
-          <div className="relative h-[250px] overflow-hidden rounded-lg">
+          <div className="relative h-62.5 overflow-hidden">
             <Image
               src={imageTwo}
               alt="Beautiful Rose2"
@@ -34,8 +34,8 @@ export default function PhotoGallery() {
         </div>
 
         {/* Second Column */}
-        <div className="flex flex-col gap-2">
-          <div className="relative h-[270px] overflow-hidden rounded-lg">
+        <div className="flex flex-col gap-2.5">
+          <div className="relative h-67.5 overflow-hidden">
             <Image
               src={imageThree}
               alt="Beautiful Rose3"
@@ -45,7 +45,7 @@ export default function PhotoGallery() {
             />
           </div>
 
-          <div className="relative h-[370px] overflow-hidden rounded-lg">
+          <div className="relative h-92.5 overflow-hidden">
             <Image
               src={imageFour}
               alt="Beautiful Rose4"
@@ -57,8 +57,8 @@ export default function PhotoGallery() {
         </div>
 
         {/* Third Column */}
-        <div className="flex flex-col gap-2">
-          <div className="relative h-[270px] overflow-hidden rounded-lg">
+        <div className="flex flex-col gap-2.5">
+          <div className="relative h-67.5 overflow-hidden">
             <Image
               src={imageFive}
               alt="Beautiful Rose5"
@@ -68,7 +68,7 @@ export default function PhotoGallery() {
             />
           </div>
 
-          <div className="relative h-[370px] overflow-hidden rounded-lg">
+          <div className="relative h-92.5 overflow-hidden">
             <Image
               src={imageSix}
               alt="Beautiful Rose6"

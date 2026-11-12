@@ -15,20 +15,20 @@ export default function PopularLabel({
       className={cn(
         "relative isolate inline-block w-fit",
         "leading-[1.15] font-bold",
-        "text-bg-maron dark:text-pink-200",
+        "text-text-maron-700 dark:text-text-maron",
 
         // Pink background highlight
         "before:absolute before:-z-10",
-        "before:start-0 before:bottom-[0.04em]",
+        "before:inset-s-0 before:bottom-[0.04em]",
         "before:h-[0.45em] before:w-[72%]",
         "before:rounded-e-full",
-        "before:bg-pink-200 dark:before:bg-zinc-600",
+        "before:bg-bg-secondary-faint dark:before:bg-bg-plain",
 
         // Pink underline
-        "after:absolute after:start-0 after:bottom-0",
+        "after:absolute after:inset-s-0 after:bottom-0",
         "after:h-[0.055em] after:w-[30%]",
         "after:rounded-full",
-        "after:bg-pink-500 dark:after:bg-pink-300",
+        "after:bg-soft-pink-600 dark:after:bg-soft-pink-500",
 
         className,
       )}

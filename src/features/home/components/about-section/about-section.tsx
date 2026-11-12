@@ -9,7 +9,7 @@ export default function AboutSection() {
   const t = useTranslations("About");
 
   return (
-    <section className="mx-auto flex max-w-7xl flex-wrap items-center gap-10 px-6 py-16">
+    <section className="container flex flex-wrap items-center gap-10 py-16">
       <AboutImages />
 
       <div className="min-w-80 flex-1">

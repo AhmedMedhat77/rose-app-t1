@@ -3,7 +3,7 @@ import TitleGallery from "./TitleGallery";
 
 export default function Gallery() {
   return (
-    <div>
+    <div className="container">
       <TitleGallery />
 
       <PhotoGallery />

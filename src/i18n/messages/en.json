@@ -445,12 +445,23 @@
     "Companies": "Companies"
   },
   "ViewMore": {
-    "ViewMore": "View more"
+    "ViewMore": "View More"
   },
   "Product": {
     "outOfStock": "OUT OF STOCK",
     "new": "NEW",
     "hot": "HOT",
     "currency": "EGP"
+  },
+  "Cart": {
+    "title": "Cart",
+    "summary": "Summary",
+    "productYouMayLike": "Products You May Like",
+    "checkout": "Checkout",
+    "coupon-placeholder": "Coupon Code",
+    "apply": "Apply",
+    "no-coupons": "No coupons applied",
+    "subtotal": "Subtotal",
+    "total": "Total"
   }
 }

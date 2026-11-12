@@ -15,11 +15,11 @@ export default function TestimonialsClient({
 
   return (
     <div>
-      <section className="bg-bg-primary-fade dark:bg-bg-plain mt-10 w-full overflow-hidden px-6 py-20">
-        <div className="mx-auto max-w-6xl">
+      <section className="bg-bg-primary-fade dark:bg-bg-plain mt-10 w-full overflow-hidden px-6 pt-20">
+        <div>
           <div className="w-full overflow-hidden">
             <div
-              className={`flex w-max gap-6 hover:[animation-play-state:paused] ${
+              className={`flex gap-12 p-10 hover:[animation-play-state:paused] ${
                 isArabic ? "animate-marquee-rtl" : "animate-marquee-ltr"
               }`}
             >
@@ -29,11 +29,11 @@ export default function TestimonialsClient({
               ].map((item, index) => (
                 <article
                   key={`${item.id}-${index}`}
-                  className="relative mt-9 w-[21.4rem] shrink-0 rounded-xl bg-white px-6 pt-9 pb-6 text-center shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
+                  className="shadow-bg-primary-saturated/10 relative mt-10 flex h-62.5 w-[21.437rem] shrink-0 flex-col rounded-3xl bg-white px-6 pt-[4.75rem] pb-6 text-center shadow-[0_4px_50.5px]"
                 >
                   {/* Customer Image */}
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <div className="relative size-16 overflow-hidden rounded-full border-2 border-white bg-gray-200">
+                    <div className="relative size-30 overflow-hidden rounded-full border-3 border-white bg-gray-200">
                       {item.image ? (
                         <Image
                           src={item.image}

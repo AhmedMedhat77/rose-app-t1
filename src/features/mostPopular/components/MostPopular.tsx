@@ -1,14 +1,14 @@
 "use client";
 import { useTranslations, useLocale } from "next-intl";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/shared/ui/tabs";
 import { MostPopularProps } from "../types/mostPopular";
 import { useState } from "react";
 import useMostPopular from "../hooks/use-most-popular";
 import { Link } from "@/i18n/navigation";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/shared/ui/button";
 import { cn } from "cn";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
-import ProductCard from "@/shared/components/ProductCard";
+import ProductCard from "@/shared/components/product-card";
 import SectionsTitle from "@/shared/components/SectionsTitle";
 
 export default function MostPopular({
@@ -34,8 +34,8 @@ export default function MostPopular({
   });
 
   return (
-    <div className="my-20">
-      <div className="mx-auto my-15 w-[80rem]">
+    <div className="container my-20">
+      <div className="mx-auto my-15 w-7xl">
         <div className="flex items-center justify-between">
           <SectionsTitle mainTitle={`${t("mostPopular.label")}`} />
           <Tabs
@@ -43,9 +43,20 @@ export default function MostPopular({
             onValueChange={setSelectedOccasionId}
             className="w-fit"
           >
-            <TabsList variant="line">
+            <TabsList>
               {occasions.map((occasion) => (
-                <TabsTrigger value={occasion.id} key={occasion.id}>
+                <TabsTrigger
+                  className={cn(
+                    "hover:bg-bg-muted border-0",
+                    // Active (selected) styles
+                    "data-active:bg-bg-plain data-active:text-text-maron",
+                    "data-active:hover:bg-bg-muted",
+                    // Disabled
+                    "data-disabled:bg-bg-muted data-disabled:text-text-muted",
+                  )}
+                  value={occasion.id}
+                  key={occasion.id}
+                >
                   {occasion.title}
                 </TabsTrigger>
               ))}
