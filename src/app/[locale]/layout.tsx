@@ -21,12 +21,8 @@ import "../globals.css";
 
 import NextAuthProvider from "@/providers/next-auth.provider";
 import { ThemeProvider } from "@/shared/context/theme.context";
-import { Toaster } from "@/shared/ui/toast";
 import { QueryProvider } from "@/shared/providers/query-provider";
-import Footer from "@/shared/layout/Footer";
-import { Header } from "@/shared/layout/Header";
-import { ThemeMode } from "@/shared/components/theme-mode";
-import { LocaleSwitcher } from "@/shared/components/locale-switcher";
+import { Toaster } from "@/shared/ui/toast";
 export const metadata: Metadata = {
   title: "Rose App",
   description: "Rose Application",
@@ -76,14 +72,8 @@ export default async function RootLayout({
         <NextAuthProvider>
           <ThemeProvider initialTheme={theme} initialSystemTheme={systemTheme}>
             <NextIntlClientProvider>
-              <header className="flex flex-wrap items-center justify-between">
-                <LocaleSwitcher />
-                <ThemeMode />
-              </header>
               <QueryProvider>
-                <Header />
                 <main className="flex-1">{children}</main>
-                <Footer />
               </QueryProvider>
               <Toaster />
             </NextIntlClientProvider>
