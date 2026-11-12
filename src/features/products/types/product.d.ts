@@ -109,5 +109,5 @@ export interface IProductOverview extends IProduct {
 }
 
 export interface IProductOverviewResponse {
-  products: IProductOverview[];
+  product: IProductOverview;
 }

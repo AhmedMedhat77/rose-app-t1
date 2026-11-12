@@ -451,6 +451,21 @@
     "outOfStock": "OUT OF STOCK",
     "new": "NEW",
     "hot": "HOT",
-    "currency": "EGP"
+    "currency": "EGP",
+    "stockLeft": "{count} left in stock",
+    "rating": "Rating: {rating}/5 ({count} ratings)",
+    "addToCart": "Add to Cart",
+    "addToWishlist": "Add to wishlist",
+    "addedToCart": "Product added successfully to cart",
+    "quantityIncreased": "Quantity increased",
+    "relatedProducts": "Related Products",
+    "previousProducts": "Previous products",
+    "nextProducts": "Next products",
+    "loadError": "Unable to load this product. Please try again.",
+    "galleryLabel": "Product images",
+    "imageUnavailable": "No image available",
+    "viewImage": "View product image {number}",
+    "previousImages": "Previous product images",
+    "nextImages": "Next product images"
   }
 }
