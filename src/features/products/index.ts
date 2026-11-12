@@ -1,1 +1,1 @@
-export { ProductOverViewPage } from "@/features/products/pages/product-overview.page";
+export { default as ProductOverViewPage } from "@/features/products/pages/product-overview.page";
