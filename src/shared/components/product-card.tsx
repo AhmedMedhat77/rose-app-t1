@@ -38,14 +38,14 @@ export default function ProductCard({
       className={cn(
         "w-full space-y-2",
         isPopular &&
-          "group flex h-[22.75rem] w-full max-w-[18.875rem] flex-col gap-4 overflow-hidden rounded-t-2xl",
+          "group flex h-91 w-full max-w-75.5 flex-col gap-4 overflow-hidden rounded-t-2xl",
       )}
     >
       {/* Product Image */}
       <div
         className={cn(
           "relative w-full overflow-hidden rounded-xl",
-          isPopular ? "min-h-0 flex-1 rounded-2xl" : "h-[220px]",
+          isPopular ? "min-h-0 flex-1 rounded-2xl" : "h-55",
         )}
       >
         {product.cover && (
@@ -95,21 +95,28 @@ export default function ProductCard({
           )}
         >
           {product.stock <= 0 ? (
-            <Badge variant="primary" className="bg-red-500 text-white">
-              <span className="translate-y-[5%]">
-                {t("Product.outOfStock")}
-              </span>
+            <Badge
+              variant="primary"
+              className="bg-bg-danger text-text-secondary-fade dark:text-text-plain"
+            >
+              <span>{t("Product.outOfStock")}</span>
             </Badge>
           ) : (
             isPopular &&
             product.stock && (
               <>
-                <Badge variant="secondary" className="text-text-zinc-700">
-                  <span className="translate-y-[5%]">{t("Product.new")}</span>
+                <Badge
+                  variant="subtle"
+                  className="bg-bg-muted text-text-zinc-700 dark:bg-bg-inverse dark:text-text-inverse"
+                >
+                  <span>{t("Product.new")}</span>
                 </Badge>
 
-                <Badge variant="secondary" className="text-text-maron">
-                  <span className="translate-y-[5%]">{t("Product.hot")}</span>
+                <Badge
+                  variant="secondary"
+                  className="bg-bg-primary-fade text-text-maron dark:bg-bg-maron-secondary dark:text-text-secondary"
+                >
+                  <span>{t("Product.hot")}</span>
                 </Badge>
               </>
             )
