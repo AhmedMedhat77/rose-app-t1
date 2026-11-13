@@ -1,4 +1,3 @@
-import { Hero } from "@/features/home/components/hero-section/hero";
 import { FeaturesStrip } from "@/features/home/components/hero-section/features-strip";
 import BestSellingRose from "@/features/bestSelling/components/best-selling-rose";
 import MostPopular from "@/features/mostPopular/components/MostPopular";
@@ -8,6 +7,7 @@ import Testimonials from "@/features/testimonials/components/Testimonials";
 import Companies from "@/features/companies/Companies";
 import getMostPopularProducts from "@/features/mostPopular/lib/api-mostproduct";
 import getAllOccasions from "@/features/mostPopular/lib/api-occasions";
+import { Hero } from "@/features/home/components/hero-section/Hero";
 
 export default async function HomePage() {
   // 1. Fetch occasions

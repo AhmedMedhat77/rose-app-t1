@@ -360,9 +360,7 @@
     "verifyCode": "تأكيد الرمز",
     "sendANewCode": "إرسال رمز جديد",
     "sending": "جاري الإرسال...",
-    "resendIn": "إعادة الإرسال بعد {seconds} ث",
-    "contactUs": "تواصل معنا",
-    "needHelp": "تحتاج مساعدة؟"
+    "resendIn": "إعادة الإرسال بعد {seconds} ث"
   },
   "AccountDetails": {
     "enterYourDetails": "حدثنا عن نفسك",
