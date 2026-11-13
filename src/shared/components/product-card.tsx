@@ -91,7 +91,7 @@ export default function ProductCard({
         <div
           className={cn(
             "absolute top-2 z-20 flex flex-wrap gap-1",
-            isPopular ? "end-1 justify-end" : "right-2",
+            isPopular ? "inset-e-1 justify-end" : "right-2",
           )}
         >
           {product.stock <= 0 ? (
