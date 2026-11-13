@@ -11,6 +11,7 @@ import { CARDS } from "../../constants/hero";
 const OVERLAY =
   "absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent";
 const LIGHT_BUTTON = "w-fit bg-red-50 text-red-800 hover:bg-red-100";
+
 export function Hero() {
   const t = useTranslations("Hero");
 

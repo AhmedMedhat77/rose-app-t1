@@ -80,25 +80,25 @@ export function HeroSlider() {
         ))}
       </div>
 
-      <div className="bg-bg-danger-fade dark:bg-maroon-50 absolute inset-e-6 bottom-5 flex h-[2.18rem] w-[4.6rem] items-center justify-between rounded-full px-3">
+      <div className="bg-bg-primary-fade dark:bg-maroon-50 absolute inset-e-8 bottom-7 flex h-8.75 w-18.5 items-center justify-between rounded-full">
         <Button
           variant="ghost"
-          size="icon-xs"
+          size="icon"
           onClick={() => api?.scrollPrev()}
           aria-label="prev"
-          className="text-text-muted size-auto bg-transparent p-0 hover:bg-transparent"
+          className="size-auto bg-transparent p-0 hover:bg-transparent"
         >
-          <ChevronLeft className="size-5 rtl:rotate-180" strokeWidth={2.5} />
+          <ChevronLeft className="text-maroon-700 size-7.5 rtl:rotate-180" />
         </Button>
 
         <Button
           variant="ghost"
-          size="icon-xs"
+          size="icon"
           onClick={() => api?.scrollNext()}
           aria-label="next"
-          className="text-maroon-700 size-auto bg-transparent p-0 hover:bg-transparent"
+          className="size-auto bg-transparent p-0 hover:bg-transparent"
         >
-          <ChevronRight className="size-5 rtl:rotate-180" strokeWidth={2.5} />
+          <ChevronRight className="text-maroon-700 size-7.5 rtl:rotate-180" />
         </Button>
       </div>
     </Carousel>
