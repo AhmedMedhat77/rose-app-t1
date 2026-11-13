@@ -433,10 +433,10 @@
 }
 
 @theme inline {
-  --color-bg-maron: var(--bg-maron);
-  --color-bg-maron-secondary: var(--bg-maron-secondary);
-  --color-text-maron: var(--text-maron);
-  --color-text-maron-700: var(--text-maron-700);
+  --color-bg-maroon: var(--bg-maroon);
+  --color-bg-maroon-secondary: var(--bg-maroon-secondary);
+  --color-text-maroon: var(--text-maroon);
+  --color-text-maroon-700: var(--text-maroon-700);
   --color-soft-pink-500: var(--text-soft-pink-500);
   --text-zinc-700: var(--color-zinc-700);
 

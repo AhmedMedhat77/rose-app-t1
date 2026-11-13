@@ -22,8 +22,8 @@ export default async function BestSellingSoldCarousel() {
           ))}
         </CarouselContent>
 
-        <CarouselPrevious className="bg-bg-maron-secondary text-text-inverse hover:bg-bg-maron hover:text-text-inverse dark:bg-bg-maron dark:hover:dark:bg-bg-maron absolute right-auto left-[-15px] z-20 border-0 dark:text-white dark:hover:text-white" />
-        <CarouselNext className="bg-bg-maron-secondary text-text-inverse hover:bg-bg-maron hover:text-text-inverse dark:bg-bg-maron dark:hover:dark:bg-bg-maron absolute right-[-15px] left-auto z-20 border-0 dark:text-white dark:hover:text-white" />
+        <CarouselPrevious className="bg-bg-maroon-secondary text-text-inverse hover:bg-bg-maroon hover:text-text-inverse dark:bg-bg-maroon dark:hover:dark:bg-bg-maroon absolute right-auto left-[-15px] z-20 border-0 dark:text-white dark:hover:text-white" />
+        <CarouselNext className="bg-bg-maroon-secondary text-text-inverse hover:bg-bg-maroon hover:text-text-inverse dark:bg-bg-maroon dark:hover:dark:bg-bg-maroon absolute right-[-15px] left-auto z-20 border-0 dark:text-white dark:hover:text-white" />
       </Carousel>
     </div>
   );
