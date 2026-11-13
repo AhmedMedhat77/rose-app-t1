@@ -46,7 +46,7 @@ export function HeroSlider() {
                 alt={t(`slides.${slide.id}.title`)}
                 fill
                 priority={i === 0}
-                className="h-[27.4rem] object-cover"
+                className="h-[27.4rem] object-cover object-center"
               />
               <div className="absolute inset-0 bg-linear-to-r from-black/60 to-transparent rtl:bg-linear-to-l" />
               <div className="absolute inset-y-0 inset-s-9 flex translate-y-30 flex-col justify-center gap-2">
@@ -69,34 +69,36 @@ export function HeroSlider() {
         ))}
       </CarouselContent>
 
-      <div className="absolute inset-e-6 top-5 flex gap-2">
+      <div className="absolute inset-e-8 top-7 flex gap-2">
         {SLIDES.map((s, i) => (
           <button
             key={s.id}
             onClick={() => api?.scrollTo(i)}
             aria-label={`${i + 1}`}
-            className={`h-1.5 rounded-full ${i === current ? "bg-bg-danger-saturated w-6" : "bg-bg-plain w-1.5"}`}
+            className={`h-2.5 cursor-pointer rounded-full ${i === current ? "bg-bg-danger-saturated w-9" : "bg-bg-plain w-2.5"}`}
           />
         ))}
       </div>
 
-      <div className="bg-bg-plain dark:bg-secondary-foreground absolute inset-e-6 bottom-5 flex h-[2.18rem] w-[4.6rem] gap-1 rounded-full p-1">
-        <Button
-          size="icon"
-          onClick={() => api?.scrollPrev()}
-          aria-label="prev"
-          className={cn(LIGHT_BUTTON, "h-[1.8rem] w-[1.8rem]")}
-        >
-          <ChevronLeft className="rtl:rotate-180" />
-        </Button>
+      <div className="bg-bg-danger-fade dark:bg-maroon-50 absolute inset-e-6 bottom-5 flex h-[2.18rem] w-[4.6rem] items-center justify-between rounded-full px-3">
         <Button
           variant="ghost"
-          size="icon"
+          size="icon-xs"
+          onClick={() => api?.scrollPrev()}
+          aria-label="prev"
+          className="text-text-muted size-auto bg-transparent p-0 hover:bg-transparent"
+        >
+          <ChevronLeft className="size-5 rtl:rotate-180" strokeWidth={2.5} />
+        </Button>
+
+        <Button
+          variant="ghost"
+          size="icon-xs"
           onClick={() => api?.scrollNext()}
           aria-label="next"
-          className={cn(LIGHT_BUTTON, "h-[1.8rem] w-[1.8rem]")}
+          className="text-maroon-700 size-auto bg-transparent p-0 hover:bg-transparent"
         >
-          <ChevronRight className="rtl:rotate-180" />
+          <ChevronRight className="size-5 rtl:rotate-180" strokeWidth={2.5} />
         </Button>
       </div>
     </Carousel>

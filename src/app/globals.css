@@ -102,10 +102,10 @@
 /* Semantic roles: bg-*, text-*, and border-* remain independent. */
 :root {
   color-scheme: light;
-  --bg-maron: var(--color-maroon-500);
-  --bg-maron-secondary: var(--color-maroon-600);
-  --text-maron: var(--color-maroon-600);
-  --text-maron-700: var(--color-maroon-700);
+  --bg-maroon: var(--color-maroon-500);
+  --bg-maroon-secondary: var(--color-maroon-600);
+  --text-maroon: var(--color-maroon-600);
+  --text-maroon-700: var(--color-maroon-700);
   --text-soft-pink-500: #ff668b;
   --text-zinc-700: var(--color-zinc-700);
   /* --color-pink-500: #f82ba9; */
@@ -234,10 +234,10 @@
 /* Explicit .light overrides the system preference; .dark forces dark mode. */
 .dark {
   color-scheme: dark;
-  --bg-maron: var(--color-maroon-500);
-  --bg-maron-secondary: var(--color-pink-200);
-  --text-maron: var(--color-soft-pink-200);
-  --text-maron-700: var(--color-soft-pink-200);
+  --bg-maroon: var(--color-maroon-500);
+  --bg-maroon-secondary: var(--color-pink-200);
+  --text-maroon: var(--color-soft-pink-200);
+  --text-maroon-700: var(--color-soft-pink-200);
   --text-soft-pink-500: var(
     --color-maroon-400
   ); /* --bg-primary-fade: var(--color-zinc-700); */

@@ -4,8 +4,8 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/shared/ui/button";
 
 import { cn } from "cn";
-import { HeroBadge } from "./HeroBadge";
-import { HeroSlider } from "./HeroSlider";
+import { HeroBadge } from "./hero-badge";
+import { HeroSlider } from "./hero-slider";
 import { CARDS } from "../../constants/hero";
 
 const OVERLAY =
@@ -16,7 +16,7 @@ export function Hero() {
 
   return (
     <section className="container flex flex-col gap-6 py-4 pt-11 pb-10">
-      <div className="grid gap-4 lg:grid-cols-[1fr_3fr]">
+      <div className="grid gap-6 lg:grid-cols-[1fr_3fr]">
         <div className="text-text-inverse dark:text-secondary-foreground relative h-110 overflow-hidden rounded-2xl">
           <Image
             src="/images/red-gifts.png"
@@ -42,7 +42,7 @@ export function Hero() {
         <HeroSlider />
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {CARDS.map((card) => (
           <div
             key={card.id}

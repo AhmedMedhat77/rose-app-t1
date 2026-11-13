@@ -14,22 +14,3 @@ export type IProduct = {
   category: { id: string; title: string };
   subCategory: { id: string; title: string } | null;
 };
-
-export type IProductsMetadata = {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-};
-
-export type IProductsPayload = {
-  data: Product[];
-  metadata: ProductsMetadata;
-};
-
-type IApiResponse<T> = {
-  status: boolean;
-  code: number;
-  message?: string;
-  payload: T;
-};
