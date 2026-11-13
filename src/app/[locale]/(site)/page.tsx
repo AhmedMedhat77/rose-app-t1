@@ -1,6 +1,6 @@
 import { FeaturesStrip } from "@/features/home/components/hero-section/features-strip";
 import BestSellingRose from "@/features/bestSelling/components/best-selling-rose";
-import MostPopular from "@/features/mostPopular/components/MostPopular";
+import MostPopular from "@/features/mostPopular/components/most-popular";
 import AboutSection from "@/features/home/components/about-section/about-section";
 import Gallery from "@/features/gallery/components/Gallery";
 import Testimonials from "@/features/testimonials/components/Testimonials";

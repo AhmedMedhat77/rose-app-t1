@@ -15,7 +15,7 @@ export default function SectionsTitle({
     <div>
       <div
         className={cn(
-          "text-text-maron flex flex-col items-center justify-center gap-4",
+          "text-text-maroon flex flex-col items-center justify-center gap-4",
           { className },
         )}
       >
