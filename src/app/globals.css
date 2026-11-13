@@ -102,6 +102,14 @@
 /* Semantic roles: bg-*, text-*, and border-* remain independent. */
 :root {
   color-scheme: light;
+  --bg-maroon: var(--color-maroon-500);
+  --bg-maroon-secondary: var(--color-maroon-600);
+  --text-maroon: var(--color-maroon-600);
+  --text-maroon-700: var(--color-maroon-700);
+  --text-soft-pink-500: #ff668b;
+  --text-zinc-700: var(--color-zinc-700);
+  /* --color-pink-500: #f82ba9; */
+
   --bg-plain: var(--color-white);
   --bg-subtle: var(--color-zinc-50);
   --bg-muted: var(--color-zinc-100);
@@ -226,6 +234,14 @@
 /* Explicit .light overrides the system preference; .dark forces dark mode. */
 .dark {
   color-scheme: dark;
+  --bg-maroon: var(--color-maroon-500);
+  --bg-maroon-secondary: var(--color-pink-200);
+  --text-maroon: var(--color-soft-pink-200);
+  --text-maroon-700: var(--color-soft-pink-200);
+  --text-soft-pink-500: var(
+    --color-maroon-400
+  ); /* --bg-primary-fade: var(--color-zinc-700); */
+
   --bg-plain: var(--color-zinc-700);
   --bg-subtle: var(--color-zinc-800);
   --bg-muted: var(--color-zinc-900);
@@ -417,6 +433,13 @@
 }
 
 @theme inline {
+  --color-bg-maroon: var(--bg-maroon);
+  --color-bg-maroon-secondary: var(--bg-maroon-secondary);
+  --color-text-maroon: var(--text-maroon);
+  --color-text-maroon-700: var(--text-maroon-700);
+  --color-soft-pink-500: var(--text-soft-pink-500);
+  --text-zinc-700: var(--color-zinc-700);
+
   --color-bg-plain: var(--bg-plain);
   --color-bg-subtle: var(--bg-subtle);
   --color-bg-muted: var(--bg-muted);
@@ -533,6 +556,8 @@
   --font-english: var(--font-sarabun);
   --font-arabic: var(--font-tajawal);
   --font-mono: var(--font-geist-mono);
+  --font-monsieur: var(--font-monsieur);
+  --font-great-vibes: var(--font-great-vibes);
   --radius-sm: 4px;
   --radius-md: var(--radius);
   --radius-lg: 8px;
@@ -557,4 +582,38 @@
     @apply bg-background text-foreground;
     font-family: var(--font-body), Arial, Helvetica, sans-serif;
   }
+}
+
+@theme {
+  --animate-marquee-ltr: marquee-ltr 25s linear infinite;
+  --animate-marquee-rtl: marquee-rtl 25s linear infinite;
+
+  @keyframes marquee-ltr {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes marquee-rtl {
+    from {
+      transform: translateX(50%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none !important;
+  }
+}
+
+.container {
+  width: max(90vw, 90%);
+  margin-inline: auto;
 }

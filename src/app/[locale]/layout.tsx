@@ -1,5 +1,10 @@
-import { LocaleSwitcher } from "@/shared/components/LocaleSwitcher";
-import { ThemeProvider } from "@/shared/context/theme.context";
+import {
+  geistMono,
+  greatVibes,
+  monsieur,
+  sarabun,
+  tajawal,
+} from "@/shared/lib/constants/fonts.constant";
 import {
   parseResolved,
   parseTheme,
@@ -12,18 +17,12 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { routing } from "../../i18n/routing";
-import {
-  geistMono,
-  sarabun,
-  tajawal,
-} from "@/shared/lib/constants/fonts.constant";
 import "../globals.css";
-import { ThemeMode } from "@/shared/components/ThemeMode";
-import Footer from "@/shared/layout/Footer";
-import { Header } from "@/shared/layout/Header";
 
+import NextAuthProvider from "@/providers/next-auth.provider";
+import { ThemeProvider } from "@/shared/context/theme.context";
+import { QueryProvider } from "@/shared/providers/query-provider";
 import { Toaster } from "@/shared/ui/toast";
-
 export const metadata: Metadata = {
   title: "Rose App",
   description: "Rose Application",
@@ -64,23 +63,22 @@ export default async function RootLayout({
       suppressHydrationWarning
       lang={locale}
       dir={dir}
-      className={`${sarabun.variable} ${tajawal.variable} ${geistMono.variable} ${resolvedTheme} h-full antialiased`}
+      className={`${sarabun.variable} ${tajawal.variable} ${geistMono.variable} ${monsieur.variable} ${greatVibes.variable} ${resolvedTheme} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col" suppressHydrationWarning>
-        <ThemeProvider initialTheme={theme} initialSystemTheme={systemTheme}>
-          <NextIntlClientProvider>
-            <header className="flex flex-wrap items-center justify-between">
-              <LocaleSwitcher />
-              <ThemeMode />
-            </header>
-            <Header />
-
-            <main className="flex-1">{children}</main>
-            <Footer />
-
-            <Toaster />
-          </NextIntlClientProvider>
-        </ThemeProvider>
+      <body
+        className="dark:bg-bg-subtle flex min-h-full flex-col"
+        suppressHydrationWarning
+      >
+        <NextAuthProvider>
+          <ThemeProvider initialTheme={theme} initialSystemTheme={systemTheme}>
+            <NextIntlClientProvider>
+              <QueryProvider>
+                <main className="flex-1">{children}</main>
+              </QueryProvider>
+              <Toaster />
+            </NextIntlClientProvider>
+          </ThemeProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );
