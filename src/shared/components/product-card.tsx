@@ -173,7 +173,9 @@ export default function ProductCard({
           <span
             className={cn(
               "font-primary align-bottom text-[14px] leading-none font-medium",
-              isPopular ? "text-text-maroon-700 text-[16px]" : "text-bg-primary",
+              isPopular
+                ? "text-text-maroon-700 text-[16px]"
+                : "text-bg-primary",
             )}
           >
             {product.price} {t("Product.currency")}
