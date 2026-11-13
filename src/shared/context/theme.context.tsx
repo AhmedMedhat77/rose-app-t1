@@ -19,7 +19,7 @@ import {
   type ThemeMode,
 } from "../lib/utils/theme.util";
 
-// Re-exported so existing client imports (e.g. ThemeMode.tsx) still resolve
+// Re-exported so existing client imports (e.g. theme-mode.tsx) still resolve
 // from this module; the definitions live in theme.util.ts.
 export {
   parseResolved,

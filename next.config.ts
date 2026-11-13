@@ -14,6 +14,17 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname:
+          process.env.NEXT_PUBLIC_IMAGE_DOMAIN ||
+          "rose-app.elevate-bootcamp.cloud",
+        pathname: "/**",
+      },
+    ],
+  },
 };
 
 const withNextIntl = createNextIntlPlugin();
