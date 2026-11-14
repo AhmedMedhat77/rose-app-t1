@@ -8,6 +8,7 @@ import { ProductDetails } from "./product-description";
 import ProductGallery from "./product-gallery/product-gallery";
 import SectionsTitle from "@/shared/components/SectionsTitle";
 import { ProductOverviewSkeleton } from "../skeletons/product-overview.skeleton";
+import ProductReview from "./product-reviews/product-review";
 
 interface ProductOverviewContentProps {
   productId: string;
@@ -41,7 +42,7 @@ export default function ProductOverviewContent({
 
         <ProductDetails product={product} />
       </section>
-
+      <ProductReview />
       <section className="mt-40 mb-72 flex flex-col">
         <div className="mr-auto -mb-10 w-fit">
           <SectionsTitle mainTitle={"Related products"} />

@@ -283,6 +283,10 @@
     "filtersError": "حدث خطأ ما. حاول مرة أخرى.",
     "filtersEmpty": "لا توجد عناصر"
   },
+  "productReview": {
+    "title": "تقييمات المنتجات",
+    "generalRating": "التقييم العام"
+  },
   "Auth": {
     "heroImageAlt": "صناديق هدايا مزينة بشرائط"
   },

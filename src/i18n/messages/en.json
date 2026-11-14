@@ -283,6 +283,10 @@
     "filtersError": "Something went wrong. Please try again.",
     "filtersEmpty": "No items found"
   },
+  "productReview": {
+    "title": "Product Reviews",
+    "generalRating": "General rating"
+  },
   "Auth": {
     "heroImageAlt": "Gift boxes with ribbons"
   },
