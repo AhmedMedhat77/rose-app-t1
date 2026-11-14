@@ -7,13 +7,23 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import ProductCard from "@/shared/components/product-card";
+import { getLocale } from "next-intl/server";
 
 export default async function BestSellingSoldCarousel() {
+  const locale = await getLocale();
+
   const { data } = await getAllProducts();
 
   return (
     <div className="relative w-full min-w-0">
-      <Carousel className="absolute w-full min-w-0">
+      <Carousel
+        className="absolute w-full min-w-0"
+        opts={{
+          align: "start",
+          loop: true,
+          direction: locale === "ar" ? "rtl" : "ltr",
+        }}
+      >
         <CarouselContent>
           {data.map((ele) => (
             <CarouselItem key={ele.id} className="basis-[320px] pl-4">

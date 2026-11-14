@@ -460,7 +460,8 @@
     "outOfStock": "OUT OF STOCK",
     "new": "NEW",
     "hot": "HOT",
-    "currency": "EGP"
+    "currency": "EGP",
+    "addToFavorites": "Add to favorites"
   },
   "Cart": {
     "title": "Cart",
@@ -472,5 +473,9 @@
     "no-coupons": "No coupons applied",
     "subtotal": "Subtotal",
     "total": "Total"
+  },
+  "ProductsCarousel": {
+    "empty": "No products to show",
+    "error": "Something went wrong. Please try again."
   }
 }
