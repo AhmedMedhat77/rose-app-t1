@@ -42,7 +42,7 @@ export default function ProductOverviewContent({
         <ProductDetails product={product} />
       </section>
 
-      <section className="flex flex-col">
+      <section className="mt-40 mb-72 flex flex-col">
         <div className="mr-auto -mb-10 w-fit">
           <SectionsTitle mainTitle={"Related products"} />
         </div>
