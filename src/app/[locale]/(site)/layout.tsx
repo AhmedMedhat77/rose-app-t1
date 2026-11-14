@@ -1,7 +1,7 @@
 import { LocaleSwitcher } from "@/shared/components/locale-switcher";
 import { ThemeMode } from "@/shared/components/theme-mode";
-import Footer from "@/shared/layout/Footer";
-import { Header } from "@/shared/layout/Header";
+import Footer from "@/shared/layout/footer";
+import { Header } from "@/shared/layout/header";
 
 export default async function RootLayout({
   children,
