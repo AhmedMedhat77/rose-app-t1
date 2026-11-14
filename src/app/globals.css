@@ -96,6 +96,7 @@
   --color-zinc-800: #27272a;
   --color-zinc-900: #18181b;
   --color-zinc-950: #09090b;
+  --color-amber-500: #fba707;
 }
 
 /* Dark faint/fade opacity follows the swatches where reference labels conflict. */
@@ -158,6 +159,7 @@
   --text-danger: var(--color-red-600);
   --text-danger-faint: var(--color-red-100);
   --text-danger-fade: var(--color-red-50);
+  --text-rating: var(--color-amber-500);
   --border-plain: var(--color-zinc-800);
   --border-subtle: var(--color-zinc-100);
   --border-muted: var(--color-zinc-200);
@@ -488,6 +490,7 @@
   --color-text-danger: var(--text-danger);
   --color-text-danger-faint: var(--text-danger-faint);
   --color-text-danger-fade: var(--text-danger-fade);
+  --color-text-rating: var(--text-rating);
   --color-border-plain: var(--border-plain);
   --color-border-subtle: var(--border-subtle);
   --color-border-muted: var(--border-muted);

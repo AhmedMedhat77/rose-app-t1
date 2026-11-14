@@ -1,9 +1,10 @@
-import Image from "next/image";
-import { ShoppingCart, Star, Eye, Heart } from "lucide-react";
+"use client";
+
 import { Badge } from "@/shared/ui/badge";
 import { cn } from "cn";
+import { Eye, Heart, ShoppingCart, Star } from "lucide-react";
 import { useTranslations } from "next-intl";
-
+import Image from "next/image";
 export interface ProductCardProduct {
   id: string | number;
   title: string;
@@ -28,10 +29,10 @@ export default function ProductCard({
 
   const starsCount = isPopular ? 5 : 4;
 
-  const discountedPrice =
-    product.discountValue &&
-    Number(product.price) -
-      (Number(product.price) * Number(product.discountValue)) / 100;
+  const hasDiscount = Number(product.discountValue ?? 0) > 0;
+  const discountedPrice = hasDiscount
+    ? Number(product.price) * (1 - Number(product.discountValue) / 100)
+    : Number(product.price);
 
   return (
     <div
@@ -153,7 +154,9 @@ export default function ProductCard({
 
           <button
             type="button"
-            aria-label="Add to cart"
+            aria-label={t("Product.addToCart")}
+
+            onClick={() => {}}
             className={cn(
               "bg-bg-maroon-secondary flex items-center justify-center rounded-full text-white",
               isPopular ? "translate-y-[50%] p-2" : "size-10",
@@ -170,6 +173,15 @@ export default function ProductCard({
             isPopular && "flex-wrap gap-1",
           )}
         >
+          {hasDiscount && (
+            <span
+              className={cn(
+                "font-primary text-text-muted align-bottom text-base leading-none font-medium tracking-normal line-through",
+              )}
+            >
+              {product.price} {t("Product.currency")}
+            </span>
+          )}
           <span
             className={cn(
               "font-primary align-bottom text-[14px] leading-none font-medium",
@@ -178,14 +190,8 @@ export default function ProductCard({
                 : "text-bg-primary",
             )}
           >
-            {product.price} {t("Product.currency")}
+            {discountedPrice} {t("Product.currency")}
           </span>
-
-          {discountedPrice && (
-            <span className="font-primary text-text-muted align-bottom text-base leading-none font-medium tracking-normal line-through">
-              {discountedPrice} {t("Product.currency")}
-            </span>
-          )}
         </div>
       </div>
     </div>

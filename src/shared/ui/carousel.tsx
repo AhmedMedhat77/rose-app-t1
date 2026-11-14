@@ -6,8 +6,9 @@ import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react";
 
+import { Button } from "@/shared/ui/button";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { Button } from "./button";
+import { useLocale } from "next-intl";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -51,8 +52,12 @@ function Carousel({
   children,
   ...props
 }: React.ComponentProps<"div"> & CarouselProps) {
+  const locale = useLocale();
+  const isRTL = locale === "ar";
+
   const [carouselRef, api] = useEmblaCarousel(
     {
+      direction: isRTL ? "rtl" : "ltr",
       ...opts,
       axis: orientation === "horizontal" ? "x" : "y",
     },
@@ -120,6 +125,7 @@ function Carousel({
       }}
     >
       <div
+        dir={isRTL ? "rtl" : "ltr"}
         onKeyDownCapture={handleKeyDown}
         className={cn("relative", className)}
         role="region"
@@ -180,6 +186,9 @@ function CarouselPrevious({
 }: React.ComponentProps<typeof Button>) {
   const { orientation, scrollPrev, canScrollPrev } = useCarousel();
 
+  const locale = useLocale();
+  const isRTL = locale === "ar";
+
   return (
     <Button
       data-slot="carousel-previous"
@@ -188,8 +197,9 @@ function CarouselPrevious({
       className={cn(
         "absolute touch-manipulation rounded-full",
         orientation === "horizontal"
-          ? "inset-y-0 -left-12 my-auto"
+          ? "inset-y-0 -left-4.75 my-auto"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+        isRTL ? "-right-4.75 left-auto rotate-180" : "",
         className,
       )}
       disabled={!canScrollPrev}
@@ -210,6 +220,8 @@ function CarouselNext({
 }: React.ComponentProps<typeof Button>) {
   const { orientation, scrollNext, canScrollNext } = useCarousel();
 
+  const locale = useLocale();
+  const isRTL = locale === "ar";
   return (
     <Button
       data-slot="carousel-next"
@@ -218,8 +230,9 @@ function CarouselNext({
       className={cn(
         "absolute touch-manipulation rounded-full",
         orientation === "horizontal"
-          ? "inset-y-0 -right-12 my-auto"
+          ? "inset-y-0 -right-4.75 my-auto"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+        isRTL ? "right-auto -left-4.75 rotate-180" : "",
         className,
       )}
       disabled={!canScrollNext}
