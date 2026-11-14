@@ -475,6 +475,7 @@
     "previousProducts": "المنتجات السابقة",
     "nextProducts": "المنتجات التالية",
     "loadError": "تعذر تحميل المنتج. حاول مرة أخرى.",
+    "retry": "حاول مرة أخرى",
     "galleryLabel": "صور المنتج",
     "imageUnavailable": "لا توجد صورة متاحة",
     "viewImage": "عرض صورة المنتج رقم {number}",

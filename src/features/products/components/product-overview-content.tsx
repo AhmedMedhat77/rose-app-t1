@@ -7,6 +7,7 @@ import { useProductById, useRelatedProducts } from "../hooks/use-product-id";
 import { ProductDetails } from "./product-description";
 import ProductGallery from "./product-gallery/product-gallery";
 import SectionsTitle from "@/shared/components/SectionsTitle";
+import { ProductOverviewSkeleton } from "../skeletons/product-overview.skeleton";
 
 interface ProductOverviewContentProps {
   productId: string;
@@ -19,25 +20,17 @@ export default function ProductOverviewContent({
   const t = useTranslations("Product");
 
   // Query
-  const { data, isLoading, isError } = useProductById(productId);
+  const { data, isLoading, error } = useProductById(productId);
   const product = data?.status ? data.payload.product : undefined;
   const { data: relatedProducts = [] } = useRelatedProducts(
     product?.categoryId ?? "",
   );
 
-  if (isLoading) {
-    return (
-      <div className="bg-bg-soft container mx-auto mt-12 h-128 animate-pulse rounded-2xl" />
-    );
-  }
+  if (isLoading) return <ProductOverviewSkeleton />;
 
-  if (isError || !product) {
-    return (
-      <p className="text-text-muted mx-auto mt-16 max-w-7xl px-6">
-        {t("loadError")}
-      </p>
-    );
-  }
+  // Delegate failures to the route error.tsx boundary
+  if (error) throw error;
+  if (!product) throw new Error(t("loadError"));
 
   return (
     <div className="container mx-auto flex flex-col justify-between px-4 py-8 lg:py-12">

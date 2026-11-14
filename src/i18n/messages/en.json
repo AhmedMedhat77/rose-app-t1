@@ -474,6 +474,7 @@
     "previousProducts": "Previous products",
     "nextProducts": "Next products",
     "loadError": "Unable to load this product. Please try again.",
+    "retry": "Try again",
     "galleryLabel": "Product images",
     "imageUnavailable": "No image available",
     "viewImage": "View product image {number}",
