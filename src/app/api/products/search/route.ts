@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const API_URL = process.env.API_URL;
+import { API_URL } from "@/app/shared/constants/config";
 const DEFAULT_LIMIT = 6;
 const MAX_LIMIT = 20;
 const MAX_SEARCH_LENGTH = 200;

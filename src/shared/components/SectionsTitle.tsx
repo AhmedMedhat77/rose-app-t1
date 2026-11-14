@@ -15,7 +15,7 @@ export default function SectionsTitle({
     <div>
       <div
         className={cn(
-          "text-text-maron flex flex-col items-center justify-center gap-4",
+          "text-text-maroon flex flex-col items-center justify-center gap-4",
           { className },
         )}
       >
@@ -24,7 +24,7 @@ export default function SectionsTitle({
             {sideTitle}
           </p>
         )}
-        <PopularLabel className="font-primary align-middle text-[36px] leading-none font-bold tracking-normal">
+        <PopularLabel className="font-primary text-bg-primary-saturated align-middle text-4xl leading-none font-bold tracking-normal">
           {mainTitle}
         </PopularLabel>
       </div>

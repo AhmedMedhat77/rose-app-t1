@@ -73,7 +73,7 @@ export default function ProductCard({
             <button
               type="button"
               aria-label="Quick view"
-              className="text-text-maron-700 flex size-7 items-center justify-center rounded-full bg-white"
+              className="text-text-maroon-700 flex size-7 items-center justify-center rounded-full bg-white"
             >
               <Eye size={15} />
             </button>
@@ -81,7 +81,7 @@ export default function ProductCard({
             <button
               type="button"
               aria-label="Add to favorites"
-              className="text-text-maron-700 flex size-7 items-center justify-center rounded-full bg-white"
+              className="text-text-maroon-700 flex size-7 items-center justify-center rounded-full bg-white"
             >
               <Heart size={15} />
             </button>
@@ -96,21 +96,28 @@ export default function ProductCard({
           )}
         >
           {product.stock <= 0 ? (
-            <Badge variant="primary" className="bg-red-500 text-white">
-              <span className="translate-y-[5%]">
-                {t("Product.outOfStock")}
-              </span>
+            <Badge
+              variant="primary"
+              className="bg-bg-danger text-text-secondary-fade dark:text-text-plain"
+            >
+              <span>{t("Product.outOfStock")}</span>
             </Badge>
           ) : (
             isPopular &&
             product.stock && (
               <>
-                <Badge variant="secondary" className="text-text-zinc-700">
-                  <span className="translate-y-[5%]">{t("Product.new")}</span>
+                <Badge
+                  variant="subtle"
+                  className="bg-bg-muted text-text-zinc-700 dark:bg-bg-inverse dark:text-text-inverse"
+                >
+                  <span>{t("Product.new")}</span>
                 </Badge>
 
-                <Badge variant="secondary" className="text-text-maron">
-                  <span className="translate-y-[5%]">{t("Product.hot")}</span>
+                <Badge
+                  variant="secondary"
+                  className="bg-bg-primary-fade text-text-maroon dark:bg-bg-maroon-secondary dark:text-text-secondary"
+                >
+                  <span>{t("Product.hot")}</span>
                 </Badge>
               </>
             )
@@ -124,7 +131,7 @@ export default function ProductCard({
           className={cn(
             "font-primary truncate leading-none font-semibold",
             isPopular
-              ? "text-text-maron-700 text-lg"
+              ? "text-text-maroon-700 text-lg"
               : "text-text-primary text-base",
           )}
         >
@@ -151,7 +158,7 @@ export default function ProductCard({
 
             onClick={() => {}}
             className={cn(
-              "bg-bg-maron-secondary flex items-center justify-center rounded-full text-white",
+              "bg-bg-maroon-secondary flex items-center justify-center rounded-full text-white",
               isPopular ? "translate-y-[50%] p-2" : "size-10",
             )}
           >
@@ -178,7 +185,9 @@ export default function ProductCard({
           <span
             className={cn(
               "font-primary align-bottom text-[14px] leading-none font-medium",
-              isPopular ? "text-text-maron-700 text-[16px]" : "text-bg-primary",
+              isPopular
+                ? "text-text-maroon-700 text-[16px]"
+                : "text-bg-primary",
             )}
           >
             {discountedPrice} {t("Product.currency")}

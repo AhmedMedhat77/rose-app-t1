@@ -6,6 +6,7 @@ import { ProductCarousel } from "@/shared/components/product-carousel";
 import { useProductById, useRelatedProducts } from "../hooks/use-product-id";
 import { ProductDetails } from "./product-description";
 import ProductGallery from "./product-gallery/product-gallery";
+import SectionsTitle from "@/shared/components/SectionsTitle";
 
 interface ProductOverviewContentProps {
   productId: string;
@@ -39,7 +40,7 @@ export default function ProductOverviewContent({
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 lg:py-12">
+    <div className="container mx-auto flex flex-col justify-between px-4 py-8 lg:py-12">
       <section className="grid items-stretch gap-8 lg:grid-cols-2 lg:gap-17.5">
         <ProductGallery
           images={product.gallery.length ? product.gallery : [product.cover]}
@@ -48,20 +49,12 @@ export default function ProductOverviewContent({
         <ProductDetails product={product} />
       </section>
 
-      <ProductCarousel
-        title={t("relatedProducts")}
-        products={relatedProducts
-          .filter((item) => String(item.id) !== productId)
-          .map((item) => ({
-            id: item.id,
-            title: item.title,
-            cover: item.cover,
-            stock: item.stock,
-            rating: item.rating,
-            price: item.price,
-            discountValue: item.discountValue,
-          }))}
-      />
+      <section className="flex flex-col">
+        <div className="mr-auto -mb-10 w-fit">
+          <SectionsTitle mainTitle={"Related products"} />
+        </div>
+        <ProductCarousel title="" products={relatedProducts || []} />
+      </section>
     </div>
   );
 }

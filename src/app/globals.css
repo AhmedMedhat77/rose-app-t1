@@ -96,16 +96,17 @@
   --color-zinc-800: #27272a;
   --color-zinc-900: #18181b;
   --color-zinc-950: #09090b;
+  --color-amber-500: #fba707;
 }
 
 /* Dark faint/fade opacity follows the swatches where reference labels conflict. */
 /* Semantic roles: bg-*, text-*, and border-* remain independent. */
 :root {
   color-scheme: light;
-  --bg-maron: var(--color-maroon-500);
-  --bg-maron-secondary: var(--color-maroon-600);
-  --text-maron: var(--color-maroon-600);
-  --text-maron-700: var(--color-maroon-700);
+  --bg-maroon: var(--color-maroon-500);
+  --bg-maroon-secondary: var(--color-maroon-600);
+  --text-maroon: var(--color-maroon-600);
+  --text-maroon-700: var(--color-maroon-700);
   --text-soft-pink-500: #ff668b;
   --text-zinc-700: var(--color-zinc-700);
   /* --color-pink-500: #f82ba9; */
@@ -158,6 +159,7 @@
   --text-danger: var(--color-red-600);
   --text-danger-faint: var(--color-red-100);
   --text-danger-fade: var(--color-red-50);
+  --text-rating: var(--color-amber-500);
   --border-plain: var(--color-zinc-800);
   --border-subtle: var(--color-zinc-100);
   --border-muted: var(--color-zinc-200);
@@ -234,10 +236,10 @@
 /* Explicit .light overrides the system preference; .dark forces dark mode. */
 .dark {
   color-scheme: dark;
-  --bg-maron: var(--color-maroon-500);
-  --bg-maron-secondary: var(--color-pink-200);
-  --text-maron: var(--color-soft-pink-200);
-  --text-maron-700: var(--color-soft-pink-200);
+  --bg-maroon: var(--color-maroon-500);
+  --bg-maroon-secondary: var(--color-pink-200);
+  --text-maroon: var(--color-soft-pink-200);
+  --text-maroon-700: var(--color-soft-pink-200);
   --text-soft-pink-500: var(
     --color-maroon-400
   ); /* --bg-primary-fade: var(--color-zinc-700); */
@@ -433,10 +435,10 @@
 }
 
 @theme inline {
-  --color-bg-maron: var(--bg-maron);
-  --color-bg-maron-secondary: var(--bg-maron-secondary);
-  --color-text-maron: var(--text-maron);
-  --color-text-maron-700: var(--text-maron-700);
+  --color-bg-maroon: var(--bg-maroon);
+  --color-bg-maroon-secondary: var(--bg-maroon-secondary);
+  --color-text-maroon: var(--text-maroon);
+  --color-text-maroon-700: var(--text-maroon-700);
   --color-soft-pink-500: var(--text-soft-pink-500);
   --text-zinc-700: var(--color-zinc-700);
 
@@ -488,6 +490,7 @@
   --color-text-danger: var(--text-danger);
   --color-text-danger-faint: var(--text-danger-faint);
   --color-text-danger-fade: var(--text-danger-fade);
+  --color-text-rating: var(--text-rating);
   --color-border-plain: var(--border-plain);
   --color-border-subtle: var(--border-subtle);
   --color-border-muted: var(--border-muted);

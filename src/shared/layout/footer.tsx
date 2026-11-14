@@ -1,25 +1,25 @@
+import Image from "next/image";
+
+import { getFormatter, getLocale, getTranslations } from "next-intl/server";
+
+import NewsletterForm from "@/features/newsletter/components/newsletter-form";
+import { Link } from "@/i18n/navigation";
 import {
   LEGAL_LINKS,
   MAIN_LINKS,
 } from "@/shared/lib/constants/navigation.constant";
-import NewsletterForm from "@/features/newsletter/components/newsletter-form";
-import { Link } from "@/i18n/navigation";
-import { useFormatter, useLocale, useTranslations } from "next-intl";
-import Image from "next/image";
+import { getCurrentYear } from "@/shared/lib/utils/time.util";
 
 const FOOTER_LINKS = [...MAIN_LINKS, ...LEGAL_LINKS];
 
-export default function Footer() {
-  //Translations
-  const format = useFormatter();
-  const local = useLocale();
-  const year = 2026;
-  // const year = format.number(new Date().getFullYear(), {
-  //   useGrouping: false,
-  //   numberingSystem: local === "ar" ? "arab" : "latn",
-  // });
-  const t = useTranslations("Footer");
-  const tNav = useTranslations("Navigation");
+export default async function Footer() {
+  // Translations
+  const t = await getTranslations("Footer");
+  const tNav = await getTranslations("Navigation");
+  const format = await getFormatter();
+  const locale = await getLocale();
+
+  const year = await getCurrentYear(locale);
   return (
     <footer className="bg-bg-inverse dark:bg-bg-muted px-20 py-10 text-zinc-100">
       <div className="flex flex-wrap gap-4">
@@ -58,7 +58,7 @@ export default function Footer() {
               {t.rich("newsletterTitle", {
                 percent: format.number(0.2, {
                   style: "percent",
-                  numberingSystem: local === "ar" ? "arab" : "latn",
+                  numberingSystem: locale === "ar" ? "arab" : "latn",
                 }),
                 highlight: (chunks) => (
                   <span className="text-white">{chunks}</span>

@@ -28,7 +28,7 @@ export default function BestSellingExploreGift() {
         </p>
       </div>
 
-      <Button className="text-text-inverse bg-bg-maron-secondary w-fit">
+      <Button className="text-text-inverse bg-bg-maroon-secondary w-fit">
         <Link href="/products" className="align-items flex justify-between">
           {" "}
           <p className=""> {t("bestSelling.exploreGift")} </p>{" "}

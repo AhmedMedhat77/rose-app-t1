@@ -15,7 +15,7 @@ export default function PopularLabel({
       className={cn(
         "relative isolate inline-block w-fit",
         "leading-[1.15] font-bold",
-        "text-text-maron-700 dark:text-text-maron",
+        "text-text-maroon-700 dark:text-text-maroon",
 
         // Pink background highlight
         "before:absolute before:-z-10",

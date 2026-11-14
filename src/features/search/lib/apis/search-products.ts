@@ -1,8 +1,5 @@
-import type {
-  IApiResponse,
-  IProduct,
-  IProductsPayload,
-} from "@/features/products/types/product";
+import type { IProduct } from "@/features/products/types/product";
+import { IPaginatedPayload, ISuccessResponse } from "@/shared/types/api";
 
 export async function searchProducts(query: string): Promise<IProduct[]> {
   const params = new URLSearchParams({ limit: "6" });
@@ -11,6 +8,6 @@ export async function searchProducts(query: string): Promise<IProduct[]> {
   const res = await fetch(`/api/products/search?${params.toString()}`);
   if (!res.ok) throw new Error("Failed to search products");
 
-  const json: IApiResponse<IProductsPayload> = await res.json();
+  const json: ISuccessResponse<IPaginatedPayload<IProduct>> = await res.json();
   return json.payload.data;
 }

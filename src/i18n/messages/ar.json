@@ -108,7 +108,6 @@
     "markAsRead": "تحديد كمقروء",
     "delete": "حذف الإشعار"
   },
-
   "About": {
     "label": "من نحن",
     "titleStart": "نقدّم لك",
@@ -125,7 +124,6 @@
       "delivery": "توصيل سريع وموثوق"
     }
   },
-
   "Footer": {
     "discover": "اكتشف موقعنا",
     "brand": "تطبيق روز للتجارة الإلكترونية",
@@ -481,6 +479,22 @@
     "imageUnavailable": "لا توجد صورة متاحة",
     "viewImage": "عرض صورة المنتج رقم {number}",
     "previousImages": "صور المنتج السابقة",
-    "nextImages": "صور المنتج التالية"
+    "nextImages": "صور المنتج التالية",
+    "addToFavorites": "إضافة إلى المفضلة"
+  },
+  "Cart": {
+    "title": "السلة",
+    "summary": "الملخص",
+    "productYouMayLike": "المنتجات التي قد تعجبك",
+    "checkout": "الدفع",
+    "coupon-placeholder": "كود الكوبون",
+    "apply": "تطبيق",
+    "no-coupons": "لم يتم تطبيق أي كوبون",
+    "subtotal": "المجموع الفرعي",
+    "total": "المجموع"
+  },
+  "ProductsCarousel": {
+    "empty": "لا يوجد منتجات للعرض",
+    "error": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
   }
 }

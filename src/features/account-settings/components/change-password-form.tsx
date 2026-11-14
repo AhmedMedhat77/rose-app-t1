@@ -64,7 +64,7 @@ export function ChangePasswordForm() {
     <form
       noValidate
       onSubmit={form.handleSubmit(onSubmit)}
-      className="flex min-h-[32rem] flex-col md:min-h-[40rem]"
+      className="flex min-h-128 flex-col"
     >
       <FieldGroup className="flex flex-col gap-6">
         {/* Old password */}
