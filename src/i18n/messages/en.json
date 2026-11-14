@@ -453,6 +453,8 @@
     "hot": "HOT",
     "currency": "EGP",
     "stockLeft": "{count} left in stock",
+    "ratingValue": "Rating: {rating}/5",
+    "ratingCount": "({count} ratings)",
     "rating": "Rating: {rating}/5 ({count} ratings)",
     "addToCart": "Add to Cart",
     "addToWishlist": "Add to wishlist",

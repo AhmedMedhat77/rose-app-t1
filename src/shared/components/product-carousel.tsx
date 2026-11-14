@@ -41,10 +41,10 @@ export function ProductCarousel({ title, products }: ProductCarouselProps) {
           ))}
         </CarouselContent>
         <CarouselPrevious
-          className="start-0"
+          className="inset-s-0"
           aria-label={t("previousProducts")}
         />
-        <CarouselNext className="end-0" aria-label={t("nextProducts")} />
+        <CarouselNext className="inset-e-0" aria-label={t("nextProducts")} />
       </Carousel>
     </section>
   );

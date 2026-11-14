@@ -466,6 +466,8 @@
     "hot": "الأكثر رواجًا",
     "currency": "جنيه مصري",
     "stockLeft": "متبقي {count} في المخزون",
+    "ratingValue": "التقييم: {rating}/5",
+    "ratingCount": "({count} تقييمات)",
     "rating": "التقييم: {rating}/5 ({count} تقييمات)",
     "addToCart": "أضف إلى السلة",
     "addToWishlist": "أضف إلى المفضلة",
