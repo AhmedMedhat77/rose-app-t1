@@ -1,3 +1,4 @@
+import { Star } from "lucide-react";
 const STAR_COUNT = 5;
 const MAX_RATING = 5;
 const ROUND_DOWN_MAX_FRACTION = 0.25;
@@ -28,4 +29,25 @@ export function getRatingStarFills(rating: number): StarFill[] {
     if (index === fullStarCount && hasHalfStar) return 0.5;
     return 0;
   });
+}
+
+export function RatingStars({ rating }: { rating: number }) {
+  const starFills = getRatingStarFills(rating);
+
+  return starFills.map((fill, index) => (
+    <span key={index} className="relative inline-flex size-4">
+      <Star size={16} strokeWidth={1.5} className="text-text-rating" />
+      <span
+        className="absolute inset-y-0 inset-s-0 overflow-hidden"
+        style={{ width: `${fill * 100}%` }}
+      >
+        <Star
+          size={16}
+          strokeWidth={1.5}
+          fill="currentColor"
+          className="text-text-rating"
+        />
+      </span>
+    </span>
+  ));
 }

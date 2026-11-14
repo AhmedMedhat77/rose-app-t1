@@ -5,7 +5,7 @@ import { Badge } from "@/shared/ui/badge";
 import { getTranslations } from "next-intl/server";
 import { IProduct } from "@/features/products/types/product";
 import { isNewProduct } from "@/shared/lib/utils/time.util";
-import { getRatingStarFills } from "@/shared/lib/utils/rating-stars.util";
+import { RatingStars } from "@/shared/components/rating-stars";
 import { Button } from "../ui/button";
 
 export default async function ProductCard({ product }: { product: IProduct }) {
@@ -101,26 +101,7 @@ export default async function ProductCard({ product }: { product: IProduct }) {
         {/* Rating & Cart */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-0.5">
-            {getRatingStarFills(product.rating).map((fill, index) => (
-              <span key={index} className="relative inline-flex size-4">
-                <Star
-                  size={16}
-                  strokeWidth={1.5}
-                  className="text-text-rating"
-                />
-                <span
-                  className="absolute inset-y-0 inset-s-0 overflow-hidden"
-                  style={{ width: `${fill * 100}%` }}
-                >
-                  <Star
-                    size={16}
-                    strokeWidth={1.5}
-                    fill="currentColor"
-                    className="text-text-rating"
-                  />
-                </span>
-              </span>
-            ))}
+            <RatingStars rating={product.rating} />
           </div>
 
           <Button
