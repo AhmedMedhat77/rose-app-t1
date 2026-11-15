@@ -3,6 +3,7 @@ import SectionsTitle from "@/shared/components/SectionsTitle";
 import { Button } from "@/shared/ui/button";
 import { MoveRightIcon, TicketPercent } from "lucide-react";
 import { Input } from "@/shared/ui/input";
+import CartSide from "@/features/cart/components/cart-side";
 
 export default async function CartPage() {
   const t = await getTranslations("Cart");
@@ -12,7 +13,8 @@ export default async function CartPage() {
       <div className="flex gap-10">
         <div className="flex-2">
           {/* cart */}
-          <h1 className="text-text-plain text-5xl font-bold">{t("title")}</h1>
+          <CartSide />
+          {/* <h1 className="text-text-plain text-5xl font-bold">{t("title")}</h1> */}
           {/* Cart component goes here */}
         </div>
         <div className="flex h-151.25 w-114.5 flex-col gap-6 rounded-md">

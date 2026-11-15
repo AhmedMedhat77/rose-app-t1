@@ -7,7 +7,7 @@ import Testimonials from "@/features/testimonials/components/Testimonials";
 import Companies from "@/features/companies/Companies";
 import getMostPopularProducts from "@/features/mostPopular/lib/api-mostproduct";
 import getAllOccasions from "@/features/mostPopular/lib/api-occasions";
-import { Hero } from "@/features/home/components/hero-section/Hero";
+import { Hero } from "@/features/home/components/hero-section/hero";
 
 export default async function HomePage() {
   // 1. Fetch occasions

@@ -48,7 +48,7 @@ export default function UserDropdown({
           <Button
             variant="ghost"
             type="button"
-            className="hover:bg-transparent"
+            className="hover:bg-transparent dark:bg-transparent"
           />
         }
       >

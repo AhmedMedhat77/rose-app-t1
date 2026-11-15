@@ -1,137 +1,166 @@
 import type { IGuestCartItem } from "../types/cart.types";
 
-const GUEST_CART_KEY = "rose-guest-cart";
-const GUEST_CART_OWNER_KEY = "rose-guest-cart-owner";
+const CART_STORAGE_KEY = "rose-guest-cart";
+const CART_OWNER_KEY = "rose-guest-cart-owner";
 
-const EMPTY_CART: IGuestCartItem[] = [];
+// Stable snapshots
+const EMPTY_GUEST_CART: IGuestCartItem[] = [];
 
 let cachedRaw: string | null | undefined;
-let cachedCart: IGuestCartItem[] = EMPTY_CART;
+let cachedSnapshot: IGuestCartItem[] = EMPTY_GUEST_CART;
 
 const listeners = new Set<() => void>();
 
-function notifyCartChange() {
+function notifyListeners() {
   listeners.forEach((listener) => listener());
-  window.dispatchEvent(new Event("rose-cart-change"));
 }
 
-function parseCart(raw: string | null): IGuestCartItem[] {
-  if (!raw) return EMPTY_CART;
+function readCart(): IGuestCartItem[] {
+  if (typeof window === "undefined") {
+    return EMPTY_GUEST_CART;
+  }
+
+  const raw = localStorage.getItem(CART_STORAGE_KEY);
+
+  if (raw === cachedRaw) {
+    return cachedSnapshot;
+  }
+
+  cachedRaw = raw;
 
   try {
-    const parsed: unknown = JSON.parse(raw);
+    const parsed: unknown = raw ? JSON.parse(raw) : [];
 
-    if (!Array.isArray(parsed)) return EMPTY_CART;
+    if (!Array.isArray(parsed)) {
+      cachedSnapshot = EMPTY_GUEST_CART;
+      return cachedSnapshot;
+    }
 
-    return parsed.filter(
+    cachedSnapshot = parsed.filter(
       (item): item is IGuestCartItem =>
         typeof item?.productId === "string" &&
         typeof item?.quantity === "number" &&
+        Number.isInteger(item.quantity) &&
         item.quantity > 0,
     );
+
+    return cachedSnapshot;
   } catch {
-    return EMPTY_CART;
+    cachedSnapshot = EMPTY_GUEST_CART;
+    return cachedSnapshot;
   }
 }
 
-// Used by useSyncExternalStore.
-export function subscribeGuestCart(callback: () => void) {
-  listeners.add(callback);
-
-  const handleStorage = (event: StorageEvent) => {
-    if (event.key === GUEST_CART_KEY) callback();
-  };
-
-  window.addEventListener("storage", handleStorage);
-  window.addEventListener("rose-cart-change", callback);
-
-  return () => {
-    listeners.delete(callback);
-    window.removeEventListener("storage", handleStorage);
-    window.removeEventListener("rose-cart-change", callback);
-  };
-}
-
-// Client snapshot.
-export function getGuestCartSnapshot(): IGuestCartItem[] {
-  if (typeof window === "undefined") return EMPTY_CART;
-
-  const raw = localStorage.getItem(GUEST_CART_KEY);
-
-  if (raw !== cachedRaw) {
-    cachedRaw = raw;
-    cachedCart = parseCart(raw);
-  }
-
-  return cachedCart;
-}
-
-// Server snapshot: always empty during SSR and hydration.
-export function getGuestCartServerSnapshot(): IGuestCartItem[] {
-  return EMPTY_CART;
-}
-
-export function getGuestCart(): IGuestCartItem[] {
-  if (typeof window === "undefined") return EMPTY_CART;
-
-  return getGuestCartSnapshot();
-}
-
-export function saveGuestCart(cart: IGuestCartItem[]) {
+function saveCart(items: IGuestCartItem[]) {
   if (typeof window === "undefined") return;
 
-  const raw = JSON.stringify(cart);
+  localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
 
-  localStorage.setItem(GUEST_CART_KEY, raw);
+  // Invalidate cache and refresh snapshot
+  cachedRaw = undefined;
+  readCart();
 
-  // Update the cached snapshot before notifying subscribers.
-  cachedRaw = raw;
-  cachedCart = cart;
-
-  notifyCartChange();
+  notifyListeners();
 }
 
-export function addGuestCartItem(productId: string, quantity: number) {
-  const cart = getGuestCart();
-  const existingItem = cart.find((item) => item.productId === productId);
+export function subscribeGuestCart(listener: () => void) {
+  listeners.add(listener);
 
-  const updatedCart = existingItem
-    ? cart.map((item) =>
-        item.productId === productId
-          ? { ...item, quantity: item.quantity + quantity }
-          : item,
-      )
-    : [...cart, { productId, quantity }];
+  if (typeof window !== "undefined") {
+    window.addEventListener("storage", handleStorage);
+  }
 
-  saveGuestCart(updatedCart);
+  return () => {
+    listeners.delete(listener);
+
+    if (typeof window !== "undefined") {
+      window.removeEventListener("storage", handleStorage);
+    }
+  };
+}
+// This function handles changes that occur in `localStorage` from another browser tab.
+function handleStorage(event: StorageEvent) {
+  if (event.key === CART_STORAGE_KEY || event.key === null) {
+    cachedRaw = undefined;
+    notifyListeners();
+  }
 }
 
-export function removeGuestCartItem(productId: string) {
-  const updatedCart = getGuestCart().filter(
-    (item) => item.productId !== productId,
+export function getGuestCartSnapshot(): IGuestCartItem[] {
+  return readCart();
+}
+
+export function getGuestCartServerSnapshot(): IGuestCartItem[] {
+  return EMPTY_GUEST_CART;
+}
+
+// Add item
+export function addGuestCartItem(item: IGuestCartItem) {
+  const cart = readCart();
+
+  const existingItem = cart.find(
+    (cartItem) => cartItem.productId === item.productId,
   );
 
-  saveGuestCart(updatedCart);
+  if (existingItem) {
+    saveCart(
+      cart.map((cartItem) =>
+        cartItem.productId === item.productId
+          ? {
+              ...cartItem,
+              quantity: cartItem.quantity + item.quantity,
+            }
+          : cartItem,
+      ),
+    );
+
+    return;
+  }
+
+  saveCart([...cart, item]);
 }
 
+// Update quantity
+export function updateGuestCartItem(productId: string, quantity: number) {
+  if (!Number.isInteger(quantity) || quantity < 1) return;
+
+  const cart = readCart();
+
+  saveCart(
+    cart.map((item) =>
+      item.productId === productId ? { ...item, quantity } : item,
+    ),
+  );
+}
+
+// Remove item
+export function removeGuestCartItem(productId: string) {
+  const cart = readCart();
+
+  saveCart(cart.filter((item) => item.productId !== productId));
+}
+
+// Clear cart
 export function clearGuestCart() {
-  saveGuestCart([]);
+  saveCart([]);
+  clearGuestCartOwner();
 }
 
+// Cart owner
 export function getGuestCartOwner(): string | null {
   if (typeof window === "undefined") return null;
 
-  return localStorage.getItem(GUEST_CART_OWNER_KEY);
+  return localStorage.getItem(CART_OWNER_KEY);
 }
 
 export function setGuestCartOwner(userId: string) {
   if (typeof window === "undefined") return;
 
-  localStorage.setItem(GUEST_CART_OWNER_KEY, userId);
+  localStorage.setItem(CART_OWNER_KEY, userId);
 }
 
 export function clearGuestCartOwner() {
   if (typeof window === "undefined") return;
 
-  localStorage.removeItem(GUEST_CART_OWNER_KEY);
+  localStorage.removeItem(CART_OWNER_KEY);
 }

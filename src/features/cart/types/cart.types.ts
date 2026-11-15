@@ -26,7 +26,6 @@ export interface ICartProduct {
   } | null;
 }
 
-// Full cart item returned by the backend.
 export interface ICartItem {
   id: string;
   userId: string;
@@ -37,7 +36,19 @@ export interface ICartItem {
   product: ICartProduct;
 }
 
-// Lightweight item stored in localStorage for guests.
+export interface ICartViewItem {
+  id: string;
+  productId: string;
+  title: string;
+  cover: string;
+  rating: number;
+  ratings: number;
+  price: number;
+  discountType: "PERCENT" | "FIXED" | null;
+  discountValue: number | null;
+  quantity: number;
+  stock: number;
+}
 export interface IGuestCartItem {
   productId: string;
   quantity: number;
@@ -49,5 +60,9 @@ export interface ICartResponse {
 
 export interface IAddToCartPayload {
   productId: string;
+  quantity: number;
+}
+
+export interface IUpdateCartItemPayload {
   quantity: number;
 }
