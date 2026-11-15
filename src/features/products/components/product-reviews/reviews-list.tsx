@@ -1,52 +1,132 @@
+"use client";
+
+import { useLocale, useTranslations } from "next-intl";
+
 import { RatingStars } from "@/shared/components/rating-stars";
 
-export default function ReviewsList() {
+import { useInfiniteReviewsQuery } from "../../hooks/use-infinite-reviews-query";
+import ReviewsListSkeleton, {
+  ReviewItemSkeleton,
+} from "../../skeletons/reviews-list.skeleton";
+import { useInfiniteSentinel } from "../../hooks/use-infinite-sentinel";
+
+export default function ReviewsList({ productId }: { productId: string }) {
   // Translate
-  return (
-    <div className="flex">
-      {/*Review Item*/}
-      <div>
-        {/* name && date */}
-        <div className="flex gap-2.5">
-          <div className="bg-bg-maroon-secondary flex h-11.25 w-11.25 items-center justify-center rounded-full text-xl font-semibold text-white">
-            A
-          </div>
-          <div className="flex flex-col">
-            <h4 className="text-text-plain text-base font-semibold">Adrian</h4>
-            <span className="text-sm font-medium text-zinc-400">
-              {new Date("2025-04-07").toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </span>
-          </div>
-        </div>
-        {/*Rating */}
-        <div className="flex items-center py-2.5">
-          <RatingStars rating={4.5} />
-          <span className="text-text-plain ms-1 text-base font-semibold">
-            (4.5)
-          </span>
-        </div>
-        <div>
-          <h4 className="align-middle text-base font-semibold">
-            Awesome Bouquet!
-          </h4>
-          <p className="text-text-default align-middle text-base leading-[125%] tracking-normal">
-            I ordered this bouquet for a special occasion, and it absolutely
-            exceeded my expectations! The flowers were fresh, beautifully
-            arranged, and exactly as pictured—if not better. The color
-            combination was stunning and gave off such a luxurious vibe. Even
-            the wrapping was elegant and thoughtful. Delivery was right on time,
-            and the bouquet arrived in perfect condition. The recipient was
-            genuinely touched and couldn&apos;t stop admiring it. Highly
-            recommend for anyone looking to make a lasting impression. Will
-            definitely order again!
-          </p>
-        </div>
+  const t = useTranslations();
+  const locale = useLocale();
+
+  // Query
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isError,
+    refetch,
+  } = useInfiniteReviewsQuery(productId);
+  const reviews = data?.pages.flatMap((page) => page.payload.data) ?? [];
+
+  // Ref
+  const { rootRef, sentinelRef } = useInfiniteSentinel({
+    onReach: fetchNextPage,
+    enabled: !!hasNextPage && !isFetchingNextPage,
+  });
+
+  // Loading
+  if (isLoading) return <ReviewsListSkeleton />;
+
+  // Error
+  if (isError) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-3 py-10">
+        <p className="text-text-plain text-base font-medium">
+          {t("productReview.loadError")}
+        </p>
+        <button
+          type="button"
+          onClick={() => refetch()}
+          className="text-text-plain text-sm font-semibold underline"
+        >
+          {t("productReview.retry")}
+        </button>
       </div>
-      <div className="border-muted mx-4 border" />
+    );
+  }
+
+  // Empty
+  if (reviews.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-10">
+        <p className="text-text-soft text-base font-medium">
+          {t("productReview.empty")}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      ref={rootRef}
+      className="flex max-h-91.75 flex-col gap-2.5 overflow-y-auto"
+    >
+      {reviews?.map((review) => {
+        const fullName =
+          `${review.user.firstName} ${review.user.lastName}`.trim();
+
+        const initials = fullName.charAt(0).toUpperCase();
+
+        return (
+          <div key={review.id} className="border-border-subtle border-b">
+            {/* Name && Date */}
+            <div className="flex gap-2.5">
+              <div className="bg-bg-maroon-secondary flex h-11.25 w-11.25 items-center justify-center rounded-full text-xl font-semibold text-white">
+                {initials}
+              </div>
+
+              <div className="flex flex-col">
+                <h4 className="text-text-plain text-base font-semibold">
+                  {fullName || review.user.username}
+                </h4>
+
+                <span className="text-sm font-medium text-zinc-400">
+                  {new Date(review.createdAt).toLocaleDateString(locale, {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </span>
+              </div>
+            </div>
+
+            {/* Rating */}
+            <div className="flex items-center py-2.5">
+              <RatingStars rating={review.rating} />
+
+              <span className="text-text-plain ms-1 text-base font-semibold">
+                ({review.rating})
+              </span>
+            </div>
+
+            {/* Title && Description */}
+            <div>
+              <h4 className="align-middle text-base font-semibold">
+                {review.headline}
+              </h4>
+
+              <p className="text-text-default pb-4 align-middle text-base leading-[125%] tracking-normal">
+                {review.content}
+              </p>
+            </div>
+          </div>
+        );
+      })}
+
+      {/* Sentinel */}
+      {hasNextPage && <div ref={sentinelRef} className="h-1" />}
+
+      {/* Loading more */}
+      {isFetchingNextPage && <ReviewItemSkeleton />}
     </div>
   );
 }

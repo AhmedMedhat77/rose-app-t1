@@ -12,10 +12,12 @@ import ProductReview from "./product-reviews/product-review";
 
 interface ProductOverviewContentProps {
   productId: string;
+  isAuthenticated: boolean;
 }
 
 export default function ProductOverviewContent({
   productId,
+  isAuthenticated,
 }: ProductOverviewContentProps) {
   // Translation
   const t = useTranslations("Product");
@@ -42,7 +44,12 @@ export default function ProductOverviewContent({
 
         <ProductDetails product={product} />
       </section>
-      <ProductReview />
+      <ProductReview
+        productId={product.id}
+        rating={product.rating}
+        ratings={product.ratings}
+        isAuthenticated={isAuthenticated}
+      />
       <section className="mt-40 mb-72 flex flex-col">
         <div className="mr-auto -mb-10 w-fit">
           <SectionsTitle mainTitle={"Related products"} />

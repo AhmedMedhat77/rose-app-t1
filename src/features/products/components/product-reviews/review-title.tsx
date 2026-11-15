@@ -1,8 +1,14 @@
 import { RatingStars } from "@/shared/components/rating-stars";
 import SectionsTitle from "@/shared/components/SectionsTitle";
 import { useTranslations } from "next-intl";
-
-export default function ReviewTitle() {
+interface ReviewTitleProps {
+  averageRating: number;
+  totalRatings: number;
+}
+export default function ReviewTitle({
+  averageRating,
+  totalRatings,
+}: ReviewTitleProps) {
   // Translate
   const t = useTranslations();
   return (
@@ -16,20 +22,20 @@ export default function ReviewTitle() {
             {`${t("productReview.generalRating")}`}:
           </h4>
           <p className="text-text-plain text-2xl font-bold">
-            4.5{" "}
+            {averageRating.toFixed(1)}{" "}
             <span className="text-text-soft text-sm font-medium">
-              (8 ratings)
+              ({totalRatings} {t("productReview.ratings")})
             </span>
           </p>
           {/* Rating & Cart */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-0.5">
-              <RatingStars rating={3.5} />
+              <RatingStars rating={averageRating} />
             </div>
           </div>
         </div>
       </div>
-      <div className="border-muted my-4 border" />
+      <div className="border-border-muted dark:border-border-subtle my-4 border" />
     </div>
   );
 }
