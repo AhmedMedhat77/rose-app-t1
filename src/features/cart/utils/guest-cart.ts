@@ -1,0 +1,166 @@
+import type { IGuestCartItem } from "../types/cart.types";
+
+const CART_STORAGE_KEY = "rose-guest-cart";
+const CART_OWNER_KEY = "rose-guest-cart-owner";
+
+// Stable snapshots
+const EMPTY_GUEST_CART: IGuestCartItem[] = [];
+
+let cachedRaw: string | null | undefined;
+let cachedSnapshot: IGuestCartItem[] = EMPTY_GUEST_CART;
+
+const listeners = new Set<() => void>();
+
+function notifyListeners() {
+  listeners.forEach((listener) => listener());
+}
+
+function readCart(): IGuestCartItem[] {
+  if (typeof window === "undefined") {
+    return EMPTY_GUEST_CART;
+  }
+
+  const raw = localStorage.getItem(CART_STORAGE_KEY);
+
+  if (raw === cachedRaw) {
+    return cachedSnapshot;
+  }
+
+  cachedRaw = raw;
+
+  try {
+    const parsed: unknown = raw ? JSON.parse(raw) : [];
+
+    if (!Array.isArray(parsed)) {
+      cachedSnapshot = EMPTY_GUEST_CART;
+      return cachedSnapshot;
+    }
+
+    cachedSnapshot = parsed.filter(
+      (item): item is IGuestCartItem =>
+        typeof item?.productId === "string" &&
+        typeof item?.quantity === "number" &&
+        Number.isInteger(item.quantity) &&
+        item.quantity > 0,
+    );
+
+    return cachedSnapshot;
+  } catch {
+    cachedSnapshot = EMPTY_GUEST_CART;
+    return cachedSnapshot;
+  }
+}
+
+function saveCart(items: IGuestCartItem[]) {
+  if (typeof window === "undefined") return;
+
+  localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+
+  // Invalidate cache and refresh snapshot
+  cachedRaw = undefined;
+  readCart();
+
+  notifyListeners();
+}
+
+export function subscribeGuestCart(listener: () => void) {
+  listeners.add(listener);
+
+  if (typeof window !== "undefined") {
+    window.addEventListener("storage", handleStorage);
+  }
+
+  return () => {
+    listeners.delete(listener);
+
+    if (typeof window !== "undefined") {
+      window.removeEventListener("storage", handleStorage);
+    }
+  };
+}
+// This function handles changes that occur in `localStorage` from another browser tab.
+function handleStorage(event: StorageEvent) {
+  if (event.key === CART_STORAGE_KEY || event.key === null) {
+    cachedRaw = undefined;
+    notifyListeners();
+  }
+}
+
+export function getGuestCartSnapshot(): IGuestCartItem[] {
+  return readCart();
+}
+
+export function getGuestCartServerSnapshot(): IGuestCartItem[] {
+  return EMPTY_GUEST_CART;
+}
+
+// Add item
+export function addGuestCartItem(item: IGuestCartItem) {
+  const cart = readCart();
+
+  const existingItem = cart.find(
+    (cartItem) => cartItem.productId === item.productId,
+  );
+
+  if (existingItem) {
+    saveCart(
+      cart.map((cartItem) =>
+        cartItem.productId === item.productId
+          ? {
+              ...cartItem,
+              quantity: cartItem.quantity + item.quantity,
+            }
+          : cartItem,
+      ),
+    );
+
+    return;
+  }
+
+  saveCart([...cart, item]);
+}
+
+// Update quantity
+export function updateGuestCartItem(productId: string, quantity: number) {
+  if (!Number.isInteger(quantity) || quantity < 1) return;
+
+  const cart = readCart();
+
+  saveCart(
+    cart.map((item) =>
+      item.productId === productId ? { ...item, quantity } : item,
+    ),
+  );
+}
+
+// Remove item
+export function removeGuestCartItem(productId: string) {
+  const cart = readCart();
+
+  saveCart(cart.filter((item) => item.productId !== productId));
+}
+
+// Clear cart
+export function clearGuestCart() {
+  saveCart([]);
+  clearGuestCartOwner();
+}
+
+// Cart owner
+export function getGuestCartOwner(): string | null {
+  if (typeof window === "undefined") return null;
+
+  return localStorage.getItem(CART_OWNER_KEY);
+}
+
+export function setGuestCartOwner(userId: string) {
+  if (typeof window === "undefined") return;
+
+  localStorage.setItem(CART_OWNER_KEY, userId);
+}
+
+export function clearGuestCartOwner() {
+  if (typeof window === "undefined") return;
+
+  localStorage.removeItem(CART_OWNER_KEY);
+}

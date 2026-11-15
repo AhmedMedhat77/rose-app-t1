@@ -1,8 +1,9 @@
 import Image from "next/image";
-import { ShoppingCart, Star, Eye, Heart } from "lucide-react";
+import { Star, Eye, Heart } from "lucide-react";
 import { Badge } from "@/shared/ui/badge";
 import { cn } from "cn";
 import { useTranslations } from "next-intl";
+import AddToCartButton from "./add-to-cart-button";
 
 export interface ProductCardProduct {
   id: string | number;
@@ -150,17 +151,11 @@ export default function ProductCard({
               />
             ))}
           </div>
-
-          <button
-            type="button"
-            aria-label="Add to cart"
-            className={cn(
-              "bg-bg-maroon-secondary flex items-center justify-center rounded-full text-white",
-              isPopular ? "translate-y-[50%] p-2" : "size-10",
-            )}
-          >
-            <ShoppingCart className="size-5" />
-          </button>
+          <AddToCartButton
+            productId={String(product.id)}
+            variant="icon"
+            stock={product.stock}
+          />
         </div>
 
         {/* Price */}

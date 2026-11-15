@@ -58,9 +58,18 @@
         "title": "Free Delivery",
         "text": "For orders above 120 EGP"
       },
-      "refund": { "title": "Get Refund", "text": "Refunds within 30 days" },
-      "payment": { "title": "Safe Payment", "text": "100% Secure Payment" },
-      "support": { "title": "24/7 Support", "text": "Contact us at any time" }
+      "refund": {
+        "title": "Get Refund",
+        "text": "Refunds within 30 days"
+      },
+      "payment": {
+        "title": "Safe Payment",
+        "text": "100% Secure Payment"
+      },
+      "support": {
+        "title": "24/7 Support",
+        "text": "Contact us at any time"
+      }
     }
   },
   "Header": {
@@ -466,6 +475,26 @@
     "apply": "Apply",
     "no-coupons": "No coupons applied",
     "subtotal": "Subtotal",
-    "total": "Total"
+    "total": "Total",
+    "clear-cart": "Clear Cart",
+    "clearing": "Clearing...",
+    "remove": "Remove",
+    "continueShopping": "Continue Shopping",
+    "no-of-product": "{count, plural, =0 {No products} one {# product} other {# products}}",
+    "addToCart": "Add To Cart",
+    "error": "Failed to load cart",
+    "loading": "Loading cart...",
+    "no-cart": "Your cart is empty.",
+    "quantity": "Quantity",
+    "decrease": "Decrease quantity",
+    "increase": "Increase quantity"
+  },
+  "ProductRow": {
+    "rating": "Rating:",
+    "ratingsCount": "{count, plural, one {# rating} other {# ratings}}",
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "currency": "EGP",
+    "originalPrice": "Original price"
   }
 }
