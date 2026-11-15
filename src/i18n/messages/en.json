@@ -90,6 +90,10 @@
     "rating": "Rating",
     "ratings": "ratings"
   },
+  "Wishlist": {
+    "add": "Add to wishlist",
+    "remove": "Remove from wishlist"
+  },
   "NotificationsPanel": {
     "title": "Notifications",
     "clearAll": "Clear all notifications",

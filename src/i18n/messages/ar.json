@@ -99,6 +99,10 @@
     "rating": "التقييم",
     "ratings": "تقييم"
   },
+  "Wishlist": {
+    "add": "أضف إلى المفضلة",
+    "remove": "إزالة من المفضلة"
+  },
   "NotificationsPanel": {
     "title": "الإشعارات",
     "clearAll": "مسح كل الإشعارات",
