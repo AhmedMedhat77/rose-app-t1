@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import Summary from "@/features/summary/components/summary";
 import ProductsCarousel from "@/shared/components/products-carousel";
 import { getProductsYouMayLike } from "@/features/products/lib/apis/products-you-may-like.api";
+import CartSide from "@/features/cart/components/cart-side";
 
 export default async function CartPage() {
   const t = await getTranslations("Cart");
@@ -11,7 +12,8 @@ export default async function CartPage() {
       <div className="flex gap-10">
         <div className="flex-2">
           {/* cart */}
-          <h1 className="text-text-plain text-5xl font-bold">{t("title")}</h1>
+          <CartSide />
+          {/* <h1 className="text-text-plain text-5xl font-bold">{t("title")}</h1> */}
         </div>
         <Summary />
       </div>

@@ -358,9 +358,7 @@
     "verifyCode": "تأكيد الرمز",
     "sendANewCode": "إرسال رمز جديد",
     "sending": "جاري الإرسال...",
-    "resendIn": "إعادة الإرسال بعد {seconds} ث",
-    "contactUs": "تواصل معنا",
-    "needHelp": "تحتاج مساعدة؟"
+    "resendIn": "إعادة الإرسال بعد {seconds} ث"
   },
   "AccountDetails": {
     "enterYourDetails": "حدثنا عن نفسك",
@@ -475,7 +473,27 @@
     "no-coupons": "لم يتم تطبيق أي كوبون",
     "discount": "الخصم",
     "subtotal": "المجموع الفرعي",
-    "total": "المجموع"
+    "total": "المجموع",
+    "clear-cart": "حذف السلة",
+    "clearing": "يتم الحذف...",
+    "remove": "حذف",
+    "continueShopping": "متابعة التسوق",
+    "no-of-product": "{count, plural, =0 {لا توجد منتجات} one {منتج واحد} two {منتجان} few {# منتجات} many {# منتج} other {# منتج}}",
+    "addToCart": "أضف الى السلة",
+    "error": "فشل تحميل السلة",
+    "loading": "جارٍ تحميل السلة...",
+    "no-cart": "سلتك فارغة.",
+    "quantity": "الكمية",
+    "decrease": "تقليل الكمية",
+    "increase": "زيادة الكمية"
+  },
+  "ProductRow": {
+    "rating": "التقييم:",
+    "ratingsCount": "{count, plural, one {تقييم واحد} two {تقييمان} few {# تقييمات} many {# تقييمًا} other {# تقييم}}",
+    "inStock": "متوفر",
+    "outOfStock": "غير متوفر",
+    "currency": "ج.م",
+    "originalPrice": "السعر الأصلي"
   },
   "ProductsCarousel": {
     "empty": "لا يوجد منتجات للعرض",
