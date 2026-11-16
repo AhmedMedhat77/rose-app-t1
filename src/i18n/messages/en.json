@@ -101,7 +101,20 @@
   },
   "Wishlist": {
     "add": "Add to wishlist",
-    "remove": "Remove from wishlist"
+    "remove": "Remove from wishlist",
+    "title": "Wishlist",
+    "count": "{count, plural, one {# item} other {# items}}",
+    "clear": "Clear Wishlist",
+    "clearing": "Clearing...",
+    "clearConfirmTitle": "Are you sure you want to clear your Wishlist?",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "empty": "Your wishlist is empty",
+    "continueShopping": "Continue Shopping",
+    "exploreSimilar": "Explore Similar Products",
+    "addToCart": "Add to Cart",
+    "loading": "Loading...",
+    "error": "Something went wrong, please try again"
   },
   "NotificationsPanel": {
     "title": "Notifications",

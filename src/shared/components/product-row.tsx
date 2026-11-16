@@ -70,19 +70,34 @@ function Title({ className, ...props }: ComponentProps<"h3">) {
   );
 }
 
-function Rating({ rating, ratings }: { rating: number; ratings: number }) {
+type RatingProps = {
+  rating: number;
+  ratings: number;
+  variant?: "default" | "badge";
+};
+
+function Rating({ rating, ratings, variant = "default" }: RatingProps) {
   const t = useTranslations("ProductRow");
 
   return (
     <div className="flex items-center gap-1.5">
-      <Star
-        aria-hidden="true"
-        size={20}
-        className="fill-amber-500 text-amber-500"
-      />
-      <p className="text-base font-normal">
-        {t("rating")} <span className="font-medium">{rating}/5</span>
-      </p>
+      {variant === "badge" ? (
+        <span className="bg-bg-warning flex items-center gap-1 rounded-md px-2 py-0.5 text-sm font-medium text-zinc-900">
+          <Star aria-hidden="true" size={16} className="fill-current" />
+          {rating}/5
+        </span>
+      ) : (
+        <>
+          <Star
+            aria-hidden="true"
+            size={20}
+            className="fill-amber-500 text-amber-500"
+          />
+          <p className="text-base font-normal">
+            {t("rating")} <span className="font-medium">{rating}/5</span>
+          </p>
+        </>
+      )}
       <p className="text-text-info text-base font-medium">
         ({t("ratingsCount", { count: ratings })})
       </p>
@@ -97,7 +112,7 @@ function StockStatus({ inStock }: { inStock: boolean }) {
     <p
       className={cn(
         "text-xs font-medium",
-        inStock ? "text-text-success" : "text-text-danger",
+        inStock ? "text-emerald-500" : "text-red-600",
       )}
     >
       {inStock ? t("inStock") : t("outOfStock")}
@@ -109,9 +124,7 @@ type PriceProps = {
   price: number;
   discountType?: string | null;
   discountValue?: number | null;
-  /** لو اتبعتت بيعرض (×N) والإجمالي، وإلا بيعرض سعر القطعة */
   quantity?: number;
-  /** بيعرض السعر الأصلي مشطوب لو في خصم */
   showOriginal?: boolean;
 };
 
@@ -168,7 +181,6 @@ type RemoveButtonProps = Omit<
   "children" | "variant"
 > & {
   label: string;
-  /** أيقونة بس (زي الـ Wishlist). الـ label بيفضل اسم الزرار لقارئ الشاشة */
   iconOnly?: boolean;
 };
 

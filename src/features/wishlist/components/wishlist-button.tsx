@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "cn";
-import { Heart } from "lucide-react";
+import { HeartMinus, HeartPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { MouseEvent } from "react";
 
@@ -18,9 +18,9 @@ export function WishlistButton({ productId, className }: WishlistButtonProps) {
   const t = useTranslations("Wishlist");
   const { isActive, isDisabled, toggle } = useWishlistToggle(productId);
   const label = isActive ? t("remove") : t("add");
+  const Icon = isActive ? HeartMinus : HeartPlus;
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    // the card is usually wrapped in a link
     event.preventDefault();
     event.stopPropagation();
     toggle();
@@ -29,23 +29,27 @@ export function WishlistButton({ productId, className }: WishlistButtonProps) {
   return (
     <Button
       type="button"
-      variant={isActive ? "primary" : "ghost"}
-      size="sm"
+      variant="ghost"
       aria-label={label}
       aria-disabled={isDisabled || undefined}
       onClick={handleClick}
       className={cn(
-        "gap-0 rounded-full px-2.5 shadow-sm",
-        !isActive && "text-text-primary",
+        // Collapsed: a 40px circle
+        "h-10 gap-0 rounded-full px-2.5 shadow-sm transition-all duration-200",
+        // Expanded: extra space at the end so the text isn't cramped
+        "hover:pe-4 focus-visible:pe-4",
+        isActive
+          ? "bg-neutral-800 text-white hover:bg-neutral-800 hover:text-white"
+          : "bg-white text-[#A8232B] hover:bg-white hover:text-[#A8232B]",
         className,
       )}
     >
-      <Heart className={cn(isActive && "fill-current")} />
+      <Icon className="size-5 shrink-0" strokeWidth={2.25} />
       <span
         className={cn(
-          "max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-all duration-200",
-          "group-hover/button:ms-2 group-hover/button:max-w-48 group-hover/button:opacity-100",
-          "group-focus-visible/button:ms-2 group-focus-visible/button:max-w-48 group-focus-visible/button:opacity-100",
+          "max-w-0 overflow-hidden text-base font-medium whitespace-nowrap opacity-0 transition-all duration-200",
+          "group-hover/button:ms-2 group-hover/button:max-w-56 group-hover/button:opacity-100",
+          "group-focus-visible/button:ms-2 group-focus-visible/button:max-w-56 group-focus-visible/button:opacity-100",
         )}
       >
         {label}

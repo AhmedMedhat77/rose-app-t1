@@ -67,7 +67,6 @@ function ClearButton({
   );
 }
 
-// الإطار اللي فيه القايمة (أو رسالة الفراغ)
 function Body({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
@@ -103,7 +102,6 @@ type ContinueShoppingProps = {
   className?: string;
 };
 
-// الزرار نفسه هو اللينك، بدل Button جوه Link (عنصرين تفاعليين جوه بعض)
 function ContinueShopping({
   href = "/products",
   children,

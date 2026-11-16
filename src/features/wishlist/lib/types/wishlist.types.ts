@@ -15,3 +15,16 @@ export interface IClearWishlistSuccessResponse {
   code: number;
   message: string;
 }
+export type WishlistViewItem = {
+  id: string;
+  productId: string;
+  title: string;
+  cover: string;
+  rating: number;
+  ratings: number;
+  price: number;
+  discountType: "PERCENT" | "FIXED" | null;
+  discountValue: number | null;
+  stock: number;
+  categoryName: string;
+};
