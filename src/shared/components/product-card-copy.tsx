@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { connection } from "next/server";
-import { ShoppingCart, Star, Eye, Heart, HeartPlus } from "lucide-react";
+import { ShoppingCart, Eye, Heart, HeartPlus } from "lucide-react";
 import { Badge } from "@/shared/ui/badge";
 import { getTranslations } from "next-intl/server";
 import { IProduct } from "@/features/products/types/product";

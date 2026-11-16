@@ -13,7 +13,6 @@ export type ICoupon = {
   immutable: boolean;
   createdAt: string;
   updatedAt: string;
-  count: {
-    orders: number;
-  };
 };
+
+export type FindCouponByCodeResult = { coupon: ICoupon } | { coupon: null };

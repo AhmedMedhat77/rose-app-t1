@@ -1,7 +1,7 @@
 import "server-only";
 
 import { API_URL } from "@/app/shared/constants/config";
-import type { ICoupon } from "@/features/coupon/lib/types/coupon";
+import type { ICoupon } from "@/features/summary/lib/types/coupon";
 import type { IPaginatedResponse } from "@/shared/types/api";
 
 export async function getCoupons(url: string): Promise<ICoupon[]> {
@@ -9,12 +9,12 @@ export async function getCoupons(url: string): Promise<ICoupon[]> {
 
   const response = await fetch(`${API_URL}${url}`, {
     headers: { Accept: "application/json" },
-    next: { revalidate: 300, tags: ["coupons"] },
+    cache: "no-store",
   });
 
   const body: IPaginatedResponse<ICoupon> = await response.json();
   if (!response.ok || !body.status) {
-    throw new Error("Failed to fetch products");
+    throw new Error("Failed to fetch coupons");
   }
 
   return body.payload.data;
