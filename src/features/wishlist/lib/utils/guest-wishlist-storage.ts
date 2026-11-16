@@ -1,4 +1,7 @@
-import { GUEST_WISHLIST_STORAGE_KEY } from "../constants/wishlist-constants";
+import {
+  GUEST_WISHLIST_OWNER_STORAGE_KEY,
+  GUEST_WISHLIST_STORAGE_KEY,
+} from "../constants/wishlist-constants";
 
 const EMPTY_IDS: string[] = [];
 const listeners = new Set<() => void>();
@@ -79,10 +82,34 @@ export function toggleGuestWishlistItem(productId: string) {
 
 export function clearGuestWishlist() {
   writeIds([]);
+  clearGuestWishlistOwner();
 }
 
 export function removeGuestWishlistItems(productIds: string[]) {
   if (productIds.length === 0) return;
 
   writeIds(getGuestWishlistSnapshot().filter((id) => !productIds.includes(id)));
+}
+export function getGuestWishlistOwner(): string | null {
+  try {
+    return window.localStorage.getItem(GUEST_WISHLIST_OWNER_STORAGE_KEY);
+  } catch {
+    return null;
+  }
+}
+
+export function setGuestWishlistOwner(userId: string) {
+  try {
+    window.localStorage.setItem(GUEST_WISHLIST_OWNER_STORAGE_KEY, userId);
+  } catch {
+    // storage is blocked, nothing to save
+  }
+}
+
+export function clearGuestWishlistOwner() {
+  try {
+    window.localStorage.removeItem(GUEST_WISHLIST_OWNER_STORAGE_KEY);
+  } catch {
+    // storage is blocked, nothing to remove
+  }
 }

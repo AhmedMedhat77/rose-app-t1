@@ -2,11 +2,12 @@ import { IProduct } from "@/features/products/types/product";
 import { RatingStars } from "@/shared/components/rating-stars";
 import { isNewProduct } from "@/shared/lib/utils/time.util";
 import { Badge } from "@/shared/ui/badge";
-import { Eye, Heart, HeartPlus } from "lucide-react";
+import { Eye, Heart } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { connection } from "next/server";
 import AddToCartButton from "./add-to-cart-button";
+import { WishlistButton } from "@/features/wishlist/components/wishlist-button";
 
 export default async function ProductCard({ product }: { product: IProduct }) {
   const t = await getTranslations();
@@ -35,14 +36,11 @@ export default async function ProductCard({ product }: { product: IProduct }) {
           />
         )}
 
-        {/* Add to Wishlist button */}
-        <button
-          type="button"
-          aria-label={t("Product.addToFavorites")}
-          className="absolute inset-s-2.5 top-2.5 z-20 flex size-7.5 items-center justify-center rounded-full bg-white"
-        >
-          <HeartPlus className="text-text-maroon size-5" />
-        </button>
+        {/* Wishlist button */}
+        <WishlistButton
+          productId={String(product.id)}
+          className="absolute inset-s-2.5 top-2.5 z-30"
+        />
 
         {/* Hover Actions */}
         <div className="absolute inset-0 z-10 flex items-center justify-center gap-2 bg-[#E7969F]/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
