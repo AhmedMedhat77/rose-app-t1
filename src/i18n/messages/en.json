@@ -58,9 +58,18 @@
         "title": "Free Delivery",
         "text": "For orders above 120 EGP"
       },
-      "refund": { "title": "Get Refund", "text": "Refunds within 30 days" },
-      "payment": { "title": "Safe Payment", "text": "100% Secure Payment" },
-      "support": { "title": "24/7 Support", "text": "Contact us at any time" }
+      "refund": {
+        "title": "Get Refund",
+        "text": "Refunds within 30 days"
+      },
+      "payment": {
+        "title": "Safe Payment",
+        "text": "100% Secure Payment"
+      },
+      "support": {
+        "title": "24/7 Support",
+        "text": "Contact us at any time"
+      }
     }
   },
   "Header": {
@@ -89,6 +98,23 @@
     "currency": "EGP",
     "rating": "Rating",
     "ratings": "ratings"
+  },
+  "Wishlist": {
+    "add": "Add to wishlist",
+    "remove": "Remove from wishlist",
+    "title": "Wishlist",
+    "count": "{count, plural, one {# item} other {# items}}",
+    "clear": "Clear Wishlist",
+    "clearing": "Clearing...",
+    "clearConfirmTitle": "Are you sure you want to clear your Wishlist?",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "empty": "Your wishlist is empty",
+    "continueShopping": "Continue Shopping",
+    "exploreSimilar": "Explore Similar Products",
+    "addToCart": "Add to Cart",
+    "loading": "Loading...",
+    "error": "Something went wrong, please try again"
   },
   "NotificationsPanel": {
     "title": "Notifications",
@@ -451,7 +477,26 @@
     "outOfStock": "OUT OF STOCK",
     "new": "NEW",
     "hot": "HOT",
-    "currency": "EGP"
+    "currency": "EGP",
+    "addToFavorites": "Add to favorites",
+    "stockLeft": "{count} left in stock",
+    "ratingValue": "Rating: {rating}/5",
+    "ratingCount": "({count} ratings)",
+    "rating": "Rating: {rating}/5 ({count} ratings)",
+    "addToCart": "Add to Cart",
+    "addToWishlist": "Add to wishlist",
+    "addedToCart": "Product added successfully to cart",
+    "quantityIncreased": "Quantity increased",
+    "relatedProducts": "Related Products",
+    "previousProducts": "Previous products",
+    "nextProducts": "Next products",
+    "loadError": "Unable to load this product. Please try again.",
+    "retry": "Try again",
+    "galleryLabel": "Product images",
+    "imageUnavailable": "No image available",
+    "viewImage": "View product image {number}",
+    "previousImages": "Previous product images",
+    "nextImages": "Next product images"
   },
   "Cart": {
     "title": "Cart",
@@ -462,6 +507,33 @@
     "apply": "Apply",
     "no-coupons": "No coupons applied",
     "subtotal": "Subtotal",
-    "total": "Total"
+    "total": "Total",
+    "clear-cart": "Clear Cart",
+    "clearing": "Clearing...",
+    "remove": "Remove",
+    "continueShopping": "Continue Shopping",
+    "no-of-product": "{count, plural, =0 {No products} one {# product} other {# products}}",
+    "addToCart": "Add To Cart",
+    "adding": "Adding",
+    "error": "Failed to load cart",
+    "loading": "Loading cart...",
+    "no-cart": "Your cart is empty, wanna try shopping?",
+    "quantity": "Quantity",
+    "decrease": "Decrease quantity",
+    "increase": "Increase quantity",
+    "addToCartFailed": "Couldn't add the product to your cart",
+    "addToCartInCart": "Add to cart, {count} already in your cart"
+  },
+  "ProductRow": {
+    "rating": "Rating:",
+    "ratingsCount": "{count, plural, one {# rating} other {# ratings}}",
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "currency": "EGP",
+    "originalPrice": "Original price"
+  },
+  "ProductsCarousel": {
+    "empty": "No products to show",
+    "error": "Something went wrong. Please try again."
   }
 }

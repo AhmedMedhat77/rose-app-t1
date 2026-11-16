@@ -99,6 +99,23 @@
     "rating": "التقييم",
     "ratings": "تقييم"
   },
+  "Wishlist": {
+    "add": "أضف إلى المفضلة",
+    "remove": "إزالة من المفضلة",
+    "title": "المفضلة",
+    "count": "{count, plural, zero {لا عناصر} one {عنصر واحد} two {عنصران} few {# عناصر} many {# عنصرًا} other {# عنصر}}",
+    "clear": "مسح المفضلة",
+    "clearing": "جارٍ المسح...",
+    "clearConfirmTitle": "هل أنت متأكد من مسح المفضلة؟",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "empty": "المفضلة فارغة",
+    "continueShopping": "متابعة التسوق",
+    "exploreSimilar": "استكشف منتجات مشابهة",
+    "addToCart": "أضف إلى السلة",
+    "loading": "جارٍ التحميل...",
+    "error": "حدث خطأ، حاول مرة أخرى"
+  },
   "NotificationsPanel": {
     "title": "الإشعارات",
     "clearAll": "مسح كل الإشعارات",
@@ -108,7 +125,6 @@
     "markAsRead": "تحديد كمقروء",
     "delete": "حذف الإشعار"
   },
-
   "About": {
     "label": "من نحن",
     "titleStart": "نقدّم لك",
@@ -125,7 +141,6 @@
       "delivery": "توصيل سريع وموثوق"
     }
   },
-
   "Footer": {
     "discover": "اكتشف موقعنا",
     "brand": "تطبيق روز للتجارة الإلكترونية",
@@ -360,9 +375,7 @@
     "verifyCode": "تأكيد الرمز",
     "sendANewCode": "إرسال رمز جديد",
     "sending": "جاري الإرسال...",
-    "resendIn": "إعادة الإرسال بعد {seconds} ث",
-    "contactUs": "تواصل معنا",
-    "needHelp": "تحتاج مساعدة؟"
+    "resendIn": "إعادة الإرسال بعد {seconds} ث"
   },
   "AccountDetails": {
     "enterYourDetails": "حدثنا عن نفسك",
@@ -464,6 +477,63 @@
     "outOfStock": "نفد المخزون",
     "new": "جديد",
     "hot": "الأكثر رواجًا",
-    "currency": "جنيه مصري"
+    "currency": "جنيه مصري",
+    "stockLeft": "متبقي {count} في المخزون",
+    "ratingValue": "التقييم: {rating}/5",
+    "ratingCount": "({count} تقييمات)",
+    "rating": "التقييم: {rating}/5 ({count} تقييمات)",
+    "addToCart": "أضف إلى السلة",
+    "addToWishlist": "أضف إلى المفضلة",
+    "addedToCart": "تمت إضافة المنتج إلى السلة بنجاح",
+    "quantityIncreased": "تمت زيادة الكمية",
+    "relatedProducts": "منتجات ذات صلة",
+    "previousProducts": "المنتجات السابقة",
+    "nextProducts": "المنتجات التالية",
+    "loadError": "تعذر تحميل المنتج. حاول مرة أخرى.",
+    "retry": "حاول مرة أخرى",
+    "galleryLabel": "صور المنتج",
+    "imageUnavailable": "لا توجد صورة متاحة",
+    "viewImage": "عرض صورة المنتج رقم {number}",
+    "previousImages": "صور المنتج السابقة",
+    "nextImages": "صور المنتج التالية",
+    "addToFavorites": "إضافة إلى المفضلة"
+  },
+  "Cart": {
+    "title": "السلة",
+    "summary": "الملخص",
+    "productYouMayLike": "المنتجات التي قد تعجبك",
+    "checkout": "الدفع",
+    "coupon-placeholder": "كود الكوبون",
+    "apply": "تطبيق",
+    "no-coupons": "لم يتم تطبيق أي كوبون",
+    "subtotal": "المجموع الفرعي",
+    "total": "المجموع",
+    "clear-cart": "حذف السلة",
+    "clearing": "يتم الحذف...",
+    "remove": "حذف",
+    "continueShopping": "متابعة التسوق",
+    "no-of-product": "{count, plural, =0 {لا توجد منتجات} one {منتج واحد} two {منتجان} few {# منتجات} many {# منتج} other {# منتج}}",
+    "addToCart": "أضف الى السلة",
+    "adding": "يتم الاضافة",
+    "error": "فشل تحميل السلة",
+    "loading": "جارٍ تحميل السلة...",
+    "no-cart": "سلتك فارغة، هل ترغب في بدء التسوق؟",
+    "quantity": "الكمية",
+    "decrease": "تقليل الكمية",
+    "increase": "زيادة الكمية",
+    "addToCartFailed": "تعذّرت إضافة المنتج إلى سلتك",
+    "addToCartInCart": "أضف إلى السلة، يوجد {count} في سلتك بالفعل"
+  },
+  "ProductRow": {
+    "rating": "التقييم:",
+    "ratingsCount": "{count, plural, one {تقييم واحد} two {تقييمان} few {# تقييمات} many {# تقييمًا} other {# تقييم}}",
+    "inStock": "متوفر",
+    "outOfStock": "غير متوفر",
+    "currency": "ج.م",
+    "originalPrice": "السعر الأصلي"
+  },
+  "ProductsCarousel": {
+    "empty": "لا يوجد منتجات للعرض",
+    "error": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
   }
 }
