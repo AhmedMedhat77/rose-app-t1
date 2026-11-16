@@ -6,12 +6,17 @@ import { useTranslations } from "next-intl";
 import { getDiscountedPrice } from "@/shared/lib/utils/price";
 import { Button } from "@/shared/ui/button";
 import { cn } from "cn";
+import { Skeleton } from "../ui/skeleton";
+
+type RowSkeletonProps = {
+  variant?: "cart" | "wishlist";
+};
 
 function Root({ className, ...props }: ComponentProps<"li">) {
   return (
     <li
       className={cn(
-        "border-border-muted flex items-stretch gap-4 border-b pb-5",
+        "border-border-muted flex items-stretch gap-4 border-b pb-5 last:border-b-0 dark:border-zinc-700",
         className,
       )}
       {...props}
@@ -109,9 +114,7 @@ type PriceProps = {
   price: number;
   discountType?: string | null;
   discountValue?: number | null;
-  /** لو اتبعتت بيعرض (×N) والإجمالي، وإلا بيعرض سعر القطعة */
   quantity?: number;
-  /** بيعرض السعر الأصلي مشطوب لو في خصم */
   showOriginal?: boolean;
 };
 
@@ -168,7 +171,6 @@ type RemoveButtonProps = Omit<
   "children" | "variant"
 > & {
   label: string;
-  /** أيقونة بس (زي الـ Wishlist). الـ label بيفضل اسم الزرار لقارئ الشاشة */
   iconOnly?: boolean;
 };
 
@@ -184,12 +186,46 @@ function RemoveButton({
       variant="destructive"
       size={iconOnly ? "icon" : "default"}
       aria-label={iconOnly ? label : undefined}
-      className={cn(!iconOnly && "gap-1.5 p-2.5", className)}
+      className={cn(
+        !iconOnly && "gap-1.5 p-2.5 text-sm font-medium",
+        className,
+      )}
       {...props}
     >
       <Trash2 aria-hidden="true" size={20} />
       {!iconOnly && label}
     </Button>
+  );
+}
+
+function RowSkeleton({ variant = "cart" }: RowSkeletonProps) {
+  const isCart = variant === "cart";
+
+  return (
+    <li className="border-border-muted flex items-stretch gap-4 border-b pb-5">
+      <Skeleton className="h-35 w-29.25 shrink-0 rounded-lg" />
+
+      <div className="flex flex-1 flex-col gap-2.5">
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex flex-col gap-2">
+            {!isCart && <Skeleton className="h-3 w-16" />}
+            <Skeleton className="h-6 w-56 max-w-full" />
+            <Skeleton className="h-5 w-44 max-w-full" />
+          </div>
+
+          <Skeleton
+            className={cn("rounded-lg", isCart ? "h-10 w-28" : "size-10")}
+          />
+        </div>
+
+        <div className="mt-auto flex items-end justify-between gap-4">
+          <Skeleton className="h-8 w-32" />
+          <Skeleton
+            className={cn("rounded-lg", isCart ? "h-12 w-44" : "h-10 w-36")}
+          />
+        </div>
+      </div>
+    </li>
   );
 }
 
@@ -205,4 +241,5 @@ export const ProductRow = Object.assign(Root, {
   Actions,
   Footer,
   RemoveButton,
+  Skeleton: RowSkeleton,
 });

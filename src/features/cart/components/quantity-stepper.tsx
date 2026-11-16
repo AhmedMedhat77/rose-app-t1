@@ -42,7 +42,7 @@ export default function QuantityStepper({
 
       <Input
         inputSize="sm"
-        className="w-26"
+        className="w-26 shadow-none"
         variant="default"
         value={value}
         aria-label={t("quantity")}

@@ -1,12 +1,12 @@
 import Image from "next/image";
 import { connection } from "next/server";
-import { ShoppingCart, Eye, Heart, HeartPlus } from "lucide-react";
+import { Eye, Heart, HeartPlus } from "lucide-react";
 import { Badge } from "@/shared/ui/badge";
 import { getTranslations } from "next-intl/server";
 import { IProduct } from "@/features/products/types/product";
-import { isNewProduct } from "@/shared/lib/utils/time.util";
 import { RatingStars } from "@/shared/components/rating-stars";
-import { Button } from "../ui/button";
+import { isNewProduct } from "@/shared/lib/utils/time.util";
+import AddToCartButton from "./add-to-cart-button";
 
 export default async function ProductCard({ product }: { product: IProduct }) {
   const t = await getTranslations();
@@ -104,13 +104,11 @@ export default async function ProductCard({ product }: { product: IProduct }) {
             <RatingStars rating={product.rating} />
           </div>
 
-          <Button
-            type="button"
-            aria-label="Add to cart"
-            className="bg-bg-maroon-secondary hover:bg-bg-maroon size-10 shrink-0 rounded-full p-0 text-white"
-          >
-            <ShoppingCart className="size-5" />
-          </Button>
+          <AddToCartButton
+            productId={String(product.id)}
+            variant="icon"
+            stock={product.stock}
+          />
         </div>
 
         {/* Price */}
