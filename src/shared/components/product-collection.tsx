@@ -68,7 +68,7 @@ function ClearButton({
       type="button"
       variant={variant}
       disabled={disabled || isPending}
-      className="text-text-maroon"
+      className="text-text-inverse"
       {...props}
     >
       <BrushCleaning aria-hidden="true" size={20} />
