@@ -1,4 +1,4 @@
-export type ICoupon = {
+export type Coupon = {
   id: string;
   code: string;
   type: "PERCENT";
@@ -15,4 +15,4 @@ export type ICoupon = {
   updatedAt: string;
 };
 
-export type FindCouponByCodeResult = { coupon: ICoupon } | { coupon: null };
+export type FindCouponByCodeResult = { coupon: Coupon } | { coupon: null };

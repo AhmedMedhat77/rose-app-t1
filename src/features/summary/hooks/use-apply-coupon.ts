@@ -8,9 +8,6 @@ export function useApplyCoupon() {
   // Mutation
   const { isPending, mutateAsync } = useMutation({
     mutationFn: (code: string) => findCouponByCodeAction(code),
-    onError: () => {
-      // The form maps this rejection to the coupon field.
-    },
   });
 
   return { isPending, applyCoupon: mutateAsync };

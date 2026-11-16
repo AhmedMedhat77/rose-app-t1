@@ -14,8 +14,8 @@ import { Input } from "@/shared/ui/input";
 
 import { useApplyCoupon } from "../hooks/use-apply-coupon";
 import { createApplyCouponSchema } from "../lib/schemas/apply-coupon.schema";
-import type { TApplyCouponFormValues } from "../lib/types/apply-coupon.types";
-import type { ICoupon } from "../lib/types/coupon";
+import type { ApplyCouponFormValues } from "../lib/types/apply-coupon.types";
+import type { Coupon } from "../lib/types/coupon";
 import {
   getCouponApplyError,
   getCouponsDiscount,
@@ -47,13 +47,13 @@ export default function Summary({
   const t = useTranslations("Cart");
 
   // State
-  const [appliedCoupons, setAppliedCoupons] = useState<ICoupon[]>([]);
+  const [appliedCoupons, setAppliedCoupons] = useState<Coupon[]>([]);
 
   // Hooks
   const { applyCoupon, isPending } = useApplyCoupon();
 
   // Form
-  const form = useForm<TApplyCouponFormValues>({
+  const form = useForm<ApplyCouponFormValues>({
     resolver: zodResolver(
       createApplyCouponSchema({ codeRequired: t("code-required") }),
     ),
@@ -65,7 +65,7 @@ export default function Summary({
   const total = subtotal - couponDiscount;
 
   // Functions
-  async function onSubmit(values: TApplyCouponFormValues) {
+  async function onSubmit(values: ApplyCouponFormValues) {
     try {
       const result = await applyCoupon(values.code);
       const applyError = getCouponApplyError({
@@ -118,12 +118,10 @@ export default function Summary({
                   orientation="horizontal"
                   data-invalid={fieldState.invalid}
                 >
-                  {/* Label */}
                   <FieldLabel htmlFor="coupon-code" className="sr-only">
                     {t("coupon-placeholder")}
                   </FieldLabel>
 
-                  {/* Field */}
                   <div className="flex-2">
                     <Input
                       {...field}
@@ -143,7 +141,7 @@ export default function Summary({
                     {t("apply")}
                   </Button>
                 </Field>
-                {/* Feedback */}
+
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}

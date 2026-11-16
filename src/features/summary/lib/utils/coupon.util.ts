@@ -1,4 +1,4 @@
-import type { ICoupon } from "@/features/summary/lib/types/coupon";
+import type { Coupon } from "@/features/summary/lib/types/coupon";
 
 export type CouponApplyError =
   "not-found" | "already-applied" | "inactive" | "below-minimum";
@@ -10,8 +10,8 @@ export function getCouponApplyError({
   appliedCoupons,
   subtotal,
 }: {
-  coupon: ICoupon | null;
-  appliedCoupons: ICoupon[];
+  coupon: Coupon | null;
+  appliedCoupons: Coupon[];
   subtotal: number;
 }): CouponApplyError | null {
   if (!coupon) return "not-found";
@@ -26,13 +26,13 @@ export function getCouponApplyError({
   return null;
 }
 
-export function getCouponDiscount(coupon: ICoupon, subtotal: number) {
+export function getCouponDiscount(coupon: Coupon, subtotal: number) {
   const percentDiscount = subtotal * (Number(coupon.value) / 100);
   const maxDiscount = subtotal * (Number(coupon.maxDiscount) / 100);
   return roundMoney(Math.min(percentDiscount, maxDiscount));
 }
 
-export function getCouponsDiscount(coupons: ICoupon[], subtotal: number) {
+export function getCouponsDiscount(coupons: Coupon[], subtotal: number) {
   const { discount } = coupons.reduce(
     (result, coupon) => {
       const couponDiscount = Math.min(
