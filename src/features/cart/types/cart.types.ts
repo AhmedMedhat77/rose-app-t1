@@ -1,30 +1,6 @@
-export interface ICartProduct {
-  id: string;
-  title: string;
-  description: string;
-  rating: number;
-  ratings: number;
-  stock: number;
-  price: string;
-  discountType: "PERCENT" | "FIXED" | null;
-  discountValue: string | null;
-  cover: string;
-  gallery: string;
-  categoryId: string;
-  subCategoryId: string | null;
-  immutable: boolean;
-  deletedAt: string | null;
-  createdAt: string;
-  updatedAt: string;
-  category: {
-    id: string;
-    title: string;
-  };
-  subCategory: {
-    id: string;
-    title: string;
-  } | null;
-}
+import { IProductOverview } from "@/features/products/types/product";
+
+export type ICartProduct = IProductOverview;
 
 export interface ICartItem {
   id: string;
@@ -52,6 +28,7 @@ export interface ICartViewItem {
 export interface IGuestCartItem {
   productId: string;
   quantity: number;
+  product: ICartProduct;
 }
 
 export interface ICartResponse {
@@ -63,6 +40,10 @@ export interface IAddToCartPayload {
   quantity: number;
 }
 
+export interface IAddToCartInput {
+  product: ICartProduct;
+  quantity: number;
+}
 export interface IUpdateCartItemPayload {
   quantity: number;
 }

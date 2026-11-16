@@ -4,6 +4,15 @@ import { BrushCleaning, MoveLeft } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/shared/ui/button";
 import { cn } from "cn";
+import { Skeleton } from "../ui/skeleton";
+import { ProductRow } from "./product-row";
+import Image from "next/image";
+
+type CollectionSkeletonProps = {
+  label: string;
+  rows?: number;
+  variant?: "cart" | "wishlist";
+};
 
 function Root({ className, ...props }: ComponentProps<"div">) {
   return <div className={cn("flex flex-col gap-6", className)} {...props} />;
@@ -59,6 +68,7 @@ function ClearButton({
       type="button"
       variant={variant}
       disabled={disabled || isPending}
+      className="text-text-maroon"
       {...props}
     >
       <BrushCleaning aria-hidden="true" size={20} />
@@ -71,7 +81,7 @@ function Body({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "border-border-muted max-h-301.75 overflow-y-auto rounded-xl border p-5",
+        "border-border-muted max-h-270 overflow-y-auto rounded-xl border p-5 dark:border-zinc-700",
         "scrollbar-none [&::-webkit-scrollbar]:hidden",
         className,
       )}
@@ -84,15 +94,28 @@ function List({ className, ...props }: ComponentProps<"ul">) {
   return <ul className={cn("flex flex-col gap-5", className)} {...props} />;
 }
 
-function Empty({ className, ...props }: ComponentProps<"p">) {
+type EmptyProps = ComponentProps<"div"> & {
+  imageSrc?: string;
+};
+
+function Empty({ imageSrc, className, children, ...props }: EmptyProps) {
   return (
-    <p
+    <div
       className={cn(
-        "text-text-muted py-8 text-center text-lg font-bold",
+        "flex flex-col items-center justify-center gap-6 py-8",
         className,
       )}
       {...props}
-    />
+    >
+      {imageSrc && <Image src={imageSrc} alt="" width={250} height={214} />}
+
+      <p
+        role="status"
+        className="text-text-muted text-center text-lg font-bold"
+      >
+        {children}
+      </p>
+    </div>
   );
 }
 
@@ -111,11 +134,41 @@ function ContinueShopping({
     <Button
       render={<Link href={href} />}
       nativeButton={false}
-      className={cn("w-fit max-w-53.25", className)}
+      className={cn("bg-bg-maroon-secondary w-fit max-w-53.25", className)}
     >
       <MoveLeft aria-hidden="true" size={20} className="rtl:rotate-180" />
       {children}
     </Button>
+  );
+}
+
+function CollectionSkeleton({
+  label,
+  rows = 3,
+  variant = "cart",
+}: CollectionSkeletonProps) {
+  return (
+    <div role="status" aria-busy="true" className="flex flex-col gap-6">
+      <span className="sr-only">{label}</span>
+
+      <Header>
+        <Heading>
+          <Skeleton className="h-12 w-40" />
+          <Skeleton className="h-5 w-24" />
+        </Heading>
+        <Skeleton className="h-10 w-36 rounded-lg" />
+      </Header>
+
+      <Body>
+        <List>
+          {Array.from({ length: rows }, (_, index) => (
+            <ProductRow.Skeleton key={index} variant={variant} />
+          ))}
+        </List>
+      </Body>
+
+      <Skeleton className="h-10 w-53.25 rounded-lg" />
+    </div>
   );
 }
 
@@ -129,4 +182,5 @@ export const ProductCollection = Object.assign(Root, {
   List,
   Empty,
   ContinueShopping,
+  Skeleton: CollectionSkeleton,
 });
