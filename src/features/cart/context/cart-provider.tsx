@@ -20,11 +20,17 @@ import { useRemoveCartItem } from "../hooks/use-remove-cart-item";
 import { useClearCart } from "../hooks/use-clear-cart";
 import { useCart, cartQueryKey } from "../hooks/use-cart";
 
-import type { IGuestCartItem, IAddToCartPayload } from "../types/cart.types";
-
+import type {
+  IGuestCartItem,
+  IAddToCartPayload,
+  IAddToCartInput,
+  ICartViewItem,
+} from "../types/cart.types";
+import { mapCartItems, mapGuestCartItems } from "../utils/cart-mapper";
 import {
   addGuestCartItem,
   clearGuestCart,
+  clearGuestCartOwner,
   getGuestCartOwner,
   getGuestCartServerSnapshot,
   getGuestCartSnapshot,
@@ -37,14 +43,20 @@ import {
 // Types
 interface ICartContext {
   guestCart: IGuestCartItem[];
+  viewItems: ICartViewItem[];
+
   isReady: boolean;
   isMerging: boolean;
   mergeError: string | null;
   cartLength: number;
 
-  getProductQuantity: (productId: string) => number;
+  isAuthenticated: boolean;
+  isCartLoading: boolean;
+  isCartError: boolean;
+  cartError: unknown;
 
-  addToCart: (payload: IAddToCartPayload) => Promise<void>;
+  getProductQuantity: (productId: string) => number;
+  addToCart: (payload: IAddToCartInput) => Promise<void>;
 
   updateQuantity: (
     productId: string,
@@ -55,11 +67,11 @@ interface ICartContext {
   removeItem: (productId: string, cartItemId?: string) => Promise<void>;
 
   clearCart: () => Promise<void>;
-
   syncGuestCart: () => Promise<void>;
 }
 
 const CartContext = createContext<ICartContext | undefined>(undefined);
+
 // Provider
 export function CartProvider({ children }: { children: ReactNode }) {
   const { data: session, status } = useSession();
@@ -82,9 +94,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const { mutate: clearMutation } = useClearCart();
 
   // Authenticated cart query
-  const { data: cartData, isLoading: isCartLoading } = useCart(
-    status === "authenticated",
-  );
+  const {
+    data: cartData,
+    isLoading: isCartLoading,
+    isError: isCartError,
+    error: cartError,
+  } = useCart(status === "authenticated");
 
   // Merge state
   const [isMerging, setIsMerging] = useState(false);
@@ -94,8 +109,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const mergeAttemptRef = useRef<string | null>(null);
 
   // Promise wrappers using mutate
+
   const addGuestItemToServer = useCallback(
-    (item: IGuestCartItem): Promise<void> => {
+    (item: IAddToCartPayload): Promise<void> => {
       return new Promise((resolve, reject) => {
         addMutation(item, {
           onSuccess: () => resolve(),
@@ -141,22 +157,32 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   // Add to cart
   const addToCart = useCallback(
-    async (payload: IAddToCartPayload) => {
+    async (payload: IAddToCartInput) => {
       if (status === "loading") {
         throw new Error("Authentication is still loading.");
       }
 
-      if (!payload.productId || payload.quantity < 1) {
+      const { product, quantity } = payload;
+
+      if (!product?.id || !Number.isInteger(quantity) || quantity < 1) {
         throw new Error("Invalid cart item.");
       }
 
+      if (product.stock <= 0) {
+        throw new Error("Product is out of stock.");
+      }
+
       if (status === "authenticated") {
-        await addGuestItemToServer(payload as IGuestCartItem);
+        await addGuestItemToServer({
+          productId: product.id,
+          quantity,
+        });
 
         return;
       }
 
-      addGuestCartItem(payload);
+      // Save complete product in localStorage
+      addGuestCartItem(product, quantity);
     },
     [status, addGuestItemToServer],
   );
@@ -228,7 +254,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     if (status === "authenticated") {
       await clearServerCart();
-
       return;
     }
 
@@ -275,8 +300,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     try {
       const currentOwner = getGuestCartOwner();
 
-      // If the cart belongs to another account,
-      // do not merge it automatically.
+      // Prevent merging another account's cart
       if (currentOwner && currentOwner !== userId) {
         throw new Error("Guest cart belongs to another account.");
       }
@@ -284,14 +308,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
       setGuestCartOwner(userId);
 
       for (const item of guestItems) {
-        await addGuestItemToServer(item);
+        // Backend receives only productId and quantity
+        await addGuestItemToServer({
+          productId: item.productId,
+          quantity: item.quantity,
+        });
 
-        // Remove the local item only after
-        // successful server response.
+        // Remove local item after successful response
         removeGuestCartItem(item.productId);
       }
 
-      clearGuestCart();
+      // All items have been synced successfully
+      clearGuestCartOwner();
 
       await queryClient.invalidateQueries({
         queryKey: cartQueryKey,
@@ -331,12 +359,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
     mergeAttemptRef.current = attemptKey;
 
     syncGuestCart().catch(() => {
-      // Error is already stored in mergeError.
+      // Error is already stored in mergeError
     });
   }, [status, userId, guestCart, syncGuestCart]);
 
   // Derived values
   const isAuthenticated = status === "authenticated";
+
+  const viewItems = isAuthenticated
+    ? mapCartItems(cartData?.cartItems ?? [])
+    : mapGuestCartItems(guestCart);
 
   const cartLength = isAuthenticated
     ? (cartData?.cartItems?.length ?? 0)
@@ -347,10 +379,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
   // Context value
   const value: ICartContext = {
     guestCart,
+    viewItems,
+
     isReady,
     isMerging,
     mergeError,
     cartLength,
+
+    isAuthenticated,
+    isCartLoading,
+    isCartError,
+    cartError,
 
     getProductQuantity,
     addToCart,

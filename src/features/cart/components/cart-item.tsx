@@ -32,7 +32,10 @@ export default function CartItem({
         <ProductRow.Header>
           <ProductRow.Info>
             <ProductRow.Title>{item.title}</ProductRow.Title>
-            <ProductRow.Rating rating={item.rating} ratings={item.ratings} />
+            <ProductRow.Rating
+              rating={Number(item.rating.toFixed(2))}
+              ratings={item.ratings}
+            />
           </ProductRow.Info>
 
           <ProductRow.RemoveButton

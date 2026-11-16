@@ -1,40 +1,87 @@
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 
 import { ProductCollection } from "@/shared/components/product-collection";
+import { useCartContext } from "../context/cart-provider";
 
-import { useCart } from "../hooks/use-cart";
-import { useClearCart } from "../hooks/use-clear-cart";
-import { useRemoveCartItem } from "../hooks/use-remove-cart-item";
-import { useUpdateCartItem } from "../hooks/use-update-cart-item";
-import { mapCartItems } from "../utils/cart-mapper";
 import CartItem from "./cart-item";
 
 export default function CartSide() {
-  // Translation
   const t = useTranslations("Cart");
 
-  // State
-  const { data: cartData, isLoading, isError, error } = useCart();
-  const updateCartItem = useUpdateCartItem();
-  const removeCartItem = useRemoveCartItem();
-  const clearCart = useClearCart();
+  const {
+    viewItems,
+    isReady,
+    isAuthenticated,
+    isCartLoading,
+    isCartError,
+    cartError,
+    updateQuantity,
+    removeItem,
+    clearCart,
+  } = useCartContext();
 
-  // Variables
-  const cartItems = cartData?.cartItems ?? [];
-  const items = mapCartItems(cartItems);
-  const productsCount = cartItems.reduce(
-    (total, item) => total + item.quantity,
-    0,
-  );
+  const [pendingItemId, setPendingItemId] = useState<string | null>(null);
+  const [isClearing, setIsClearing] = useState(false);
+  const [actionError, setActionError] = useState<string | null>(null);
 
-  if (isLoading) return <p>{t("loading")}</p>;
+  const isLoading = !isReady || isCartLoading;
 
-  if (isError) {
+  const handleUpdateQuantity = async (
+    productId: string,
+    cartItemId: string,
+    quantity: number,
+  ) => {
+    try {
+      setActionError(null);
+      setPendingItemId(cartItemId);
+
+      await updateQuantity(
+        productId,
+        quantity,
+        isAuthenticated ? cartItemId : undefined,
+      );
+    } catch (error) {
+      setActionError(error instanceof Error ? error.message : t("error"));
+    } finally {
+      setPendingItemId(null);
+    }
+  };
+
+  const handleRemoveItem = async (productId: string, cartItemId: string) => {
+    try {
+      setActionError(null);
+      setPendingItemId(cartItemId);
+
+      await removeItem(productId, isAuthenticated ? cartItemId : undefined);
+    } catch (error) {
+      setActionError(error instanceof Error ? error.message : t("error"));
+    } finally {
+      setPendingItemId(null);
+    }
+  };
+
+  const handleClearCart = async () => {
+    try {
+      setActionError(null);
+      setIsClearing(true);
+
+      await clearCart();
+    } catch (error) {
+      setActionError(error instanceof Error ? error.message : t("error"));
+    } finally {
+      setIsClearing(false);
+    }
+  };
+
+  if (isLoading) return <ProductCollection.Skeleton label={t("loading")} />;
+
+  if (isCartError) {
     return (
       <p role="alert" className="text-text-danger">
-        {error instanceof Error ? error.message : t("error")}
+        {cartError instanceof Error ? cartError.message : t("error")}
       </p>
     );
   }
@@ -44,35 +91,44 @@ export default function CartSide() {
       <ProductCollection.Header>
         <ProductCollection.Heading>
           <ProductCollection.Title>{t("title")}</ProductCollection.Title>
+
           <ProductCollection.Count>
-            {t("no-of-product", { count: productsCount })}
+            {t("no-of-product", { count: viewItems.length })}
           </ProductCollection.Count>
         </ProductCollection.Heading>
 
         <ProductCollection.ClearButton
           label={t("clear-cart")}
           pendingLabel={t("clearing")}
-          isPending={clearCart.isPending}
-          disabled={productsCount === 0}
-          onClick={() => clearCart.mutate()}
+          isPending={isClearing}
+          disabled={viewItems.length === 0 || isClearing}
+          onClick={handleClearCart}
         />
       </ProductCollection.Header>
 
       <ProductCollection.Body>
-        {items.length === 0 ? (
-          <ProductCollection.Empty>{t("no-cart")}</ProductCollection.Empty>
+        {actionError && (
+          <p role="alert" className="text-text-danger">
+            {actionError}
+          </p>
+        )}
+
+        {viewItems.length === 0 ? (
+          <ProductCollection.Empty imageSrc="/images/no-cart.png">
+            {t("no-cart")}
+          </ProductCollection.Empty>
         ) : (
           <ProductCollection.List>
-            {items.map((item) => (
+            {viewItems.map((item) => (
               <CartItem
                 key={item.id}
                 item={item}
                 onUpdateQuantity={(quantity) =>
-                  updateCartItem.mutate({ cartItemId: item.id, quantity })
+                  handleUpdateQuantity(item.productId, item.id, quantity)
                 }
-                onRemove={() => removeCartItem.mutate(item.id)}
-                isUpdating={updateCartItem.isPending}
-                isRemoving={removeCartItem.isPending}
+                onRemove={() => handleRemoveItem(item.productId, item.id)}
+                isUpdating={pendingItemId === item.id}
+                isRemoving={pendingItemId === item.id}
               />
             ))}
           </ProductCollection.List>

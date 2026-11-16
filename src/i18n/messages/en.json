@@ -460,7 +460,26 @@
     "outOfStock": "OUT OF STOCK",
     "new": "NEW",
     "hot": "HOT",
-    "currency": "EGP"
+    "currency": "EGP",
+    "addToFavorites": "Add to favorites",
+    "stockLeft": "{count} left in stock",
+    "ratingValue": "Rating: {rating}/5",
+    "ratingCount": "({count} ratings)",
+    "rating": "Rating: {rating}/5 ({count} ratings)",
+    "addToCart": "Add to Cart",
+    "addToWishlist": "Add to wishlist",
+    "addedToCart": "Product added successfully to cart",
+    "quantityIncreased": "Quantity increased",
+    "relatedProducts": "Related Products",
+    "previousProducts": "Previous products",
+    "nextProducts": "Next products",
+    "loadError": "Unable to load this product. Please try again.",
+    "retry": "Try again",
+    "galleryLabel": "Product images",
+    "imageUnavailable": "No image available",
+    "viewImage": "View product image {number}",
+    "previousImages": "Previous product images",
+    "nextImages": "Next product images"
   },
   "Cart": {
     "title": "Cart",
@@ -478,12 +497,15 @@
     "continueShopping": "Continue Shopping",
     "no-of-product": "{count, plural, =0 {No products} one {# product} other {# products}}",
     "addToCart": "Add To Cart",
+    "adding": "Adding",
     "error": "Failed to load cart",
     "loading": "Loading cart...",
-    "no-cart": "Your cart is empty.",
+    "no-cart": "Your cart is empty, wanna try shopping?",
     "quantity": "Quantity",
     "decrease": "Decrease quantity",
-    "increase": "Increase quantity"
+    "increase": "Increase quantity",
+    "addToCartFailed": "Couldn't add the product to your cart",
+    "addToCartInCart": "Add to cart, {count} already in your cart"
   },
   "ProductRow": {
     "rating": "Rating:",
@@ -492,5 +514,9 @@
     "outOfStock": "Out of Stock",
     "currency": "EGP",
     "originalPrice": "Original price"
+  },
+  "ProductsCarousel": {
+    "empty": "No products to show",
+    "error": "Something went wrong. Please try again."
   }
 }

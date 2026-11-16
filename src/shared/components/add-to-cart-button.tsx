@@ -1,12 +1,15 @@
 "use client";
 
-import { ShoppingCart } from "lucide-react";
-
-import { Button } from "@/shared/ui/button";
-import { useCartContext } from "@/features/cart/context/cart-provider";
-import { cn } from "cn";
 import { useState } from "react";
+import { ShoppingCart } from "lucide-react";
 import { useTranslations } from "next-intl";
+
+import { useCartContext } from "@/features/cart/context/cart-provider";
+import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
+import { Button } from "@/shared/ui/button";
+import { addToast } from "@/shared/ui/toast";
+import { getProductById } from "@/features/products/lib/apis/products.api";
+import { cn } from "cn";
 
 interface IAddToCartButtonProps {
   productId: string;
@@ -28,36 +31,55 @@ export default function AddToCartButton({
   className,
   stock,
   disabled = false,
-  onAdded,
   onError,
 }: IAddToCartButtonProps) {
+  // Translation
   const t = useTranslations("Cart");
+
+  // State
   const { addToCart, getProductQuantity } = useCartContext();
   const [isAdding, setIsAdding] = useState(false);
-  const productQuantity = getProductQuantity(productId);
 
+  // Variables
+  const productQuantity = getProductQuantity(productId);
   const isOutOfStock = stock <= 0;
   const isDisabled = disabled || isOutOfStock || isAdding;
 
-  const handleAddToCart = async () => {
+  // Functions
+  async function handleAddToCart() {
     if (isDisabled) return;
+    setIsAdding(true);
+
     try {
-      setIsAdding(true);
+      const result = await getProductById(productId);
+
+      if (!("payload" in result)) {
+        throw new Error(
+          "message" in result ? result.message : t("addToCartFailed"),
+        );
+      }
+
+      const product = result.payload.product;
+
+      if (product.stock <= 0) {
+        throw new Error(t("outOfStock"));
+      }
 
       await addToCart({
-        productId,
+        product,
         quantity,
       });
-
-      onAdded?.();
     } catch (error) {
+      addToast(
+        TOAST_STATE.Unsuccessful,
+        error instanceof Error ? error.message : t("addToCartFailed"),
+      );
       onError?.(error);
     } finally {
       setIsAdding(false);
     }
-  };
+  }
 
-  // Full button
   if (variant === "full") {
     return (
       <Button
@@ -67,20 +89,23 @@ export default function AddToCartButton({
         disabled={isDisabled}
         loading={isAdding}
         onClick={handleAddToCart}
-        className="relative"
+        className={cn("relative", className)}
       >
-        <ShoppingCart size={20} />
-        {t("addToCart")}
-        {productQuantity > 0 && (
-          <span className="absolute inset-s-5 -top-0.5 text-sm">
-            {productQuantity}
-          </span>
-        )}
+        <span className="relative flex items-center justify-center">
+          <ShoppingCart size={20} />
+
+          {productQuantity > 0 && (
+            <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] font-bold">
+              {productQuantity}
+            </span>
+          )}
+        </span>
+
+        {isAdding ? t("adding") : t("addToCart")}
       </Button>
     );
   }
 
-  // Icon button
   return (
     <Button
       type="button"
@@ -94,13 +119,15 @@ export default function AddToCartButton({
         className,
       )}
     >
-      <ShoppingCart size={24} />
+      <span className="relative flex items-center justify-center">
+        <ShoppingCart size={20} />
 
-      {productQuantity > 0 && (
-        <span className="absolute -top-0.5 right-3 text-sm text-white dark:text-black">
-          {productQuantity}
-        </span>
-      )}
+        {productQuantity > 0 && (
+          <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] font-bold">
+            {productQuantity}
+          </span>
+        )}
+      </span>
     </Button>
   );
 }
