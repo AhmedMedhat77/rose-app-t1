@@ -49,8 +49,11 @@ export default function ProductSlider({
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="start-0" aria-label={t("previousImages")} />
-      <CarouselNext className="end-0" aria-label={t("nextImages")} />
+      <CarouselPrevious
+        className="inset-s-0"
+        aria-label={t("previousImages")}
+      />
+      <CarouselNext className="inset-e-0" aria-label={t("nextImages")} />
     </Carousel>
   );
 }
