@@ -6,6 +6,8 @@ import { TicketPercent, Check, XIcon, MoveRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Controller, useForm } from "react-hook-form";
 
+import { useCartContext } from "@/features/cart/context/cart-provider";
+import { getCartSubtotal } from "@/features/cart/utils/cart-subtotal.util";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/shared/lib/utils/cn.util";
 import { Button } from "@/shared/ui/button";
@@ -33,18 +35,15 @@ const CHECKOUT_BUTTON_CLASS =
   "bg-bg-maroon-secondary h-17.5 w-full rounded-xl text-xl";
 
 interface SummaryProps {
-  subtotal: number;
-  isCartEmpty: boolean;
   className?: string;
 }
 
-export default function Summary({
-  subtotal,
-  isCartEmpty,
-  className,
-}: SummaryProps) {
+export default function Summary({ className }: SummaryProps) {
   // Translation
   const t = useTranslations("Cart");
+
+  // Context
+  const { viewItems, isReady } = useCartContext();
 
   // State
   const [appliedCoupons, setAppliedCoupons] = useState<Coupon[]>([]);
@@ -61,6 +60,8 @@ export default function Summary({
   });
 
   // Variables
+  const subtotal = getCartSubtotal(viewItems);
+  const isCartEmpty = !isReady || viewItems.length === 0;
   const couponDiscount = getCouponsDiscount(appliedCoupons, subtotal);
   const total = subtotal - couponDiscount;
 

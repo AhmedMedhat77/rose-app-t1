@@ -1,9 +1,8 @@
 import { getTranslations } from "next-intl/server";
 
 import { getProductsYouMayLike } from "@/features/products/lib/apis/products-you-may-like.api";
+import Summary from "@/features/summary/components/summary";
 import ProductsCarousel from "@/shared/components/products-carousel";
-
-import CheckoutSummary from "../../../../features/summary/components/checkout-summary";
 
 export default async function CheckoutPage() {
   const t = await getTranslations("Cart");
@@ -17,7 +16,7 @@ export default async function CheckoutPage() {
             Shipping Address
           </h1>
         </div>
-        <CheckoutSummary />
+        <Summary />
       </div>
       <div className="flex flex-col gap-6 p-2.5">
         {/* Product you may like */}
