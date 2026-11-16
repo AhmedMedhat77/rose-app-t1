@@ -11,7 +11,9 @@ export default function CartSection() {
         <CartSide />
       </div>
       <CartSubtotal>
-        {(subtotal) => <Summary subtotal={subtotal} />}
+        {({ subtotal, isCartEmpty }) => (
+          <Summary subtotal={subtotal} isCartEmpty={isCartEmpty} />
+        )}
       </CartSubtotal>
     </>
   );

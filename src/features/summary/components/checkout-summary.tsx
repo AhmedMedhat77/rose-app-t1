@@ -5,6 +5,10 @@ import Summary from "@/features/summary/components/summary";
 
 export default function CheckoutSummary() {
   return (
-    <CartSubtotal>{(subtotal) => <Summary subtotal={subtotal} />}</CartSubtotal>
+    <CartSubtotal>
+      {({ subtotal, isCartEmpty }) => (
+        <Summary subtotal={subtotal} isCartEmpty={isCartEmpty} />
+      )}
+    </CartSubtotal>
   );
 }

@@ -33,9 +33,19 @@ export function getCouponDiscount(coupon: ICoupon, subtotal: number) {
 }
 
 export function getCouponsDiscount(coupons: ICoupon[], subtotal: number) {
-  const discount = coupons.reduce(
-    (sum, coupon) => sum + getCouponDiscount(coupon, subtotal),
-    0,
+  const { discount } = coupons.reduce(
+    (result, coupon) => {
+      const couponDiscount = Math.min(
+        getCouponDiscount(coupon, result.remaining),
+        result.remaining,
+      );
+
+      return {
+        discount: result.discount + couponDiscount,
+        remaining: roundMoney(result.remaining - couponDiscount),
+      };
+    },
+    { discount: 0, remaining: subtotal },
   );
 
   return roundMoney(Math.min(discount, subtotal));

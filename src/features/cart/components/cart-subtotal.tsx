@@ -6,16 +6,18 @@ import { useCart } from "@/features/cart/hooks/use-cart";
 import { mapCartItems } from "@/features/cart/utils/cart-mapper";
 import { getCartSubtotal } from "@/features/cart/utils/cart-subtotal.util";
 
-export default function CartSubtotal({
-  children,
-}: {
-  children: (subtotal: number) => ReactNode;
-}) {
+interface CartSubtotalProps {
+  children: (totals: { subtotal: number; isCartEmpty: boolean }) => ReactNode;
+}
+
+export default function CartSubtotal({ children }: CartSubtotalProps) {
   // Query
   const { data: cartData } = useCart();
 
   // Variables
-  const subtotal = getCartSubtotal(mapCartItems(cartData?.cartItems ?? []));
+  const cartItems = cartData?.cartItems ?? [];
+  const subtotal = getCartSubtotal(mapCartItems(cartItems));
+  const isCartEmpty = cartItems.length === 0;
 
-  return children(subtotal);
+  return children({ subtotal, isCartEmpty });
 }

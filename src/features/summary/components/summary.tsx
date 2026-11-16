@@ -6,15 +6,16 @@ import { TicketPercent, Check, XIcon, MoveRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Controller, useForm } from "react-hook-form";
 
-import { findCouponByCodeAction } from "@/features/summary/lib/actions/find-coupon.action";
-import type { ICoupon } from "@/features/summary/lib/types/coupon";
 import { Link } from "@/i18n/navigation";
+import { cn } from "@/shared/lib/utils/cn.util";
 import { Button } from "@/shared/ui/button";
-import { Field, FieldError } from "@/shared/ui/field";
+import { Field, FieldError, FieldLabel } from "@/shared/ui/field";
 import { Input } from "@/shared/ui/input";
 
+import { useApplyCoupon } from "../hooks/use-apply-coupon";
 import { createApplyCouponSchema } from "../lib/schemas/apply-coupon.schema";
 import type { TApplyCouponFormValues } from "../lib/types/apply-coupon.types";
+import type { ICoupon } from "../lib/types/coupon";
 import {
   getCouponApplyError,
   getCouponsDiscount,
@@ -28,12 +29,28 @@ const COUPON_ERROR_KEY: Record<CouponApplyError, string> = {
   "below-minimum": "coupon-below-minimum",
 };
 
-export default function Summary({ subtotal }: { subtotal: number }) {
+const CHECKOUT_BUTTON_CLASS =
+  "bg-bg-maroon-secondary h-17.5 w-full rounded-xl text-xl";
+
+interface SummaryProps {
+  subtotal: number;
+  isCartEmpty: boolean;
+  className?: string;
+}
+
+export default function Summary({
+  subtotal,
+  isCartEmpty,
+  className,
+}: SummaryProps) {
   // Translation
   const t = useTranslations("Cart");
 
   // State
   const [appliedCoupons, setAppliedCoupons] = useState<ICoupon[]>([]);
+
+  // Hooks
+  const { applyCoupon, isPending } = useApplyCoupon();
 
   // Form
   const form = useForm<TApplyCouponFormValues>({
@@ -50,7 +67,7 @@ export default function Summary({ subtotal }: { subtotal: number }) {
   // Functions
   async function onSubmit(values: TApplyCouponFormValues) {
     try {
-      const result = await findCouponByCodeAction(values.code);
+      const result = await applyCoupon(values.code);
       const applyError = getCouponApplyError({
         coupon: result.coupon,
         appliedCoupons,
@@ -83,7 +100,12 @@ export default function Summary({ subtotal }: { subtotal: number }) {
   }
 
   return (
-    <div className="flex h-151.25 w-114.5 flex-col gap-6 rounded-md">
+    <div
+      className={cn(
+        "flex h-151.25 w-114.5 flex-col gap-6 rounded-md",
+        className,
+      )}
+    >
       <h2 className="text-text-plain text-3xl font-semibold">{t("summary")}</h2>
       <div className="bg-bg-subtle flex min-h-0 flex-1 flex-col gap-2.5 rounded-sm p-4">
         <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -96,6 +118,12 @@ export default function Summary({ subtotal }: { subtotal: number }) {
                   orientation="horizontal"
                   data-invalid={fieldState.invalid}
                 >
+                  {/* Label */}
+                  <FieldLabel htmlFor="coupon-code" className="sr-only">
+                    {t("coupon-placeholder")}
+                  </FieldLabel>
+
+                  {/* Field */}
                   <div className="flex-2">
                     <Input
                       {...field}
@@ -108,13 +136,14 @@ export default function Summary({ subtotal }: { subtotal: number }) {
                   </div>
                   <Button
                     type="submit"
-                    disabled={form.formState.isSubmitting}
+                    disabled={isPending}
                     className="bg-bg-maroon-secondary flex-1"
                   >
                     <TicketPercent className="size-5" />
                     {t("apply")}
                   </Button>
                 </Field>
+                {/* Feedback */}
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}
@@ -182,14 +211,21 @@ export default function Summary({ subtotal }: { subtotal: number }) {
           </div>
         </div>
       </div>
-      <Button
-        nativeButton={false}
-        render={<Link href="/checkout" />}
-        className="bg-bg-maroon-secondary h-17.5 w-full rounded-xl text-xl"
-      >
-        {t("checkout")}
-        <MoveRightIcon className="size-5 rtl:rotate-180" />
-      </Button>
+      {isCartEmpty ? (
+        <Button type="button" disabled className={CHECKOUT_BUTTON_CLASS}>
+          {t("checkout")}
+          <MoveRightIcon className="size-5 rtl:rotate-180" />
+        </Button>
+      ) : (
+        <Button
+          nativeButton={false}
+          render={<Link href="/checkout" />}
+          className={CHECKOUT_BUTTON_CLASS}
+        >
+          {t("checkout")}
+          <MoveRightIcon className="size-5 rtl:rotate-180" />
+        </Button>
+      )}
     </div>
   );
 }
