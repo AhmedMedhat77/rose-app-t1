@@ -25,7 +25,7 @@ interface NotificationsPanelProps {
 }
 
 const actionClass =
-  "h-auto gap-2 px-1 py-1   text-text-muted hover:bg-transparent hover:text-zinc-600";
+  "h-auto gap-2 px-1 py-1 dark:text-zinc-50 dark:hover:text-text-muted hover:bg-transparent hover:text-zinc-600";
 
 export default function NotificationsPanel({
   notifications = [],
@@ -42,22 +42,22 @@ export default function NotificationsPanel({
     <Card
       aria-label="Notifications"
       className={cn(
-        "flex flex-col gap-0 overflow-hidden border-0 bg-white p-0 shadow-2xl",
+        "bg-bg-plain flex flex-col gap-0 overflow-hidden border-0 p-0 shadow-2xl",
         className,
       )}
     >
       {/* Header */}
-      <header className="bg-maroon-700 px-4 py-4">
-        <h2 className="text-xl leading-tight font-bold text-white">
+      <header className="bg-bg-primary-saturated px-4 py-4">
+        <h2 className="text-text-inverse text-xl leading-tight font-bold">
           {t("title")}
           {!isEmpty && ` (${notifications.length})`}
         </h2>
       </header>
 
       {/* Actions */}
-      <div className="flex items-center justify-between border-b border-white px-5 py-3">
+      <div className="border-border-inverse flex items-center justify-between border-b px-5 py-3">
         <Button variant="ghost" className={actionClass} onClick={onClearAll}>
-          <BrushCleaning />
+          <BrushCleaning className="text-zinc-400" size={18} />
           {t("clearAll")}
         </Button>
 
@@ -66,7 +66,7 @@ export default function NotificationsPanel({
           className={actionClass}
           onClick={onMarkAllAsRead}
         >
-          <CheckCheck />
+          <CheckCheck className="text-zinc-400" size={18} />
           {t("markAllAsRead")}
         </Button>
       </div>
@@ -89,8 +89,10 @@ export default function NotificationsPanel({
               <li
                 key={n.id}
                 className={cn(
-                  "flex items-start gap-2 border-b border-white px-4 py-3",
-                  n.isRead && "bg-zinc-300",
+                  "border-border-inverse flex items-start gap-2 border-b px-4 py-3",
+                  n.isRead
+                    ? "bg-zinc-300 dark:bg-zinc-600"
+                    : "dark:bg-bg-muted",
                 )}
               >
                 <div className="flex-1">
@@ -112,14 +114,14 @@ export default function NotificationsPanel({
                     aria-label="Notification options"
                     className="text-text-soft hover:text-zinc-700"
                   >
-                    <EllipsisVertical className="size-4" />
+                    <EllipsisVertical className="size-4 cursor-pointer" />
                   </PopoverTrigger>
                   <PopoverContent align="end" className="gap-1 p-1">
                     <button
                       type="button"
                       disabled={n.isRead}
                       onClick={() => onMarkAsRead?.(n.id)}
-                      className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-zinc-100 disabled:cursor-not-allowed disabled:text-zinc-400 disabled:hover:bg-transparent"
+                      className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm disabled:cursor-not-allowed disabled:text-zinc-400 disabled:hover:bg-transparent"
                     >
                       <Check className="size-4" />
                       {t("markAsRead")}
@@ -127,7 +129,7 @@ export default function NotificationsPanel({
                     <button
                       type="button"
                       onClick={() => onDelete?.(n.id)}
-                      className="text-text-danger flex items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-zinc-100"
+                      className="text-text-danger flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm"
                     >
                       <Trash2 className="size-4" />
                       {t("delete")}
