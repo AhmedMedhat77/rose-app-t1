@@ -94,52 +94,6 @@ export function getGuestCartServerSnapshot(): IGuestCartItem[] {
   return EMPTY_GUEST_CART;
 }
 
-// // Add item
-// export function addGuestCartItem(item: IGuestCartItem) {
-//   const cart = readCart();
-
-//   const existingItem = cart.find(
-//     (cartItem) => cartItem.productId === item.productId,
-//   );
-
-//   if (existingItem) {
-//     saveCart(
-//       cart.map((cartItem) =>
-//         cartItem.productId === item.productId
-//           ? {
-//               ...cartItem,
-//               quantity: cartItem.quantity + item.quantity,
-//             }
-//           : cartItem,
-//       ),
-//     );
-
-//     return;
-//   }
-
-//   saveCart([...cart, item]);
-// }
-
-// // Update quantity
-// export function updateGuestCartItem(productId: string, quantity: number) {
-//   if (!Number.isInteger(quantity) || quantity < 1) return;
-
-//   const cart = readCart();
-
-//   saveCart(
-//     cart.map((item) =>
-//       item.productId === productId ? { ...item, quantity } : item,
-//     ),
-//   );
-// }
-
-// // Remove item
-// export function removeGuestCartItem(productId: string) {
-//   const cart = readCart();
-
-//   saveCart(cart.filter((item) => item.productId !== productId));
-// }
-
 // Add Item
 export function addGuestCartItem(product: ICartProduct, quantity: number) {
   if (quantity <= 0 || product.stock <= 0) return;
