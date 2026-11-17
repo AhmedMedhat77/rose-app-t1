@@ -23,9 +23,12 @@ export default async function HomePage() {
   return (
     <div>
       <Hero />
-      <div>
-        <FeaturesStrip />
+
+      <FeaturesStrip />
+
+      <div className="mx-auto w-full max-w-[80rem]">
         <BestSellingRose />
+
         <MostPopular
           occasions={occasions}
           initialProducts={initialProducts}
@@ -33,12 +36,15 @@ export default async function HomePage() {
         />
 
         <AboutSection />
+
         <Gallery />
       </div>
 
       <Testimonials />
 
-      <Companies />
+      <div className="mx-auto w-full max-w-[80rem]">
+        <Companies />
+      </div>
     </div>
   );
 }

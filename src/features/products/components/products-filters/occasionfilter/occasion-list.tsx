@@ -63,7 +63,7 @@ export default function OccasionList() {
           <button
             key={el.id}
             type="button"
-            onClick={() => select(el.title)}
+            onClick={() => select(el.id)}
             aria-pressed={isActive}
             className="relative h-18.5 w-33.25 overflow-hidden rounded-lg"
           >

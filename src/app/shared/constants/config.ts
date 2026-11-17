@@ -1,2 +1,2 @@
-import "server-only";
+"server-only";
 export const API_URL = process.env.API_URL;

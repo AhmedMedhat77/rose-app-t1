@@ -23,6 +23,7 @@ import NextAuthProvider from "@/providers/next-auth.provider";
 import { ThemeProvider } from "@/shared/context/theme.context";
 import { QueryProvider } from "@/shared/providers/query-provider";
 import { Toaster } from "@/shared/ui/toast";
+
 export const metadata: Metadata = {
   title: "Rose App",
   description: "Rose Application",

@@ -51,7 +51,7 @@ export default function CategoryList() {
   return (
     <div
       ref={rootRef}
-      className="flex max-h-49.75 [scrollbar-width:none] flex-col gap-2.5 overflow-y-auto [&::-webkit-scrollbar]:hidden"
+      className="flex max-h-49.75 scrollbar-none flex-col gap-2.5 overflow-y-auto [&::-webkit-scrollbar]:hidden"
     >
       {categorieslist.map((el) => {
         const isActive = selectedTitle === el.title;
@@ -59,7 +59,7 @@ export default function CategoryList() {
           <button
             key={el.id}
             type="button"
-            onClick={() => select(el.title)}
+            onClick={() => select(el.id)}
             aria-pressed={isActive}
             className={`dark:bg-bg-subtle flex h-7 shrink-0 items-center gap-2.5 rounded-sm hover:bg-zinc-300 hover:dark:bg-zinc-600 ${isActive ? "bg-bg-primary-fade dark:bg-secondary-faint" : "bg-bg-soft"}`}
           >
