@@ -4,6 +4,7 @@ import { Badge } from "@/shared/ui/badge";
 import { useCartContext } from "../context/cart-provider";
 
 export default function CartCount() {
+  // Context
   const { cartLength } = useCartContext();
 
   if (cartLength <= 0) return null;

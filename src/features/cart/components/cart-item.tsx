@@ -21,8 +21,10 @@ export default function CartItem({
   isUpdating = false,
   isRemoving = false,
 }: ICartItemProps) {
+  // Translation
   const t = useTranslations("Cart");
 
+  // Variables
   const isOutOfStock = item.stock === 0;
 
   return (

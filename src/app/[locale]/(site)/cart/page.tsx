@@ -32,8 +32,6 @@ export default async function CartPage() {
         <div className="flex-2">
           {/* cart */}
           <CartSide />
-          {/* <h1 className="text-text-plain text-5xl font-bold">{t("title")}</h1> */}
-          {/* Cart component goes here */}
         </div>
         <div className="flex h-151.25 w-114.5 flex-col gap-6 rounded-md">
           {/* summary */}

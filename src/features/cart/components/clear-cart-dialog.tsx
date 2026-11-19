@@ -28,10 +28,13 @@ export default function ClearCartDialog({
   isPending = false,
   disabled = false,
 }: IClearCartDialogProps) {
+  // Translation
   const t = useTranslations("Cart");
 
+  // State
   const [open, setOpen] = useState(false);
 
+  // Functions
   const handleConfirm = async () => {
     await onConfirm();
     setOpen(false);

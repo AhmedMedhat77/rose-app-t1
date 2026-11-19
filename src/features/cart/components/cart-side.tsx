@@ -10,8 +10,10 @@ import CartItem from "./cart-item";
 import ClearCartDialog from "./clear-cart-dialog";
 
 export default function CartSide() {
+  // Translation
   const t = useTranslations("Cart");
 
+  // Context
   const {
     viewItems,
     isReady,
@@ -24,12 +26,15 @@ export default function CartSide() {
     clearCart,
   } = useCartContext();
 
+  // State
   const [pendingItemId, setPendingItemId] = useState<string | null>(null);
   const [isClearing, setIsClearing] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
 
+  // Variables
   const isLoading = !isReady || isCartLoading;
 
+  // Functions
   const handleUpdateQuantity = async (
     productId: string,
     cartItemId: string,
