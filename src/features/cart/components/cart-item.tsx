@@ -21,21 +21,29 @@ export default function CartItem({
   isUpdating = false,
   isRemoving = false,
 }: ICartItemProps) {
-  // Translation
   const t = useTranslations("Cart");
+
+  const isOutOfStock = item.stock === 0;
 
   return (
     <ProductRow>
-      <ProductRow.Image src={item.cover} alt={item.title} />
+      <ProductRow.Image
+        src={item.cover}
+        alt={item.title}
+        dimmed={isOutOfStock}
+      />
 
       <ProductRow.Content>
         <ProductRow.Header>
           <ProductRow.Info>
             <ProductRow.Title>{item.title}</ProductRow.Title>
+
             <ProductRow.Rating
               rating={Number(item.rating.toFixed(2))}
               ratings={item.ratings}
             />
+
+            {isOutOfStock && <ProductRow.StockStatus inStock={false} />}
           </ProductRow.Info>
 
           <ProductRow.RemoveButton
@@ -56,7 +64,7 @@ export default function CartItem({
           <QuantityStepper
             value={item.quantity}
             max={item.stock}
-            disabled={isUpdating}
+            disabled={isUpdating || isOutOfStock}
             onChange={onUpdateQuantity}
           />
         </ProductRow.Footer>

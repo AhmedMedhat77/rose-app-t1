@@ -19,7 +19,6 @@ interface IAddToCartButtonProps {
   isPopular?: boolean;
   className?: string;
   disabled?: boolean;
-  onAdded?: () => void;
   onError?: (error: unknown) => void;
 }
 
@@ -33,21 +32,18 @@ export default function AddToCartButton({
   disabled = false,
   onError,
 }: IAddToCartButtonProps) {
-  // Translation
   const t = useTranslations("Cart");
 
-  // State
   const { addToCart, getProductQuantity } = useCartContext();
   const [isAdding, setIsAdding] = useState(false);
 
-  // Variables
   const productQuantity = getProductQuantity(productId);
   const isOutOfStock = stock <= 0;
   const isDisabled = disabled || isOutOfStock || isAdding;
 
-  // Functions
   async function handleAddToCart() {
     if (isDisabled) return;
+
     setIsAdding(true);
 
     try {
@@ -55,14 +51,14 @@ export default function AddToCartButton({
 
       if (!("payload" in result)) {
         throw new Error(
-          "message" in result ? result.message : t("addToCartFailed"),
+          "message" in result ? result.message : "Product request failed",
         );
       }
 
       const product = result.payload.product;
 
       if (product.stock <= 0) {
-        throw new Error(t("outOfStock"));
+        throw new Error("Product is out of stock");
       }
 
       await addToCart({
@@ -70,10 +66,15 @@ export default function AddToCartButton({
         quantity,
       });
     } catch (error) {
-      addToast(
-        TOAST_STATE.Unsuccessful,
-        error instanceof Error ? error.message : t("addToCartFailed"),
-      );
+      console.error("Failed to add product to cart:", error);
+
+      const message =
+        error instanceof Error && error.message === "Product is out of stock"
+          ? t("outOfStock")
+          : t("addToCartFailed");
+
+      addToast(TOAST_STATE.Unsuccessful, message);
+
       onError?.(error);
     } finally {
       setIsAdding(false);

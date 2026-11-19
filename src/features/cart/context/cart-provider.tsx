@@ -22,7 +22,6 @@ import { useCart, cartQueryKey } from "../hooks/use-cart";
 
 import type {
   IGuestCartItem,
-  IAddToCartPayload,
   IAddToCartInput,
   ICartViewItem,
 } from "../types/cart.types";
@@ -88,10 +87,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
   );
 
   // Mutations
-  const { mutate: addMutation } = useAddCartItem();
-  const { mutate: updateMutation } = useUpdateCartItem();
-  const { mutate: removeMutation } = useRemoveCartItem();
-  const { mutate: clearMutation } = useClearCart();
+  const { mutateAsync: addGuestItemToServer } = useAddCartItem();
+  const { mutateAsync: updateServerCartItem } = useUpdateCartItem();
+  const { mutateAsync: removeServerCartItem } = useRemoveCartItem();
+  const { mutateAsync: clearServerCart } = useClearCart();
 
   // Authenticated cart query
   const {
@@ -107,53 +106,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const mergeLockRef = useRef(false);
   const mergeAttemptRef = useRef<string | null>(null);
-
-  // Promise wrappers using mutate
-
-  const addGuestItemToServer = useCallback(
-    (item: IAddToCartPayload): Promise<void> => {
-      return new Promise((resolve, reject) => {
-        addMutation(item, {
-          onSuccess: () => resolve(),
-          onError: (error) => reject(error),
-        });
-      });
-    },
-    [addMutation],
-  );
-
-  const updateServerCartItem = useCallback(
-    (variables: { cartItemId: string; quantity: number }): Promise<void> => {
-      return new Promise((resolve, reject) => {
-        updateMutation(variables, {
-          onSuccess: () => resolve(),
-          onError: (error) => reject(error),
-        });
-      });
-    },
-    [updateMutation],
-  );
-
-  const removeServerCartItem = useCallback(
-    (cartItemId: string): Promise<void> => {
-      return new Promise((resolve, reject) => {
-        removeMutation(cartItemId, {
-          onSuccess: () => resolve(),
-          onError: (error) => reject(error),
-        });
-      });
-    },
-    [removeMutation],
-  );
-
-  const clearServerCart = useCallback((): Promise<void> => {
-    return new Promise((resolve, reject) => {
-      clearMutation(undefined, {
-        onSuccess: () => resolve(),
-        onError: (error) => reject(error),
-      });
-    });
-  }, [clearMutation]);
 
   // Add to cart
   const addToCart = useCallback(

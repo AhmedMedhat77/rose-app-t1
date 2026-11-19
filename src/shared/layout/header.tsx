@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { LocaleSwitcher } from "@/shared/components/locale-switcher";
@@ -11,15 +10,13 @@ import { Input } from "@/shared/ui/input";
 import { Suspense } from "react";
 import { SearchBar } from "@/features/search/components/searchBar";
 import AuthMenu from "../components/auth-menu";
-import { useCartContext } from "@/features/cart/context/cart-provider";
-import { Badge } from "../ui/badge";
+import CartCount from "@/features/cart/components/cart-count";
 
 const ICON_BUTTON =
   "text-zinc-700 relative  dark:text-text-plain flex size-9 items-center justify-center rounded-md transition-colors";
 
 export function Header() {
   const t = useTranslations("Header");
-  const { cartLength } = useCartContext();
 
   return (
     <header>
@@ -69,11 +66,7 @@ export function Header() {
 
               <Link href="/cart" aria-label={t("cart")} className={ICON_BUTTON}>
                 <ShoppingCartIcon />
-                {cartLength > 0 && (
-                  <Badge className="bg-bg-danger dark:bg-bg-danger text-text-inverse dark:text-secondary-foreground absolute inset-e-0 -top-1 flex size-3.5 items-center justify-center rounded-full">
-                    {cartLength > 99 ? "99+" : cartLength}
-                  </Badge>
-                )}
+                <CartCount />
               </Link>
 
               <NotificationsMenu label={t("notifications")} />
