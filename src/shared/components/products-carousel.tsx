@@ -9,7 +9,7 @@ import {
   CarouselPrevious,
 } from "@/shared/ui/carousel";
 import { IProduct } from "@/features/products/types/product";
-import ProductCard from "@/shared/components/product-card-copy";
+import ProductCard from "@/shared/components/product-card";
 import { ProductsCarouselSkeleton } from "@/shared/skeletons/products-carousel.skeleton";
 import { ProductsCarouselErrorBoundary } from "@/shared/components/products-carousel-error-boundary";
 

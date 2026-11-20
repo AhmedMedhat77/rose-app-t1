@@ -1,5 +1,7 @@
 "use client";
 
+import { Link } from "@/i18n/navigation";
+import { getDiscountedPrice } from "@/shared/lib/utils/discounted-price.util";
 import { Badge } from "@/shared/ui/badge";
 import { cn } from "cn";
 import { Eye, Heart, ShoppingCart, Star } from "lucide-react";
@@ -12,6 +14,7 @@ export interface ProductCardProduct {
   stock: number;
   rating?: number | null;
   price: number | string;
+  discountType?: string | null;
   discountValue?: number | string | null;
 }
 
@@ -29,10 +32,8 @@ export default function ProductCard({
 
   const starsCount = isPopular ? 5 : 4;
 
-  const hasDiscount = Number(product.discountValue ?? 0) > 0;
-  const discountedPrice = hasDiscount
-    ? Number(product.price) * (1 - Number(product.discountValue) / 100)
-    : Number(product.price);
+  const discountedPrice = getDiscountedPrice(product);
+  const hasDiscount = discountedPrice < Number(product.price);
 
   return (
     <div
@@ -49,31 +50,36 @@ export default function ProductCard({
           isPopular ? "min-h-0 flex-1 rounded-2xl" : "h-55",
         )}
       >
-        {product.cover && (
-          <Image
-            src={product.cover}
-            alt={product.title}
-            fill
-            sizes={
-              isPopular
-                ? "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                : "302px"
-            }
-            className={cn(
-              "object-cover",
-              isPopular &&
-                "transition-transform duration-300 group-hover:scale-105",
-            )}
-          />
-        )}
-
+        <Link
+          href={`/products/${product.id}`}
+          className="focus-visible:outline-ring absolute inset-0 focus-visible:outline-2"
+          aria-label={product.title}
+        >
+          {product.cover && (
+            <Image
+              src={product.cover}
+              alt={product.title}
+              fill
+              sizes={
+                isPopular
+                  ? "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  : "302px"
+              }
+              className={cn(
+                "object-cover",
+                isPopular &&
+                  "transition-transform duration-300 group-hover:scale-105",
+              )}
+            />
+          )}
+        </Link>
         {/* Popular Hover Actions */}
         {isPopular && (
-          <div className="absolute inset-0 z-10 flex items-center justify-center gap-2 bg-[#E7969F]/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center gap-2 bg-[#E7969F]/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             <button
               type="button"
               aria-label="Quick view"
-              className="text-text-maroon-700 flex size-7 items-center justify-center rounded-full bg-white"
+              className="text-text-maroon-700 pointer-events-auto flex size-7 items-center justify-center rounded-full bg-white"
             >
               <Eye size={15} />
             </button>
@@ -81,7 +87,7 @@ export default function ProductCard({
             <button
               type="button"
               aria-label="Add to favorites"
-              className="text-text-maroon-700 flex size-7 items-center justify-center rounded-full bg-white"
+              className="text-text-maroon-700 pointer-events-auto flex size-7 items-center justify-center rounded-full bg-white"
             >
               <Heart size={15} />
             </button>
@@ -135,7 +141,12 @@ export default function ProductCard({
               : "text-text-primary text-base",
           )}
         >
-          {product.title}
+          <Link
+            href={`/products/${product.id}`}
+            className="focus-visible:outline-ring focus-visible:outline-2"
+          >
+            {product.title}
+          </Link>
         </p>
 
         {/* Rating & Cart */}
@@ -156,7 +167,6 @@ export default function ProductCard({
             type="button"
             aria-label={t("Product.addToCart")}
 
-            onClick={() => {}}
             className={cn(
               "bg-bg-maroon-secondary flex items-center justify-center rounded-full text-white",
               isPopular ? "translate-y-[50%] p-2" : "size-10",

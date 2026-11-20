@@ -1,3 +1,4 @@
+import { getDiscountedPrice } from "@/shared/lib/utils/discounted-price.util";
 import { IProduct } from "@/features/products/types/product";
 import { RatingStars } from "@/shared/components/rating-stars";
 import { isNewProduct } from "@/shared/lib/utils/time.util";
@@ -11,10 +12,8 @@ import { Button } from "../ui/button";
 export default async function ProductCard({ product }: { product: IProduct }) {
   const t = await getTranslations();
 
-  const discountedPrice =
-    product.discountValue &&
-    Number(product.price) -
-      (Number(product.price) * Number(product.discountValue)) / 100;
+  const discountedPrice = getDiscountedPrice(product);
+  const hasDiscount = discountedPrice < Number(product.price);
 
   await connection();
   const isNew = Boolean(product.createdAt) && isNewProduct(product.createdAt);
@@ -115,14 +114,14 @@ export default async function ProductCard({ product }: { product: IProduct }) {
 
         {/* Price */}
         <div className="flex flex-wrap items-center gap-2">
-          {discountedPrice && (
+          {hasDiscount && (
             <span className="text-text-maroon-700 align-bottom leading-none font-medium">
               {discountedPrice} {t("Product.currency")}
             </span>
           )}
 
           <span
-            className={`align-bottom leading-none font-medium ${discountedPrice ? "text-text-muted line-through" : "text-text-maroon-700"}`}
+            className={`align-bottom leading-none font-medium ${hasDiscount ? "text-text-muted line-through" : "text-text-maroon-700"}`}
           >
             {product.price} {t("Product.currency")}
           </span>

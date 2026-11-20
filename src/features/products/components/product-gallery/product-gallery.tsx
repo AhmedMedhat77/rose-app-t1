@@ -6,10 +6,11 @@ import ProductImage from "./product-image";
 import ProductSlider from "./product-slider";
 
 type ProductGalleryProps = {
+  title: string;
   images: IProductOverview["gallery"];
 };
 
-export default function ProductGallery({ images }: ProductGalleryProps) {
+export default function ProductGallery({ images, title }: ProductGalleryProps) {
   const t = useTranslations("Product");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const activeImage =
@@ -26,7 +27,7 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
     <section aria-label={t("galleryLabel")} className="min-w-0">
       <div className="bg-bg-soft relative aspect-[1.16] overflow-hidden rounded-2xl">
         {activeImage ? (
-          <ProductImage image={activeImage} />
+          <ProductImage image={activeImage} title={title} />
         ) : (
           <div className="text-text-muted grid size-full place-items-center">
             {t("imageUnavailable")}

@@ -6,7 +6,7 @@ export type IProduct = {
   ratings: number;
   stock: number;
   price: string;
-  discountType: "PERCENT" | null;
+  discountType: "PERCENT" | "FIXED" | null;
   discountValue: string | null;
   cover: string;
   categoryId: string;
@@ -25,15 +25,8 @@ export type IProductsMetadata = {
 };
 
 export type IProductsPayload = {
-  data: Product[];
-  metadata: ProductsMetadata;
-};
-
-type IApiResponse<T> = {
-  status: boolean;
-  code: number;
-  message?: string;
-  payload: T;
+  data: IProduct[];
+  metadata: IProductsMetadata;
 };
 
 // Types for product overview
@@ -61,7 +54,7 @@ interface IProductOverViewSubCategory {
   id: string;
   title: string;
   description: string;
-  image: boolean;
+  image: string;
   categoryId: string;
   immutable: boolean;
   createdAt: string;

@@ -5,10 +5,9 @@ import { Button } from "@/shared/ui/button";
 
 interface ProductActionsProps {
   disabled: boolean;
-  onAddToCart: () => void;
 }
 
-export function ProductActions({ disabled, onAddToCart }: ProductActionsProps) {
+export function ProductActions({ disabled }: ProductActionsProps) {
   const t = useTranslations("Product");
 
   return (
@@ -22,12 +21,7 @@ export function ProductActions({ disabled, onAddToCart }: ProductActionsProps) {
       >
         <HeartPlus className="size-6.25" />
       </Button>
-      <Button
-        type="button"
-        onClick={onAddToCart}
-        disabled={disabled}
-        className="h-14 w-full"
-      >
+      <Button type="button" disabled={disabled} className="h-14 w-full">
         <ShoppingCart />
         {t("addToCart")}
       </Button>
