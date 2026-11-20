@@ -1,18 +1,31 @@
+import { getDiscount } from "@/shared/lib/utils/price";
+
 import type { Coupon } from "@/features/summary/lib/types/coupon";
 
 export type CouponApplyError =
-  "not-found" | "already-applied" | "inactive" | "below-minimum";
+  "not-found" | "already-applied" | "inactive" | "expired" | "below-minimum";
 
-const roundMoney = (value: number) => Math.round(value * 100) / 100;
+function isCouponValid(coupon: Coupon, now: number) {
+  const validUntil = new Date(coupon.validUntil).getTime();
+  const validFrom = new Date(coupon.validFrom).getTime();
+
+  return (
+    coupon.usedCount < coupon.usageLimit &&
+    now <= validUntil &&
+    now >= validFrom
+  );
+}
 
 export function getCouponApplyError({
   coupon,
   appliedCoupons,
   subtotal,
+  now = Date.now(),
 }: {
   coupon: Coupon | null;
   appliedCoupons: Coupon[];
   subtotal: number;
+  now?: number;
 }): CouponApplyError | null {
   if (!coupon) return "not-found";
 
@@ -21,24 +34,27 @@ export function getCouponApplyError({
   );
   if (isAlreadyApplied) return "already-applied";
   if (!coupon.isActive) return "inactive";
+  if (!isCouponValid(coupon, now)) return "expired";
   if (subtotal < Number(coupon.minPurchase)) return "below-minimum";
 
   return null;
 }
 
-export function getCouponDiscount(coupon: Coupon, subtotal: number) {
-  const percentDiscount = subtotal * (Number(coupon.value) / 100);
-  const maxDiscount = subtotal * (Number(coupon.maxDiscount) / 100);
-  return roundMoney(Math.min(percentDiscount, maxDiscount));
-}
+const roundMoney = (value: number) => Math.round(value * 100) / 100;
 
 export function getCouponsDiscount(coupons: Coupon[], subtotal: number) {
   const { discount } = coupons.reduce(
     (result, coupon) => {
-      const couponDiscount = Math.min(
-        getCouponDiscount(coupon, result.remaining),
-        result.remaining,
-      );
+      const amount = getDiscount({
+        price: result.remaining,
+        discountType: coupon.type,
+        discountValue: Number(coupon.value),
+      });
+      const cappedDiscount =
+        coupon.type === "PERCENT" && coupon.maxDiscount !== null
+          ? Math.min(amount, Number(coupon.maxDiscount))
+          : amount;
+      const couponDiscount = Math.min(cappedDiscount, result.remaining);
 
       return {
         discount: result.discount + couponDiscount,

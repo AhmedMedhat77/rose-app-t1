@@ -29,6 +29,7 @@ const COUPON_ERROR_KEY: Record<CouponApplyError, string> = {
   "not-found": "coupon-not-found",
   "already-applied": "coupon-already-applied",
   inactive: "coupon-inactive",
+  expired: "coupon-expired",
   "below-minimum": "coupon-below-minimum",
 };
 
