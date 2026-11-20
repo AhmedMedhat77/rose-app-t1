@@ -13,7 +13,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/shared/ui/carousel";
-import Link from "next/link";
 
 export default function ProductsCarousel({
   title,
@@ -57,9 +56,7 @@ async function ProductsCarouselSlides({
       <CarouselContent>
         {products.map((product) => (
           <CarouselItem key={product.id} className="basis-80">
-            <Link href={`/products/${product.id}`}>
-              <ProductCard product={product} />
-            </Link>
+            <ProductCard product={product} />
           </CarouselItem>
         ))}
       </CarouselContent>

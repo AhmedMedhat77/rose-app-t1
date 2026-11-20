@@ -40,7 +40,7 @@ export default function ProductCard({
   return (
     <div
       className={cn(
-        "w-full space-y-2",
+        "relative isolate w-full space-y-2",
         isPopular &&
           "group flex h-91 w-full max-w-75.5 flex-col gap-4 overflow-hidden rounded-t-2xl",
       )}
@@ -52,32 +52,27 @@ export default function ProductCard({
           isPopular ? "min-h-0 flex-1 rounded-2xl" : "h-55",
         )}
       >
-        <Link
-          href={`/products/${product.id}`}
-          className="focus-visible:outline-ring absolute inset-0 focus-visible:outline-2"
-          aria-label={product.title}
-        >
-          {product.cover && (
-            <Image
-              src={product.cover}
-              alt={product.title}
-              fill
-              sizes={
-                isPopular
-                  ? "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  : "302px"
-              }
-              className={cn(
-                "object-cover",
-                isPopular &&
-                  "transition-transform duration-300 group-hover:scale-105",
-              )}
-            />
-          )}
-        </Link>
+        {product.cover && (
+          <Image
+            src={product.cover}
+            alt={product.title}
+            fill
+            sizes={
+              isPopular
+                ? "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                : "302px"
+            }
+            className={cn(
+              "object-cover",
+              isPopular &&
+                "transition-transform duration-300 group-hover:scale-105",
+            )}
+          />
+        )}
+
         {/* Popular Hover Actions */}
         {isPopular && (
-          <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center gap-2 bg-[#E7969F]/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center gap-2 bg-[#E7969F]/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             <button
               type="button"
               aria-label="Quick view"
@@ -99,7 +94,7 @@ export default function ProductCard({
         {/* Product Badges */}
         <div
           className={cn(
-            "absolute top-2 z-20 flex flex-wrap gap-1",
+            "pointer-events-none absolute top-2 z-20 flex flex-wrap gap-1",
             isPopular ? "inset-e-1 justify-end" : "right-2",
           )}
         >
@@ -145,7 +140,7 @@ export default function ProductCard({
         >
           <Link
             href={`/products/${product.id}`}
-            className="focus-visible:outline-ring focus-visible:outline-2"
+            className="focus-visible:after:outline-ring after:absolute after:inset-0 after:z-10 after:rounded-xl focus-visible:outline-none focus-visible:after:outline-2"
           >
             {product.title}
           </Link>
@@ -164,11 +159,13 @@ export default function ProductCard({
               />
             ))}
           </div>
-          <AddToCartButton
-            productId={String(product.id)}
-            variant="icon"
-            stock={product.stock}
-          />
+          <div className="relative z-20">
+            <AddToCartButton
+              productId={String(product.id)}
+              variant="icon"
+              stock={product.stock}
+            />
+          </div>
         </div>
 
         {/* Price */}
