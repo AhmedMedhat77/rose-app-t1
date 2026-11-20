@@ -58,9 +58,18 @@
         "title": "Free Delivery",
         "text": "For orders above 120 EGP"
       },
-      "refund": { "title": "Get Refund", "text": "Refunds within 30 days" },
-      "payment": { "title": "Safe Payment", "text": "100% Secure Payment" },
-      "support": { "title": "24/7 Support", "text": "Contact us at any time" }
+      "refund": {
+        "title": "Get Refund",
+        "text": "Refunds within 30 days"
+      },
+      "payment": {
+        "title": "Safe Payment",
+        "text": "100% Secure Payment"
+      },
+      "support": {
+        "title": "24/7 Support",
+        "text": "Contact us at any time"
+      }
     }
   },
   "Header": {
@@ -451,7 +460,26 @@
     "outOfStock": "OUT OF STOCK",
     "new": "NEW",
     "hot": "HOT",
-    "currency": "EGP"
+    "currency": "EGP",
+    "addToFavorites": "Add to favorites",
+    "stockLeft": "{count} left in stock",
+    "ratingValue": "Rating: {rating}/5",
+    "ratingCount": "({count} ratings)",
+    "rating": "Rating: {rating}/5 ({count} ratings)",
+    "addToCart": "Add to Cart",
+    "addToWishlist": "Add to wishlist",
+    "addedToCart": "Product added successfully to cart",
+    "quantityIncreased": "Quantity increased",
+    "relatedProducts": "Related Products",
+    "previousProducts": "Previous products",
+    "nextProducts": "Next products",
+    "loadError": "Unable to load this product. Please try again.",
+    "retry": "Try again",
+    "galleryLabel": "Product images",
+    "imageUnavailable": "No image available",
+    "viewImage": "View product image {number}",
+    "previousImages": "Previous product images",
+    "nextImages": "Next product images"
   },
   "Cart": {
     "title": "Cart",
@@ -460,8 +488,49 @@
     "checkout": "Checkout",
     "coupon-placeholder": "Coupon Code",
     "apply": "Apply",
+    "coupon-applied": "Coupon Applied: ",
+    "code-required": "Enter a coupon code",
+    "coupon-not-found": "Coupon not found",
+    "coupon-already-applied": "This coupon is already applied",
+    "coupon-inactive": "This coupon is not active",
+    "coupon-below-minimum": "Cart subtotal is below the minimum purchase",
+    "coupon-request-failed": "Could not check this coupon. Please try again.",
     "no-coupons": "No coupons applied",
+    "discount": "Discount",
+    "currency": "EGP",
     "subtotal": "Subtotal",
-    "total": "Total"
+    "total": "Total",
+    "clear-cart": "Clear Cart",
+    "clearing": "Clearing...",
+    "confirmClear": "Clear your cart?",
+    "confirmClearDescription": "Are you sure you want to remove all items from your cart? This action cannot be undone.",
+    "cancel": "Cancel",
+    "remove": "Remove",
+    "continueShopping": "Continue Shopping",
+    "startShopping": "Start Shopping",
+    "no-of-product": "{count, plural, =0 {No products} one {# product} other {# products}}",
+    "addToCart": "Add To Cart",
+    "adding": "Adding",
+    "error": "Failed to load cart",
+    "loading": "Loading cart...",
+    "no-cart": "Your cart is empty, wanna try shopping?",
+    "quantity": "Quantity",
+    "decrease": "Decrease quantity",
+    "increase": "Increase quantity",
+    "addToCartFailed": "Couldn't add the product to your cart",
+    "addToCartInCart": "Add to cart, {count} already in your cart",
+    "outOfStock": "This product is out of stock."
+  },
+  "ProductRow": {
+    "rating": "Rating:",
+    "ratingsCount": "{count, plural, one {# rating} other {# ratings}}",
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "currency": "EGP",
+    "originalPrice": "Original price"
+  },
+  "ProductsCarousel": {
+    "empty": "No products to show",
+    "error": "Something went wrong. Please try again."
   }
 }
