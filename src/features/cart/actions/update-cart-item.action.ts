@@ -1,6 +1,6 @@
 "use server";
 
-import { updateCartItemMutation } from "../server/update-cart-item.mutation";
+import { updateCartItemMutation } from "../server/update-cart-item.api";
 
 export async function updateCartItemAction(
   cartItemId: string,

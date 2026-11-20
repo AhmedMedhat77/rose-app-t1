@@ -83,7 +83,7 @@ function Rating({ rating, ratings }: { rating: number; ratings: number }) {
       <Star
         aria-hidden="true"
         size={20}
-        className="fill-amber-500 text-amber-500"
+        className="fill-text-rating text-text-rating"
       />
       <p className="text-base font-normal">
         {t("rating")} <span className="font-medium">{rating}/5</span>

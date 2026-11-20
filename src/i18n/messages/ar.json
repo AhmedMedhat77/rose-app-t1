@@ -502,8 +502,12 @@
     "total": "المجموع",
     "clear-cart": "حذف السلة",
     "clearing": "يتم الحذف...",
+    "confirmClear": "هل تريد إفراغ سلة التسوق؟",
+    "confirmClearDescription": "هل أنت متأكد أنك تريد حذف جميع المنتجات من سلة التسوق؟ لا يمكن التراجع عن هذا الإجراء.",
+    "cancel": "إلغاء",
     "remove": "حذف",
     "continueShopping": "متابعة التسوق",
+    "startShopping": "ابدأ التسوق",
     "no-of-product": "{count, plural, =0 {لا توجد منتجات} one {منتج واحد} two {منتجان} few {# منتجات} many {# منتج} other {# منتج}}",
     "addToCart": "أضف الى السلة",
     "adding": "يتم الاضافة",
@@ -514,7 +518,8 @@
     "decrease": "تقليل الكمية",
     "increase": "زيادة الكمية",
     "addToCartFailed": "تعذّرت إضافة المنتج إلى سلتك",
-    "addToCartInCart": "أضف إلى السلة، يوجد {count} في سلتك بالفعل"
+    "addToCartInCart": "أضف إلى السلة، يوجد {count} في سلتك بالفعل",
+    "outOfStock": "هذا المنتج غير متوفر في المخزون."
   },
   "ProductRow": {
     "rating": "التقييم:",

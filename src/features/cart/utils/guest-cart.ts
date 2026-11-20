@@ -3,7 +3,7 @@ import type { ICartProduct, IGuestCartItem } from "../types/cart.types";
 const CART_STORAGE_KEY = "rose-guest-cart";
 const CART_OWNER_KEY = "rose-guest-cart-owner";
 
-// Stable snapshots
+// useSyncExternalStore requires the same snapshot reference until storage changes.
 const EMPTY_GUEST_CART: IGuestCartItem[] = [];
 
 let cachedRaw: string | null | undefined;
@@ -56,7 +56,6 @@ function saveCart(items: IGuestCartItem[]) {
 
   localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
 
-  // Invalidate cache and refresh snapshot
   cachedRaw = undefined;
   readCart();
 
@@ -78,7 +77,7 @@ export function subscribeGuestCart(listener: () => void) {
     }
   };
 }
-// This function handles changes that occur in `localStorage` from another browser tab.
+// Storage events only fire in other tabs; local writes notify listeners in saveCart.
 function handleStorage(event: StorageEvent) {
   if (event.key === CART_STORAGE_KEY || event.key === null) {
     cachedRaw = undefined;
@@ -94,7 +93,6 @@ export function getGuestCartServerSnapshot(): IGuestCartItem[] {
   return EMPTY_GUEST_CART;
 }
 
-// Add Item
 export function addGuestCartItem(product: ICartProduct, quantity: number) {
   if (quantity <= 0 || product.stock <= 0) return;
 
@@ -127,7 +125,6 @@ export function addGuestCartItem(product: ICartProduct, quantity: number) {
     },
   ]);
 }
-// Update Item
 export function updateGuestCartItem(productId: string, quantity: number) {
   const cart = readCart();
 
@@ -147,20 +144,17 @@ export function updateGuestCartItem(productId: string, quantity: number) {
     ),
   );
 }
-// Remove Item
 export function removeGuestCartItem(productId: string) {
   const cart = readCart();
 
   saveCart(cart.filter((item) => item.productId !== productId));
 }
 
-// Clear cart
 export function clearGuestCart() {
   saveCart([]);
   clearGuestCartOwner();
 }
 
-// Cart owner
 export function getGuestCartOwner(): string | null {
   if (typeof window === "undefined") return null;
 

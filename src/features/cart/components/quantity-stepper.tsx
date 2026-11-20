@@ -21,6 +21,7 @@ export default function QuantityStepper({
   disabled = false,
   onChange,
 }: Props) {
+  // Translation
   const t = useTranslations("Cart");
 
   return (
