@@ -7,14 +7,14 @@ export default async function RootLayout({
   children,
 }: LayoutProps<"/[locale]">) {
   return (
-    <main className="flex-1">
+    <section className="flex-1">
       <header className="flex flex-wrap items-center justify-between">
         <LocaleSwitcher />
         <ThemeMode />
       </header>
       <Header />
-      <main className="flex-1">{children}</main>
+      <section className="flex-1">{children}</section>
       <Footer />
-    </main>
+    </section>
   );
 }
