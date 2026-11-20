@@ -31,7 +31,11 @@ export function ProductDetails({ product }: ProductDetailsProps) {
       </div>
       <ProductRating rating={product.rating} count={product.ratings} />
       <ProductDescription description={product.description} />
-      <ProductActions disabled={product.stock <= 0} />
+      <ProductActions
+        productId={product.id}
+        stock={product.stock}
+        disabled={product.stock <= 0}
+      />
     </div>
   );
 }

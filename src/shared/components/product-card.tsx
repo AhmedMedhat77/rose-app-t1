@@ -4,9 +4,11 @@ import { Link } from "@/i18n/navigation";
 import { getDiscountedPrice } from "@/shared/lib/utils/discounted-price.util";
 import { Badge } from "@/shared/ui/badge";
 import { cn } from "cn";
-import { Eye, Heart, ShoppingCart, Star } from "lucide-react";
+import { Eye, Heart, Star } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import AddToCartButton from "./add-to-cart-button";
+
 export interface ProductCardProduct {
   id: string | number;
   title: string;
@@ -162,18 +164,11 @@ export default function ProductCard({
               />
             ))}
           </div>
-
-          <button
-            type="button"
-            aria-label={t("Product.addToCart")}
-
-            className={cn(
-              "bg-bg-maroon-secondary flex items-center justify-center rounded-full text-white",
-              isPopular ? "translate-y-[50%] p-2" : "size-10",
-            )}
-          >
-            <ShoppingCart className="size-5" />
-          </button>
+          <AddToCartButton
+            productId={String(product.id)}
+            variant="icon"
+            stock={product.stock}
+          />
         </div>
 
         {/* Price */}

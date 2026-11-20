@@ -13,7 +13,7 @@ export default function ProductImage({ image, title }: ProductImageProps) {
       fill
       loading="eager"
       sizes="(max-width: 768px) 100vw, 50vw"
-      className="object-cover"
+      className="bg-white object-contain"
     />
   );
 }

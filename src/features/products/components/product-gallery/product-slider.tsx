@@ -36,7 +36,7 @@ export default function ProductSlider({
               onMouseEnter={() => onSetActiveImage(idx)}
               aria-label={t("viewImage", { number: idx + 1 })}
               aria-pressed={image === activeImage}
-              className={`relative block aspect-square w-full overflow-hidden rounded-xl border-2 transition ${image === activeImage ? "border-bg-maron" : "hover:border-border-primary border-transparent"}`}
+              className={`relative block aspect-square w-full cursor-pointer overflow-hidden rounded-xl border-2 transition ${image === activeImage ? "border-border-secondary" : "hover:border-border-primary border-transparent"}`}
             >
               <Image
                 src={image}
@@ -49,8 +49,11 @@ export default function ProductSlider({
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="start-0" aria-label={t("previousImages")} />
-      <CarouselNext className="end-0" aria-label={t("nextImages")} />
+      <CarouselPrevious
+        className="inset-s-0"
+        aria-label={t("previousImages")}
+      />
+      <CarouselNext className="inset-e-0" aria-label={t("nextImages")} />
     </Carousel>
   );
 }

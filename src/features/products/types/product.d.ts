@@ -14,6 +14,7 @@ export type IProduct = {
   createdAt: string;
   updatedAt: string;
   category: { id: string; title: string };
+  immutable: boolean;
   subCategory: { id: string; title: string } | null;
 };
 

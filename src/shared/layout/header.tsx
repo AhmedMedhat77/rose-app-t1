@@ -10,9 +10,10 @@ import { Input } from "@/shared/ui/input";
 import { Suspense } from "react";
 import { SearchBar } from "@/features/search/components/searchBar";
 import AuthMenu from "../components/auth-menu";
+import CartCount from "@/features/cart/components/cart-count";
 
 const ICON_BUTTON =
-  "text-zinc-700  dark:text-text-plain flex size-9 items-center justify-center rounded-md transition-colors";
+  "text-zinc-700 relative  dark:text-text-plain flex size-9 items-center justify-center rounded-md transition-colors";
 
 export function Header() {
   const t = useTranslations("Header");
@@ -62,8 +63,10 @@ export function Header() {
               >
                 <HeartIcon />
               </Link>
+
               <Link href="/cart" aria-label={t("cart")} className={ICON_BUTTON}>
                 <ShoppingCartIcon />
+                <CartCount />
               </Link>
 
               <NotificationsMenu label={t("notifications")} />

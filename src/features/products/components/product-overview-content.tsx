@@ -1,7 +1,6 @@
 import { getTranslations } from "next-intl/server";
 
 import ProductsCarousel from "@/shared/components/products-carousel";
-import SectionsTitle from "@/shared/components/SectionsTitle";
 import { getProductsByCategory } from "../lib/apis/products.api";
 import type { IProductOverview } from "../types/product";
 import { ProductDetails } from "./product-description";
@@ -29,10 +28,10 @@ export default async function ProductOverviewContent({
       </section>
 
       <section className="mt-40 mb-72 flex flex-col">
-        <div className="mr-auto -mb-10 w-fit">
-          <SectionsTitle mainTitle={t("relatedProducts")} />
-        </div>
-        <ProductsCarousel productsList={relatedProducts} />
+        <ProductsCarousel
+          productsList={relatedProducts}
+          title={t("relatedProducts")}
+        />
       </section>
     </div>
   );
