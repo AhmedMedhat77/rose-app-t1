@@ -39,7 +39,7 @@ function ProductImage({ src, alt, dimmed = false, className }: ImageProps) {
       width={117}
       height={140}
       className={cn(
-        "h-35 w-29.25 shrink-0 rounded-lg object-cover",
+        "h-24 w-20 shrink-0 rounded-lg object-cover sm:h-28 sm:w-24 lg:h-35 lg:w-29.25",
         dimmed && "opacity-50",
         className,
       )}

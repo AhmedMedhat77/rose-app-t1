@@ -9,12 +9,14 @@ export default async function CartPage() {
   const t = await getTranslations("Cart");
 
   return (
-    <section className="mx-auto flex w-full flex-col gap-12.5 px-20 py-30">
-      <div className="flex gap-10">
+    <section className="mx-auto flex w-full flex-col gap-12.5 px-4 py-8 lg:px-20 lg:py-30">
+      <div className="flex flex-col gap-10 md:flex-row">
         <div className="flex-2">
           <CartSide />
         </div>
-        <Summary />
+        <div className="flex">
+          <Summary />
+        </div>
       </div>
       <div className="flex flex-col gap-6 p-2.5">
         <ProductsCarousel
