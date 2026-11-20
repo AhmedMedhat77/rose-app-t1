@@ -15,6 +15,7 @@ import { Field, FieldError, FieldLabel } from "@/shared/ui/field";
 import { Input } from "@/shared/ui/input";
 
 import { useApplyCoupon } from "../hooks/use-apply-coupon";
+import { SummaryAmountSkeleton } from "../skeletons/summary-amount.skeleton";
 import { createApplyCouponSchema } from "../lib/schemas/apply-coupon.schema";
 import type { ApplyCouponFormValues } from "../lib/types/apply-coupon.types";
 import type { Coupon } from "../lib/types/coupon";
@@ -139,7 +140,7 @@ export default function Summary({ className }: SummaryProps) {
                     className="bg-bg-maroon-secondary flex-1"
                   >
                     <TicketPercent className="size-5" />
-                    {t("apply")}
+                    {isPending ? t("applying") : t("apply")}
                   </Button>
                 </Field>
 
@@ -182,13 +183,13 @@ export default function Summary({ className }: SummaryProps) {
             </p>
           )}
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4" aria-busy={!isReady}>
           <div className="flex justify-between">
             <span className="text-text-plain text-lg font-medium">
               {t("subtotal")}
             </span>
             <span className="text-text-plain text-xl font-semibold">
-              {formatMoney(subtotal)}
+              {isReady ? formatMoney(subtotal) : <SummaryAmountSkeleton />}
             </span>
           </div>
           <div className="flex justify-between">
@@ -196,7 +197,11 @@ export default function Summary({ className }: SummaryProps) {
               {t("discount")}
             </span>
             <span className="text-text-plain text-xl font-semibold">
-              {formatMoney(couponDiscount)}
+              {isReady ? (
+                formatMoney(couponDiscount)
+              ) : (
+                <SummaryAmountSkeleton />
+              )}
             </span>
           </div>
           <hr className="border-border-soft border" />
@@ -205,7 +210,11 @@ export default function Summary({ className }: SummaryProps) {
               {t("total")}
             </span>
             <span className="text-text-maroon text-2xl font-bold">
-              {formatMoney(total)}
+              {isReady ? (
+                formatMoney(total)
+              ) : (
+                <SummaryAmountSkeleton className="h-8 w-28" />
+              )}
             </span>
           </div>
         </div>

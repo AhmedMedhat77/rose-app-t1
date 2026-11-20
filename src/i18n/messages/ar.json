@@ -488,6 +488,7 @@
     "checkout": "الدفع",
     "coupon-placeholder": "كود الكوبون",
     "apply": "تطبيق",
+    "applying": "جارٍ التطبيق…",
     "coupon-applied": "تم تطبيق الكوبون: ",
     "code-required": "أدخل كود الكوبون",
     "coupon-not-found": "الكوبون غير موجود",

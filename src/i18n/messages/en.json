@@ -488,6 +488,7 @@
     "checkout": "Checkout",
     "coupon-placeholder": "Coupon Code",
     "apply": "Apply",
+    "applying": "Applying…",
     "coupon-applied": "Coupon Applied: ",
     "code-required": "Enter a coupon code",
     "coupon-not-found": "Coupon not found",
