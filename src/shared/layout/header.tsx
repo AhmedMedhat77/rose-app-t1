@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { LocaleSwitcher } from "@/shared/components/locale-switcher";
 import { Link } from "@/i18n/navigation";
 import { NavBar } from "./navbar";
-import { HeartIcon, ShoppingCartIcon } from "lucide-react";
+import { ShoppingCartIcon } from "lucide-react";
 import { NotificationsMenu } from "@/features/notifications/components/notifications-menu";
 import { NotificationToggle } from "@/features/notifications/components/notification-toggle";
 import { Input } from "@/shared/ui/input";
@@ -13,6 +13,7 @@ import { SearchBar } from "@/features/search/components/searchBar";
 import AuthMenu from "../components/auth-menu";
 import { useCartContext } from "@/features/cart/context/cart-provider";
 import { Badge } from "../ui/badge";
+import { WishlistLink } from "@/features/wishlist/components/wishlist-link";
 
 const ICON_BUTTON =
   "text-zinc-700 relative  dark:text-text-plain flex size-9 items-center justify-center rounded-md transition-colors";
@@ -59,13 +60,7 @@ export function Header() {
             <AuthMenu loginLabel={t("login")} />
 
             <div className="border-border flex items-center gap-1 border-s ps-4">
-              <Link
-                href="/wishlist"
-                aria-label={t("wishlist")}
-                className={ICON_BUTTON}
-              >
-                <HeartIcon />
-              </Link>
+              <WishlistLink className={ICON_BUTTON} />
 
               <Link href="/cart" aria-label={t("cart")} className={ICON_BUTTON}>
                 <ShoppingCartIcon />
