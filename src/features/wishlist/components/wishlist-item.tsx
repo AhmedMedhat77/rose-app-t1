@@ -1,6 +1,4 @@
 "use client";
-
-import { ShoppingCart } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { Link } from "@/i18n/navigation";
@@ -8,6 +6,7 @@ import { ProductRow } from "@/shared/components/product-row";
 import { Button } from "@/shared/ui/button";
 import { WishlistViewItem } from "../lib/types/wishlist.types";
 import { FILTER_KEYS } from "@/features/products/lib/constants/filters.constant";
+import AddToCartButton from "@/shared/components/add-to-cart-button";
 
 type WishlistRowProps = {
   item: WishlistViewItem;
@@ -56,10 +55,11 @@ export default function WishlistItem({ item, onRemove }: WishlistRowProps) {
           />
 
           {inStock ? (
-            <Button>
-              <ShoppingCart aria-hidden="true" />
-              {t("addToCart")}
-            </Button>
+            <AddToCartButton
+              productId={String(item.productId)}
+              variant="icon"
+              stock={item.stock}
+            />
           ) : (
             <Button
               variant="secondary"

@@ -2,10 +2,11 @@
 
 import { Badge } from "@/shared/ui/badge";
 import { cn } from "cn";
-import { Eye, Heart, Star } from "lucide-react";
+import { Eye, Star } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import AddToCartButton from "./add-to-cart-button";
+import { WishlistButton } from "@/features/wishlist/components/wishlist-button";
 
 export interface ProductCardProduct {
   id: string | number;
@@ -80,13 +81,7 @@ export default function ProductCard({
               <Eye size={15} />
             </button>
 
-            <button
-              type="button"
-              aria-label="Add to favorites"
-              className="text-text-maroon-700 flex size-7 items-center justify-center rounded-full bg-white"
-            >
-              <Heart size={15} />
-            </button>
+            <WishlistButton productId={String(product.id)} />
           </div>
         )}
 

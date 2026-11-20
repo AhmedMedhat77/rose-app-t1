@@ -21,16 +21,21 @@ import {
   clearGuestWishlist,
   removeGuestWishlistItems,
 } from "../lib/utils/guest-wishlist-storage";
-import { WishlistViewItem } from "../lib/types/wishlist.types";
+import { WishlistItem, WishlistViewItem } from "../lib/types/wishlist.types";
 
-export default function WishlistSide() {
+type WishlistSideProps = {
+  initialItems?: WishlistItem[];
+};
+
+export default function WishlistSide({ initialItems }: WishlistSideProps) {
   // Translation
   const t = useTranslations("Wishlist");
 
   // State
   const { status } = useSession();
   const isGuest = status === "unauthenticated";
-  const user = useWishlist();
+  // const user = useWishlist();
+  const user = useWishlist(initialItems);
   const guest = useGuestWishlistProducts(isGuest);
   const removeItem = useRemoveWishlistItem();
   const clearWishlist = useClearWishlist();

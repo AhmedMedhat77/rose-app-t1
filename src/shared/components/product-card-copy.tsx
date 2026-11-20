@@ -2,7 +2,7 @@ import { IProduct } from "@/features/products/types/product";
 import { RatingStars } from "@/shared/components/rating-stars";
 import { isNewProduct } from "@/shared/lib/utils/time.util";
 import { Badge } from "@/shared/ui/badge";
-import { Eye, Heart } from "lucide-react";
+import { Eye } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { connection } from "next/server";
@@ -52,13 +52,7 @@ export default async function ProductCard({ product }: { product: IProduct }) {
             <Eye className="size-5" />
           </button>
 
-          <button
-            type="button"
-            aria-label="Add to favorites"
-            className="text-text-maroon-700 flex size-7.5 items-center justify-center rounded-full bg-white"
-          >
-            <Heart className="size-5" />
-          </button>
+          <WishlistButton productId={String(product.id)} />
         </div>
 
         {/* Product Badges */}

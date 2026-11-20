@@ -1,7 +1,5 @@
-import "server-only";
-
 import { API_URL } from "@/app/shared/constants/config";
-import { IProduct } from "@/features/products/types/product";
+import type { IProduct } from "@/features/products/types/product";
 import { IApiResponse } from "@/shared/types/api";
 
 export async function getProduct(productId: string): Promise<IProduct | null> {

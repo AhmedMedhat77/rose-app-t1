@@ -2,20 +2,19 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { getWishlistAction } from "../lib/actions/wishlist.actions";
-import { WISHLIST_QUERY_KEY } from "../lib/constants/wishlist-constants";
+import { WishlistItem } from "../lib/types/wishlist.types";
+import { fetchWishlist } from "../lib/apis/fetch-wishlist";
 
-export function useWishlist() {
+export const WISHLIST_QUERY_KEY = ["wishlist"] as const;
+
+export function useWishlist(initialItems?: WishlistItem[]) {
   const { status } = useSession();
 
   const query = useQuery({
     queryKey: WISHLIST_QUERY_KEY,
     enabled: status === "authenticated",
-    queryFn: async () => {
-      const result = await getWishlistAction();
-      if (!result.ok) throw new Error(`Wishlist failed (${result.status})`);
-      return result.data;
-    },
+    queryFn: fetchWishlist,
+    initialData: initialItems,
   });
 
   const items = query.data ?? [];
