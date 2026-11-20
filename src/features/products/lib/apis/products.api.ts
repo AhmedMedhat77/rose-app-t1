@@ -1,11 +1,18 @@
+import "server-only";
+
+import { notFound } from "next/navigation";
+
+import { API_URL } from "@/app/shared/constants/config";
+import { getProducts } from "@/shared/lib/apis/products.api";
 import type { IApiResponse } from "@/shared/types/api";
 import type { IProduct, IProductOverviewResponse } from "../../types/product";
-import { PRODUCT_OVERVIEW_ENDPOINT } from "./product.endpoint";
 
 export async function getProductById(
   id: string,
 ): Promise<IApiResponse<IProductOverviewResponse>> {
-  const response = await fetch(PRODUCT_OVERVIEW_ENDPOINT(id));
+  if (!API_URL) throw new Error("API_URL is not configured");
+  const response = await fetch(`${API_URL}/products/${encodeURIComponent(id)}`);
+  if (response.status === 404) notFound();
   const result: {
     status: boolean;
     code: number;
@@ -51,17 +58,5 @@ export async function getProductsByCategory(
   categoryId: string,
 ): Promise<IProduct[]> {
   const params = new URLSearchParams({ categoryId, limit: "8" });
-  const response = await fetch(`/api/products/search?${params}`);
-  const result: {
-    status?: boolean;
-    message?: string;
-    payload?: { data?: IProduct[] };
-    data?: IProduct[];
-  } = await response.json();
-
-  if (!response.ok || result.status === false) {
-    throw new Error(result.message || "Unable to fetch related products");
-  }
-
-  return result.payload?.data ?? result.data ?? [];
+  return getProducts(`/products?${params}`);
 }
