@@ -9,7 +9,7 @@ import type { IApiResponse } from "@/app/shared/types/api";
 
 interface ICartRequestOptions {
   method: "GET" | "POST" | "PATCH" | "DELETE";
-  endpoint: string;
+  endpoint?: string;
   body?: unknown;
 }
 
