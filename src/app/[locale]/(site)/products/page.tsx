@@ -12,11 +12,11 @@ export default async function Products({ searchParams }: PropsFilters) {
   return (
     <div className="container mx-auto min-h-screen">
       <div className="flex min-h-screen justify-between gap-6.25">
-        <div className="w-[301px]">
+        <div className="w-75.25">
           <ProductsFilters />
         </div>
 
-        <div className="w-[954px]">
+        <div className="w-238.5">
           <ProductList filters={filters} />
         </div>
       </div>

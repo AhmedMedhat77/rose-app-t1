@@ -30,27 +30,21 @@ export async function getAllProducts(
     minRating: params.rating,
   };
 
-  for (const [key, value] of Object.entries(apiParams)) {
+  Object.entries(apiParams).forEach(([key, value]) => {
     if (value !== undefined && value !== null && value !== "") {
       searchParams.set(key, String(value));
     }
-  }
-
-  const baseUrl = `https://rose-app.elevate-bootcamp.cloud/api/products`;
-
-  const queryString = searchParams.toString();
-  const fullUrl = queryString ? `${baseUrl}?${queryString}` : baseUrl;
-
-  const response = await fetch(fullUrl, {
-    method: "GET",
-    next: { revalidate: 300 },
   });
 
+  const queryString = searchParams.toString();
+
+  const response = await fetch(
+    `/api/products/all-product${queryString ? `?${queryString}` : ""}`,
+  );
+
   if (!response.ok) {
-    throw new Error(
-      `Failed to fetch products: ${response.status} ${response.statusText}`,
-    );
+    throw new Error("Failed to fetch products");
   }
-  const data = await response.json();
-  return data;
+
+  return response.json();
 }
