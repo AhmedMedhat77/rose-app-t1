@@ -5,7 +5,7 @@ import { Badge } from "@/shared/ui/badge";
 import { getTranslations } from "next-intl/server";
 import { IProduct } from "@/features/products/types/product";
 import { RatingStars } from "@/shared/components/rating-stars";
-import { isNewProduct } from "@/shared/lib/utils/time.util";
+import { isNewProduct } from "@/features/products/lib/utils/is-new-product.util";
 import AddToCartButton from "./add-to-cart-button";
 
 export default async function ProductCard({ product }: { product: IProduct }) {
