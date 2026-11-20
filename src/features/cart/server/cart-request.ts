@@ -9,13 +9,13 @@ import type { IApiResponse } from "@/app/shared/types/api";
 
 interface ICartRequestOptions {
   method: "GET" | "POST" | "PATCH" | "DELETE";
-  endpoint: string;
+  endpoint?: string;
   body?: unknown;
 }
 
 export async function cartRequest<T>({
   method,
-  endpoint,
+  endpoint = "",
   body,
 }: ICartRequestOptions): Promise<T> {
   if (!API_URL) {
