@@ -14,7 +14,7 @@ export default async function CartPage() {
         <div className="flex-2">
           <CartSide />
         </div>
-        <div className="flex">
+        <div className="w-full min-w-0 md:w-114.5 md:shrink">
           <Summary />
         </div>
       </div>

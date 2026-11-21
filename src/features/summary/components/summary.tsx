@@ -33,8 +33,15 @@ const COUPON_ERROR_KEY: Record<CouponApplyError, string> = {
   "below-minimum": "coupon-below-minimum",
 };
 
+const COUPON_CODE_ERROR_ID = "coupon-code-error";
+
 const CHECKOUT_BUTTON_CLASS =
   "bg-bg-maroon-secondary h-17.5 w-full rounded-xl text-xl";
+
+const SUMMARY_LINE_CLASS =
+  "flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1";
+
+const SUMMARY_AMOUNT_CLASS = "ms-auto max-w-full text-end tabular-nums";
 
 interface SummaryProps {
   className?: string;
@@ -44,11 +51,11 @@ export default function Summary({ className }: SummaryProps) {
   // Translation
   const t = useTranslations("Cart");
 
-  // Context
-  const { viewItems, isReady } = useCartContext();
-
   // State
   const [appliedCoupons, setAppliedCoupons] = useState<Coupon[]>([]);
+
+  // Context
+  const { viewItems, isReady } = useCartContext();
 
   // Hooks
   const { applyCoupon, isPending } = useApplyCoupon();
@@ -63,33 +70,35 @@ export default function Summary({ className }: SummaryProps) {
 
   // Variables
   const subtotal = getCartSubtotal(viewItems);
-  const isCartEmpty = !isReady || viewItems.length === 0;
+  const isCheckoutDisabled = !isReady || viewItems.length === 0;
   const couponDiscount = getCouponsDiscount(appliedCoupons, subtotal);
   const total = subtotal - couponDiscount;
 
   // Functions
   async function onSubmit(values: ApplyCouponFormValues) {
-    try {
-      const result = await applyCoupon(values.code);
-      const applyError = getCouponApplyError({
-        coupon: result.coupon,
-        appliedCoupons,
-        subtotal,
-      });
+    const result = await applyCoupon(values.code);
 
-      if (applyError || !result.coupon) {
-        form.setError("code", {
-          message: t(COUPON_ERROR_KEY[applyError ?? "not-found"]),
-        });
-        return;
-      }
-
-      const coupon = result.coupon;
-      setAppliedCoupons((current) => [...current, coupon]);
-      form.reset();
-    } catch {
+    if (!result.ok) {
       form.setError("code", { message: t("coupon-request-failed") });
+      return;
     }
+
+    const applyError = getCouponApplyError({
+      coupon: result.coupon,
+      appliedCoupons,
+      subtotal,
+    });
+
+    if (applyError || !result.coupon) {
+      form.setError("code", {
+        message: t(COUPON_ERROR_KEY[applyError ?? "not-found"]),
+      });
+      return;
+    }
+
+    const coupon = result.coupon;
+    setAppliedCoupons((current) => [...current, coupon]);
+    form.reset();
   }
 
   function removeCoupon(couponId: string) {
@@ -105,7 +114,7 @@ export default function Summary({ className }: SummaryProps) {
   return (
     <div
       className={cn(
-        "flex h-151.25 w-114.5 flex-col gap-6 rounded-md",
+        "flex h-151.25 w-full min-w-0 flex-col gap-6 rounded-md",
         className,
       )}
     >
@@ -120,33 +129,42 @@ export default function Summary({ className }: SummaryProps) {
                 <Field
                   orientation="horizontal"
                   data-invalid={fieldState.invalid}
+                  className="flex-wrap"
                 >
                   <FieldLabel htmlFor="coupon-code" className="sr-only">
                     {t("coupon-placeholder")}
                   </FieldLabel>
 
-                  <div className="flex-2">
+                  <div className="min-w-48 grow-[2] basis-48">
                     <Input
                       {...field}
                       id="coupon-code"
                       type="text"
                       placeholder={t("coupon-placeholder")}
                       aria-invalid={fieldState.invalid}
-                      className="w-full bg-white shadow-none"
+                      aria-describedby={
+                        fieldState.invalid ? COUPON_CODE_ERROR_ID : undefined
+                      }
+                      className="w-full min-w-0 bg-white shadow-none"
                     />
                   </div>
-                  <Button
-                    type="submit"
-                    disabled={isPending}
-                    className="bg-bg-maroon-secondary flex-1"
-                  >
-                    <TicketPercent className="size-5" />
-                    {isPending ? t("applying") : t("apply")}
-                  </Button>
+                  <div className="flex shrink-0 grow">
+                    <Button
+                      type="submit"
+                      disabled={isPending}
+                      className="bg-bg-maroon-secondary w-full"
+                    >
+                      <TicketPercent className="size-5" />
+                      {isPending ? t("applying") : t("apply")}
+                    </Button>
+                  </div>
                 </Field>
 
                 {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
+                  <FieldError
+                    id={COUPON_CODE_ERROR_ID}
+                    errors={[fieldState.error]}
+                  />
                 )}
               </div>
             )}
@@ -184,20 +202,30 @@ export default function Summary({ className }: SummaryProps) {
             </p>
           )}
         </div>
-        <div className="flex flex-col gap-4" aria-busy={!isReady}>
-          <div className="flex justify-between">
-            <span className="text-text-plain text-lg font-medium">
+        <div className="flex min-w-0 flex-col gap-4" aria-busy={!isReady}>
+          <div className={SUMMARY_LINE_CLASS}>
+            <span className="text-text-plain min-w-0 text-lg font-medium">
               {t("subtotal")}
             </span>
-            <span className="text-text-plain text-xl font-semibold">
+            <span
+              className={cn(
+                SUMMARY_AMOUNT_CLASS,
+                "text-text-plain text-xl font-semibold",
+              )}
+            >
               {isReady ? formatMoney(subtotal) : <SummaryAmountSkeleton />}
             </span>
           </div>
-          <div className="flex justify-between">
-            <span className="text-text-plain text-lg font-medium">
+          <div className={SUMMARY_LINE_CLASS}>
+            <span className="text-text-plain min-w-0 text-lg font-medium">
               {t("discount")}
             </span>
-            <span className="text-text-plain text-xl font-semibold">
+            <span
+              className={cn(
+                SUMMARY_AMOUNT_CLASS,
+                "text-text-plain text-xl font-semibold",
+              )}
+            >
               {isReady ? (
                 formatMoney(couponDiscount)
               ) : (
@@ -205,22 +233,27 @@ export default function Summary({ className }: SummaryProps) {
               )}
             </span>
           </div>
-          <hr className="border-border-soft border" />
-          <div className="flex justify-between">
-            <span className="text-text-maroon text-2xl font-bold">
+          <hr className="border-border-soft w-full shrink-0 border" />
+          <div className={SUMMARY_LINE_CLASS}>
+            <span className="text-text-maroon min-w-0 text-2xl font-bold">
               {t("total")}
             </span>
-            <span className="text-text-maroon text-2xl font-bold">
+            <span
+              className={cn(
+                SUMMARY_AMOUNT_CLASS,
+                "text-text-maroon text-2xl font-bold",
+              )}
+            >
               {isReady ? (
                 formatMoney(total)
               ) : (
-                <SummaryAmountSkeleton className="h-8 w-28" />
+                <SummaryAmountSkeleton className="h-8 w-28 max-w-full" />
               )}
             </span>
           </div>
         </div>
       </div>
-      {isCartEmpty ? (
+      {isCheckoutDisabled ? (
         <Button type="button" disabled className={CHECKOUT_BUTTON_CLASS}>
           {t("checkout")}
           <MoveRightIcon className="size-5 rtl:rotate-180" />
