@@ -10,11 +10,11 @@ export default async function CartPage() {
 
   return (
     <section className="mx-auto flex w-full flex-col gap-12.5 px-4 py-8 lg:px-20 lg:py-30">
-      <div className="flex flex-col gap-10 md:flex-row">
+      <div className="flex flex-col gap-10 xl:flex-row">
         <div className="flex-2">
           <CartSide />
         </div>
-        <div className="flex">
+        <div className="flex justify-around">
           <Summary />
         </div>
       </div>
