@@ -19,7 +19,7 @@ function LocaleSwitcherLinks({ query }: { query: string }) {
   const otherLocales = routing.locales.filter((l) => l !== locale);
 
   return (
-    <nav aria-label={t("language")} className="flex gap-3 p-4">
+    <nav aria-label={t("language")} className="flex gap-3">
       {otherLocales.map((nextLocale) => (
         <Link
           key={nextLocale}
@@ -27,7 +27,7 @@ function LocaleSwitcherLinks({ query }: { query: string }) {
           locale={nextLocale}
           lang={nextLocale}
           dir={nextLocale === "ar" ? "rtl" : "ltr"}
-          className={`dark:text-text-plain focus-visible:outline-ring rounded-sm px-2 py-1 text-zinc-700 underline-offset-4 hover:underline focus-visible:outline-2 ${nextLocale === "ar" ? "font-arabic" : "font-english"}`}
+          className={`dark:text-text-plain focus-visible:outline-ring rounded-sm text-xl font-bold text-zinc-700 underline-offset-4 hover:underline focus-visible:outline-2 ${nextLocale === "ar" ? "font-arabic" : "font-english"}`}
         >
           {localeNames[nextLocale]}
         </Link>

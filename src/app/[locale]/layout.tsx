@@ -23,6 +23,8 @@ import NextAuthProvider from "@/providers/next-auth.provider";
 import { ThemeProvider } from "@/shared/context/theme.context";
 import { QueryProvider } from "@/shared/providers/query-provider";
 import { Toaster } from "@/shared/ui/toast";
+import { CartProvider } from "@/features/cart/context/cart-provider";
+import { GuestWishlistMerger } from "@/features/wishlist/components/guest-wishlist-merger";
 export const metadata: Metadata = {
   title: "Rose App",
   description: "Rose Application",
@@ -73,7 +75,10 @@ export default async function RootLayout({
           <ThemeProvider initialTheme={theme} initialSystemTheme={systemTheme}>
             <NextIntlClientProvider>
               <QueryProvider>
-                <main className="flex-1">{children}</main>
+                <CartProvider>
+                  <GuestWishlistMerger />
+                  <main className="flex-1">{children}</main>
+                </CartProvider>
               </QueryProvider>
               <Toaster />
             </NextIntlClientProvider>
