@@ -88,7 +88,10 @@
     "pushError": "حدث خطأ، حاول مرة أخرى.",
     "pushEnabled": "تم تفعيل الإشعارات.",
     "pushDisabled": "تم إيقاف الإشعارات.",
-    "pushNotEnabled": "الإشعارات غير مفعّلة."
+    "pushNotEnabled": "الإشعارات غير مفعّلة.",
+    "openMenu": "فتح القائمة",
+    "menu": "القائمة",
+    "menuDescription": "تصفح أقسام الموقع"
   },
   "Search": {
     "title": "منتجات قد تعجبك:",
