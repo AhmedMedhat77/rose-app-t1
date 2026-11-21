@@ -1,8 +1,5 @@
-import { HeartPlus } from "lucide-react";
-import { useTranslations } from "next-intl";
-
-import { Button } from "@/shared/ui/button";
 import AddToCartButton from "@/shared/components/add-to-cart-button";
+import { WishlistButton } from "@/features/wishlist/components/wishlist-button";
 
 interface ProductActionsProps {
   productId: string;
@@ -17,19 +14,12 @@ export function ProductActions({
   quantity = 1,
   disabled = false,
 }: ProductActionsProps) {
-  const t = useTranslations("Product");
-
   return (
     <div className="mt-auto flex gap-3 pt-3">
-      <Button
-        type="button"
-        size="icon-lg"
-        variant="ghost"
-        className="bg-muted size-14"
-        aria-label={t("addToWishlist")}
-      >
-        <HeartPlus aria-hidden="true" className="size-6.25" />
-      </Button>
+      <WishlistButton
+        productId={productId}
+        className="h-11.5 w-12.25 rounded-md text-zinc-900 hover:pe-0"
+      />
 
       <AddToCartButton
         productId={productId}
@@ -37,7 +27,7 @@ export function ProductActions({
         quantity={quantity}
         disabled={disabled}
         variant="full"
-        className="h-14 w-full"
+        className="h-11.5 w-full"
       />
     </div>
   );

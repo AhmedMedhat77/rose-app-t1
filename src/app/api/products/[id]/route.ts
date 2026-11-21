@@ -1,44 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { HEADERS } from "@/shared/lib/constants/api.constant";
-import { PRODUCT_ENDPOINT } from "@/features/products/lib/apis/product.endpoint";
+import { API_URL } from "@/app/shared/constants/config";
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const { id } = await params;
-  const apiUrl = process.env.API_URL?.replace(/\/+$/, "");
-
-  if (!apiUrl) {
+  if (!API_URL) {
     return NextResponse.json(
-      { status: false, message: "API URL is not configured" },
+      { status: false, message: "Products service is unavailable" },
       { status: 500 },
     );
   }
 
+  const { id } = await params;
+
   try {
-    const endpoint = new URL(
-      `/api/${PRODUCT_ENDPOINT}/${encodeURIComponent(id)}`,
-      apiUrl,
+    const response = await fetch(
+      `${API_URL}/products/${encodeURIComponent(id)}`,
+      { cache: "no-store", signal: request.signal },
     );
-    const response = await fetch(endpoint, {
-      headers: HEADERS.ACCEPT_JSON,
-      signal: request.signal,
-    });
 
-    return new Response(response.body, {
+    return NextResponse.json(await response.json(), {
       status: response.status,
-      headers: {
-        "Content-Type":
-          response.headers.get("content-type") ?? "application/json",
-      },
     });
-  } catch (error) {
-    if (error instanceof Error && error.name === "AbortError") throw error;
-
+  } catch {
     return NextResponse.json(
-      { status: false, message: "Unable to reach the backend API" },
+      { status: false, message: "Products service is unreachable" },
       { status: 502 },
     );
   }

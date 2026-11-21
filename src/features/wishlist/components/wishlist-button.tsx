@@ -44,7 +44,7 @@ export function WishlistButton({ productId, className }: WishlistButtonProps) {
         className,
       )}
     >
-      <Icon className="size-5 shrink-0" strokeWidth={2.25} />
+      <Icon className="size-6 shrink-0" strokeWidth={2.25} />
       <span
         className={cn(
           "max-w-0 overflow-hidden text-base font-medium whitespace-nowrap opacity-0 transition-all duration-200",

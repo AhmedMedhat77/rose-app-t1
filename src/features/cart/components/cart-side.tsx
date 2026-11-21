@@ -7,10 +7,13 @@ import { ProductCollection } from "@/shared/components/product-collection";
 import { useCartContext } from "../context/cart-provider";
 
 import CartItem from "./cart-item";
+import ClearCartDialog from "./clear-cart-dialog";
 
 export default function CartSide() {
+  // Translation
   const t = useTranslations("Cart");
 
+  // Context
   const {
     viewItems,
     isReady,
@@ -23,12 +26,15 @@ export default function CartSide() {
     clearCart,
   } = useCartContext();
 
+  // State
   const [pendingItemId, setPendingItemId] = useState<string | null>(null);
   const [isClearing, setIsClearing] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
 
+  // Variables
   const isLoading = !isReady || isCartLoading;
 
+  // Functions
   const handleUpdateQuantity = async (
     productId: string,
     cartItemId: string,
@@ -44,7 +50,8 @@ export default function CartSide() {
         isAuthenticated ? cartItemId : undefined,
       );
     } catch (error) {
-      setActionError(error instanceof Error ? error.message : t("error"));
+      console.error("Failed to update cart quantity:", error);
+      setActionError(t("error"));
     } finally {
       setPendingItemId(null);
     }
@@ -57,7 +64,8 @@ export default function CartSide() {
 
       await removeItem(productId, isAuthenticated ? cartItemId : undefined);
     } catch (error) {
-      setActionError(error instanceof Error ? error.message : t("error"));
+      console.error("Failed to remove cart item:", error);
+      setActionError(t("error"));
     } finally {
       setPendingItemId(null);
     }
@@ -70,18 +78,23 @@ export default function CartSide() {
 
       await clearCart();
     } catch (error) {
-      setActionError(error instanceof Error ? error.message : t("error"));
+      console.error("Failed to clear cart:", error);
+      setActionError(t("error"));
     } finally {
       setIsClearing(false);
     }
   };
 
-  if (isLoading) return <ProductCollection.Skeleton label={t("loading")} />;
+  if (isLoading) {
+    return <ProductCollection.Skeleton label={t("loading")} />;
+  }
 
   if (isCartError) {
+    console.error("Failed to load cart:", cartError);
+
     return (
       <p role="alert" className="text-text-danger">
-        {cartError instanceof Error ? cartError.message : t("error")}
+        {t("error")}
       </p>
     );
   }
@@ -97,12 +110,10 @@ export default function CartSide() {
           </ProductCollection.Count>
         </ProductCollection.Heading>
 
-        <ProductCollection.ClearButton
-          label={t("clear-cart")}
-          pendingLabel={t("clearing")}
+        <ClearCartDialog
+          onConfirm={handleClearCart}
           isPending={isClearing}
-          disabled={viewItems.length === 0 || isClearing}
-          onClick={handleClearCart}
+          disabled={viewItems.length === 0}
         />
       </ProductCollection.Header>
 
@@ -136,7 +147,7 @@ export default function CartSide() {
       </ProductCollection.Body>
 
       <ProductCollection.ContinueShopping href="/products">
-        {t("continueShopping")}
+        {viewItems.length > 0 ? t("continueShopping") : t("startShopping")}
       </ProductCollection.ContinueShopping>
     </ProductCollection>
   );

@@ -1,6 +1,11 @@
-import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
+import { Suspense } from "react";
 
+import { IProduct } from "@/features/products/types/product";
+import SectionsTitle from "@/shared/components/SectionsTitle";
+import ProductCard from "@/shared/components/product-card-copy";
+import { ProductsCarouselErrorBoundary } from "@/shared/components/products-carousel-error-boundary";
+import { ProductsCarouselSkeleton } from "@/shared/skeletons/products-carousel.skeleton";
 import {
   Carousel,
   CarouselContent,
@@ -8,19 +13,20 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/shared/ui/carousel";
-import { IProduct } from "@/features/products/types/product";
-import ProductCard from "@/shared/components/product-card-copy";
-import { ProductsCarouselSkeleton } from "@/shared/skeletons/products-carousel.skeleton";
-import { ProductsCarouselErrorBoundary } from "@/shared/components/products-carousel-error-boundary";
 
 export default function ProductsCarousel({
+  title,
   productsList,
 }: {
+  title: string;
   productsList: Promise<IProduct[]>;
 }) {
   return (
     <ProductsCarouselErrorBoundary>
       <Suspense fallback={<ProductsCarouselSkeleton />}>
+        <div className="flex justify-start">
+          <SectionsTitle mainTitle={title} />
+        </div>
         <ProductsCarouselSlides productsList={productsList} />
       </Suspense>
     </ProductsCarouselErrorBoundary>
@@ -39,16 +45,11 @@ async function ProductsCarouselSlides({
     return <p>{t("empty")}</p>;
   }
 
-  // const locale = await getLocale();
-  // const dir = locale === "ar" ? "rtl" : "ltr";
-
   return (
     <Carousel
-      // dir={dir}
       opts={{
         align: "start",
         loop: true,
-        // direction: dir,
       }}
       className="w-full"
     >
