@@ -18,15 +18,12 @@ export default function LoginPopover({ label }: { label: string }) {
   const t = useTranslations("LoginPopover");
   const pathname = usePathname();
 
-  // الـ popover مفتوح بس طول ما إحنا في نفس الصفحة اللي اتفتح فيها،
-  // فلما الصفحة تتغير بيتقفل لوحده
   const [openAt, setOpenAt] = useState<string | null>(null);
   const open = openAt === pathname;
   const setOpen = (next: boolean) => setOpenAt(next ? pathname : null);
 
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // نمسح الـ timer لو الـ component اتشال
   useEffect(() => {
     return () => {
       if (hoverTimer.current) clearTimeout(hoverTimer.current);
@@ -36,7 +33,7 @@ export default function LoginPopover({ label }: { label: string }) {
   const trigger = (
     <>
       <User aria-hidden="true" size={20} />
-      {label}
+      <span className="hidden sm:inline">{label}</span>
     </>
   );
 

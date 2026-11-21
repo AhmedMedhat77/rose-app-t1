@@ -88,7 +88,10 @@
     "pushError": "Something went wrong. Please try again.",
     "pushEnabled": "Push notifications are enabled.",
     "pushDisabled": "Push notifications are disabled.",
-    "pushNotEnabled": "Push notifications are not enabled."
+    "pushNotEnabled": "Push notifications are not enabled.",
+    "openMenu": "Open menu",
+    "menu": "Menu",
+    "menuDescription": "Browse the site sections"
   },
   "Search": {
     "title": "Products you may like:",
