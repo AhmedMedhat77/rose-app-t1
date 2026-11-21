@@ -56,8 +56,6 @@ src/
 │   ├── request.ts
 │   └── routing.ts
 │
-├── providers/
-│   └── <name>.provider.tsx
 │
 ├── features/
 │   └── <feature-name>/
@@ -97,7 +95,7 @@ src/
 │   │   └── <component-name>-skeleton.tsx
 │   ├── layout/
 │   │   └── <component-name>.tsx
-│   ├── context/
+│   ├── providers/
 │   │   ├── <name>.context.tsx
 │   │   └── <name>.provider.tsx
 │   ├── hooks/
