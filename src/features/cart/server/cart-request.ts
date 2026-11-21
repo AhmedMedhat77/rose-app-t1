@@ -5,7 +5,7 @@ import { HEADERS } from "@/app/shared/constants/api.constant";
 
 import { getAccessToken } from "./get-access-token";
 
-import type { IApiResponse } from "@/app/shared/types/api";
+import type { IApiResponse } from "@/shared/types/api";
 
 interface ICartRequestOptions {
   method: "GET" | "POST" | "PATCH" | "DELETE";
