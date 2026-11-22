@@ -1,21 +1,16 @@
 import type { ComponentProps, ReactNode } from "react";
 import Image from "next/image";
-//import { connection } from "next/server";
 import { Eye } from "lucide-react";
-//import { getTranslations } from "next-intl/server";
 import { cn } from "cn";
-
 import type { IProduct } from "@/features/products/types/product";
 import { WishlistButton } from "@/features/wishlist/components/wishlist-button";
 import { Link } from "@/i18n/navigation";
 import { RatingStars } from "@/shared/components/rating-stars";
 import { getDiscountedPrice } from "@/shared/lib/utils/discounted-price.util";
 import { Badge } from "@/shared/ui/badge";
-
 import AddToCartButton from "./add-to-cart-button";
-
 import { useTranslations } from "next-intl";
-import { isNewProduct } from "../lib/utils/is-new-product.util";
+import { NewBadge } from "./new-badge";
 
 type ProductCardProduct = Pick<
   IProduct,
@@ -85,10 +80,8 @@ function HoverActions({ productId }: { productId: string }) {
 }
 
 function Badges({ product }: { product: ProductCardProduct }) {
-  // const t = await getTranslations();
   const t = useTranslations();
 
-  const isNew = !!product.createdAt && isNewProduct(product.createdAt);
   const isHot = (product.rating ?? 0) >= 4.5;
   const isOutOfStock = product.stock <= 0;
 
@@ -102,14 +95,7 @@ function Badges({ product }: { product: ProductCardProduct }) {
           <span>{t("Product.outOfStock")}</span>
         </Badge>
       )}
-      {isNew && (
-        <Badge
-          variant="subtle"
-          className="bg-bg-muted text-text-zinc-700 dark:bg-bg-inverse dark:text-text-inverse"
-        >
-          <span>{t("Product.new")}</span>
-        </Badge>
-      )}
+      <NewBadge createdAt={product.createdAt} />
       {isHot && (
         <Badge
           variant="secondary"
