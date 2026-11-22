@@ -4,11 +4,11 @@ import { updateTag } from "next/cache";
 import { getServerSession } from "next-auth";
 
 import { authOptions } from "@/auth";
+import { ApiError } from "@/shared/lib/apis/fetch.api";
 
 import {
   deleteAccount,
   profileCacheTag,
-  ProfileRequestError,
   updateProfile,
   uploadProfilePhoto,
 } from "../apis/profile.api";
@@ -36,8 +36,12 @@ function failed(error: unknown): {
   message: string;
   code?: number;
 } {
-  if (error instanceof ProfileRequestError) {
-    return { success: false, message: "Request failed", code: error.status };
+  if (error instanceof ApiError) {
+    return {
+      success: false,
+      message: error.message,
+      code: error.code ?? error.status,
+    };
   }
 
   return { success: false, message: "Request failed" };
