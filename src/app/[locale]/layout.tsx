@@ -19,11 +19,12 @@ import { notFound } from "next/navigation";
 import { routing } from "../../i18n/routing";
 import "../globals.css";
 
-import NextAuthProvider from "@/providers/next-auth.provider";
-import { ThemeProvider } from "@/shared/context/theme.context";
+import NextAuthProvider from "@/shared/providers/next-auth.provider";
+import { ThemeProvider } from "@/shared/providers/theme.context";
 import { QueryProvider } from "@/shared/providers/query-provider";
-import { Toaster } from "@/shared/ui/toast";
 import { CartProvider } from "@/features/cart/context/cart-provider";
+import { Toaster } from "@/shared/ui/toast";
+import { GuestWishlistMerger } from "@/features/wishlist/components/guest-wishlist-merger";
 export const metadata: Metadata = {
   title: "Rose App",
   description: "Rose Application",
@@ -75,6 +76,7 @@ export default async function RootLayout({
             <NextIntlClientProvider>
               <QueryProvider>
                 <CartProvider>
+                  <GuestWishlistMerger />
                   <main className="flex-1">{children}</main>
                 </CartProvider>
               </QueryProvider>

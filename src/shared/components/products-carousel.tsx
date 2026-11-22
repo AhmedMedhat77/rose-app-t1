@@ -14,6 +14,9 @@ import {
   CarouselPrevious,
 } from "@/shared/ui/carousel";
 
+const CAROUSEL_NAV_BUTTONS_CLASS =
+  "bg-bg-maroon-secondary text-text-inverse hover:bg-bg-primary-saturated dark:bg-bg-maroon dark:text-white dark:hover:text-text-inverse absolute z-20 border-0";
+
 export default function ProductsCarousel({
   title,
   productsList,
@@ -23,10 +26,10 @@ export default function ProductsCarousel({
 }) {
   return (
     <ProductsCarouselErrorBoundary>
+      <div className="flex justify-start">
+        <SectionsTitle mainTitle={title} />
+      </div>
       <Suspense fallback={<ProductsCarouselSkeleton />}>
-        <div className="flex justify-start">
-          <SectionsTitle mainTitle={title} />
-        </div>
         <ProductsCarouselSlides productsList={productsList} />
       </Suspense>
     </ProductsCarouselErrorBoundary>
@@ -55,14 +58,14 @@ async function ProductsCarouselSlides({
     >
       <CarouselContent>
         {products.map((product) => (
-          <CarouselItem key={product.id} className="basis-80">
+          <CarouselItem key={product.id} className="basis-79.5">
             <ProductCard product={product} />
           </CarouselItem>
         ))}
       </CarouselContent>
 
-      <CarouselPrevious className="bg-bg-maroon-secondary text-text-inverse hover:bg-bg-maroon hover:text-text-inverse dark:bg-bg-maroon dark:hover:dark:bg-bg-maroon absolute z-20 border-0 dark:text-white dark:hover:text-white" />
-      <CarouselNext className="bg-bg-maroon-secondary text-text-inverse hover:bg-bg-maroon hover:text-text-inverse dark:bg-bg-maroon dark:hover:dark:bg-bg-maroon absolute z-20 border-0 dark:text-white dark:hover:text-white" />
+      <CarouselPrevious className={CAROUSEL_NAV_BUTTONS_CLASS} />
+      <CarouselNext className={CAROUSEL_NAV_BUTTONS_CLASS} />
     </Carousel>
   );
 }

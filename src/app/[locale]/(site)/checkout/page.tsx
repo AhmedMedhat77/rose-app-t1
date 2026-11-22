@@ -16,7 +16,7 @@ export default async function CheckoutPage() {
             Shipping Address
           </h1>
         </div>
-        <Summary />
+        <Summary className="max-w-114.5 min-w-0 flex-[1_1_28.625rem]" />
       </div>
       <div className="flex flex-col gap-6 p-2.5">
         {/* Product you may like */}

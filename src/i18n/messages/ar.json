@@ -88,7 +88,10 @@
     "pushError": "حدث خطأ، حاول مرة أخرى.",
     "pushEnabled": "تم تفعيل الإشعارات.",
     "pushDisabled": "تم إيقاف الإشعارات.",
-    "pushNotEnabled": "الإشعارات غير مفعّلة."
+    "pushNotEnabled": "الإشعارات غير مفعّلة.",
+    "openMenu": "فتح القائمة",
+    "menu": "القائمة",
+    "menuDescription": "تصفح أقسام الموقع"
   },
   "Search": {
     "title": "منتجات قد تعجبك:",
@@ -98,6 +101,23 @@
     "currency": "ج.م",
     "rating": "التقييم",
     "ratings": "تقييم"
+  },
+  "Wishlist": {
+    "add": "أضف إلى المفضلة",
+    "remove": "إزالة من المفضلة",
+    "title": "المفضلة",
+    "count": "{count, plural, zero {لا عناصر} one {عنصر واحد} two {عنصران} few {# عناصر} many {# عنصرًا} other {# عنصر}}",
+    "clear": "مسح المفضلة",
+    "clearing": "جارٍ المسح...",
+    "clearConfirmTitle": "هل أنت متأكد من مسح المفضلة؟",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "empty": "المفضلة فارغة",
+    "continueShopping": "متابعة التسوق",
+    "exploreSimilar": "استكشف منتجات مشابهة",
+    "addToCart": "أضف إلى السلة",
+    "loading": "جارٍ التحميل...",
+    "error": "حدث خطأ، حاول مرة أخرى"
   },
   "NotificationsPanel": {
     "title": "الإشعارات",
@@ -488,11 +508,13 @@
     "checkout": "الدفع",
     "coupon-placeholder": "كود الكوبون",
     "apply": "تطبيق",
+    "applying": "جارٍ التطبيق…",
     "coupon-applied": "تم تطبيق الكوبون: ",
     "code-required": "أدخل كود الكوبون",
     "coupon-not-found": "الكوبون غير موجود",
     "coupon-already-applied": "تم تطبيق هذا الكوبون بالفعل",
     "coupon-inactive": "هذا الكوبون غير نشط",
+    "coupon-expired": "كوبون غير صالح أو منتهي الصلاحية",
     "coupon-below-minimum": "مجموع السلة أقل من الحد الأدنى للشراء",
     "coupon-request-failed": "تعذر التحقق من الكوبون. حاول مرة أخرى.",
     "no-coupons": "لم يتم تطبيق أي كوبون",
