@@ -1,6 +1,18 @@
+---
+description: apiFetch — server-side HTTP client, *.api.ts files, success envelope, and ApiError
+globs:
+  [
+    "src/**/*.api.ts",
+    "src/shared/lib/apis/**",
+    "src/features/**/lib/apis/**",
+    "src/features/**/server/**",
+  ]
+alwaysApply: false
+---
+
 # Calling the API
 
-`apiFetch` in `fetch.api.ts` is the only server-side HTTP client. A `*.api.ts` file calls it. Components, hooks, and pages call the exported function from that file. They do not call `apiFetch`.
+`apiFetch` in `src/shared/lib/apis/fetch.api.ts` is the only server-side HTTP client. A `*.api.ts` file calls it. Components, hooks, and pages call the exported function from that file. They do not call `apiFetch`.
 
 `apiFetch` is `server-only`. A Client Component cannot import it. A Client Component uses `useSession()` for signed-in state and calls a Server Action. The Server Action, or a Server Component, reads the session with `getServerSession(authOptions)` and passes the access token into the `*.api.ts` function.
 

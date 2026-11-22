@@ -198,3 +198,4 @@ Read the matching file before working on that topic.
 - [Components](.agents/rules/components.md) — read before creating a component, skeleton, dialog, or loading/error/empty state
 - [i18n](.agents/rules/i18n.md) — read before touching translations, locale routing, navigation imports, or RTL layout
 - [Auth](.agents/rules/auth.md) — read before touching NextAuth v4 config, session types, or route protection in `proxy.ts`
+- [API fetch](.agents/rules/api-fetch.md) — read before writing or changing a `*.api.ts` file or `apiFetch`
