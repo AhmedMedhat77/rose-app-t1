@@ -13,11 +13,13 @@ import ProductReview from "./product-reviews/product-review";
 interface ProductOverviewContentProps {
   productId: string;
   isAuthenticated: boolean;
+  reviewsSlot: React.ReactNode;
 }
 
 export default function ProductOverviewContent({
   productId,
   isAuthenticated,
+  reviewsSlot,
 }: ProductOverviewContentProps) {
   // Translation
   const t = useTranslations("Product");
@@ -46,9 +48,8 @@ export default function ProductOverviewContent({
       </section>
       <ProductReview
         productId={product.id}
-        rating={product.rating}
-        ratings={product.ratings}
         isAuthenticated={isAuthenticated}
+        reviewsSlot={reviewsSlot}
       />
       <section className="mt-40 mb-72 flex flex-col">
         <div className="mr-auto -mb-10 w-fit">

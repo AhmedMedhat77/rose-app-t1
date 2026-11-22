@@ -1,10 +1,14 @@
 "use server";
 
-import { authOptions } from "@/auth";
+import { updateTag } from "next/cache";
 import { getServerSession } from "next-auth";
-import { reviewSchema } from "../../schemas/review.schema";
-import { createReviewApi } from "../apis/products.api";
 import z from "zod";
+
+import { authOptions } from "@/auth";
+
+import { reviewSchema } from "../../schemas/review.schema";
+import { REVIEWS_TAG } from "../constants/product.constants";
+import { createReviewApi } from "../apis/products.api";
 
 const serverSchema = reviewSchema({
   titleRequired: "titleRequired",
@@ -41,6 +45,9 @@ export async function createReviewAction(values: unknown) {
   // Mutation
   try {
     await createReviewApi(validation.data, accessToken);
+
+    // Read-your-writes: the user sees their review right away
+    updateTag(REVIEWS_TAG(validation.data.productId));
 
     return {
       success: true,

@@ -1,58 +1,15 @@
 "use client";
-
-import { useLocale, useTranslations } from "next-intl";
-
 import { RatingStars } from "@/shared/components/rating-stars";
+import { useLocale, useTranslations } from "next-intl";
+import { IProductReview } from "../../types/product";
 
-import { useInfiniteReviewsQuery } from "../../hooks/use-infinite-reviews-query";
-import ReviewsListSkeleton, {
-  ReviewItemSkeleton,
-} from "../../skeletons/reviews-list.skeleton";
-import { useInfiniteSentinel } from "../../hooks/use-infinite-sentinel";
-
-export default function ReviewsList({ productId }: { productId: string }) {
+interface ReviewsListProps {
+  reviews: IProductReview[];
+}
+export default function ReviewsList({ reviews }: ReviewsListProps) {
   // Translate
   const t = useTranslations();
   const locale = useLocale();
-
-  // Query
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isError,
-    refetch,
-  } = useInfiniteReviewsQuery(productId);
-  const reviews = data?.pages.flatMap((page) => page.payload.data) ?? [];
-
-  // Ref
-  const { rootRef, sentinelRef } = useInfiniteSentinel({
-    onReach: fetchNextPage,
-    enabled: !!hasNextPage && !isFetchingNextPage,
-  });
-
-  // Loading
-  if (isLoading) return <ReviewsListSkeleton />;
-
-  // Error
-  if (isError) {
-    return (
-      <div className="flex flex-col items-center justify-center gap-3 py-10">
-        <p className="text-text-plain text-base font-medium">
-          {t("productReview.loadError")}
-        </p>
-        <button
-          type="button"
-          onClick={() => refetch()}
-          className="text-text-plain text-sm font-semibold underline"
-        >
-          {t("productReview.retry")}
-        </button>
-      </div>
-    );
-  }
 
   // Empty
   if (reviews.length === 0) {
@@ -66,10 +23,7 @@ export default function ReviewsList({ productId }: { productId: string }) {
   }
 
   return (
-    <div
-      ref={rootRef}
-      className="flex max-h-91.75 flex-col gap-2.5 overflow-y-auto"
-    >
+    <div className="flex max-h-91.75 flex-col gap-2.5 overflow-y-auto">
       {reviews?.map((review) => {
         const fullName =
           `${review.user.firstName} ${review.user.lastName}`.trim();
@@ -121,12 +75,6 @@ export default function ReviewsList({ productId }: { productId: string }) {
           </div>
         );
       })}
-
-      {/* Sentinel */}
-      {hasNextPage && <div ref={sentinelRef} className="h-1" />}
-
-      {/* Loading more */}
-      {isFetchingNextPage && <ReviewItemSkeleton />}
     </div>
   );
 }

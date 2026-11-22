@@ -11,6 +11,7 @@ export default function ReviewTitle({
 }: ReviewTitleProps) {
   // Translate
   const t = useTranslations();
+
   return (
     <div>
       <div className="flex flex-col items-start gap-2.5">
