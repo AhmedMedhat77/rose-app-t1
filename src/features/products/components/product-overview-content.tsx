@@ -27,7 +27,7 @@ export default async function ProductOverviewContent({
         <ProductDetails product={product} />
       </section>
 
-      <section className="mt-40 mb-72 flex flex-col">
+      <section className="mt-42 mb-72 flex flex-col">
         <ProductsCarousel
           productsList={relatedProducts}
           title={t("relatedProducts")}

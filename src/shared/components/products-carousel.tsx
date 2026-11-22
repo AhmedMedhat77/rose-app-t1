@@ -26,7 +26,7 @@ export default function ProductsCarousel({
 }) {
   return (
     <ProductsCarouselErrorBoundary>
-      <div className="flex justify-start">
+      <div className="mb-4 flex justify-start">
         <SectionsTitle mainTitle={title} />
       </div>
       <Suspense fallback={<ProductsCarouselSkeleton />}>
