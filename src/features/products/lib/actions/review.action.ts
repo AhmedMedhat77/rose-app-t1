@@ -4,6 +4,17 @@ import { authOptions } from "@/auth";
 import { getServerSession } from "next-auth";
 import { reviewSchema } from "../../schemas/review.schema";
 import { createReviewApi } from "../apis/products.api";
+import z from "zod";
+
+const serverSchema = reviewSchema({
+  titleRequired: "titleRequired",
+  contentRequired: "contentRequired",
+  ratingInteger: "ratingInteger",
+  ratingMin: "ratingMin",
+  ratingMax: "ratingMax",
+}).extend({
+  productId: z.string().uuid(),
+});
 
 export async function createReviewAction(values: unknown) {
   // Session
@@ -18,7 +29,7 @@ export async function createReviewAction(values: unknown) {
   }
 
   // Validation
-  const validation = reviewSchema.safeParse(values);
+  const validation = serverSchema.safeParse(values);
 
   if (!validation.success) {
     return {
@@ -29,16 +40,16 @@ export async function createReviewAction(values: unknown) {
 
   // Mutation
   try {
-    const result = await createReviewApi(validation.data, accessToken);
+    await createReviewApi(validation.data, accessToken);
 
     return {
       success: true,
-      message: result.message,
+      message: "REVIEW_CREATED",
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
-      message: error instanceof Error ? error.message : "SOMETHING_WENT_WRONG",
+      message: "SOMETHING_WENT_WRONG",
     };
   }
 }

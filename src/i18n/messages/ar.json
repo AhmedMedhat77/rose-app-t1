@@ -297,7 +297,16 @@
     "reviewPlaceholder": "ما رأيك في هذا المنتج؟",
     "addReview": "إضافة تقييم",
     "submitting": "جارٍ الإرسال...",
-    "loginToReview": "الرجاء تسجيل الدخول لتتمكن من تقييم المنتج"
+    "loginToReview": "الرجاء تسجيل الدخول لتتمكن من التقييم",
+    "UNAUTHORIZED": "لازم تسجل دخول علشان تضيف تقييم.",
+    "INVALID_DATA": "راجع بيانات التقييم وحاول تاني.",
+    "SOMETHING_WENT_WRONG": "لقد قمت بتقييم هذا المنتج بالفعل.",
+    "titleRequired": "العنوان مطلوب",
+    "contentRequired": "التقييم مطلوب",
+    "ratingInteger": "التقييم لازم يكون رقم صحيح",
+    "ratingMin": "من فضلك اختار تقييم",
+    "ratingMax": "التقييم لا يمكن أن يزيد عن 5",
+    "REVIEW_CREATED": "تمت إضافة التقييم بنجاح"
   },
   "Auth": {
     "heroImageAlt": "صناديق هدايا مزينة بشرائط"

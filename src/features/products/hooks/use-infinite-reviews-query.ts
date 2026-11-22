@@ -1,11 +1,12 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { gatReviewsApi } from "../lib/apis/products.api";
+import { PRODUCT_QUERY_KEYS } from "../lib/constants/product.constants";
 
 const REVIEWS_PAGE_SIZE = 10;
 
 export function useInfiniteReviewsQuery(productId: string) {
   return useInfiniteQuery({
-    queryKey: ["reviews", productId, REVIEWS_PAGE_SIZE],
+    queryKey: [...PRODUCT_QUERY_KEYS.reviews(productId), REVIEWS_PAGE_SIZE],
 
     queryFn: ({ pageParam, signal }) =>
       gatReviewsApi(

@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Link } from "@/i18n/navigation";
@@ -9,16 +8,15 @@ import { RatingStars } from "@/shared/components/rating-stars";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
-import { addToast } from "@/shared/ui/toast";
-import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
-
 import {
   reviewSchema,
   type IReviewFormValues,
 } from "../../schemas/review.schema";
-import { createReviewAction } from "../../lib/actions/review.action";
 import { useTranslations } from "next-intl";
 import FetchFeedback from "@/shared/components/fetch-feedback";
+import { useCreateReview } from "../../hooks/use-create-review";
+import { useMemo } from "react";
+import { usePathname } from "@/i18n/navigation";
 
 interface ReviewFormProps {
   productId: string;
@@ -31,105 +29,128 @@ export default function ReviewForm({
 }: ReviewFormProps) {
   // Translate
   const t = useTranslations();
-  // State
-  const [selectedRating, setSelectedRating] = useState(0);
-
+  const pathname = usePathname();
+  const loginHref = `/login?callbackUrl=${encodeURIComponent(pathname)}`;
+  //schemaReview
+  const reviewFormSchema = useMemo(
+    () =>
+      reviewSchema({
+        titleRequired: t("productReview.titleRequired"),
+        contentRequired: t("productReview.contentRequired"),
+        ratingInteger: t("productReview.ratingInteger"),
+        ratingMin: t("productReview.ratingMin"),
+        ratingMax: t("productReview.ratingMax"),
+      }),
+    [t],
+  );
   // Form
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm<IReviewFormValues>({
-    resolver: zodResolver(reviewSchema),
+  const { control, handleSubmit, reset } = useForm<IReviewFormValues>({
+    resolver: zodResolver(reviewFormSchema),
     defaultValues: {
-      productId,
       headline: "",
       content: "",
       rating: 0,
     },
   });
-
+  //Hook
+  const { createReview, isPending } = useCreateReview(productId);
   // Functions
-  const onSubmit = async (values: IReviewFormValues) => {
+  const onSubmit = (values: IReviewFormValues) => {
     if (!isAuthenticated) return;
 
-    const result = await createReviewAction(values);
-
-    if (result.success) {
-      addToast(TOAST_STATE.Successful, result.message);
-      reset();
-      setSelectedRating(0);
-    } else {
-      addToast(TOAST_STATE.Unsuccessful, result.message);
-    }
+    createReview(
+      { ...values, productId },
+      {
+        onSuccess: () => {
+          reset();
+        },
+      },
+    );
   };
-
   return (
     <div className="relative">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={`flex flex-col gap-2.75 ${
-          !isAuthenticated ? "pointer-events-none blur-xs select-none" : ""
-        }`}
+        inert={!isAuthenticated}
+        className={`flex flex-col gap-2.75 ${!isAuthenticated ? "blur-xs" : ""}`}
       >
-        <span className="text-text-plain flex items-center gap-2.5 py-2.5 text-base font-medium">
-          {t("productReview.yourRating")}:
-          <RatingStars
-            rating={selectedRating}
-            size={25}
-            onRatingChange={(rating) => {
-              setSelectedRating(rating);
-              setValue("rating", rating, { shouldValidate: true });
-            }}
-          />
-        </span>
-
-        {errors.rating && (
-          <FetchFeedback>{errors.rating.message}</FetchFeedback>
-        )}
-
-        <div className="flex flex-col gap-1.5">
-          <Input
-            {...register("headline")}
-            className="label:text-text-plain label:text-sm label:font-medium shadow-none"
-            label={t("productReview.titleLabel")}
-            placeholder={t("productReview.titlePlaceholder")}
-          />
-          {errors.headline && (
-            <FetchFeedback>{errors.headline.message}</FetchFeedback>
+        {/*rating*/}
+        <Controller
+          name="rating"
+          control={control}
+          render={({ field, fieldState }) => (
+            <>
+              <span className="text-text-plain flex items-center gap-2.5 py-2.5 text-base font-medium">
+                {t("productReview.yourRating")}:
+                <RatingStars
+                  rating={field.value}
+                  size={25}
+                  onRatingChange={field.onChange}
+                />
+              </span>
+              {fieldState.error && (
+                <FetchFeedback className="my-0.5 text-start">
+                  {fieldState.error.message}
+                </FetchFeedback>
+              )}
+            </>
           )}
-        </div>
-
-        <div>
-          <Textarea
-            {...register("content")}
-            className="label:text-text-plain label:text-sm label:font-medium resize-none"
-            label={t("productReview.reviewLabel")}
-            placeholder={t("productReview.reviewPlaceholder")}
-          />
-          {errors.content && (
-            <FetchFeedback>{errors.content.message}</FetchFeedback>
+        />
+        {/*headline*/}
+        <Controller
+          name="headline"
+          control={control}
+          render={({ field, fieldState }) => (
+            <div className="flex flex-col gap-1.5">
+              <Input
+                {...field}
+                className="label:text-text-plain label:text-sm label:font-medium shadow-none"
+                label={t("productReview.titleLabel")}
+                placeholder={t("productReview.titlePlaceholder")}
+              />
+              {fieldState.error && (
+                <FetchFeedback className="my-0.5 text-start">
+                  {fieldState.error.message}
+                </FetchFeedback>
+              )}
+            </div>
           )}
-        </div>
-
-        <Button type="submit" variant="primary" disabled={isSubmitting}>
-          {isSubmitting
-            ? `${t("productReview.submitting")}`
-            : `${t("productReview.addReview")}`}
+        />
+        {/*content*/}
+        <Controller
+          name="content"
+          control={control}
+          render={({ field, fieldState }) => (
+            <div>
+              <Textarea
+                {...field}
+                className="label:text-text-plain label:text-sm label:font-medium resize-none"
+                label={t("productReview.reviewLabel")}
+                placeholder={t("productReview.reviewPlaceholder")}
+              />
+              {fieldState.error && (
+                <FetchFeedback className="my-0.5 text-start">
+                  {fieldState.error.message}
+                </FetchFeedback>
+              )}
+            </div>
+          )}
+        />
+        {/*add review*/}
+        <Button type="submit" variant="primary" disabled={isPending}>
+          {isPending
+            ? t("productReview.submitting")
+            : t("productReview.addReview")}
         </Button>
       </form>
-
+      {/*blur */}
       {!isAuthenticated && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center">
-          <Link
-            href="/login"
-            className="text-text-plain text-center text-base font-semibold"
-          >
-            {t("productReview.loginToReview")}
-          </Link>
-        </div>
+        <Link
+          href={loginHref}
+          className="text-text-plain absolute inset-0 z-10 flex items-center justify-center text-center text-base font-semibold"
+        >
+          {t("productReview.loginToReview")}
+        </Link>
       )}
     </div>
   );

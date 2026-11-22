@@ -1,17 +1,24 @@
 import { z } from "zod";
 
-export const reviewSchema = z.object({
-  productId: z.string().uuid(),
+interface ReviewSchemaMessages {
+  titleRequired: string;
+  contentRequired: string;
+  ratingInteger: string;
+  ratingMin: string;
+  ratingMax: string;
+}
 
-  headline: z.string().trim().min(1, "Title is required"),
+export const reviewSchema = (messages: ReviewSchemaMessages) =>
+  z.object({
+    headline: z.string().trim().min(1, messages.titleRequired),
 
-  content: z.string().trim().min(1, "Review is required"),
+    content: z.string().trim().min(1, messages.contentRequired),
 
-  rating: z
-    .number()
-    .int("Rating must be a whole number")
-    .min(1, "Rating must be at least 1")
-    .max(5, "Rating cannot exceed 5"),
-});
+    rating: z
+      .number()
+      .int(messages.ratingInteger)
+      .min(1, messages.ratingMin)
+      .max(5, messages.ratingMax),
+  });
 
-export type IReviewFormValues = z.infer<typeof reviewSchema>;
+export type IReviewFormValues = z.infer<ReturnType<typeof reviewSchema>>;
