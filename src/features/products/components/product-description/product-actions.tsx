@@ -18,7 +18,8 @@ export function ProductActions({
     <div className="mt-auto flex gap-3 pt-3">
       <WishlistButton
         productId={productId}
-        className="h-11.5 w-12.25 rounded-md text-zinc-900 hover:pe-0"
+        className="h-11.5 w-12.25 rounded-lg text-zinc-900 hover:px-0"
+        showLabel={false}
       />
 
       <AddToCartButton

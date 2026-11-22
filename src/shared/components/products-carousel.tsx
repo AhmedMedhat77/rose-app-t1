@@ -1,6 +1,5 @@
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
-
 import { IProduct } from "@/features/products/types/product";
 import SectionsTitle from "@/shared/components/SectionsTitle";
 import ProductCard from "@/shared/components/product-card-copy";

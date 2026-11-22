@@ -12,6 +12,7 @@ import { SearchBar } from "@/features/search/components/searchBar";
 import AuthMenu from "../components/auth-menu";
 import { WishlistLink } from "@/features/wishlist/components/wishlist-link";
 import CartCount from "@/features/cart/components/cart-count";
+import { ThemeMode } from "../components/theme-mode";
 
 const ICON_BUTTON =
   "text-zinc-700 relative  dark:text-text-plain flex size-9 items-center justify-center rounded-md transition-colors";
@@ -68,8 +69,11 @@ export function Header() {
               <NotificationToggle />
             </div>
 
-            <div className="border-border flex items-center gap-2 border-s ps-4">
+            <div className="border-border flex items-center gap-2 border-s py-1.5 ps-4">
               <LocaleSwitcher />
+            </div>
+            <div className="border-border flex items-center gap-2 border-s ps-4">
+              <ThemeMode />
             </div>
           </div>
         </div>

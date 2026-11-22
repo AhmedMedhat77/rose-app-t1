@@ -77,12 +77,15 @@ export default function ProductCard({
             <button
               type="button"
               aria-label="Quick view"
-              className="text-text-maroon-700 pointer-events-auto flex size-7 items-center justify-center rounded-full bg-white"
+              className="text-text-maroon-700 pointer-events-auto flex size-7.5 items-center justify-center rounded-full bg-white"
             >
-              <Eye size={15} />
+              <Eye className="size-5" />
             </button>
 
-            <WishlistButton productId={String(product.id)} />
+            <WishlistButton
+              productId={String(product.id)}
+              className="pointer-events-auto"
+            />
           </div>
         )}
 

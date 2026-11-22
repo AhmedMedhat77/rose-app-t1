@@ -74,8 +74,8 @@ export default function WishlistSide({ initialItems }: WishlistSideProps) {
     <ProductCollection>
       <ProductCollection.Header>
         <ProductCollection.Heading>
-          <ProductCollection.Title className="flex items-center gap-2.5">
-            <FolderHeart aria-hidden="true" className="size-12 shrink-0" />
+          <ProductCollection.Title className="flex items-center gap-2.5 text-5xl">
+            <FolderHeart aria-hidden="true" className="size-15 shrink-0" />
             {t("title")}
           </ProductCollection.Title>
           <ProductCollection.Count>

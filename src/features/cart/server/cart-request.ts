@@ -15,7 +15,7 @@ interface ICartRequestOptions {
 
 export async function cartRequest<T>({
   method,
-  endpoint,
+  endpoint = "",
   body,
 }: ICartRequestOptions): Promise<T> {
   if (!API_URL) {

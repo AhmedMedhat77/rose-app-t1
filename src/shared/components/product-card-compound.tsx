@@ -1,8 +1,8 @@
 import type { ComponentProps, ReactNode } from "react";
 import Image from "next/image";
-import { connection } from "next/server";
+//import { connection } from "next/server";
 import { Eye } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+//import { getTranslations } from "next-intl/server";
 import { cn } from "cn";
 
 import type { IProduct } from "@/features/products/types/product";
@@ -10,11 +10,17 @@ import { WishlistButton } from "@/features/wishlist/components/wishlist-button";
 import { Link } from "@/i18n/navigation";
 import { RatingStars } from "@/shared/components/rating-stars";
 import { getDiscountedPrice } from "@/shared/lib/utils/discounted-price.util";
-import { isNewProduct } from "@/shared/lib/utils/time.util";
 import { Badge } from "@/shared/ui/badge";
 
 import AddToCartButton from "./add-to-cart-button";
 
+import { useTranslations } from "next-intl";
+import { isNewProduct } from "../lib/utils/is-new-product.util";
+
+type ProductCardProduct = Pick<
+  IProduct,
+  "id" | "title" | "price" | "cover" | "rating" | "stock" | "createdAt"
+>;
 function Root({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
@@ -32,7 +38,7 @@ function Media({
   product,
   children,
 }: {
-  product: IProduct;
+  product: ProductCardProduct;
   children?: ReactNode;
 }) {
   return (
@@ -78,12 +84,12 @@ function HoverActions({ productId }: { productId: string }) {
   );
 }
 
-async function Badges({ product }: { product: IProduct }) {
-  const t = await getTranslations();
+function Badges({ product }: { product: ProductCardProduct }) {
+  // const t = await getTranslations();
+  const t = useTranslations();
 
-  await connection();
-  const isNew = Boolean(product.createdAt) && isNewProduct(product.createdAt);
-  const isHot = product.rating >= 4.5;
+  const isNew = !!product.createdAt && isNewProduct(product.createdAt);
+  const isHot = (product.rating ?? 0) >= 4.5;
   const isOutOfStock = product.stock <= 0;
 
   return (
@@ -117,9 +123,9 @@ async function Badges({ product }: { product: IProduct }) {
 }
 
 // title, rating, add to cart and price (same in every version)
-async function Details({ product }: { product: IProduct }) {
-  const t = await getTranslations();
-
+function Details({ product }: { product: ProductCardProduct }) {
+  // const t = await getTranslations();
+  const t = useTranslations();
   const discountedPrice = getDiscountedPrice(product);
   const hasDiscount = discountedPrice < Number(product.price);
 

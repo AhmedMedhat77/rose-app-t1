@@ -1,4 +1,5 @@
 "use client";
+
 import { useTranslations } from "next-intl";
 
 import { Link } from "@/i18n/navigation";
@@ -28,7 +29,7 @@ export default function WishlistItem({ item, onRemove }: WishlistRowProps) {
         <ProductRow.Header>
           <ProductRow.Info>
             <ProductRow.StockStatus inStock={inStock} />
-            <ProductRow.Title className="text-xl text-zinc-800">
+            <ProductRow.Title className="text-xl text-zinc-800 dark:text-zinc-100">
               {item.title}
             </ProductRow.Title>
             <ProductRow.Rating
@@ -57,7 +58,7 @@ export default function WishlistItem({ item, onRemove }: WishlistRowProps) {
           {inStock ? (
             <AddToCartButton
               productId={String(item.productId)}
-              variant="icon"
+              variant="full"
               stock={item.stock}
             />
           ) : (
