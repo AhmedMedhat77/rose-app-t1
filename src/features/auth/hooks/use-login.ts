@@ -11,9 +11,18 @@ export function useLogin() {
     mutationFn: async (values: TLoginFormValues) => {
       const searchParams = new URLSearchParams(window.location.search);
 
+      const currentPath = window.location.pathname + window.location.search;
+
+      const pathnameWithoutLocale =
+        window.location.pathname.replace(/^\/(en|ar)(?=\/|$)/, "") || "/";
+
+      const isAuthPage = /^\/(login|register|forgot-password)(\/|$)/.test(
+        pathnameWithoutLocale,
+      );
+
       const callbackUrl =
         getSafeCallbackUrl(searchParams.get("callbackUrl")) ??
-        getSafeCallbackUrl(window.location.pathname + window.location.search) ??
+        (isAuthPage ? "/" : getSafeCallbackUrl(currentPath)) ??
         "/";
 
       const response = await signIn("credentials", {

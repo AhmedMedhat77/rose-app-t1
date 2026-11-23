@@ -11,6 +11,7 @@ import { addToast } from "@/shared/ui/toast";
 import { getProductById } from "@/features/products/lib/apis/products.api";
 import { cn } from "cn";
 
+// types
 interface IAddToCartButtonProps {
   productId: string;
   stock: number;
@@ -32,11 +33,13 @@ export default function AddToCartButton({
   disabled = false,
   onError,
 }: IAddToCartButtonProps) {
+  // transilation
   const t = useTranslations("Cart");
-
-  const { addToCart, getProductQuantity } = useCartContext();
+  // state
   const [isAdding, setIsAdding] = useState(false);
-
+  // context
+  const { addToCart, getProductQuantity } = useCartContext();
+  // apis hook
   const productQuantity = getProductQuantity(productId);
   const isOutOfStock = stock <= 0;
   const isDisabled = disabled || isOutOfStock || isAdding;
