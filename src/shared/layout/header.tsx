@@ -14,7 +14,6 @@ import { SearchBar } from "@/features/search/components/searchBar";
 import AuthMenu from "../components/auth-menu";
 import { ThemeMode } from "../components/theme-mode";
 import CartCount from "@/features/cart/components/cart-count";
-import WishlistCount from "@/features/wishlist/components/wishlist-count";
 
 const ICON_BUTTON =
   "text-zinc-700 relative flex size-9 shrink-0 items-center justify-center rounded-md transition-colors dark:text-text-plain";
@@ -74,7 +73,6 @@ export function Header() {
                 className={ICON_BUTTON}
               >
                 <HeartIcon className="size-5" />
-                <WishlistCount />
               </Link>
 
               <Link href="/cart" aria-label={t("cart")} className={ICON_BUTTON}>
