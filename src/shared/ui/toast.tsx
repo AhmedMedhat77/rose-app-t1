@@ -62,7 +62,7 @@ function ToastViewport({ className, ...props }: ToastPrimitive.Viewport.Props) {
     <ToastPrimitive.Viewport
       data-slot="toast-viewport"
       className={cn(
-        "pointer-events-none fixed end-4 bottom-4 z-50 w-[calc(100vw_-_2rem)] max-w-sm outline-none sm:w-full",
+        "pointer-events-none fixed inset-e-4 bottom-4 z-50 w-[calc(100vw-2rem)] max-w-sm outline-none sm:w-full",
         className,
       )}
       {...props}
@@ -162,7 +162,7 @@ function ToastClose({
       data-slot="toast-close"
       render={render}
       className={cn(
-        "text-text-soft hover:text-text-plain absolute end-1 top-1 shrink-0 after:absolute after:-inset-2 after:content-['']",
+        "text-text-soft hover:text-text-plain absolute inset-e-1 top-1 shrink-0 after:absolute after:-inset-2 after:content-['']",
         className,
       )}
       {...props}

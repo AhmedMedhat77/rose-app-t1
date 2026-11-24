@@ -22,7 +22,7 @@ export default async function AccountSettingsLayout({
       <div className="flex flex-row gap-6">
         <AccountSettingsSidebar />
 
-        <main className="flex-1 p-6">{children}</main>
+        <section className="flex-1 p-6">{children}</section>
       </div>
     </div>
   );

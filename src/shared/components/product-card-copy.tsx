@@ -1,0 +1,136 @@
+import Image from "next/image";
+import { connection } from "next/server";
+import { Eye, Heart } from "lucide-react";
+import { Badge } from "@/shared/ui/badge";
+import { getTranslations } from "next-intl/server";
+import { getDiscountedPrice } from "@/shared/lib/utils/price";
+import { IProduct } from "@/features/products/types/product";
+import { RatingStars } from "@/shared/components/rating-stars";
+import { isNewProduct } from "@/features/products/lib/utils/is-new-product.util";
+import AddToCartButton from "./add-to-cart-button";
+import { Link } from "@/i18n/navigation";
+import { WishlistButton } from "@/features/wishlist/components/wishlist-button";
+
+export default async function ProductCard({ product }: { product: IProduct }) {
+  const t = await getTranslations();
+
+  const discountedPrice = getDiscountedPrice(product);
+  const hasDiscount = discountedPrice < Number(product.price);
+
+  await connection();
+  const isNew = Boolean(product.createdAt) && isNewProduct(product.createdAt);
+  const isHot = product.rating >= 4.5;
+  const isOutOfStock = product.stock <= 0;
+
+  return (
+    <div className="group relative isolate flex w-full flex-col gap-3">
+      {/* Product Image */}
+      <div className="relative h-68 w-full overflow-hidden rounded-xl">
+        {product.cover && (
+          <Image
+            src={product.cover}
+            alt={product.title}
+            fill
+            sizes="320px"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        )}
+
+        {/* Wishlist button */}
+        <WishlistButton
+          productId={String(product.id)}
+          className="absolute inset-s-2.5 top-2.5 z-30"
+        />
+
+        {/* Hover Actions */}
+        <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center gap-2 bg-[#E7969F]/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <button
+            type="button"
+            aria-label="Quick view"
+            className="text-text-maroon-700 pointer-events-auto flex size-7.5 items-center justify-center rounded-full bg-white"
+          >
+            <Eye className="size-5" />
+          </button>
+
+          <button
+            type="button"
+            aria-label="Add to favorites"
+            className="text-text-maroon-700 pointer-events-auto flex size-7.5 items-center justify-center rounded-full bg-white"
+          >
+            <Heart className="size-5" />
+          </button>
+        </div>
+
+        {/* Product Badges */}
+        <div className="pointer-events-none absolute inset-e-2.5 top-2.5 z-20 flex flex-wrap justify-end gap-1.5">
+          {isOutOfStock && (
+            <Badge
+              variant="primary"
+              className="bg-bg-danger text-text-secondary-fade dark:text-text-plain"
+            >
+              <span>{t("Product.outOfStock")}</span>
+            </Badge>
+          )}
+          {isNew && (
+            <Badge
+              variant="subtle"
+              className="bg-bg-muted text-text-zinc-700 dark:bg-bg-inverse dark:text-text-inverse"
+            >
+              <span>{t("Product.new")}</span>
+            </Badge>
+          )}
+          {isHot && (
+            <Badge
+              variant="secondary"
+              className="bg-bg-primary-fade text-text-maroon dark:bg-bg-maroon-secondary dark:text-text-secondary"
+            >
+              <span>{t("Product.hot")}</span>
+            </Badge>
+          )}
+        </div>
+      </div>
+
+      {/* Product Information */}
+      <div className="space-y-2">
+        <p className="font-primary text-text-primary truncate text-base leading-none font-semibold">
+          <Link
+            href={`/products/${product.id}`}
+            className="focus-visible:after:outline-ring after:absolute after:inset-0 after:z-10 after:rounded-xl focus-visible:outline-none focus-visible:after:outline-2"
+          >
+            {product.title}
+          </Link>
+        </p>
+
+        {/* Rating & Cart */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-0.5">
+            <RatingStars rating={product.rating} />
+          </div>
+
+          <div className="relative z-20">
+            <AddToCartButton
+              productId={String(product.id)}
+              variant="icon"
+              stock={product.stock}
+            />
+          </div>
+        </div>
+
+        {/* Price */}
+        <div className="flex flex-wrap items-center gap-2">
+          {hasDiscount && (
+            <span className="text-text-maroon-700 align-bottom leading-none font-medium">
+              {discountedPrice} {t("Product.currency")}
+            </span>
+          )}
+
+          <span
+            className={`align-bottom leading-none font-medium ${hasDiscount ? "text-text-muted line-through" : "text-text-maroon-700"}`}
+          >
+            {product.price} {t("Product.currency")}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -33,5 +33,6 @@
   },
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "references.preferredLocation": "view"
 }

@@ -2,7 +2,7 @@ import "server-only";
 
 import { HEADERS } from "@/app/shared/constants/api.constant";
 import { API_URL } from "@/app/shared/constants/config";
-import { IApiResponse } from "@/app/shared/types/api";
+import { IApiResponse } from "@/shared/types/api";
 import {
   ILoginResponse,
   TLoginFormValues,

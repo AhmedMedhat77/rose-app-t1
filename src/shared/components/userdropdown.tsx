@@ -48,20 +48,25 @@ export default function UserDropdown({
           <Button
             variant="ghost"
             type="button"
-            className="hover:bg-transparent"
+            aria-label={fullName}
+            className="hover:bg-transparent dark:bg-transparent"
           />
         }
       >
-        <span className="flex flex-col items-start">
-          <p className="text-text-soft text-xs font-normal">{t("hello")}</p>
-          <p className="text-primary max-w-40 truncate text-base font-semibold">
+        <UserRound aria-hidden="true" className="size-5 shrink-0 sm:hidden" />
+
+        <span className="hidden flex-col items-start sm:flex">
+          <span className="text-text-soft text-xs font-normal">
+            {t("hello")}
+          </span>
+          <span className="text-primary max-w-40 truncate text-base font-semibold">
             {firstName}
-          </p>
+          </span>
         </span>
 
         <ChevronDown
           aria-hidden="true"
-          className="text-text-soft size-4.5 shrink-0"
+          className="text-text-soft hidden size-4.5 shrink-0 sm:block"
         />
       </DropdownMenuTrigger>
 
