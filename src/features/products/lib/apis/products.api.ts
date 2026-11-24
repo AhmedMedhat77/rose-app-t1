@@ -7,6 +7,8 @@ import { getProducts } from "@/shared/lib/apis/products.api";
 import type { IApiResponse } from "@/shared/types/api";
 import type { IProduct, IProductOverviewResponse } from "../../types/product";
 
+const RELATED_PRODUCTS_LIMIT = 8;
+
 export async function getProductById(
   id: string,
 ): Promise<IApiResponse<IProductOverviewResponse>> {
@@ -56,7 +58,15 @@ export async function getProductById(
 
 export async function getProductsByCategory(
   categoryId: string,
+  excludeProductId: string,
 ): Promise<IProduct[]> {
-  const params = new URLSearchParams({ categoryId, limit: "8" });
-  return getProducts(`/products?${params}`);
+  const params = new URLSearchParams({
+    categoryId,
+    limit: String(RELATED_PRODUCTS_LIMIT + 1),
+  });
+  const products = await getProducts(`/products?${params}`);
+
+  return products
+    .filter((product) => product.id !== excludeProductId)
+    .slice(0, RELATED_PRODUCTS_LIMIT);
 }

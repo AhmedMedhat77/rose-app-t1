@@ -14,7 +14,7 @@ export default async function ProductOverviewContent({
   product,
 }: ProductOverviewContentProps) {
   const t = await getTranslations("Product");
-  const relatedProducts = getProductsByCategory(product.categoryId);
+  const relatedProducts = getProductsByCategory(product.categoryId, product.id);
 
   return (
     <div className="container mx-auto flex flex-col justify-between px-4 py-8 lg:py-12">

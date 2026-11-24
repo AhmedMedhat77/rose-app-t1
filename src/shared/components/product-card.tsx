@@ -1,6 +1,6 @@
 "use client";
 import { Link } from "@/i18n/navigation";
-import { getDiscountedPrice } from "@/shared/lib/utils/discounted-price.util";
+import { getDiscountedPrice } from "@/shared/lib/utils/price";
 import { Badge } from "@/shared/ui/badge";
 import { cn } from "cn";
 import { Eye, Heart, Star } from "lucide-react";
