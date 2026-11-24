@@ -9,11 +9,12 @@ function isCouponValid(coupon: Coupon, now: number) {
   const validUntil = new Date(coupon.validUntil).getTime();
   const validFrom = new Date(coupon.validFrom).getTime();
 
-  return (
-    coupon.usedCount < coupon.usageLimit &&
-    now <= validUntil &&
-    now >= validFrom
-  );
+  const withinUsageLimit =
+    coupon.usageLimit === null || coupon.usedCount < coupon.usageLimit;
+
+  const withinDateRange = now >= validFrom && now <= validUntil;
+
+  return withinUsageLimit && withinDateRange;
 }
 
 export function getCouponApplyError({

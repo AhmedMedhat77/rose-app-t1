@@ -5,7 +5,7 @@ export type Coupon = {
   value: string;
   minPurchase: string;
   maxDiscount: string | null;
-  usageLimit: number;
+  usageLimit: number | null;
   usedCount: number;
   validFrom: string;
   validUntil: string;
