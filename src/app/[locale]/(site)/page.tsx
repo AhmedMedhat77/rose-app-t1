@@ -1,5 +1,5 @@
 import { FeaturesStrip } from "@/features/home/components/hero-section/features-strip";
-import BestSellingRose from "@/features/bestSelling/components/best-selling-rose";
+import BestSelling from "@/features/bestSelling/components/best-selling";
 import MostPopular from "@/features/mostPopular/components/most-popular";
 import AboutSection from "@/features/home/components/about-section/about-section";
 import Gallery from "@/features/gallery/components/Gallery";
@@ -25,7 +25,7 @@ export default async function HomePage() {
       <Hero />
       <div>
         <FeaturesStrip />
-        <BestSellingRose />
+        <BestSelling />
         <MostPopular
           occasions={occasions}
           initialProducts={initialProducts}

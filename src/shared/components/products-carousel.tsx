@@ -21,14 +21,16 @@ export default function ProductsCarousel({
   title,
   productsList,
 }: {
-  title: string;
+  title?: string;
   productsList: Promise<IProduct[]>;
 }) {
   return (
     <ProductsCarouselErrorBoundary>
-      <div className="mb-4 flex justify-start">
-        <SectionsTitle mainTitle={title} />
-      </div>
+      {title && (
+        <div className="mb-4 flex justify-start">
+          <SectionsTitle mainTitle={title} />
+        </div>
+      )}
       <Suspense fallback={<ProductsCarouselSkeleton />}>
         <ProductsCarouselSlides productsList={productsList} />
       </Suspense>

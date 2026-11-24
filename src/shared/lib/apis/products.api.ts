@@ -1,21 +1,52 @@
 import "server-only";
 
-import { API_URL } from "@/app/shared/constants/config";
-import type { IProduct } from "@/features/products/types/product";
-import type { IPaginatedResponse } from "@/shared/types/api";
+import { notFound } from "next/navigation";
 
-export async function getProducts(url: string): Promise<IProduct[]> {
-  if (!API_URL) throw new Error("API_URL is not configured");
+import { apiFetch } from "@/shared/lib/apis/fetch.api";
+import type {
+  IProduct,
+  IProductOverview,
+  IProductOverviewResponse,
+} from "@/features/products/types/product";
+import type { IPaginatedPayload } from "@/shared/types/api";
 
-  const response = await fetch(`${API_URL}${url}`, {
-    headers: { Accept: "application/json" },
-    next: { revalidate: 300, tags: ["products"] },
-  });
+export async function getProductById(id: string): Promise<IProductOverview> {
+  const response = await apiFetch<IProductOverviewResponse>(
+    `/products/${encodeURIComponent(id)}`,
+  );
+  if (!response.payload?.product) {
+    notFound();
+  }
+  const { gallery, ...product } = response.payload.product;
+  let images: string[] = [];
 
-  const body: IPaginatedResponse<IProduct> = await response.json();
-  if (!response.ok || !body.status) {
-    throw new Error("Failed to fetch products");
+  if (Array.isArray(gallery)) {
+    images = gallery;
+  } else {
+    try {
+      const parsedGallery: unknown = JSON.parse(gallery);
+      if (Array.isArray(parsedGallery)) {
+        images = parsedGallery.filter(
+          (image): image is string => typeof image === "string",
+        );
+      }
+    } catch {
+      images = gallery ? [gallery] : [];
+    }
   }
 
-  return body.payload.data;
+  return {
+    ...product,
+    gallery: images,
+  };
+}
+
+export async function getProducts(query: string): Promise<IProduct[]> {
+  const response = await apiFetch<IPaginatedPayload<IProduct>>(
+    `/products?${query}`,
+    {
+      next: { revalidate: 300, tags: ["products"] },
+    },
+  );
+  return response.payload.data;
 }
