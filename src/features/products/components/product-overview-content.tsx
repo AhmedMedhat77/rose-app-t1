@@ -1,52 +1,37 @@
-"use client";
+import { getTranslations } from "next-intl/server";
 
-import { useTranslations } from "next-intl";
-
-import { ProductCarousel } from "@/shared/components/product-carousel";
-import { useProductById, useRelatedProducts } from "../hooks/use-product-id";
+import ProductsCarousel from "@/shared/components/products-carousel";
+import { getProductsByCategory } from "../lib/apis/products.api";
+import type { IProductOverview } from "../types/product";
 import { ProductDetails } from "./product-description";
 import ProductGallery from "./product-gallery/product-gallery";
-import SectionsTitle from "@/shared/components/SectionsTitle";
-import { ProductOverviewSkeleton } from "../skeletons/product-overview.skeleton";
 
 interface ProductOverviewContentProps {
-  productId: string;
+  product: IProductOverview;
 }
 
-export default function ProductOverviewContent({
-  productId,
+export default async function ProductOverviewContent({
+  product,
 }: ProductOverviewContentProps) {
-  // Translation
-  const t = useTranslations("Product");
-
-  // Query
-  const { data, isLoading, error } = useProductById(productId);
-  const product = data?.status ? data.payload.product : undefined;
-  const { data: relatedProducts = [] } = useRelatedProducts(
-    product?.categoryId ?? "",
-  );
-
-  if (isLoading) return <ProductOverviewSkeleton />;
-
-  // Delegate failures to the route error.tsx boundary
-  if (error) throw error;
-  if (!product) throw new Error(t("loadError"));
+  const t = await getTranslations("Product");
+  const relatedProducts = getProductsByCategory(product.categoryId, product.id);
 
   return (
     <div className="container mx-auto flex flex-col justify-between px-4 py-8 lg:py-12">
       <section className="grid items-stretch gap-8 lg:grid-cols-2 lg:gap-17.5">
         <ProductGallery
+          title={product.title}
           images={product.gallery.length ? product.gallery : [product.cover]}
         />
 
         <ProductDetails product={product} />
       </section>
 
-      <section className="mt-40 mb-72 flex flex-col">
-        <div className="mr-auto -mb-10 w-fit">
-          <SectionsTitle mainTitle={"Related products"} />
-        </div>
-        <ProductCarousel title="" products={relatedProducts || []} />
+      <section className="mt-42 mb-72 flex flex-col">
+        <ProductsCarousel
+          productsList={relatedProducts}
+          title={t("relatedProducts")}
+        />
       </section>
     </div>
   );

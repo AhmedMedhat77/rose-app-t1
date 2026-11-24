@@ -26,15 +26,8 @@ export type IProductsMetadata = {
 };
 
 export type IProductsPayload = {
-  data: Product[];
-  metadata: ProductsMetadata;
-};
-
-type IApiResponse<T> = {
-  status: boolean;
-  code: number;
-  message?: string;
-  payload: T;
+  data: IProduct[];
+  metadata: IProductsMetadata;
 };
 
 // Types for product overview
@@ -62,7 +55,7 @@ interface IProductOverViewSubCategory {
   id: string;
   title: string;
   description: string;
-  image: boolean;
+  image: string;
   categoryId: string;
   immutable: boolean;
   createdAt: string;

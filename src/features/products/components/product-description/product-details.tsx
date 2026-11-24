@@ -1,3 +1,4 @@
+import { getDiscountedPrice } from "@/shared/lib/utils/price";
 import type { IProductOverview } from "../../types/product";
 import { ProductActions } from "./product-actions";
 import { ProductDescription } from "./product-description";
@@ -11,9 +12,8 @@ interface ProductDetailsProps {
 
 export function ProductDetails({ product }: ProductDetailsProps) {
   const basePrice = Number(product.price);
-  const discount = Number(product.discountValue ?? 0);
-  const hasDiscount = product.discountType === "PERCENT" && discount > 0;
-  const price = hasDiscount ? basePrice * (1 - discount / 100) : basePrice;
+  const price = getDiscountedPrice(product);
+  const hasDiscount = price < basePrice;
 
   return (
     <div className="flex min-h-0 flex-col">

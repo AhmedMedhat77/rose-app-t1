@@ -24,4 +24,4 @@ export interface IPaginatedPayload<T> {
 
 export type IPaginatedResponse<T> = ISuccessResponse<IPaginatedPayload<T>>;
 
-export type IApiResponse<T> = IErrorResponse | ISuccessResponse<T>;
+export type IApiResponse<T> = ISuccessResponse<T> | IErrorResponse;

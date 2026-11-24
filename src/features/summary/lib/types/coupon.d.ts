@@ -1,11 +1,11 @@
 export type Coupon = {
   id: string;
   code: string;
-  type: "PERCENT";
+  type: "PERCENT" | "FIXED";
   value: string;
   minPurchase: string;
-  maxDiscount: string;
-  usageLimit: number;
+  maxDiscount: string | null;
+  usageLimit: number | null;
   usedCount: number;
   validFrom: string;
   validUntil: string;
