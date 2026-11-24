@@ -2,8 +2,8 @@ import "server-only";
 
 import { getServerSession } from "next-auth";
 
-import { authOptions } from "@/auth";
 import { API_URL } from "@/app/shared/constants/config";
+import { authOptions } from "@/auth";
 import type { ISuccessResponse } from "@/shared/types/api";
 
 export type ApiMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
@@ -25,16 +25,14 @@ export interface ApiFetchOptions extends Omit<RequestInit, "method" | "body"> {
 }
 
 export class ApiError extends Error {
-  readonly status: number;
+  readonly status: boolean;
   readonly code?: number;
-  readonly data: unknown;
 
-  constructor(status: number, message: string, data?: unknown, code?: number) {
+  constructor(code: number, message: string) {
     super(message);
     this.name = "ApiError";
-    this.status = status;
+    this.status = false;
     this.code = code;
-    this.data = data;
   }
 }
 
@@ -122,11 +120,6 @@ function bodyMessage(data: unknown) {
   return data.message;
 }
 
-function bodyCode(data: unknown) {
-  if (!isRecord(data) || typeof data.code !== "number") return undefined;
-  return data.code;
-}
-
 function throwIfFailed(response: Response, data: unknown) {
   const statusFailed = isRecord(data) && data.status === false;
   if (response.ok && !statusFailed) return;
@@ -134,8 +127,6 @@ function throwIfFailed(response: Response, data: unknown) {
   throw new ApiError(
     response.status,
     bodyMessage(data) ?? (response.statusText || "Request failed"),
-    data,
-    bodyCode(data),
   );
 }
 
@@ -151,8 +142,6 @@ function readSuccess<T>(
     throw new ApiError(
       response.status,
       bodyMessage(data) ?? "Unexpected response",
-      data,
-      bodyCode(data),
     );
   }
 

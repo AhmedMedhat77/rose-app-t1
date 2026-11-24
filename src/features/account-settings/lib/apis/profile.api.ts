@@ -19,7 +19,7 @@ export async function getProfile(
   });
 
   if (!result.payload?.user) {
-    throw new ApiError(500, "Failed to load profile", result);
+    throw new ApiError(500, "Failed to load profile");
   }
 
   return result.payload.user;
@@ -36,7 +36,7 @@ export async function updateProfile(
   });
 
   if (!result.payload?.user) {
-    throw new ApiError(500, "Failed to update profile", result);
+    throw new ApiError(500, "Failed to update profile");
   }
 
   return result.payload.user;
@@ -56,7 +56,7 @@ export async function uploadProfilePhoto(
   });
 
   if (!result.payload?.url) {
-    throw new ApiError(500, "Failed to upload photo", result);
+    throw new ApiError(500, "Failed to upload photo");
   }
 
   return result.payload.url;

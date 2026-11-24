@@ -3,7 +3,7 @@ import { connection } from "next/server";
 import { Eye, Heart } from "lucide-react";
 import { Badge } from "@/shared/ui/badge";
 import { getTranslations } from "next-intl/server";
-import { getDiscountedPrice } from "@/shared/lib/utils/discounted-price.util";
+import { getDiscountedPrice } from "@/shared/lib/utils/price";
 import { IProduct } from "@/features/products/types/product";
 import { RatingStars } from "@/shared/components/rating-stars";
 import { isNewProduct } from "@/features/products/lib/utils/is-new-product.util";

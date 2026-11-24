@@ -1,7 +1,7 @@
 "use server";
 
-import { updateTag } from "next/cache";
 import { getServerSession } from "next-auth";
+import { updateTag } from "next/cache";
 
 import { authOptions } from "@/auth";
 import { ApiError } from "@/shared/lib/apis/fetch.api";
@@ -40,7 +40,6 @@ function failed(error: unknown): {
     return {
       success: false,
       message: error.message,
-      code: error.code ?? error.status,
     };
   }
 

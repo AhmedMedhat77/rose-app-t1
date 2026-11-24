@@ -1,33 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { API_URL } from "@/app/shared/constants/config";
+import { apiFetch } from "@/shared/lib/apis/fetch.api";
+import { ApiError } from "next/dist/server/api-utils";
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  if (!API_URL) {
-    return NextResponse.json(
-      { status: false, message: "Products service is unavailable" },
-      { status: 500 },
-    );
-  }
-
   const { id } = await params;
 
-  try {
-    const response = await fetch(
-      `${API_URL}/products/${encodeURIComponent(id)}`,
-      { cache: "no-store", signal: request.signal },
-    );
+  const response = await apiFetch(`/products`, {
+    method: "GET",
+    query: { id },
+    signal: request.signal,
+  });
 
-    return NextResponse.json(await response.json(), {
-      status: response.status,
-    });
-  } catch {
-    return NextResponse.json(
-      { status: false, message: "Products service is unreachable" },
-      { status: 502 },
-    );
+  if (!response.payload) {
+    throw new ApiError(response.code, response.message);
   }
+  return NextResponse.json(response);
 }

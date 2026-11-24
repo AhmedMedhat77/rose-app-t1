@@ -33,7 +33,7 @@ export default function WishlistItem({ item, onRemove }: WishlistRowProps) {
               {item.title}
             </ProductRow.Title>
             <ProductRow.Rating
-              rating={item.rating}
+              rating={Number(item.rating.toFixed(1))}
               ratings={item.ratings}
               variant="badge"
             />
