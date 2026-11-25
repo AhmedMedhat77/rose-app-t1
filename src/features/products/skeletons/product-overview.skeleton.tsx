@@ -1,5 +1,6 @@
 import { ProductsCarouselSkeleton } from "@/shared/skeletons/products-carousel.skeleton";
 import { Skeleton } from "@/shared/ui/skeleton";
+import { ProductReviewsSkeleton } from "./product-reviews.skeleton";
 
 const THUMBNAIL_COUNT = 4;
 
@@ -38,7 +39,8 @@ export function ProductOverviewSkeleton() {
           </div>
         </div>
       </section>
-
+      {/* Reviews */}
+      <ProductReviewsSkeleton />
       {/* Related products */}
       <section className="flex flex-col gap-6">
         <Skeleton className="h-8 w-56" />

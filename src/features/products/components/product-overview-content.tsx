@@ -5,13 +5,18 @@ import { getProductsByCategory } from "../lib/apis/products.api";
 import type { IProductOverview } from "../types/product";
 import { ProductDetails } from "./product-description";
 import ProductGallery from "./product-gallery/product-gallery";
+import ProductReview from "./product-reviews/product-review";
 
 interface ProductOverviewContentProps {
   product: IProductOverview;
+  isAuthenticated: boolean;
+  reviewsSlot: React.ReactNode;
 }
 
 export default async function ProductOverviewContent({
   product,
+  isAuthenticated,
+  reviewsSlot,
 }: ProductOverviewContentProps) {
   const t = await getTranslations("Product");
   const relatedProducts = getProductsByCategory(product.categoryId, product.id);
@@ -26,7 +31,11 @@ export default async function ProductOverviewContent({
 
         <ProductDetails product={product} />
       </section>
-
+      <ProductReview
+        productId={product.id}
+        isAuthenticated={isAuthenticated}
+        reviewsSlot={reviewsSlot}
+      />
       <section className="mt-42 mb-72 flex flex-col">
         <ProductsCarousel
           productsList={relatedProducts}
