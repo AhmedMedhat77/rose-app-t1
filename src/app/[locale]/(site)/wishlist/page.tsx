@@ -1,12 +1,3 @@
-// import WishlistSide from "@/features/wishlist/components/wishlist-side";
-
-// export default function WishlistPage() {
-//   return (
-//     <section className="mx-auto flex w-full flex-col px-20 py-15.5">
-//       <WishlistSide />
-//     </section>
-//   );
-// }
 import { getServerSession } from "next-auth";
 import { Suspense } from "react";
 
@@ -22,9 +13,7 @@ async function WishlistContent() {
   if (session?.accessToken) {
     try {
       initialItems = await getWishlist(session.accessToken);
-    } catch {
-      // the client will fetch again and show the error state
-    }
+    } catch {}
   }
 
   return <WishlistSide initialItems={initialItems} />;

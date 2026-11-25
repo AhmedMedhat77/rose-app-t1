@@ -56,7 +56,7 @@ export function Header() {
 
           <div className="flex shrink-0 items-center gap-4">
             <AuthMenu loginLabel={t("login")} />
-
+            {/* Wishlist Heart Icon */}
             <div className="border-border flex items-center gap-1 border-s ps-4">
               <WishlistLink className={ICON_BUTTON} />
 

@@ -12,10 +12,6 @@ import AddToCartButton from "./add-to-cart-button";
 import { useTranslations } from "next-intl";
 import { NewBadge } from "./new-badge";
 
-type ProductCardProduct = Pick<
-  IProduct,
-  "id" | "title" | "price" | "cover" | "rating" | "stock" | "createdAt"
->;
 function Root({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
@@ -33,7 +29,7 @@ function Media({
   product,
   children,
 }: {
-  product: ProductCardProduct;
+  product: IProduct;
   children?: ReactNode;
 }) {
   return (
@@ -79,7 +75,7 @@ function HoverActions({ productId }: { productId: string }) {
   );
 }
 
-function Badges({ product }: { product: ProductCardProduct }) {
+function Badges({ product }: { product: IProduct }) {
   const t = useTranslations();
 
   const isHot = (product.rating ?? 0) >= 4.5;
@@ -109,7 +105,7 @@ function Badges({ product }: { product: ProductCardProduct }) {
 }
 
 // title, rating, add to cart and price (same in every version)
-function Details({ product }: { product: ProductCardProduct }) {
+function Details({ product }: { product: IProduct }) {
   // const t = await getTranslations();
   const t = useTranslations();
   const discountedPrice = getDiscountedPrice(product);

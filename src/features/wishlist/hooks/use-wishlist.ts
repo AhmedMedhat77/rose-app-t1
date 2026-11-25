@@ -22,7 +22,9 @@ export function useWishlist(initialItems?: WishlistItem[]) {
   return {
     items,
     count: items.length,
-    isLoading: status === "loading" || query.isLoading,
+    //isLoading: status === "loading" || query.isLoading,
+    isLoading:
+      initialItems === undefined && (status === "loading" || query.isLoading),
     isError: query.isError,
     isInWishlist: (productId: string) =>
       items.some((item) => item.productId === productId),
