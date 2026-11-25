@@ -3,6 +3,8 @@ import { IProductReview } from "./../../types/product.d";
 import type { IApiResponse, IPaginatedResponse } from "@/shared/types/api";
 import type { IProduct, IProductOverviewResponse } from "../../types/product";
 import { PRODUCT_OVERVIEW_ENDPOINT } from "./product.endpoint";
+import { ApiError } from "next/dist/server/api-utils";
+
 import { IReviewFormValues } from "../../schemas/review.schema";
 import { REVIEWS_LIMIT } from "../constants/product.constants";
 
@@ -107,7 +109,10 @@ export async function createReviewApi(
   const result = await response.json();
 
   if (!response.ok) {
-    throw new Error(result.message || "FAILED_TO_CREATE_REVIEW");
+    throw new ApiError(
+      response.status,
+      result.message || "FAILED_TO_CREATE_REVIEW",
+    );
   }
 
   return result;
