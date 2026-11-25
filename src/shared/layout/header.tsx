@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { LocaleSwitcher } from "@/shared/components/locale-switcher";
 import { Link } from "@/i18n/navigation";
-import { NavBar } from "./NavBar";
+import { NavBar } from "./navbar";
 import { HeartIcon, ShoppingCartIcon } from "lucide-react";
 import { NotificationsMenu } from "@/features/notifications/components/notifications-menu";
 import { NotificationToggle } from "@/features/notifications/components/notification-toggle";

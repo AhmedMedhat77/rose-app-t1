@@ -58,9 +58,18 @@
         "title": "Free Delivery",
         "text": "For orders above 120 EGP"
       },
-      "refund": { "title": "Get Refund", "text": "Refunds within 30 days" },
-      "payment": { "title": "Safe Payment", "text": "100% Secure Payment" },
-      "support": { "title": "24/7 Support", "text": "Contact us at any time" }
+      "refund": {
+        "title": "Get Refund",
+        "text": "Refunds within 30 days"
+      },
+      "payment": {
+        "title": "Safe Payment",
+        "text": "100% Secure Payment"
+      },
+      "support": {
+        "title": "24/7 Support",
+        "text": "Contact us at any time"
+      }
     }
   },
   "Header": {
@@ -274,6 +283,31 @@
     "filtersError": "Something went wrong. Please try again.",
     "filtersEmpty": "No items found"
   },
+  "productReview": {
+    "title": "Product Reviews",
+    "generalRating": "General rating",
+    "ratings": "ratings",
+    "loadError": "Failed to load reviews",
+    "retry": "Try again",
+    "empty": "No reviews yet",
+    "yourRating": "Your rating",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Enter review title",
+    "reviewLabel": "Review",
+    "reviewPlaceholder": "What do you think of this product?",
+    "addReview": "Add Review",
+    "submitting": "Submitting...",
+    "loginToReview": "Please login to be able to review",
+    "UNAUTHORIZED": "You must be logged in to submit a review.",
+    "INVALID_DATA": "Please check your review and try again.",
+    "SOMETHING_WENT_WRONG": "You have already reviewed this product.",
+    "titleRequired": "Title is required",
+    "contentRequired": "Review is required",
+    "ratingInteger": "Rating must be a whole number",
+    "ratingMin": "Please select a rating",
+    "ratingMax": "Rating cannot exceed 5",
+    "REVIEW_CREATED": "Review added successfully"
+  },
   "Auth": {
     "heroImageAlt": "Gift boxes with ribbons"
   },
@@ -451,7 +485,26 @@
     "outOfStock": "OUT OF STOCK",
     "new": "NEW",
     "hot": "HOT",
-    "currency": "EGP"
+    "currency": "EGP",
+    "addToFavorites": "Add to favorites",
+    "stockLeft": "{count} left in stock",
+    "ratingValue": "Rating: {rating}/5",
+    "ratingCount": "({count} ratings)",
+    "rating": "Rating: {rating}/5 ({count} ratings)",
+    "addToCart": "Add to Cart",
+    "addToWishlist": "Add to wishlist",
+    "addedToCart": "Product added successfully to cart",
+    "quantityIncreased": "Quantity increased",
+    "relatedProducts": "Related Products",
+    "previousProducts": "Previous products",
+    "nextProducts": "Next products",
+    "loadError": "Unable to load this product. Please try again.",
+    "retry": "Try again",
+    "galleryLabel": "Product images",
+    "imageUnavailable": "No image available",
+    "viewImage": "View product image {number}",
+    "previousImages": "Previous product images",
+    "nextImages": "Next product images"
   },
   "Cart": {
     "title": "Cart",
@@ -463,5 +516,9 @@
     "no-coupons": "No coupons applied",
     "subtotal": "Subtotal",
     "total": "Total"
+  },
+  "ProductsCarousel": {
+    "empty": "No products to show",
+    "error": "Something went wrong. Please try again."
   }
 }

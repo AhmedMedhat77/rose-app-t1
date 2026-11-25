@@ -47,7 +47,7 @@ export default function MostPopular({
               {occasions.map((occasion) => (
                 <TabsTrigger
                   className={cn(
-                    "hover:bg-bg-muted dark:text-text-muted bg-bg-subtle border-0",
+                    "hover:bg-bg-muted dark:text-text-muted bg-bg-plain dark:bg-bg-subtle border-0",
                     // Active (selected) styles
                     "data-active:bg-bg-plain data-active:text-text-maroon",
                     "data-active:dark:bg-bg-subtle",
