@@ -7,13 +7,13 @@ import { useForm } from "react-hook-form";
 import { createLoginSchema } from "@/features/auth/schemas";
 import { Link } from "@/i18n/navigation";
 
-import { Button } from "@/shared/ui/button";
-import { Input } from "@/shared/ui/input";
-import { TLoginFormValues } from "../types";
 import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
 import { addToast } from "@/shared/ui/toast";
-import { getSafeCallbackUrl } from "@/shared/lib/utils/safe-callback-url.util";
+import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
+
 import { useLogin } from "../hooks/use-login";
+import type { TLoginFormValues } from "../types";
 
 export default function LoginForm() {
   const t = useTranslations("Login");
@@ -38,14 +38,9 @@ export default function LoginForm() {
 
   const onSubmit = handleSubmit((values) => {
     login(values, {
-      onSuccess: () => {
-        const searchParams = new URLSearchParams(window.location.search);
-        const safeCallbackUrl = getSafeCallbackUrl(
-          searchParams.get("callbackUrl"),
-        );
-
-        if (safeCallbackUrl) {
-          window.location.href = safeCallbackUrl;
+      onSuccess: (response) => {
+        if (response.url) {
+          window.location.assign(response.url);
         }
       },
       onError: () => {
@@ -53,6 +48,7 @@ export default function LoginForm() {
       },
     });
   });
+
   return (
     <form noValidate onSubmit={onSubmit} className="w-full space-y-4 p-4">
       <Input
@@ -71,7 +67,6 @@ export default function LoginForm() {
         {...register("password")}
       />
 
-      {/* Forgot password */}
       <div className="flex justify-end pt-0.5">
         <Link
           href="/forgot-password"
@@ -81,7 +76,6 @@ export default function LoginForm() {
         </Link>
       </div>
 
-      {/* Login Button */}
       <Button className="w-full" type="submit" loading={isPending}>
         {t("submit")}
       </Button>

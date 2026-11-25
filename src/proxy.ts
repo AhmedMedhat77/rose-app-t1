@@ -42,7 +42,14 @@ export default async function proxy(request: NextRequest) {
   const pathname = path.replace(localePrefix, "") || "/";
 
   if (!token && isProtectedRoute(pathname)) {
-    return NextResponse.redirect(generateURL("/login", locale, request));
+    const loginUrl = generateURL("/login", locale, request);
+
+    loginUrl.searchParams.set(
+      "callbackUrl",
+      `${request.nextUrl.pathname}${request.nextUrl.search}`,
+    );
+
+    return NextResponse.redirect(loginUrl);
   }
 
   return intlMiddleware(request);

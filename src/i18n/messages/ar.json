@@ -525,7 +525,7 @@
     "productYouMayLike": "المنتجات التي قد تعجبك",
     "checkout": "الدفع",
     "coupon-placeholder": "كود الكوبون",
-    "apply": "تطبيق",
+    "apply": "تطبيق الكوبون",
     "applying": "جارٍ التطبيق…",
     "coupon-applied": "تم تطبيق الكوبون: ",
     "code-required": "أدخل كود الكوبون",
@@ -559,7 +559,9 @@
     "increase": "زيادة الكمية",
     "addToCartFailed": "تعذّرت إضافة المنتج إلى سلتك",
     "addToCartInCart": "أضف إلى السلة، يوجد {count} في سلتك بالفعل",
-    "outOfStock": "هذا المنتج غير متوفر في المخزون."
+    "outOfStock": "هذا المنتج غير متوفر في المخزون.",
+    "actionFailed": "فشلت العملية، برجاء المحاولة مرة أخرى.",
+    "syncGuestCartFailed": "تعذر تحميل سلة التسوق الخاصة بك."
   },
   "ProductRow": {
     "rating": "التقييم:",

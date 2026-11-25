@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TicketPercent, Check, XIcon, MoveRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -14,16 +15,32 @@ import { Button } from "@/shared/ui/button";
 import { Field, FieldError, FieldLabel } from "@/shared/ui/field";
 import { Input } from "@/shared/ui/input";
 
+import { useCouponContext } from "../context/coupon-provider";
 import { useApplyCoupon } from "../hooks/use-apply-coupon";
 import { SummaryAmountSkeleton } from "../skeletons/summary-amount.skeleton";
 import { createApplyCouponSchema } from "../lib/schemas/apply-coupon.schema";
 import type { ApplyCouponFormValues } from "../lib/types/apply-coupon.types";
-import type { Coupon } from "../lib/types/coupon";
 import {
   getCouponApplyError,
   getCouponsDiscount,
   type CouponApplyError,
 } from "../lib/utils/coupon.util";
+
+const summaryVariants = cva("", {
+  variants: {
+    variant: {
+      editable: "",
+      readonly: "",
+    },
+  },
+  defaultVariants: {
+    variant: "editable",
+  },
+});
+
+interface SummaryProps extends VariantProps<typeof summaryVariants> {
+  className?: string;
+}
 
 const COUPON_ERROR_KEY: Record<CouponApplyError, string> = {
   "not-found": "coupon-not-found",
@@ -35,27 +52,21 @@ const COUPON_ERROR_KEY: Record<CouponApplyError, string> = {
 
 const COUPON_CODE_ERROR_ID = "coupon-code-error";
 
-const CHECKOUT_BUTTON_CLASS =
-  "bg-bg-maroon-secondary h-17.5 w-full rounded-xl text-xl";
-
 const SUMMARY_LINE_CLASS =
   "flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1";
 
 const SUMMARY_AMOUNT_CLASS = "ms-auto max-w-full text-end tabular-nums";
 
-interface SummaryProps {
-  className?: string;
-}
-
-export default function Summary({ className }: SummaryProps) {
+export default function Summary({ className, variant }: SummaryProps) {
   // Translation
   const t = useTranslations("Cart");
 
-  // State
-  const [appliedCoupons, setAppliedCoupons] = useState<Coupon[]>([]);
+  const isReadOnly = variant === "readonly";
 
   // Context
   const { viewItems, isReady } = useCartContext();
+  const { appliedCoupons, addAppliedCoupon, removeAppliedCoupon } =
+    useCouponContext();
 
   // Hooks
   const { applyCoupon, isPending } = useApplyCoupon();
@@ -73,6 +84,7 @@ export default function Summary({ className }: SummaryProps) {
   const isCheckoutDisabled = !isReady || viewItems.length === 0;
   const couponDiscount = getCouponsDiscount(appliedCoupons, subtotal);
   const total = subtotal - couponDiscount;
+  const discountPercentage = `${Math.round((couponDiscount / subtotal) * 100)}%`;
 
   // Functions
   async function onSubmit(values: ApplyCouponFormValues) {
@@ -97,23 +109,37 @@ export default function Summary({ className }: SummaryProps) {
     }
 
     const coupon = result.coupon;
-    setAppliedCoupons((current) => [...current, coupon]);
+    addAppliedCoupon(coupon);
     form.reset();
-  }
-
-  function removeCoupon(couponId: string) {
-    setAppliedCoupons((current) =>
-      current.filter((coupon) => coupon.id !== couponId),
-    );
   }
 
   function formatMoney(amount: number) {
     return `${amount.toFixed(2)} ${t("currency")}`;
   }
 
+  // Effects
+  useEffect(() => {
+    if (!isReady || isReadOnly) {
+      return;
+    }
+
+    for (const coupon of appliedCoupons) {
+      const storedError = getCouponApplyError({
+        coupon,
+        appliedCoupons: [],
+        subtotal,
+      });
+
+      if (storedError) {
+        removeAppliedCoupon(coupon.id);
+      }
+    }
+  }, [appliedCoupons, isReady, isReadOnly, removeAppliedCoupon, subtotal]);
+
   return (
     <div
       className={cn(
+        summaryVariants({ variant }),
         "flex h-151.25 w-full min-w-0 flex-col gap-6 rounded-md",
         className,
       )}
@@ -135,7 +161,7 @@ export default function Summary({ className }: SummaryProps) {
                     {t("coupon-placeholder")}
                   </FieldLabel>
 
-                  <div className="min-w-48 grow-[2] basis-48">
+                  <div className="min-w-48 grow-2 basis-48">
                     <Input
                       {...field}
                       id="coupon-code"
@@ -146,12 +172,14 @@ export default function Summary({ className }: SummaryProps) {
                         fieldState.invalid ? COUPON_CODE_ERROR_ID : undefined
                       }
                       className="w-full min-w-0 bg-white shadow-none"
+                      readOnly={isReadOnly}
+                      disabled={isReadOnly}
                     />
                   </div>
                   <div className="flex shrink-0 grow">
                     <Button
                       type="submit"
-                      disabled={isPending}
+                      disabled={isPending || isReadOnly}
                       className="bg-bg-maroon-secondary w-full"
                     >
                       <TicketPercent className="size-5" />
@@ -182,16 +210,18 @@ export default function Summary({ className }: SummaryProps) {
                         {`${t("coupon-applied")} ${coupon.code}`}
                       </p>
                     </div>
-                    <Button
-                      type="button"
-                      size="icon-xs"
-                      variant="ghost"
-                      aria-label={t("remove")}
-                      className="text-text-soft hover:text-text-danger bg-transparent hover:bg-transparent"
-                      onClick={() => removeCoupon(coupon.id)}
-                    >
-                      <XIcon className="size-5" />
-                    </Button>
+                    {!isReadOnly && (
+                      <Button
+                        type="button"
+                        size="icon-xs"
+                        variant="ghost"
+                        aria-label={t("remove")}
+                        className="text-text-soft hover:text-text-danger bg-transparent hover:bg-transparent"
+                        onClick={() => removeAppliedCoupon(coupon.id)}
+                      >
+                        <XIcon className="size-5" />
+                      </Button>
+                    )}
                   </div>
                 </li>
               ))}
@@ -216,32 +246,51 @@ export default function Summary({ className }: SummaryProps) {
               {isReady ? formatMoney(subtotal) : <SummaryAmountSkeleton />}
             </span>
           </div>
+          {isReadOnly ? (
+            <div className="flex items-center gap-2.5">
+              <hr className="border-border-soft w-full border" />
+              <p className="text-text-plain shrink-0 text-base font-semibold">
+                {isReady ? (
+                  `${discountPercentage} ${t("discount")}`
+                ) : (
+                  <SummaryAmountSkeleton />
+                )}
+              </p>
+              <hr className="border-border-soft w-full border" />
+            </div>
+          ) : (
+            <>
+              <div className={SUMMARY_LINE_CLASS}>
+                <span className="text-text-plain min-w-0 text-lg font-medium">
+                  {t("discount")}
+                </span>
+                <span
+                  className={cn(
+                    SUMMARY_AMOUNT_CLASS,
+                    "text-text-plain text-xl font-semibold",
+                  )}
+                >
+                  {isReady ? (
+                    formatMoney(couponDiscount)
+                  ) : (
+                    <SummaryAmountSkeleton />
+                  )}
+                </span>
+              </div>
+              <hr className="border-border-soft w-full shrink-0 border" />
+            </>
+          )}
           <div className={SUMMARY_LINE_CLASS}>
-            <span className="text-text-plain min-w-0 text-lg font-medium">
-              {t("discount")}
-            </span>
             <span
-              className={cn(
-                SUMMARY_AMOUNT_CLASS,
-                "text-text-plain text-xl font-semibold",
-              )}
+              className={`${isReadOnly ? "text-text-plain" : "text-text-maroon"} min-w-0 text-2xl font-bold`}
             >
-              {isReady ? (
-                formatMoney(couponDiscount)
-              ) : (
-                <SummaryAmountSkeleton />
-              )}
-            </span>
-          </div>
-          <hr className="border-border-soft w-full shrink-0 border" />
-          <div className={SUMMARY_LINE_CLASS}>
-            <span className="text-text-maroon min-w-0 text-2xl font-bold">
               {t("total")}
             </span>
             <span
               className={cn(
                 SUMMARY_AMOUNT_CLASS,
-                "text-text-maroon text-2xl font-bold",
+                `${isReadOnly ? "text-text-plain" : "text-text-maroon"}`,
+                "text-2xl font-bold",
               )}
             >
               {isReady ? (
@@ -253,16 +302,15 @@ export default function Summary({ className }: SummaryProps) {
           </div>
         </div>
       </div>
-      {isCheckoutDisabled ? (
-        <Button type="button" disabled className={CHECKOUT_BUTTON_CLASS}>
-          {t("checkout")}
-          <MoveRightIcon className="size-5 rtl:rotate-180" />
-        </Button>
-      ) : (
+      {!isReadOnly && (
         <Button
           nativeButton={false}
-          render={<Link href="/checkout" />}
-          className={CHECKOUT_BUTTON_CLASS}
+          disabled={isCheckoutDisabled}
+          render={isCheckoutDisabled ? <span /> : <Link href="/checkout" />}
+          className={cn(
+            "bg-bg-maroon-secondary h-17.5 w-full rounded-xl text-xl",
+            "data-disabled:pointer-events-none data-disabled:bg-gray-200 data-disabled:text-gray-500",
+          )}
         >
           {t("checkout")}
           <MoveRightIcon className="size-5 rtl:rotate-180" />

@@ -12,6 +12,7 @@ import type { IProductOverviewResponse } from "@/features/products/types/product
 import type { IApiResponse } from "@/shared/types/api";
 import { cn } from "cn";
 
+// types
 interface IAddToCartButtonProps {
   productId: string;
   stock: number;
@@ -33,11 +34,13 @@ export default function AddToCartButton({
   disabled = false,
   onError,
 }: IAddToCartButtonProps) {
+  // transilation
   const t = useTranslations("Cart");
-
-  const { addToCart, getProductQuantity } = useCartContext();
+  // state
   const [isAdding, setIsAdding] = useState(false);
-
+  // context
+  const { addToCart, getProductQuantity } = useCartContext();
+  // apis hook
   const productQuantity = getProductQuantity(productId);
   const isOutOfStock = stock <= 0;
   const isDisabled = disabled || isOutOfStock || isAdding;
