@@ -534,7 +534,9 @@
     "increase": "Increase quantity",
     "addToCartFailed": "Couldn't add the product to your cart",
     "addToCartInCart": "Add to cart, {count} already in your cart",
-    "outOfStock": "This product is out of stock."
+    "outOfStock": "This product is out of stock.",
+    "actionFailed": "The operation failed. Please try again.",
+    "syncGuestCartFailed": "We couldn't load your guest cart."
   },
   "ProductRow": {
     "rating": "Rating:",
