@@ -1,9 +1,11 @@
-import { authOptions } from "@/auth";
-import ProductOverviewContent from "../components/product-overview-content";
+import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
-import ReviewsListSkeleton from "../skeletons/reviews-list.skeleton";
 import { Suspense } from "react";
+import { authOptions } from "@/auth";
+import { getProductById } from "../lib/apis/products.api";
+import ProductOverviewContent from "../components/product-overview-content";
 import ReviewsSection from "../components/product-reviews/reviews-section";
+import ReviewsListSkeleton from "../skeletons/reviews-list.skeleton";
 
 export default async function ProductOverViewPage({
   params,
@@ -12,15 +14,19 @@ export default async function ProductOverViewPage({
 }) {
   const { id } = await params;
 
-  // Get the current user session
+  // Session
   const session = await getServerSession(authOptions);
-
-  // Check if the user is authenticated
   const isAuthenticated = !!session?.accessToken;
+
+  // Product
+
+  const result = await getProductById(id);
+
+  if (!result.status) notFound();
 
   return (
     <ProductOverviewContent
-      productId={id}
+      product={result.payload.product}
       isAuthenticated={isAuthenticated}
       reviewsSlot={
         <Suspense fallback={<ReviewsListSkeleton />}>

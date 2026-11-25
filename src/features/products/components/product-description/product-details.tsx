@@ -1,3 +1,4 @@
+import { getDiscountedPrice } from "@/shared/lib/utils/price";
 import type { IProductOverview } from "../../types/product";
 import { ProductActions } from "./product-actions";
 import { ProductDescription } from "./product-description";
@@ -11,11 +12,8 @@ interface ProductDetailsProps {
 
 export function ProductDetails({ product }: ProductDetailsProps) {
   const basePrice = Number(product.price);
-  const discount = Number(product.discountValue ?? 0);
-  const hasDiscount = product.discountType === "PERCENT" && discount > 0;
-  const price = hasDiscount ? basePrice * (1 - discount / 100) : basePrice;
-
-  function handleAddToCart() {}
+  const price = getDiscountedPrice(product);
+  const hasDiscount = price < basePrice;
 
   return (
     <div className="flex min-h-0 flex-col">
@@ -34,8 +32,9 @@ export function ProductDetails({ product }: ProductDetailsProps) {
       <ProductRating rating={product.rating} count={product.ratings} />
       <ProductDescription description={product.description} />
       <ProductActions
+        productId={product.id}
+        stock={product.stock}
         disabled={product.stock <= 0}
-        onAddToCart={handleAddToCart}
       />
     </div>
   );

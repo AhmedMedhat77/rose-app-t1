@@ -5,7 +5,7 @@ import {
   parseTheme,
   themeModes,
   useTheme,
-} from "@/shared/context/theme.context";
+} from "@/shared/providers/theme.context";
 import { ToggleGroup, ToggleGroupItem } from "@/shared/ui/toggle-group";
 import { cn } from "cn";
 

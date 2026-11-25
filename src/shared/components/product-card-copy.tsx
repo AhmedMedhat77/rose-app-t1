@@ -1,20 +1,21 @@
-import { IProduct } from "@/features/products/types/product";
-import { RatingStars } from "@/shared/components/rating-stars";
-import { isNewProduct } from "@/shared/lib/utils/time.util";
-import { Badge } from "@/shared/ui/badge";
-import { Eye, Heart, HeartPlus, ShoppingCart } from "lucide-react";
-import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { connection } from "next/server";
-import { Button } from "../ui/button";
+import { Eye, Heart } from "lucide-react";
+import { Badge } from "@/shared/ui/badge";
+import { getTranslations } from "next-intl/server";
+import { getDiscountedPrice } from "@/shared/lib/utils/price";
+import { IProduct } from "@/features/products/types/product";
+import { RatingStars } from "@/shared/components/rating-stars";
+import { isNewProduct } from "@/features/products/lib/utils/is-new-product.util";
+import AddToCartButton from "./add-to-cart-button";
+import { Link } from "@/i18n/navigation";
+import { WishlistButton } from "@/features/wishlist/components/wishlist-button";
 
 export default async function ProductCard({ product }: { product: IProduct }) {
   const t = await getTranslations();
 
-  const discountedPrice =
-    product.discountValue &&
-    Number(product.price) -
-      (Number(product.price) * Number(product.discountValue)) / 100;
+  const discountedPrice = getDiscountedPrice(product);
+  const hasDiscount = discountedPrice < Number(product.price);
 
   await connection();
   const isNew = Boolean(product.createdAt) && isNewProduct(product.createdAt);
@@ -22,7 +23,7 @@ export default async function ProductCard({ product }: { product: IProduct }) {
   const isOutOfStock = product.stock <= 0;
 
   return (
-    <div className="group flex w-full flex-col gap-3">
+    <div className="group relative isolate flex w-full flex-col gap-3">
       {/* Product Image */}
       <div className="relative h-68 w-full overflow-hidden rounded-xl">
         {product.cover && (
@@ -35,21 +36,18 @@ export default async function ProductCard({ product }: { product: IProduct }) {
           />
         )}
 
-        {/* Add to Wishlist button */}
-        <button
-          type="button"
-          aria-label={t("Product.addToFavorites")}
-          className="absolute inset-s-2.5 top-2.5 z-20 flex size-7.5 items-center justify-center rounded-full bg-white"
-        >
-          <HeartPlus className="text-text-maroon size-5" />
-        </button>
+        {/* Wishlist button */}
+        <WishlistButton
+          productId={String(product.id)}
+          className="absolute inset-s-2.5 top-2.5 z-30"
+        />
 
         {/* Hover Actions */}
-        <div className="absolute inset-0 z-10 flex items-center justify-center gap-2 bg-[#E7969F]/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+        <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center gap-2 bg-[#E7969F]/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
           <button
             type="button"
             aria-label="Quick view"
-            className="text-text-maroon-700 flex size-7.5 items-center justify-center rounded-full bg-white"
+            className="text-text-maroon-700 pointer-events-auto flex size-7.5 items-center justify-center rounded-full bg-white"
           >
             <Eye className="size-5" />
           </button>
@@ -57,14 +55,14 @@ export default async function ProductCard({ product }: { product: IProduct }) {
           <button
             type="button"
             aria-label="Add to favorites"
-            className="text-text-maroon-700 flex size-7.5 items-center justify-center rounded-full bg-white"
+            className="text-text-maroon-700 pointer-events-auto flex size-7.5 items-center justify-center rounded-full bg-white"
           >
             <Heart className="size-5" />
           </button>
         </div>
 
         {/* Product Badges */}
-        <div className="absolute inset-e-2.5 top-2.5 z-20 flex flex-wrap justify-end gap-1.5">
+        <div className="pointer-events-none absolute inset-e-2.5 top-2.5 z-20 flex flex-wrap justify-end gap-1.5">
           {isOutOfStock && (
             <Badge
               variant="primary"
@@ -95,7 +93,12 @@ export default async function ProductCard({ product }: { product: IProduct }) {
       {/* Product Information */}
       <div className="space-y-2">
         <p className="font-primary text-text-primary truncate text-base leading-none font-semibold">
-          {product.title}
+          <Link
+            href={`/products/${product.id}`}
+            className="focus-visible:after:outline-ring after:absolute after:inset-0 after:z-10 after:rounded-xl focus-visible:outline-none focus-visible:after:outline-2"
+          >
+            {product.title}
+          </Link>
         </p>
 
         {/* Rating & Cart */}
@@ -104,25 +107,25 @@ export default async function ProductCard({ product }: { product: IProduct }) {
             <RatingStars rating={product.rating} />
           </div>
 
-          <Button
-            type="button"
-            aria-label="Add to cart"
-            className="bg-bg-maroon-secondary hover:bg-bg-maroon size-10 shrink-0 rounded-full p-0 text-white"
-          >
-            <ShoppingCart className="size-5" />
-          </Button>
+          <div className="relative z-20">
+            <AddToCartButton
+              productId={String(product.id)}
+              variant="icon"
+              stock={product.stock}
+            />
+          </div>
         </div>
 
         {/* Price */}
         <div className="flex flex-wrap items-center gap-2">
-          {discountedPrice && (
+          {hasDiscount && (
             <span className="text-text-maroon-700 align-bottom leading-none font-medium">
               {discountedPrice} {t("Product.currency")}
             </span>
           )}
 
           <span
-            className={`align-bottom leading-none font-medium ${discountedPrice ? "text-text-muted line-through" : "text-text-maroon-700"}`}
+            className={`align-bottom leading-none font-medium ${hasDiscount ? "text-text-muted line-through" : "text-text-maroon-700"}`}
           >
             {product.price} {t("Product.currency")}
           </span>

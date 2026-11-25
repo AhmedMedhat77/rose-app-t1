@@ -1,10 +1,14 @@
 "use client";
-
+import { Link } from "@/i18n/navigation";
+import { getDiscountedPrice } from "@/shared/lib/utils/price";
 import { Badge } from "@/shared/ui/badge";
 import { cn } from "cn";
-import { Eye, Heart, ShoppingCart, Star } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { Eye, Heart, Star } from "lucide-react";
 import Image from "next/image";
+
+import { useTranslations } from "next-intl";
+import AddToCartButton from "./add-to-cart-button";
+
 export interface ProductCardProduct {
   id: string | number;
   title: string;
@@ -12,6 +16,7 @@ export interface ProductCardProduct {
   stock: number;
   rating?: number | null;
   price: number | string;
+  discountType?: string | null;
   discountValue?: number | string | null;
 }
 
@@ -29,15 +34,13 @@ export default function ProductCard({
 
   const starsCount = isPopular ? 5 : 4;
 
-  const hasDiscount = Number(product.discountValue ?? 0) > 0;
-  const discountedPrice = hasDiscount
-    ? Number(product.price) * (1 - Number(product.discountValue) / 100)
-    : Number(product.price);
+  const discountedPrice = getDiscountedPrice(product);
+  const hasDiscount = discountedPrice < Number(product.price);
 
   return (
     <div
       className={cn(
-        "w-full space-y-2",
+        "relative isolate w-full space-y-2",
         isPopular &&
           "group flex h-91 w-full max-w-75.5 flex-col gap-4 overflow-hidden rounded-t-2xl",
       )}
@@ -69,19 +72,20 @@ export default function ProductCard({
 
         {/* Popular Hover Actions */}
         {isPopular && (
-          <div className="absolute inset-0 z-10 flex items-center justify-center gap-2 bg-[#E7969F]/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            <button
+          <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center gap-2 bg-[#E7969F]/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <Link
+              href={`/products/${product.id}`}
               type="button"
               aria-label="Quick view"
-              className="text-text-maroon-700 flex size-7 items-center justify-center rounded-full bg-white"
+              className="text-text-maroon-700 pointer-events-auto flex size-7 items-center justify-center rounded-full bg-white"
             >
               <Eye size={15} />
-            </button>
+            </Link>
 
             <button
               type="button"
               aria-label="Add to favorites"
-              className="text-text-maroon-700 flex size-7 items-center justify-center rounded-full bg-white"
+              className="text-text-maroon-700 pointer-events-auto flex size-7 items-center justify-center rounded-full bg-white"
             >
               <Heart size={15} />
             </button>
@@ -91,7 +95,7 @@ export default function ProductCard({
         {/* Product Badges */}
         <div
           className={cn(
-            "absolute top-2 z-20 flex flex-wrap gap-1",
+            "pointer-events-none absolute top-2 z-20 flex flex-wrap gap-1",
             isPopular ? "inset-e-1 justify-end" : "right-2",
           )}
         >
@@ -135,7 +139,12 @@ export default function ProductCard({
               : "text-text-primary text-base",
           )}
         >
-          {product.title}
+          <Link
+            href={`/products/${product.id}`}
+            className="focus-visible:after:outline-ring after:absolute after:inset-0 after:z-10 after:rounded-xl focus-visible:outline-none focus-visible:after:outline-2"
+          >
+            {product.title}
+          </Link>
         </p>
 
         {/* Rating & Cart */}
@@ -151,19 +160,13 @@ export default function ProductCard({
               />
             ))}
           </div>
-
-          <button
-            type="button"
-            aria-label={t("Product.addToCart")}
-
-            onClick={() => {}}
-            className={cn(
-              "bg-bg-maroon-secondary flex items-center justify-center rounded-full text-white",
-              isPopular ? "translate-y-[50%] p-2" : "size-10",
-            )}
-          >
-            <ShoppingCart className="size-5" />
-          </button>
+          <div className="relative z-20">
+            <AddToCartButton
+              productId={String(product.id)}
+              variant="icon"
+              stock={product.stock}
+            />
+          </div>
         </div>
 
         {/* Price */}

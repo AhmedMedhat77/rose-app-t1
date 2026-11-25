@@ -90,7 +90,7 @@ function Textarea({
         onChange={handleChange}
         {...(value === undefined ? { defaultValue } : { value })}
         className={cn(
-          "border-border-soft bg-bg-plain text-text-plain placeholder:text-text-muted field-sizing-content max-h-60 min-h-37.5 w-full resize-y overflow-y-auto rounded-lg border p-4 text-sm break-words transition-colors outline-none",
+          "border-border-soft bg-bg-plain text-text-plain placeholder:text-text-muted field-sizing-content max-h-60 min-h-37.5 w-full resize-y overflow-y-auto rounded-lg border p-4 text-sm wrap-break-word transition-colors outline-none",
           "hover:border-border-default hover:ring-ring-default hover:ring-3",
           "focus:border-border-primary focus-visible:border-border-primary focus-visible:ring-ring-default focus-visible:ring-3",
           "aria-invalid:border-border-danger aria-invalid:ring-ring-danger aria-invalid:hover:border-border-danger aria-invalid:focus:border-border-danger aria-invalid:focus-visible:border-border-danger aria-invalid:ring-3",

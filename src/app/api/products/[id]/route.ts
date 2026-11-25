@@ -1,45 +1,43 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { HEADERS } from "@/shared/lib/constants/api.constant";
-import { PRODUCT_ENDPOINT } from "@/features/products/lib/apis/product.endpoint";
+import { apiFetch, ApiError } from "@/shared/lib/apis/fetch.api";
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const { id } = await params;
-  const apiUrl = process.env.API_URL?.replace(/\/+$/, "");
-
-  if (!apiUrl) {
-    return NextResponse.json(
-      { status: false, message: "API URL is not configured" },
-      { status: 500 },
-    );
-  }
-
   try {
-    const endpoint = new URL(
-      `/api/${PRODUCT_ENDPOINT}/${encodeURIComponent(id)}`,
-      apiUrl,
-    );
-    const response = await fetch(endpoint, {
-      headers: HEADERS.ACCEPT_JSON,
+    const { id } = await params;
+
+    const response = await apiFetch(`/products/${encodeURIComponent(id)}`, {
+      method: "GET",
       signal: request.signal,
     });
 
-    return new Response(response.body, {
-      status: response.status,
-      headers: {
-        "Content-Type":
-          response.headers.get("content-type") ?? "application/json",
-      },
-    });
+    if (!response.payload) {
+      throw new ApiError(404, "Product not found");
+    }
+
+    return NextResponse.json(response);
   } catch (error) {
-    if (error instanceof Error && error.name === "AbortError") throw error;
+    console.error("Get product API error:", error);
+
+    const status =
+      error instanceof ApiError &&
+      error.code &&
+      error.code >= 400 &&
+      error.code <= 599
+        ? error.code
+        : 500;
 
     return NextResponse.json(
-      { status: false, message: "Unable to reach the backend API" },
-      { status: 502 },
+      {
+        status: false,
+        code: status,
+        message:
+          error instanceof Error ? error.message : "Failed to fetch product",
+      },
+      { status },
     );
   }
 }
