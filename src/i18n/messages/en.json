@@ -574,5 +574,32 @@
   "ProductsCarousel": {
     "empty": "No products to show",
     "error": "Something went wrong. Please try again."
+  },
+  "Orders": {
+    "title": "Orders",
+    "orderNumber": "Order #{number}",
+    "createdIn": "Created in:",
+    "totalPrice": "Total Price:",
+    "currency": "EGP",
+    "paid": "Paid",
+    "status": "Status:",
+    "statusInProgress": "In Progress",
+    "statusDone": "Done",
+    "statusCancelled": "Canceled",
+    "statusRefunded": "Refunded",
+    "paymentMethod": "Payment Method:",
+    "paymentCash": "Cash",
+    "paymentCreditCard": "Credit Card",
+    "deliveryStatus": "Delivery Status:",
+    "deliveryPending": "Pending",
+    "deliveryShipped": "Shipped",
+    "deliveryDelivered": "Delivered",
+    "deliveryCancelled": "Canceled",
+    "orderItems": "Order Items:",
+    "showAll": "Show All",
+    "showLess": "Show Less",
+    "empty": "You have no orders yet",
+    "startShopping": "Start Shopping",
+    "error": "Something went wrong while loading your orders. Please try again."
   }
 }
