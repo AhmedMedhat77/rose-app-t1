@@ -1,14 +1,22 @@
-import { HeartPlus, ShoppingCart } from "lucide-react";
+import { HeartPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { Button } from "@/shared/ui/button";
+import AddToCartButton from "@/shared/components/add-to-cart-button";
 
 interface ProductActionsProps {
-  disabled: boolean;
-  onAddToCart: () => void;
+  productId: string;
+  stock: number;
+  quantity?: number;
+  disabled?: boolean;
 }
 
-export function ProductActions({ disabled, onAddToCart }: ProductActionsProps) {
+export function ProductActions({
+  productId,
+  stock,
+  quantity = 1,
+  disabled = false,
+}: ProductActionsProps) {
   const t = useTranslations("Product");
 
   return (
@@ -17,20 +25,20 @@ export function ProductActions({ disabled, onAddToCart }: ProductActionsProps) {
         type="button"
         size="icon-lg"
         variant="ghost"
-        className="bg-muted size-14 dark:border-zinc-500 dark:bg-transparent"
+        className="bg-muted size-14"
         aria-label={t("addToWishlist")}
       >
-        <HeartPlus className="size-6.25" />
+        <HeartPlus aria-hidden="true" className="size-6.25" />
       </Button>
-      <Button
-        type="button"
-        onClick={onAddToCart}
+
+      <AddToCartButton
+        productId={productId}
+        stock={stock}
+        quantity={quantity}
         disabled={disabled}
+        variant="full"
         className="h-14 w-full"
-      >
-        <ShoppingCart />
-        {t("addToCart")}
-      </Button>
+      />
     </div>
   );
 }

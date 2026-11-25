@@ -1,15 +1,27 @@
-import { HEADERS } from "./../../../../shared/lib/constants/api.constant";
-import { IProductReview } from "./../../types/product.d";
+import "server-only";
+
+import { notFound } from "next/navigation";
+
+import { API_URL } from "@/app/shared/constants/config";
+import { getProducts } from "@/shared/lib/apis/products.api";
+import { HEADERS } from "@/shared/lib/constants/api.constant";
 import type { IApiResponse, IPaginatedResponse } from "@/shared/types/api";
-import type { IProduct, IProductOverviewResponse } from "../../types/product";
-import { PRODUCT_OVERVIEW_ENDPOINT } from "./product.endpoint";
-import { IReviewFormValues } from "../../schemas/review.schema";
+import type { IReviewFormValues } from "../../schemas/review.schema";
+import type {
+  IProduct,
+  IProductOverviewResponse,
+  IProductReview,
+} from "../../types/product";
 import { REVIEWS_LIMIT } from "../constants/product.constants";
+
+const RELATED_PRODUCTS_LIMIT = 8;
 
 export async function getProductById(
   id: string,
 ): Promise<IApiResponse<IProductOverviewResponse>> {
-  const response = await fetch(PRODUCT_OVERVIEW_ENDPOINT(id));
+  if (!API_URL) throw new Error("API_URL is not configured");
+  const response = await fetch(`${API_URL}/products/${encodeURIComponent(id)}`);
+  if (response.status === 404) notFound();
   const result: {
     status: boolean;
     code: number;
@@ -53,21 +65,17 @@ export async function getProductById(
 
 export async function getProductsByCategory(
   categoryId: string,
+  excludeProductId: string,
 ): Promise<IProduct[]> {
-  const params = new URLSearchParams({ categoryId, limit: "8" });
-  const response = await fetch(`/api/products/search?${params}`);
-  const result: {
-    status?: boolean;
-    message?: string;
-    payload?: { data?: IProduct[] };
-    data?: IProduct[];
-  } = await response.json();
+  const params = new URLSearchParams({
+    categoryId,
+    limit: String(RELATED_PRODUCTS_LIMIT + 1),
+  });
+  const products = await getProducts(`/products?${params}`);
 
-  if (!response.ok || result.status === false) {
-    throw new Error(result.message || "Unable to fetch related products");
-  }
-
-  return result.payload?.data ?? result.data ?? [];
+  return products
+    .filter((product) => product.id !== excludeProductId)
+    .slice(0, RELATED_PRODUCTS_LIMIT);
 }
 
 export async function getReviewsApi(
