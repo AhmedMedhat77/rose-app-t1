@@ -16,7 +16,13 @@ export async function GET(request: NextRequest) {
     .slice(0, MAX_IDS);
 
   try {
-    const products = await Promise.all(ids.map((id) => getProductById(id)));
+    const products = await Promise.all(
+      ids.map((id) =>
+        getProductById(id, {
+          cache: "no-store",
+        }),
+      ),
+    );
 
     return NextResponse.json(
       products.filter((product): product is IProduct => product !== null),

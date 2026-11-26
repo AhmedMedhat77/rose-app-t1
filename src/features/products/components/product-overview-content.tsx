@@ -27,9 +27,7 @@ export default async function ProductOverviewContent({
   }).toString();
 
   const products: IProduct[] = await getProducts(relatedProductsQuery);
-  const relatedProducts = Promise.resolve(
-    products.filter((p) => p.id !== product.id),
-  );
+  const relatedProducts = products.filter((p) => p.id !== product.id);
 
   return (
     <div className="container mx-auto flex flex-col justify-between px-4 py-8 lg:py-12">
@@ -48,7 +46,7 @@ export default async function ProductOverviewContent({
       />
       <section className="mt-42 mb-72 flex flex-col">
         <ProductsCarousel
-          productsList={relatedProducts}
+          productsList={Promise.resolve(relatedProducts)}
           title={t("relatedProducts")}
         />
       </section>

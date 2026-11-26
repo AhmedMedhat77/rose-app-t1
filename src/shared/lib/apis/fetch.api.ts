@@ -173,7 +173,6 @@ export async function apiFetch<T>(
     headers: finalHeaders,
     body: encodeBody(body, finalHeaders),
   });
-  console.log("response", response);
   const data = await readBody(response);
   throwIfFailed(response, data);
   return readSuccess<T>(response, data);
