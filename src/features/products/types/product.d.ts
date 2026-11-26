@@ -1,3 +1,5 @@
+import { ITimeStamp } from "@/shared/types/time";
+
 export type IProduct = {
   id: string;
   title: string;
@@ -106,4 +108,18 @@ export interface IProductOverview extends IProduct {
 
 export interface IProductOverviewResponse {
   product: IProductOverview;
+}
+
+export interface IProductReview extends ITimeStamp {
+  id: string;
+  userId: string;
+  productId: string;
+  headline: string;
+  content: string;
+  rating: number;
+  user: IUserPreview;
+  product: {
+    id: string;
+    title: string;
+  };
 }

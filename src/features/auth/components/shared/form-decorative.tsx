@@ -1,5 +1,5 @@
 "use client";
-import { useTheme } from "@/shared/context/theme.context";
+import { useTheme } from "@/shared/providers/theme.context";
 import { cn } from "cn";
 import Image, { type ImageProps } from "next/image";
 

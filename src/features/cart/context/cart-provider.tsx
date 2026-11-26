@@ -6,13 +6,16 @@ import {
   useContext,
   useEffect,
   useRef,
-  useState,
   useSyncExternalStore,
   type ReactNode,
 } from "react";
 
 import { useSession } from "next-auth/react";
 import { useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
+
+import { addToast } from "@/shared/ui/toast";
+import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
 
 import { useAddCartItem } from "../hooks/use-add-cart-item";
 import { useUpdateCartItem } from "../hooks/use-update-cart-item";
@@ -20,12 +23,10 @@ import { useRemoveCartItem } from "../hooks/use-remove-cart-item";
 import { useClearCart } from "../hooks/use-clear-cart";
 import { useCart, cartQueryKey } from "../hooks/use-cart";
 
-import type {
-  IGuestCartItem,
-  IAddToCartInput,
-  ICartViewItem,
-} from "../types/cart.types";
+import type { IAddToCartInput, ICartViewItem } from "../types/cart.types";
+
 import { mapCartItems, mapGuestCartItems } from "../utils/cart-mapper";
+
 import {
   addGuestCartItem,
   clearGuestCart,
@@ -40,12 +41,9 @@ import {
 } from "../utils/guest-cart";
 
 interface ICartContext {
-  guestCart: IGuestCartItem[];
   viewItems: ICartViewItem[];
 
   isReady: boolean;
-  isMerging: boolean;
-  mergeError: string | null;
   cartLength: number;
 
   isAuthenticated: boolean;
@@ -65,18 +63,19 @@ interface ICartContext {
   removeItem: (productId: string, cartItemId?: string) => Promise<void>;
 
   clearCart: () => Promise<void>;
-  syncGuestCart: () => Promise<void>;
 }
 
 const CartContext = createContext<ICartContext | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const { data: session, status } = useSession();
-
   const queryClient = useQueryClient();
+  const t = useTranslations("Cart");
 
+  // Variables
   const userId = session?.user?.id;
-  // hooks
+  const isAuthenticated = status === "authenticated";
+
   // Guest cart subscription
   const guestCart = useSyncExternalStore(
     subscribeGuestCart,
@@ -96,18 +95,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
     isLoading: isCartLoading,
     isError: isCartError,
     error: cartError,
-  } = useCart(status === "authenticated");
-
-  // State
-  const [isMerging, setIsMerging] = useState(false);
-  const [mergeError, setMergeError] = useState<string | null>(null);
+  } = useCart(isAuthenticated);
 
   // Refs
   const mergeLockRef = useRef(false);
   const mergeAttemptRef = useRef<string | null>(null);
 
-  // Functions
-
+  // Add to cart
   const addToCart = useCallback(
     async (payload: IAddToCartInput) => {
       if (status === "loading") {
@@ -124,7 +118,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         throw new Error("Product is out of stock.");
       }
 
-      if (status === "authenticated") {
+      if (isAuthenticated) {
         await addGuestItemToServer({
           productId: product.id,
           quantity,
@@ -133,11 +127,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
         return;
       }
 
-      // Guest carts store product details because they have no server query.
       addGuestCartItem(product, quantity);
     },
-    [status, addGuestItemToServer],
+    [status, isAuthenticated, addGuestItemToServer],
   );
+
+  // Update quantity
   const updateQuantity = useCallback(
     async (productId: string, quantity: number, cartItemId?: string) => {
       if (status === "loading") {
@@ -152,7 +147,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         throw new Error("Quantity must be a positive integer.");
       }
 
-      if (status === "authenticated") {
+      if (isAuthenticated) {
         if (!cartItemId) {
           throw new Error("Cart item ID is required.");
         }
@@ -167,9 +162,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
       updateGuestCartItem(productId, quantity);
     },
-    [status, updateServerCartItem],
+    [status, isAuthenticated, updateServerCartItem],
   );
 
+  // Remove item
   const removeItem = useCallback(
     async (productId: string, cartItemId?: string) => {
       if (status === "loading") {
@@ -180,7 +176,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         throw new Error("Product ID is required.");
       }
 
-      if (status === "authenticated") {
+      if (isAuthenticated) {
         if (!cartItemId) {
           throw new Error("Cart item ID is required.");
         }
@@ -192,25 +188,27 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
       removeGuestCartItem(productId);
     },
-    [status, removeServerCartItem],
+    [status, isAuthenticated, removeServerCartItem],
   );
 
+  // Clear cart
   const clearCart = useCallback(async () => {
     if (status === "loading") {
       throw new Error("Authentication is still loading.");
     }
 
-    if (status === "authenticated") {
+    if (isAuthenticated) {
       await clearServerCart();
       return;
     }
 
     clearGuestCart();
-  }, [status, clearServerCart]);
+  }, [status, isAuthenticated, clearServerCart]);
 
+  // Get product quantity
   const getProductQuantity = useCallback(
     (productId: string) => {
-      if (status === "authenticated") {
+      if (isAuthenticated) {
         return (
           cartData?.cartItems?.find((item) => item.productId === productId)
             ?.quantity ?? 0
@@ -221,28 +219,23 @@ export function CartProvider({ children }: { children: ReactNode }) {
         guestCart.find((item) => item.productId === productId)?.quantity ?? 0
       );
     },
-    [status, cartData, guestCart],
+    [isAuthenticated, cartData, guestCart],
   );
 
   // Sync guest cart with backend
   const syncGuestCart = useCallback(async () => {
-    if (status !== "authenticated" || !userId) {
-      return;
-    }
-
-    if (mergeLockRef.current) {
+    if (!isAuthenticated || !userId || mergeLockRef.current) {
       return;
     }
 
     const guestItems = [...getGuestCartSnapshot()];
 
     if (guestItems.length === 0) {
+      clearGuestCartOwner();
       return;
     }
 
     mergeLockRef.current = true;
-    setIsMerging(true);
-    setMergeError(null);
 
     try {
       const currentOwner = getGuestCartOwner();
@@ -260,7 +253,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           quantity: item.quantity,
         });
 
-        // Remove an item only after the backend accepts it, so failures can be retried.
+        // Remove an item only after the backend accepts it.
         removeGuestCartItem(item.productId);
       }
 
@@ -270,21 +263,19 @@ export function CartProvider({ children }: { children: ReactNode }) {
         queryKey: cartQueryKey,
       });
     } catch (error) {
-      const message =
-        error instanceof Error ? error.message : "Failed to sync guest cart.";
-
-      setMergeError(message);
+      console.error("Failed to sync guest cart:", error);
+      addToast(TOAST_STATE.Unsuccessful, t("syncGuestCartFailed"));
 
       throw error;
     } finally {
       mergeLockRef.current = false;
-      setIsMerging(false);
     }
-  }, [status, userId, addGuestItemToServer, queryClient]);
+  }, [isAuthenticated, userId, addGuestItemToServer, queryClient, t]);
 
-  // Effects
+  // Automatically sync guest cart once per authenticated user.
   useEffect(() => {
-    if (status !== "authenticated" || !userId) {
+    if (!isAuthenticated || !userId) {
+      mergeAttemptRef.current = null;
       return;
     }
 
@@ -292,25 +283,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    const attemptKey = [
-      userId,
-      ...guestCart.map((item) => `${item.productId}:${item.quantity}`),
-    ].join("|");
-
-    if (mergeAttemptRef.current === attemptKey) {
+    if (mergeAttemptRef.current === userId) {
       return;
     }
 
-    mergeAttemptRef.current = attemptKey;
+    mergeAttemptRef.current = userId;
 
-    syncGuestCart().catch(() => {
-      // syncGuestCart stores the error before rethrowing it.
+    void syncGuestCart().catch(() => {
+      // The error is already handled with a toast inside syncGuestCart.
     });
-  }, [status, userId, guestCart, syncGuestCart]);
+  }, [isAuthenticated, userId, guestCart, syncGuestCart]);
 
   // Variables
-  const isAuthenticated = status === "authenticated";
-
   const viewItems = isAuthenticated
     ? mapCartItems(cartData?.cartItems ?? [])
     : mapGuestCartItems(guestCart);
@@ -323,12 +307,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   // Context value
   const value: ICartContext = {
-    guestCart,
     viewItems,
 
     isReady,
-    isMerging,
-    mergeError,
     cartLength,
 
     isAuthenticated,
@@ -341,7 +322,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
     updateQuantity,
     removeItem,
     clearCart,
-    syncGuestCart,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

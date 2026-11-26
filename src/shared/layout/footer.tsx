@@ -8,7 +8,7 @@ import {
   LEGAL_LINKS,
   MAIN_LINKS,
 } from "@/shared/lib/constants/navigation.constant";
-import { getCurrentYear } from "@/shared/lib/utils/time.util";
+import { getCurrentYear } from "@/features/products/lib/utils/current-year.util";
 
 const FOOTER_LINKS = [...MAIN_LINKS, ...LEGAL_LINKS];
 

@@ -58,6 +58,7 @@ type ClearButtonProps = Omit<ComponentProps<typeof Button>, "children"> & {
 function ClearButton({
   label,
   pendingLabel,
+  className,
   isPending = false,
   variant = "secondary",
   disabled,
@@ -68,7 +69,7 @@ function ClearButton({
       type="button"
       variant={variant}
       disabled={disabled || isPending}
-      className="text-text-maroon"
+      className={className}
       {...props}
     >
       <BrushCleaning aria-hidden="true" size={20} />

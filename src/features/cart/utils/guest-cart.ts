@@ -41,7 +41,13 @@ function readCart(): IGuestCartItem[] {
         typeof item?.productId === "string" &&
         typeof item?.quantity === "number" &&
         Number.isInteger(item.quantity) &&
-        item.quantity > 0,
+        item.quantity > 0 &&
+        typeof item?.product === "object" &&
+        item.product !== null &&
+        item.product.id === item.productId &&
+        typeof item.product.stock === "number" &&
+        Number.isFinite(item.product.stock) &&
+        item.product.stock >= 0,
     );
 
     return cachedSnapshot;

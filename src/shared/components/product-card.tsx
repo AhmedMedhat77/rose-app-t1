@@ -1,14 +1,14 @@
 "use client";
-
-import { useState } from "react";
 import { Link } from "@/i18n/navigation";
-import { getDiscountedPrice } from "@/shared/lib/utils/discounted-price.util";
+import { getDiscountedPrice } from "@/shared/lib/utils/price";
 import { Badge } from "@/shared/ui/badge";
 import { cn } from "cn";
-import { Eye, HeartMinus, Star, HeartPlus, Heart } from "lucide-react";
+import { Eye, HeartMinus, Star, HeartPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 import AddToCartButton from "./add-to-cart-button";
+import { WishlistButton } from "@/features/wishlist/components/wishlist-button";
+import { useState } from "react";
+import Image from "next/image";
 
 export interface ProductCardProduct {
   id: string | number;
@@ -140,23 +140,19 @@ export default function ProductCard({
         {/* Popular Hover Actions */}
         {isPopular && (
           <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center gap-2 bg-[#E7969F]/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            <button
-              type="button"
-              aria-label="Toggle wishlist"
-              aria-pressed={isWishlisted}
-              onClick={toggleWishlist}
-              className="text-text-maroon-700 pointer-events-auto flex size-7 items-center justify-center rounded-full bg-white"
-            >
-              <Heart size={15} fill={isWishlisted ? "currentColor" : "none"} />
-            </button>
-
-            <button
+            <Link
+              href={`/products/${product.id}`}
               type="button"
               aria-label="Quick view"
-              className="text-text-maroon-700 pointer-events-auto flex size-7 items-center justify-center rounded-full bg-white"
+              className="text-text-maroon-700 pointer-events-auto flex size-7.5 items-center justify-center rounded-full bg-white"
             >
               <Eye size={15} />
-            </button>
+            </Link>
+
+            <WishlistButton
+              productId={String(product.id)}
+              className="pointer-events-auto"
+            />
           </div>
         )}
 

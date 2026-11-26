@@ -1,43 +1,30 @@
 "use client";
 
-import type { ReactNode } from "react";
 import { useTranslations } from "next-intl";
+
 import { Link, usePathname } from "@/i18n/navigation";
 import { MAIN_LINKS } from "@/shared/lib/constants/navigation.constant";
-import {
-  ClipboardListIcon,
-  GiftIcon,
-  HeadsetIcon,
-  HomeIcon,
-  InfoIcon,
-  PartyPopperIcon,
-} from "lucide-react";
 import { cn } from "cn";
 
-type MainLinkKey = (typeof MAIN_LINKS)[number]["key"];
-
-const NAV_ICONS: Record<MainLinkKey, ReactNode> = {
-  home: <HomeIcon width={20} height={20} />,
-  products: <GiftIcon width={20} height={20} />,
-  categories: <ClipboardListIcon width={20} height={20} />,
-  occasions: <PartyPopperIcon width={20} height={20} />,
-  contact: <HeadsetIcon width={20} height={20} />,
-  about: <InfoIcon width={20} height={20} />,
-};
+import { isActiveNavLink, NAV_ICONS } from "./nav-shared";
 
 export function NavBar() {
+  // Translation
   const tNav = useTranslations("Navigation");
   const t = useTranslations("Header");
+
+  // Navigation
   const pathname = usePathname();
 
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
-
   return (
-    <nav aria-label={t("mainNavigation")} className="bg-bg-primary-saturated">
+    <nav
+      aria-label={t("mainNavigation")}
+      className="bg-bg-primary-saturated hidden lg:block"
+    >
       <ul className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-10 gap-y-1 px-6">
         {MAIN_LINKS.map(({ key, href }) => {
-          const active = isActive(href);
+          const active = isActiveNavLink(pathname, href);
+
           return (
             <li key={key}>
               <Link

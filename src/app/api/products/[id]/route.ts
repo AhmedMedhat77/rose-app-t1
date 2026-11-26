@@ -1,33 +1,43 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { API_URL } from "@/app/shared/constants/config";
+import { apiFetch, ApiError } from "@/shared/lib/apis/fetch.api";
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  if (!API_URL) {
-    return NextResponse.json(
-      { status: false, message: "Products service is unavailable" },
-      { status: 500 },
-    );
-  }
-
-  const { id } = await params;
-
   try {
-    const response = await fetch(
-      `${API_URL}/products/${encodeURIComponent(id)}`,
-      { cache: "no-store", signal: request.signal },
-    );
+    const { id } = await params;
 
-    return NextResponse.json(await response.json(), {
-      status: response.status,
+    const response = await apiFetch(`/products/${encodeURIComponent(id)}`, {
+      method: "GET",
+      signal: request.signal,
     });
-  } catch {
+
+    if (!response.payload) {
+      throw new ApiError(404, "Product not found");
+    }
+
+    return NextResponse.json(response);
+  } catch (error) {
+    console.error("Get product API error:", error);
+
+    const status =
+      error instanceof ApiError &&
+      error.code &&
+      error.code >= 400 &&
+      error.code <= 599
+        ? error.code
+        : 500;
+
     return NextResponse.json(
-      { status: false, message: "Products service is unreachable" },
-      { status: 502 },
+      {
+        status: false,
+        code: status,
+        message:
+          error instanceof Error ? error.message : "Failed to fetch product",
+      },
+      { status },
     );
   }
 }
