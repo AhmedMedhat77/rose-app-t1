@@ -39,6 +39,7 @@ export default async function ProductOverViewPage({
   // Product
   let product = await getProductById<IProductOverview>(id);
 
+  // If product not found, return 404
   if (!product) notFound();
   product = { ...product, gallery: parseGallery(product.gallery) };
 
