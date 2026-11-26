@@ -1,4 +1,4 @@
-import { API_URL } from "@/app/shared/constants/config";
+import { API_URL } from "@/shared/lib/constants/config";
 import { IMostPopularProduct, Product } from "../types/mostPopular";
 
 export default async function getMostPopularProducts(

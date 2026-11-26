@@ -1,8 +1,8 @@
 import "server-only";
 
-import { API_URL } from "@/app/shared/constants/config";
+import { API_URL } from "@/shared/lib/constants/config";
 import { IProduct } from "@/features/products/types/product";
-import { IApiResponse } from "@/shared/types/api";
+import { IApiResponse } from "@/shared/lib/types/api";
 
 export async function getProduct(productId: string): Promise<IProduct | null> {
   const response = await fetch(

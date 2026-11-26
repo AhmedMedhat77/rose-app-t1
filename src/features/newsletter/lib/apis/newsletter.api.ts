@@ -1,5 +1,5 @@
 "use server";
-import { API_URL } from "@/app/shared/constants/config";
+import { API_URL } from "@/shared/lib/constants/config";
 
 export type SubscribeResult = "subscribed" | "already-subscribed" | "error";
 

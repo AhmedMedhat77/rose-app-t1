@@ -2,9 +2,9 @@ import "server-only";
 
 import { getServerSession } from "next-auth";
 
-import { API_URL } from "@/app/shared/constants/config";
+import { API_URL } from "@/shared/lib/constants/config";
 import { authOptions } from "@/auth";
-import type { ISuccessResponse } from "@/shared/types/api";
+import type { ISuccessResponse } from "@/shared/lib/types/api";
 
 export type ApiMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -173,7 +173,7 @@ export async function apiFetch<T>(
     headers: finalHeaders,
     body: encodeBody(body, finalHeaders),
   });
-
+  console.log("response", response);
   const data = await readBody(response);
   throwIfFailed(response, data);
   return readSuccess<T>(response, data);

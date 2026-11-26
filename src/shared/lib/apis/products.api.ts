@@ -8,7 +8,7 @@ import type {
   IProductOverview,
   IProductOverviewResponse,
 } from "@/features/products/types/product";
-import type { IPaginatedPayload } from "@/shared/types/api";
+import type { IPaginatedPayload } from "@/shared/lib/types/api";
 
 export async function getProductById(id: string): Promise<IProductOverview> {
   const response = await apiFetch<IProductOverviewResponse>(

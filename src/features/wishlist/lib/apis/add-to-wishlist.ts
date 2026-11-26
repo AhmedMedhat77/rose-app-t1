@@ -1,11 +1,11 @@
 import "server-only";
 
-import { HEADERS } from "@/app/shared/constants/api.constant";
-import { API_URL } from "@/app/shared/constants/config";
+import { HEADERS } from "@/shared/lib/constants/api.constant";
+import { API_URL } from "@/shared/lib/constants/config";
 
 import type { WishlistItem } from "../types/wishlist.types";
 import { WishlistRequestError } from "./wishlist-request-error";
-import { IApiResponse } from "@/shared/types/api";
+import { IApiResponse } from "@/shared/lib/types/api";
 
 export async function addToWishlist(
   accessToken: string,

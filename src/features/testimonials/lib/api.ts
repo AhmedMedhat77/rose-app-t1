@@ -1,4 +1,4 @@
-import { API_URL } from "@/app/shared/constants/config";
+import { API_URL } from "@/shared/lib/constants/config";
 import { ITestimonials } from "./types/testimonials";
 
 export default async function getAllTestimonials() {

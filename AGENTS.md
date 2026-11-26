@@ -106,7 +106,9 @@ src/
 │       ├── constants/
 │       │   └── <scope-name>.constant.ts
 │       └── utils/
-│           └── <scope-name>.util.ts
+│       │   └── <scope-name>.util.ts
+│       └── types/
+│           └── <scope-name>.d.ts
 │
 └── app/
     ├── favicon.ico
@@ -115,11 +117,6 @@ src/
     │   └── auth/
     │       └── [...nextauth]/
     │           └── route.ts
-    ├── shared/
-    │   ├── constants/
-    │   │   └── <scope-name>.constant.ts
-    │   └── types/
-    │       └── <scope-name>.d.ts
     └── [locale]/                        # localized root
         ├── layout.tsx
         ├── page.tsx

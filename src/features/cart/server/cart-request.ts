@@ -1,11 +1,11 @@
 import "server-only";
 
-import { API_URL } from "@/app/shared/constants/config";
-import { HEADERS } from "@/app/shared/constants/api.constant";
+import { API_URL } from "@/shared/lib/constants/config";
+import { HEADERS } from "@/shared/lib/constants/api.constant";
 
 import { getAccessToken } from "./get-access-token";
 
-import type { IApiResponse } from "@/shared/types/api";
+import type { IApiResponse } from "@/shared/lib/types/api";
 
 interface ICartRequestOptions {
   method: "GET" | "POST" | "PATCH" | "DELETE";

@@ -1,4 +1,4 @@
-import { API_URL } from "@/app/shared/constants/config";
+import { API_URL } from "@/shared/lib/constants/config";
 import { IOccasion } from "../types/mostPopular";
 import { IOccasionsResponse } from "../types/occasions";
 

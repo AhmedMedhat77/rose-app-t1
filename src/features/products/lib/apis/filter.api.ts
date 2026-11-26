@@ -2,7 +2,7 @@ import type {
   IApiResponse,
   IPaginatedPayload,
   IPaginatedResponse,
-} from "@/shared/types/api";
+} from "@/shared/lib/types/api";
 
 import { HEADERS } from "@/shared/lib/constants/api.constant";
 

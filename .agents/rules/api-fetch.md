@@ -24,7 +24,7 @@ One exported function per endpoint. A different query, body, or cache option is 
 
 ## Success
 
-`apiFetch<T>` returns `ISuccessResponse<T>` from `src/shared/types/api.d.ts`. `T` is `payload`.
+`apiFetch<T>` returns `ISuccessResponse<T>` from `src/shared/lib/types/api.d.ts`. `T` is `payload`.
 
 ```ts
 {
