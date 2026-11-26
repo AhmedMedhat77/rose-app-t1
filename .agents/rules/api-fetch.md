@@ -12,9 +12,9 @@ alwaysApply: false
 
 # Calling the API
 
-`apiFetch` in `src/shared/lib/apis/fetch.api.ts` is the only server-side HTTP client. A `*.api.ts` file calls it. Components, hooks, and pages call the exported function from that file. They do not call `apiFetch`.
+`apiFetch` in `src/shared/lib/apis/fetch.api.ts` is the only server-side HTTP client. A `*.api.ts` file calls it. Server Components, Route Handlers, and Server Actions call the exported function from that file. They do not call `apiFetch`. Client components and hooks do not import `*.api.ts` or `apiFetch`.
 
-`apiFetch` is `server-only`. A Client Component cannot import it. A Client Component uses `useSession()` for signed-in state and calls a Server Action. The Server Action, or a Server Component, reads the session with `getServerSession(authOptions)` and passes the access token into the `*.api.ts` function.
+`apiFetch` is `server-only`. A Client Component cannot import it. A Client Component uses `useSession()` for signed-in state. Calling the backend as that user is separate: pass `auth: true`, or pass a token string. Both are allowed, and neither is the default. The client never sees the token. It goes through a Route Handler or a Server Action.
 
 ## Where the file goes
 
@@ -64,22 +64,35 @@ A 2xx body must still have `status: true` and a numeric `code`. A body missing e
 
 ## Failure
 
-`apiFetch` throws `ApiError`. Do not check `status` again inside the `*.api.ts` file.
+`apiFetch` throws `ApiError` on a non-2xx HTTP status, on a 2xx body with `status: false`, and on a 2xx body missing `status: true` or a numeric `code`.
 
 `ApiError` carries:
 
-- `status`, the HTTP status
-- `code`, the body's `code` when it is a number
-- `message`, the body's `message` when it is a string, otherwise the HTTP status text
-- `data`, the raw body
+- `status`, always `false`
+- `code`, the HTTP status (`response.status`)
+- `message`, the body's `message` when it is a non-empty string, otherwise the HTTP status text, otherwise `"Request failed"`
 
-A non-2xx HTTP status throws. A 2xx body with `status: false` also throws. Change password's wrong-password body is an `ApiError` with `code: 401` and `message: "Current password is incorrect."`. The `*.api.ts` function lets that error through. The Server Action maps `code === 401` onto the old-password field. The form shows its own translated message.
+There is no `data` field. The body's `code` is not copied onto `ApiError`.
+
+A function that loads one item catches a 404 and returns `null`. It does not call `notFound()`. Whether the page calls `notFound()` is TBD by the team. See `nextjs.md`.
+
+```ts
+try {
+  const { payload } = await apiFetch<{ product: IProduct }>(`/products/${id}`);
+  return payload?.product ?? null;
+} catch (error) {
+  if (error instanceof ApiError && error.code === 404) return null;
+  throw error;
+}
+```
+
+Other errors propagate. Change password lets `ApiError` through. `code` is the HTTP status, so the Server Action maps `code === 401` onto the old-password field. The form shows its own translated message.
 
 Newsletter keeps three results in its own function, because the form does not want a thrown error:
 
 - HTTP 201 returns `"subscribed"`.
-- HTTP 409, or body `code: 409`, is caught and returned as `"already-subscribed"`.
-- HTTP 400 with `errors` is caught and returned as `"error"`. `error.data` still holds `errors`.
+- HTTP 409 (`error.code === 409`) is caught and returned as `"already-subscribed"`.
+- HTTP 400 (`error.code === 400`) is caught and returned as `"error"`.
 
 ## Arguments
 
@@ -91,9 +104,9 @@ A plain object `body` is sent as JSON. `FormData`, a string, or a blob is sent a
 
 `Accept` is always `application/json`. A JSON body gets `Content-Type: application/json`.
 
-`auth: token` sends `Authorization: Bearer <token>`. `auth: true` reads the current server session and throws `ApiError` 401 when the access token is missing. Omit `auth` when the endpoint is public.
+`auth: token` sends `Authorization: Bearer <token>`. `auth: true` reads the current server session and throws `ApiError` 401 when the access token is missing. Both are allowed, and neither is the default. Omit `auth` when the endpoint is public.
 
-`cache` and `next` are passed through to `fetch`. Copy the caller's current cache. Do not invent one cache policy for every GET.
+`cache` and `next` are passed through to `fetch`. Copy the caller's current cache. Do not invent one cache policy for every GET. Per-user data uses `cache: "no-store"`. Do not add per-user cache tags.
 
 ```ts
 const result = await apiFetch<void>("/users/change-password", {

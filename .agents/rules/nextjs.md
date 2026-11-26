@@ -76,6 +76,8 @@ export async function ProductList() {
 
 **Suspense only works when the child component is `async` and returns a Promise.** A non-async component wrapped in `<Suspense>` has no effect.
 
+When a `*.api.ts` function returns `null` for a missing item, whether the page calls `notFound()` — and whether that call sits outside `<Suspense>` — is TBD by the team. The data function does not call `notFound()`.
+
 ---
 
 ## Mutations Strategy
@@ -98,19 +100,31 @@ Use Route Handlers only when you need to avoid exposing sensitive information (t
 // src/app/api/products/route.ts
 import { NextRequest, NextResponse } from "next/server";
 
-import { HEADERS } from "@/app/shared/constants/api.constant";
+import { ApiError, apiFetch } from "@/shared/lib/apis/fetch.api";
+import type { IPaginatedPayload } from "@/shared/lib/types/api";
 
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const page = searchParams.get("page") ?? "1";
+  const page = request.nextUrl.searchParams.get("page") ?? "1";
 
-  const res = await fetch(`${process.env.API}/products?page=${page}`, {
-    headers: { ...HEADERS.JSON_HEADER },
-  });
+  try {
+    // apiFetch is the generic fetch API created for this project.
+    const result = await apiFetch<
+      IPaginatedPayload<{ id: string; name: string }>
+    >("/products", { query: { page } });
 
-  const data = await res.json();
+    return NextResponse.json(result.payload);
+  } catch (error) {
+    const status =
+      error instanceof ApiError &&
+      error.code !== undefined &&
+      error.code >= 400 &&
+      error.code <= 599
+        ? error.code
+        : 500;
+    const message = error instanceof Error ? error.message : "Request failed";
 
-  return NextResponse.json(data);
+    return NextResponse.json({ message }, { status });
+  }
 }
 ```
 
