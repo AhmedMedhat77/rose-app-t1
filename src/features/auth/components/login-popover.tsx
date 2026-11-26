@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { User } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import { Link, usePathname } from "@/i18n/navigation";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
@@ -17,16 +17,20 @@ const CLOSE_DELAY_MS = 1000;
 export default function LoginPopover({ label }: { label: string }) {
   const t = useTranslations("LoginPopover");
   const pathname = usePathname();
+  const locale = useLocale();
 
-  // الـ popover مفتوح بس طول ما إحنا في نفس الصفحة اللي اتفتح فيها،
-  // فلما الصفحة تتغير بيتقفل لوحده
+  const loginHref = {
+    pathname: "/login" as const,
+    query: {
+      callbackUrl: `/${locale}${pathname}`,
+    },
+  };
   const [openAt, setOpenAt] = useState<string | null>(null);
   const open = openAt === pathname;
   const setOpen = (next: boolean) => setOpenAt(next ? pathname : null);
 
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // نمسح الـ timer لو الـ component اتشال
   useEffect(() => {
     return () => {
       if (hoverTimer.current) clearTimeout(hoverTimer.current);
@@ -36,7 +40,7 @@ export default function LoginPopover({ label }: { label: string }) {
   const trigger = (
     <>
       <User aria-hidden="true" size={20} />
-      {label}
+      <span className="hidden sm:inline">{label}</span>
     </>
   );
 
@@ -49,7 +53,7 @@ export default function LoginPopover({ label }: { label: string }) {
 
   if (isAuthPage) {
     return (
-      <Link href="/login" className={TRIGGER_CLASS}>
+      <Link href={loginHref} className={TRIGGER_CLASS}>
         {trigger}
       </Link>
     );
@@ -75,7 +79,7 @@ export default function LoginPopover({ label }: { label: string }) {
         nativeButton={false}
         render={
           <Link
-            href="/login"
+            href={loginHref}
             className={TRIGGER_CLASS}
             onMouseEnter={openNow}
             onMouseLeave={closeLater}

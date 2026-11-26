@@ -18,6 +18,7 @@ import {
 } from "@/shared/ui/alert-dialog";
 
 import { ProductCollection } from "@/shared/components/product-collection";
+import { Button } from "@/shared/ui/button";
 
 interface IClearCartDialogProps {
   onConfirm: () => void | Promise<void>;
@@ -57,29 +58,27 @@ export default function ClearCartDialog({
         className="max-w-lg gap-5 p-4 sm:gap-6 sm:p-6"
       >
         {/* Close button */}
-        <button
+        <Button
+          variant="ghost"
           type="button"
           onClick={() => setOpen(false)}
           aria-label={t("cancel")}
-          className="text-muted-foreground hover:text-foreground absolute inset-e-4 top-4 transition-colors sm:inset-e-5 sm:top-5"
+          className="text-text-soft absolute inset-e-0 top-1 cursor-pointer sm:inset-e-1 sm:top-2"
           disabled={isPending}
         >
           <X className="size-5 sm:size-6" />
-        </button>
+        </Button>
 
         <AlertDialogHeader className="items-center gap-3 text-center">
           {/* Outer circle */}
-          <div className="flex size-20 items-center justify-center rounded-full bg-zinc-100 sm:size-26">
+          <div className="bg-bg-muted flex size-20 items-center justify-center rounded-full sm:size-26">
             {/* Inner circle */}
-            <AlertDialogMedia className="mb-0 size-14 rounded-full bg-zinc-200 sm:size-17.5 [&_svg]:size-6 sm:[&_svg]:size-8">
-              <BrushCleaning
-                aria-hidden="true"
-                className="dark:text-zinc-800"
-              />
+            <AlertDialogMedia className="bg-bg-soft mb-0 size-14 rounded-full sm:size-17.5 [&_svg]:size-6 sm:[&_svg]:size-8">
+              <BrushCleaning aria-hidden="true" />
             </AlertDialogMedia>
           </div>
 
-          <AlertDialogTitle className="text-lg font-semibold text-zinc-800 sm:text-xl dark:text-zinc-50">
+          <AlertDialogTitle className="text-text-plain text-lg font-semibold sm:text-xl">
             {t("confirmClear")}
           </AlertDialogTitle>
 

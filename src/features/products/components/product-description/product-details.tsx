@@ -1,4 +1,4 @@
-import { getDiscountedPrice } from "@/shared/lib/utils/discounted-price.util";
+import { getDiscountedPrice } from "@/shared/lib/utils/price";
 import type { IProductOverview } from "../../types/product";
 import { ProductActions } from "./product-actions";
 import { ProductDescription } from "./product-description";

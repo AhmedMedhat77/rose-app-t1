@@ -6,11 +6,11 @@ import type { IProduct } from "@/features/products/types/product";
 import { WishlistButton } from "@/features/wishlist/components/wishlist-button";
 import { Link } from "@/i18n/navigation";
 import { RatingStars } from "@/shared/components/rating-stars";
-import { getDiscountedPrice } from "@/shared/lib/utils/discounted-price.util";
 import { Badge } from "@/shared/ui/badge";
 import AddToCartButton from "./add-to-cart-button";
 import { useTranslations } from "next-intl";
 import { NewBadge } from "./new-badge";
+import { getDiscountedPrice } from "../lib/utils/price";
 
 function Root({ className, ...props }: ComponentProps<"div">) {
   return (

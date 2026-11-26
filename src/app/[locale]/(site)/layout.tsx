@@ -5,10 +5,10 @@ export default async function RootLayout({
   children,
 }: LayoutProps<"/[locale]">) {
   return (
-    <main className="flex-1">
+    <section className="flex-1">
       <Header />
-      <main className="flex-1">{children}</main>
+      <section className="flex-1">{children}</section>
       <Footer />
-    </main>
+    </section>
   );
 }
