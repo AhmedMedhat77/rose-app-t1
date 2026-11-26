@@ -1,5 +1,4 @@
 import { getTranslations } from "next-intl/server";
-
 import CartSide from "@/features/cart/components/cart-side";
 import { getProductsYouMayLike } from "@/features/products/lib/apis/products-you-may-like.api";
 import Summary from "@/features/summary/components/summary";

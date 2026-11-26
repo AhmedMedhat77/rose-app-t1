@@ -1,19 +1,19 @@
 import Image from "next/image";
 import { Suspense } from "react";
 import { useTranslations } from "next-intl";
-import { HeartIcon, ShoppingCartIcon } from "lucide-react";
-
-import { Link } from "@/i18n/navigation";
 import { LocaleSwitcher } from "@/shared/components/locale-switcher";
+import { Link } from "@/i18n/navigation";
 import { NavBar } from "./navbar";
+import { ShoppingCartIcon } from "lucide-react";
 import { MobileNav } from "./mobile-nav";
 import { NotificationsMenu } from "@/features/notifications/components/notifications-menu";
 import { NotificationToggle } from "@/features/notifications/components/notification-toggle";
 import { Input } from "@/shared/ui/input";
 import { SearchBar } from "@/features/search/components/searchBar";
 import AuthMenu from "../components/auth-menu";
-import { ThemeMode } from "../components/theme-mode";
+import { WishlistLink } from "@/features/wishlist/components/wishlist-link";
 import CartCount from "@/features/cart/components/cart-count";
+import { ThemeMode } from "../components/theme-mode";
 
 const ICON_BUTTON =
   "text-zinc-700 relative flex size-9 shrink-0 items-center justify-center rounded-md transition-colors dark:text-text-plain";
@@ -64,16 +64,9 @@ export function Header() {
           {/* Actions */}
           <div className="flex shrink-0 items-center justify-center gap-2 sm:gap-4">
             <AuthMenu loginLabel={t("login")} />
-
-            {/* Icons */}
-            <div className="border-border flex items-center gap-0.5 border-s ps-2 sm:gap-1 sm:ps-4">
-              <Link
-                href="/wishlist"
-                aria-label={t("wishlist")}
-                className={ICON_BUTTON}
-              >
-                <HeartIcon className="size-5" />
-              </Link>
+            {/* Wishlist Heart Icon */}
+            <div className="border-border flex items-center gap-1 border-s ps-4">
+              <WishlistLink className={ICON_BUTTON} />
 
               <Link href="/cart" aria-label={t("cart")} className={ICON_BUTTON}>
                 <ShoppingCartIcon className="size-5" />
