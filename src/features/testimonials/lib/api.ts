@@ -14,6 +14,5 @@ export default async function getAllTestimonials() {
   }
 
   const data: ITestimonials = await response.json();
-  console.log("testimonials===>", data);
   return data;
 }
