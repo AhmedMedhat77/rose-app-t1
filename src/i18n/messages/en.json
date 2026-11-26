@@ -303,6 +303,32 @@
     "filtersError": "Something went wrong. Please try again.",
     "filtersEmpty": "No items found"
   },
+  "productReview": {
+    "title": "Product Reviews",
+    "generalRating": "General rating",
+    "ratings": "ratings",
+    "loadError": "Failed to load reviews",
+    "retry": "Try again",
+    "empty": "No reviews yet",
+    "yourRating": "Your rating",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Enter review title",
+    "reviewLabel": "Review",
+    "reviewPlaceholder": "What do you think of this product?",
+    "addReview": "Add Review",
+    "submitting": "Submitting...",
+    "loginToReview": "Please login to be able to review",
+    "UNAUTHORIZED": "You must be logged in to submit a review.",
+    "INVALID_DATA": "Please check your review and try again.",
+    "SOMETHING_WENT_WRONG": "Something went wrong, please try again",
+    "ALREADY_REVIEWED": "You have already reviewed this product",
+    "titleRequired": "Title is required",
+    "contentRequired": "Review is required",
+    "ratingInteger": "Rating must be a whole number",
+    "ratingMin": "Please select a rating",
+    "ratingMax": "Rating cannot exceed 5",
+    "REVIEW_CREATED": "Review added successfully"
+  },
   "Auth": {
     "heroImageAlt": "Gift boxes with ribbons"
   },

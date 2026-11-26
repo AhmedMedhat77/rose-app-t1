@@ -1,7 +1,7 @@
 import "server-only";
 
 import { API_URL } from "@/shared/lib/constants/config";
-import { IProduct } from "@/features/products/types/product";
+import type { IProduct } from "@/features/products/types/product";
 import { IApiResponse } from "@/shared/lib/types/api";
 
 export async function getProduct(productId: string): Promise<IProduct | null> {

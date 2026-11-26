@@ -8,7 +8,6 @@ import type {
   WishlistItem,
 } from "../types/wishlist.types";
 import { WishlistRequestError } from "../apis/wishlist-request-error";
-import { getWishlist } from "../apis/get-wishlist";
 import { addToWishlist } from "../apis/add-to-wishlist";
 import { removeWishlistItem } from "../apis/remove-wishlist-item";
 import { clearWishlist } from "../apis/clear-wishlist";
@@ -18,8 +17,10 @@ async function runAuthenticated<T>(
 ): Promise<WishlistActionResult<T>> {
   const session = await getServerSession(authOptions);
   if (!session?.accessToken) {
-    return { ok: false, status: 401 };
+    //return { ok: false, status: 401 };
+    throw new WishlistRequestError(401, "Unauthorized");
   }
+
   try {
     return { ok: true, data: await operation(session.accessToken) };
   } catch (error) {
@@ -28,11 +29,11 @@ async function runAuthenticated<T>(
   }
 }
 
-export async function getWishlistAction(): Promise<
-  WishlistActionResult<WishlistItem[]>
-> {
-  return runAuthenticated(getWishlist);
-}
+// export async function getWishlistAction(): Promise<
+//   WishlistActionResult<WishlistItem[]>
+// > {
+//   return runAuthenticated(getWishlist);
+// }
 
 export async function addToWishlistAction(
   productId: string,

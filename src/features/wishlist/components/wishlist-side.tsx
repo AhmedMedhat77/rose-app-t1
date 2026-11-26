@@ -21,16 +21,21 @@ import {
   clearGuestWishlist,
   removeGuestWishlistItems,
 } from "../lib/utils/guest-wishlist-storage";
-import { WishlistViewItem } from "../lib/types/wishlist.types";
+import { WishlistItem, WishlistViewItem } from "../lib/types/wishlist.types";
 
-export default function WishlistSide() {
+type WishlistSideProps = {
+  initialItems?: WishlistItem[];
+};
+
+export default function WishlistSide({ initialItems }: WishlistSideProps) {
   // Translation
   const t = useTranslations("Wishlist");
 
   // State
   const { status } = useSession();
   const isGuest = status === "unauthenticated";
-  const user = useWishlist();
+  // const user = useWishlist();
+  const user = useWishlist(initialItems);
   const guest = useGuestWishlistProducts(isGuest);
   const removeItem = useRemoveWishlistItem();
   const clearWishlist = useClearWishlist();
@@ -69,8 +74,8 @@ export default function WishlistSide() {
     <ProductCollection>
       <ProductCollection.Header>
         <ProductCollection.Heading>
-          <ProductCollection.Title className="flex items-center gap-2.5">
-            <FolderHeart aria-hidden="true" className="size-12 shrink-0" />
+          <ProductCollection.Title className="flex items-center gap-2.5 text-5xl">
+            <FolderHeart aria-hidden="true" className="size-15 shrink-0" />
             {t("title")}
           </ProductCollection.Title>
           <ProductCollection.Count>

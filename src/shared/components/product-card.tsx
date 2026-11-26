@@ -3,11 +3,11 @@ import { Link } from "@/i18n/navigation";
 import { getDiscountedPrice } from "@/shared/lib/utils/price";
 import { Badge } from "@/shared/ui/badge";
 import { cn } from "cn";
-import { Eye, Heart, Star } from "lucide-react";
+import { Eye, Star } from "lucide-react";
 import Image from "next/image";
-
 import { useTranslations } from "next-intl";
 import AddToCartButton from "./add-to-cart-button";
+import { WishlistButton } from "@/features/wishlist/components/wishlist-button";
 
 export interface ProductCardProduct {
   id: string | number;
@@ -77,18 +77,15 @@ export default function ProductCard({
               href={`/products/${product.id}`}
               type="button"
               aria-label="Quick view"
-              className="text-text-maroon-700 pointer-events-auto flex size-7 items-center justify-center rounded-full bg-white"
+              className="text-text-maroon-700 pointer-events-auto flex size-7.5 items-center justify-center rounded-full bg-white"
             >
               <Eye size={15} />
             </Link>
 
-            <button
-              type="button"
-              aria-label="Add to favorites"
-              className="text-text-maroon-700 pointer-events-auto flex size-7 items-center justify-center rounded-full bg-white"
-            >
-              <Heart size={15} />
-            </button>
+            <WishlistButton
+              productId={String(product.id)}
+              className="pointer-events-auto"
+            />
           </div>
         )}
 

@@ -29,7 +29,7 @@ export default function WishlistItem({ item, onRemove }: WishlistRowProps) {
         <ProductRow.Header>
           <ProductRow.Info>
             <ProductRow.StockStatus inStock={inStock} />
-            <ProductRow.Title className="text-xl text-zinc-800">
+            <ProductRow.Title className="text-xl text-zinc-800 dark:text-zinc-100">
               {item.title}
             </ProductRow.Title>
             <ProductRow.Rating
