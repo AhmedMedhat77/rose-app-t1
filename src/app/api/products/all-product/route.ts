@@ -1,4 +1,4 @@
-import { API_URL } from "@/app/shared/constants/config";
+import { API_URL } from "@/shared/lib/constants/config";
 import { NextRequest, NextResponse } from "next/server";
 
 const BASE_URL = API_URL;

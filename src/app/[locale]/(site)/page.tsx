@@ -1,11 +1,11 @@
 import { FeaturesStrip } from "@/features/home/components/hero-section/features-strip";
-import BestSelling from "@/features/bestSelling/components/best-selling";
 import MostPopular from "@/features/mostPopular/components/most-popular";
 import AboutSection from "@/features/home/components/about-section/about-section";
 import Gallery from "@/features/gallery/components/Gallery";
 import Testimonials from "@/features/testimonials/components/Testimonials";
 import Companies from "@/features/companies/Companies";
 import { Hero } from "@/features/home/components/hero-section/hero";
+import BestSelling from "@/features/bestSelling/components/best-selling";
 
 type Props = {
   searchParams: Promise<{
@@ -19,14 +19,13 @@ export default async function HomePage({ searchParams }: Props) {
   return (
     <div>
       <Hero />
-      <div>
-        <FeaturesStrip />
+
+      <FeaturesStrip />
+
+      <div className="mx-auto w-full max-w-[80rem]">
         <BestSelling />
-        <MostPopular
-          occasions={occasions}
-          initialProducts={initialProducts}
-          initialOccasionId={initialOccasionId}
-        />
+
+        <MostPopular occasionId={occasionId} />
 
         <AboutSection />
 
