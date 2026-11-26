@@ -575,5 +575,13 @@
   "ProductsCarousel": {
     "empty": "No products to show",
     "error": "Something went wrong. Please try again."
+  },
+  "NoItemsFound": {
+    "title": "No Items Found",
+    "description": "We couldn't find any products matching your selection. Try changing your filters or search for something else."
+  },
+  "WishList": {
+    "addToWishlist": "Add to Wishlist",
+    "removeFromWishlist": "Remove from Wishlist"
   }
 }
