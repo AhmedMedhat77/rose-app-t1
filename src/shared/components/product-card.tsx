@@ -5,7 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { getDiscountedPrice } from "@/shared/lib/utils/discounted-price.util";
 import { Badge } from "@/shared/ui/badge";
 import { cn } from "cn";
-import { Eye, Heart, Star } from "lucide-react";
+import { Eye, HeartMinus, Star, HeartPlus, Heart } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import AddToCartButton from "./add-to-cart-button";
@@ -105,28 +105,29 @@ export default function ProductCard({
             aria-pressed={isWishlisted}
             onClick={toggleWishlist}
             className={cn(
-              "group/wishlist absolute start-2 top-2 z-30 cursor-pointer",
+              "group/wishlist insert-s-2 absolute top-2 z-30 cursor-pointer",
               "flex h-8 w-8 items-center justify-start gap-2",
-              "rounded-full px-[8px]",
+              "mx-2 rounded-full px-2",
               "transition-all duration-300 ease-in-out",
-              "hover:w-[180px]",
+              "hover:w-45",
               isWishlisted
                 ? "bg-bg-inverse text-text-inverse"
                 : "bg-bg-plain text-text-maron-700",
             )}
           >
-            <Heart
-              size={16}
-              className="shrink-0"
-              fill={isWishlisted ? "currentColor" : "none"}
-            />
+            {isWishlisted ? (
+              <HeartMinus size={16} className="shrink-0" />
+            ) : (
+              <HeartPlus size={16} className="text-text-maroon shrink-0" />
+            )}
 
             <span
               className={cn(
                 "max-w-0 overflow-hidden text-xs font-medium whitespace-nowrap opacity-0",
                 "transition-all duration-300",
-                "group-hover/wishlist:max-w-[150px]",
+                "group-hover/wishlist:max-w-37.5",
                 "group-hover/wishlist:opacity-100",
+                isWishlisted === false && "text-text-maroon",
               )}
             >
               {isWishlisted
@@ -163,7 +164,7 @@ export default function ProductCard({
         <div
           className={cn(
             "pointer-events-none absolute top-2 z-20 flex flex-wrap gap-1",
-            isPopular ? "inset-e-1 justify-end" : "end-2",
+            isPopular ? "inset-e-1 justify-end" : "inset-e-2",
           )}
         >
           {product.stock <= 0 ? (

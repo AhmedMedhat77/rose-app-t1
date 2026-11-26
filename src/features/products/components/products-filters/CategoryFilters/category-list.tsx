@@ -24,7 +24,7 @@ export default function CategoryList() {
     isFetchNextPageError,
   } = useCategories();
   // Hooks
-  const { value: selectedTitle, select } = useFilterParam(FILTER_KEYS.CATEGORY);
+  const { value: selectedId, select } = useFilterParam(FILTER_KEYS.CATEGORY);
   // handell infinent scroll
   const { rootRef, sentinelRef } = useInfiniteSentinel({
     onReach: fetchNextPage,
@@ -54,7 +54,7 @@ export default function CategoryList() {
       className="flex max-h-49.75 scrollbar-none flex-col gap-2.5 overflow-y-auto [&::-webkit-scrollbar]:hidden"
     >
       {categorieslist.map((el) => {
-        const isActive = selectedTitle === el.title;
+        const isActive = selectedId === el.id;
         return (
           <button
             key={el.id}
