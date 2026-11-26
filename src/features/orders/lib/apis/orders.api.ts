@@ -24,7 +24,7 @@ export async function getOrders(
 }
 
 export async function getOrderById(accessToken: string, orderId: string) {
-  const result = await apiFetch<IOrder>(
+  const result = await apiFetch<{ order: IOrder }>(
     `/orders/${encodeURIComponent(orderId)}`,
     {
       auth: accessToken,
@@ -32,5 +32,5 @@ export async function getOrderById(accessToken: string, orderId: string) {
     },
   );
 
-  return result.payload;
+  return result.payload.order;
 }

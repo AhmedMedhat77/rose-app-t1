@@ -38,10 +38,12 @@ function OrderItemsList({ items }: OrderItemsListProps) {
               <ProductRow.Title className="text-base">
                 {item.product.title}
               </ProductRow.Title>
-              <ProductRow.Rating
-                rating={Number(item.product.rating.toFixed(1))}
-                ratings={item.product.ratings}
-              />
+              {item.product.rating !== undefined && (
+                <ProductRow.Rating
+                  rating={Number(item.product.rating.toFixed(1))}
+                  ratings={item.product.ratings ?? 0}
+                />
+              )}
             </ProductRow.Info>
 
             <ProductRow.Footer>
