@@ -1,4 +1,5 @@
-import { ITimeStamp } from "@/shared/lib/types/time";
+import type { IMetaData, IPaginatedPayload } from "@/shared/lib/types/api";
+import type { ITimeStamp } from "@/shared/lib/types/time";
 
 export type IProduct = {
   id: string;
@@ -20,16 +21,15 @@ export type IProduct = {
   subCategory: { id: string; title: string } | null;
 };
 
-export type IProductsMetadata = {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-};
+export type IProductsMetadata = IMetaData;
+export type IProductsPayload = IPaginatedPayload<IProduct>;
 
-export type IProductsPayload = {
-  data: IProduct[];
-  metadata: IProductsMetadata;
+export type IProductListParams = Partial<Pick<IMetaData, "page" | "limit">> & {
+  category?: string;
+  occasion?: string;
+  rating?: number;
+  minPrice?: number;
+  maxPrice?: number;
 };
 
 // Types for product overview

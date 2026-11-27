@@ -139,7 +139,7 @@ function Details({ product }: { product: IProduct }) {
       <div className="flex flex-wrap items-center gap-2">
         {hasDiscount && (
           <span className="text-text-maroon-700 align-bottom leading-none font-medium">
-            {discountedPrice} {t("Product.currency")}
+            {discountedPrice.toFixed(2)} {t("Product.currency")}
           </span>
         )}
 
@@ -151,7 +151,7 @@ function Details({ product }: { product: IProduct }) {
               : "text-text-maroon-700",
           )}
         >
-          {product.price} {t("Product.currency")}
+          {Number(product.price).toFixed(2)} {t("Product.currency")}
         </span>
       </div>
     </div>
