@@ -1,5 +1,5 @@
-import React from "react";
+import { notFound } from "next/navigation";
 
 export default function CategoriesPage() {
-  return <div className="text-3xl">CategoriesPAge</div>;
+  notFound();
 }

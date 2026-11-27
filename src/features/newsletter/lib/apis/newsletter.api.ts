@@ -7,11 +7,10 @@ export async function subscribeToNewsletter(
   email: string,
 ): Promise<SubscribeResult> {
   try {
-    const result = await apiFetch<unknown>("/subscriptions", {
+    await apiFetch<unknown>("/subscriptions", {
       method: "POST",
       body: { email },
     });
-    console.log(result);
     return "subscribed";
   } catch (error) {
     if (!(error instanceof ApiError)) throw error;

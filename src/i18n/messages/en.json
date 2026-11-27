@@ -30,6 +30,9 @@
       "button": "Shop Now"
     },
     "slides": {
+      "goToSlide": "Go to slide {number}",
+      "previousSlide": "Previous slide",
+      "nextSlide": "Next slide",
       "flowers": {
         "title": "Say It with Flowers",
         "subtitle": "Elegant gifts for every special moment."

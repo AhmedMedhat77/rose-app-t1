@@ -30,6 +30,9 @@
       "button": "تسوق الآن"
     },
     "slides": {
+      "goToSlide": "الانتقال إلى الشريحة {number}",
+      "previousSlide": "الشريحة السابقة",
+      "nextSlide": "الشريحة التالية",
       "flowers": {
         "title": "قلها بالورود",
         "subtitle": "هدايا أنيقة لكل لحظة مميزة."

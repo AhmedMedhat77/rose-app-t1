@@ -11,7 +11,7 @@ export default function ProductImage({ image, title }: ProductImageProps) {
       src={image}
       alt={title}
       fill
-      loading="eager"
+      priority
       sizes="(max-width: 768px) 100vw, 50vw"
       className="bg-white bg-center object-center"
     />

@@ -139,7 +139,7 @@ export default function ProductCard({
 
         {/* Popular Hover Actions */}
         {isPopular && (
-          <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center gap-2 bg-[#E7969F]/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <div className="bg-product-overlay/50 pointer-events-none absolute inset-0 z-20 flex items-center justify-center gap-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             <Link
               href={`/products/${product.id}`}
               type="button"
@@ -220,8 +220,12 @@ export default function ProductCard({
                 key={i}
                 size={isPopular ? 20 : 17}
                 strokeWidth={1.5}
-                fill={i < Math.round(product.rating ?? 0) ? "#F9A825" : "none"}
-                className="text-[#F9A825]"
+                fill={
+                  i < Math.round(product.rating ?? 0)
+                    ? "var(--color-rating-star)"
+                    : "none"
+                }
+                className="text-rating-star"
               />
             ))}
           </div>

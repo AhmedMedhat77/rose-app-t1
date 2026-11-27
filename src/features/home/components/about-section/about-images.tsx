@@ -7,7 +7,7 @@ export default function AboutImages() {
         aria-hidden="true"
         className="border-maroon-600 absolute inset-s-0 top-1.25 bottom-1 left-1 h-90.75 w-67.25 rotate-[-3.09deg] rounded-tl-[3.1rem] rounded-tr-[7.5rem] rounded-br-[7.5rem] rounded-bl-[7.5rem] border-4 rtl:rotate-[3.09deg]"
       />
-      <div className="absolute inset-s-10.5 top-6 left-[1.7rem] h-86 w-75.5 overflow-hidden rounded-tl-[3.1rem] rounded-tr-[7.5rem] rounded-br-[7.5rem] rounded-bl-[7.5rem]">
+      <div className="absolute start-[1.7rem] top-6 h-86 w-75.5 overflow-hidden rounded-tl-[3.1rem] rounded-tr-[7.5rem] rounded-br-[7.5rem] rounded-bl-[7.5rem]">
         <Image
           src="/images/violet-figt.png"
           alt=""

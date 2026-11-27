@@ -23,6 +23,7 @@ export function Hero() {
             src="/images/red-gifts.png"
             alt=""
             fill
+            sizes="(max-width: 1024px) 100vw, 25vw"
             className="h-110 object-cover"
           />
           <div className={OVERLAY} />
@@ -49,7 +50,13 @@ export function Hero() {
             key={card.id}
             className="text-text-inverse dark:text-secondary-foreground relative h-[16.9rem] overflow-hidden rounded-2xl"
           >
-            <Image src={card.image} alt="" fill className="object-cover" />
+            <Image
+              src={card.image}
+              alt=""
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover"
+            />
             <div className={OVERLAY} />
             <div className="absolute inset-0 flex flex-col justify-end gap-2 p-4">
               <HeroBadge>{t(`cards.${card.id}.badge`)}</HeroBadge>

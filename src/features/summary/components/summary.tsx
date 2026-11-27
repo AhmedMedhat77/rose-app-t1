@@ -84,7 +84,8 @@ export default function Summary({ className, variant }: SummaryProps) {
   const isCheckoutDisabled = !isReady || viewItems.length === 0;
   const couponDiscount = getCouponsDiscount(appliedCoupons, subtotal);
   const total = subtotal - couponDiscount;
-  const discountPercentage = `${Math.round((couponDiscount / subtotal) * 100)}%`;
+  const discountPercentage =
+    subtotal > 0 ? `${Math.round((couponDiscount / subtotal) * 100)}%` : "0%";
 
   // Functions
   async function onSubmit(values: ApplyCouponFormValues) {

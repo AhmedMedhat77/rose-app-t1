@@ -97,6 +97,8 @@
   --color-zinc-900: #18181b;
   --color-zinc-950: #09090b;
   --color-amber-500: #fba707;
+  --color-product-overlay: #e7969f;
+  --color-rating-star: #f9a825;
 }
 
 /* Dark faint/fade opacity follows the swatches where reference labels conflict. */

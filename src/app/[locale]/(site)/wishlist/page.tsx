@@ -11,9 +11,7 @@ async function WishlistContent() {
 
   let initialItems: WishlistItem[] | undefined;
   if (session?.accessToken) {
-    try {
-      initialItems = await getWishlist(session.accessToken);
-    } catch {}
+    initialItems = await getWishlist(session.accessToken);
   }
 
   return <WishlistSide initialItems={initialItems} />;

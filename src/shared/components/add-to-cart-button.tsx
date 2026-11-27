@@ -123,6 +123,7 @@ export default function AddToCartButton({
       disabled={isDisabled}
       loading={isAdding}
       onClick={handleAddToCart}
+      aria-label={variant === "icon" ? t("addToCart") : undefined}
       className={cn(
         "bg-bg-maroon-secondary relative size-10.5 rounded-full",
         isPopular && "translate-y-[50%]",

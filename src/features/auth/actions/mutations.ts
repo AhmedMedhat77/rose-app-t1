@@ -1,8 +1,6 @@
 import "server-only";
 
-import { HEADERS } from "@/shared/lib/constants/api.constant";
-import { API_URL } from "@/shared/lib/constants/config";
-import { IApiResponse } from "@/shared/lib/types/api";
+import { apiFetch } from "@/shared/lib/apis/fetch.api";
 import {
   ILoginResponse,
   TLoginFormValues,
@@ -27,25 +25,11 @@ import {
 } from "@/features/auth/types/register.types";
 
 async function postJson<T>(path: string, body: unknown): Promise<T> {
-  if (!API_URL) {
-    throw new Error("API_URL is not configured");
-  }
-
-  const response = await fetch(`${API_URL}${path}`, {
+  const response = await apiFetch<T>(path, {
     method: "POST",
-    body: JSON.stringify(body),
-    headers: HEADERS.JSON_HEADER,
+    body,
   });
-  const data: IApiResponse<T> = await response.json();
-
-  if (!data.status) {
-    throw new Error(data.message);
-  }
-  if (!response.ok) {
-    throw new Error(data.message || `Request failed (${response.status})`);
-  }
-
-  return data.payload;
+  return response.payload;
 }
 
 export async function loginMutation(payload: TLoginFormValues) {

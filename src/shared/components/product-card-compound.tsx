@@ -61,7 +61,7 @@ function WishlistCorner({ productId }: { productId: string }) {
 // version WITH hover: eye + heart appear when the card is hovered
 function HoverActions({ productId }: { productId: string }) {
   return (
-    <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center gap-2 bg-[#E7969F]/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100 focus-within:opacity-100">
+    <div className="bg-product-overlay/50 pointer-events-none absolute inset-0 z-20 flex items-center justify-center gap-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100 focus-within:opacity-100">
       <button
         type="button"
         aria-label="Quick view"

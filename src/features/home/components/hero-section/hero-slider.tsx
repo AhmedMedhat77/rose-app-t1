@@ -46,6 +46,7 @@ export function HeroSlider() {
                 alt={t(`slides.${slide.id}.title`)}
                 fill
                 priority={i === 0}
+                sizes="(max-width: 1024px) 100vw, 75vw"
                 className="h-[27.4rem] object-cover object-center"
               />
               <div className="absolute inset-0 bg-linear-to-r from-black/60 to-transparent rtl:bg-linear-to-l" />
@@ -74,7 +75,7 @@ export function HeroSlider() {
           <button
             key={s.id}
             onClick={() => api?.scrollTo(i)}
-            aria-label={`${i + 1}`}
+            aria-label={t("slides.goToSlide", { number: i + 1 })}
             className={`h-2.5 cursor-pointer rounded-full ${i === current ? "bg-bg-danger-saturated w-9" : "bg-bg-plain w-2.5"}`}
           />
         ))}
@@ -85,7 +86,7 @@ export function HeroSlider() {
           variant="ghost"
           size="icon"
           onClick={() => api?.scrollPrev()}
-          aria-label="prev"
+          aria-label={t("slides.previousSlide")}
           className="size-auto bg-transparent p-0 hover:bg-transparent"
         >
           <ChevronLeft className="text-maroon-700 size-7.5 rtl:rotate-180" />
@@ -95,7 +96,7 @@ export function HeroSlider() {
           variant="ghost"
           size="icon"
           onClick={() => api?.scrollNext()}
-          aria-label="next"
+          aria-label={t("slides.nextSlide")}
           className="size-auto bg-transparent p-0 hover:bg-transparent"
         >
           <ChevronRight className="text-maroon-700 size-7.5 rtl:rotate-180" />

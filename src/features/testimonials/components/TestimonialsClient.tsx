@@ -76,12 +76,12 @@ export default function TestimonialsClient({
                   </p>
 
                   {/* Date */}
-                  <p className="text-[10px] text-gray-400">
-                    {new Date(item.createdAt).toLocaleDateString("en-US", {
+                  <p className="text-text-maroon-700 text-[10px]">
+                    {new Intl.DateTimeFormat(locale, {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
-                    })}
+                    }).format(new Date(item.createdAt))}
                   </p>
                 </article>
               ))}

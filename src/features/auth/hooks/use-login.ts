@@ -15,6 +15,9 @@ export function useLogin() {
 
       const pathnameWithoutLocale =
         window.location.pathname.replace(/^\/(en|ar)(?=\/|$)/, "") || "/";
+      const localePrefix =
+        window.location.pathname.match(/^\/(en|ar)(?=\/|$)/)?.[0] ?? "";
+      const localeHome = localePrefix ? `${localePrefix}/` : "/";
 
       const isAuthPage = /^\/(login|register|forgot-password)(\/|$)/.test(
         pathnameWithoutLocale,
@@ -22,8 +25,8 @@ export function useLogin() {
 
       const callbackUrl =
         getSafeCallbackUrl(searchParams.get("callbackUrl")) ??
-        (isAuthPage ? "/" : getSafeCallbackUrl(currentPath)) ??
-        "/";
+        (isAuthPage ? localeHome : getSafeCallbackUrl(currentPath)) ??
+        localeHome;
 
       const response = await signIn("credentials", {
         ...values,

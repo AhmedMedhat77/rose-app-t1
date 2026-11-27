@@ -1,18 +1,8 @@
-import { API_URL } from "@/shared/lib/constants/config";
-import { ITestimonials } from "./types/testimonials";
+import { apiFetch } from "@/shared/lib/apis/fetch.api";
+import type { ITestimonials } from "./types/testimonials";
 
 export default async function getAllTestimonials() {
-  const response = await fetch(`${API_URL}/testimonials`, {
-    method: "GET",
-    next: {
-      revalidate: 300,
-    },
+  return apiFetch<ITestimonials["payload"]>("/testimonials", {
+    next: { revalidate: 300 },
   });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch testimonials");
-  }
-
-  const data: ITestimonials = await response.json();
-  return data;
 }
