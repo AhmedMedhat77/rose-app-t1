@@ -6,7 +6,7 @@ import { cn } from "cn";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
 
-import type { MostPopularClientProps } from "../types/mostPopular";
+import type { MostPopularClientProps } from "../lib/types/mostPopular";
 
 type Props = Pick<MostPopularClientProps, "occasions" | "sectionTitle"> & {
   selectedOccasionId: string;

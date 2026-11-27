@@ -65,8 +65,8 @@ src/
 │       │   ├── <component-name>.tsx
 │       │   └── shared?/
 │       │       └── <component-name>.tsx
-|       ├── skeletons?/                  # skeleton components related to the route
-|       |   └── <component-name>-skeleton.tsx
+│       ├── skeletons?/                  # skeleton components related to the route
+│       │   └── <component-name>-skeleton.tsx
 │       ├── layout?/
 │       │   └── <component-name>.tsx
 │       ├── screens?/
@@ -75,7 +75,7 @@ src/
 │       │   └── use-<hook-name>.ts
 │       └── lib?/
 │           ├── actions/
-│           |   └── <scope-name>.action.ts      # feature-specific server actions
+│           │   └── <scope-name>.action.ts      # feature-specific server actions
 │           ├── apis/
 │           │   └── <scope-name>.api.ts
 │           ├── constants/
@@ -105,8 +105,12 @@ src/
 │   └── lib/
 │       ├── constants/
 │       │   └── <scope-name>.constant.ts
-│       └── utils/
-│           └── <scope-name>.util.ts
+│       ├── utils/
+│       │   └── <scope-name>.util.ts
+│       ├── types/
+│       │   └── <scope-name>.d.ts
+│       └── apis/
+│           └── <scope-name>.api.ts
 │
 └── app/
     ├── favicon.ico
@@ -115,11 +119,6 @@ src/
     │   └── auth/
     │       └── [...nextauth]/
     │           └── route.ts
-    ├── shared/
-    │   ├── constants/
-    │   │   └── <scope-name>.constant.ts
-    │   └── types/
-    │       └── <scope-name>.d.ts
     └── [locale]/                        # localized root
         ├── layout.tsx
         ├── page.tsx

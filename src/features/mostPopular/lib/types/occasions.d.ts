@@ -7,12 +7,3 @@ export interface IOccasion {
   createdAt: string;
   updatedAt: string;
 }
-
-export interface IOccasionsResponse {
-  status: boolean;
-  code: number;
-  payload: {
-    data: IOccasion[];
-    metadata: IMetadata;
-  };
-}

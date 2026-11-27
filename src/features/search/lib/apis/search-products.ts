@@ -1,5 +1,5 @@
 import type { IProduct } from "@/features/products/types/product";
-import { IPaginatedPayload, ISuccessResponse } from "@/shared/types/api";
+import { IPaginatedPayload, ISuccessResponse } from "@/shared/lib/types/api";
 
 export async function searchProducts(query: string): Promise<IProduct[]> {
   const params = new URLSearchParams({ limit: "6" });

@@ -6,7 +6,7 @@ import { Link } from "@/i18n/navigation";
 import { cn } from "cn";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 
-import getAllOccasions from "../lib/api-occasions";
+import getAllOccasions from "../lib/apis/occasions.api";
 import MostPopularTabs from "./most-popular-tabes";
 import MostPopularProducts from "./most-popular-products";
 
@@ -18,7 +18,12 @@ export default async function MostPopular({ occasionId }: Props) {
   const t = await getTranslations();
   const locale = await getLocale();
 
-  const occasions = await getAllOccasions();
+  const query = new URLSearchParams({
+    page: "1",
+    limit: "12",
+  }).toString();
+
+  const occasions = await getAllOccasions(query);
 
   const initialOccasionId = occasions?.[0]?.id ?? "";
 

@@ -1,4 +1,4 @@
-import { getReviewsApi } from "../../lib/apis/products.api";
+import { getReviewsApi } from "../../lib/apis/reviews.api";
 import { getReviewsSummary } from "../../lib/utils/reviews.util";
 import ReviewTitle from "./review-title";
 import ReviewsList from "./reviews-list";

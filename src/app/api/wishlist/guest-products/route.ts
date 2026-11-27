@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import type { IProduct } from "@/features/products/types/product";
-import { getProduct } from "@/features/wishlist/lib/apis/get-product";
+import { getProductById } from "@/shared/lib/apis/products.api";
 
 const MAX_IDS = 100;
 const UUID_PATTERN =
@@ -16,7 +16,13 @@ export async function GET(request: NextRequest) {
     .slice(0, MAX_IDS);
 
   try {
-    const products = await Promise.all(ids.map((id) => getProduct(id)));
+    const products = await Promise.all(
+      ids.map((id) =>
+        getProductById(id, {
+          cache: "no-store",
+        }),
+      ),
+    );
 
     return NextResponse.json(
       products.filter((product): product is IProduct => product !== null),

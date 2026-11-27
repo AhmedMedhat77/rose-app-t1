@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth";
 import z from "zod";
 import { authOptions } from "@/auth";
 import { reviewSchema } from "../../schemas/review.schema";
-import { createReviewApi } from "../apis/products.api";
+import { createReviewApi } from "../apis/reviews.api";
 import { REVIEWS_TAG } from "../constants/product.constants";
 import { ApiError } from "next/dist/server/api-utils";
 

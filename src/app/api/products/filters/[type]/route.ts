@@ -5,7 +5,7 @@ import { HEADERS } from "@/shared/lib/constants/api.constant";
 import {
   CATEGORY_ENDPOINT,
   OCCASIONS_ENDPOINT,
-} from "@/features/products/lib/apis/product.endpoint";
+} from "@/features/products/lib/constants/product.endpoint";
 
 const FILTER_ENDPOINTS = {
   categories: CATEGORY_ENDPOINT,

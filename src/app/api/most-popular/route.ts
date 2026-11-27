@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { API_URL } from "@/app/shared/constants/config";
+import { API_URL } from "@/shared/lib/constants/config";
 
 export async function GET(request: NextRequest) {
   const baseUrl = API_URL;
