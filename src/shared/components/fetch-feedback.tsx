@@ -1,12 +1,20 @@
+import { cn } from "cn";
 import React from "react";
+
+interface FetchFeedbackProps {
+  children: React.ReactNode;
+  className?: string;
+}
 
 export default function FetchFeedback({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+  className,
+}: FetchFeedbackProps) {
   if (!children) return null;
+
   return (
-    <p className="text-text-danger my-4 text-center text-sm">{children}</p>
+    <p className={cn("text-text-danger my-4 text-center text-sm", className)}>
+      {children}
+    </p>
   );
 }

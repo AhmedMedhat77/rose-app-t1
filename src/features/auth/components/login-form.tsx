@@ -15,7 +15,6 @@ import FormTitle from "./shared/form-title";
 import FormDivider from "./shared/form-divider";
 import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
 import { addToast } from "@/shared/ui/toast";
-import { getSafeCallbackUrl } from "@/shared/lib/utils/safe-callback-url.util";
 
 export default function LoginForm() {
   // Translation
@@ -43,16 +42,12 @@ export default function LoginForm() {
   });
 
   // Functions
+
   const onSubmit = handleSubmit((values) => {
     login(values, {
-      onSuccess: () => {
-        const searchParams = new URLSearchParams(window.location.search);
-        const safeCallbackUrl = getSafeCallbackUrl(
-          searchParams.get("callbackUrl"),
-        );
-
-        if (safeCallbackUrl) {
-          window.location.href = safeCallbackUrl;
+      onSuccess: (response) => {
+        if (response.url) {
+          window.location.assign(response.url);
         }
       },
       onError: () => {

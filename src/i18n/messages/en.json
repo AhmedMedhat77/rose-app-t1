@@ -58,9 +58,18 @@
         "title": "Free Delivery",
         "text": "For orders above 120 EGP"
       },
-      "refund": { "title": "Get Refund", "text": "Refunds within 30 days" },
-      "payment": { "title": "Safe Payment", "text": "100% Secure Payment" },
-      "support": { "title": "24/7 Support", "text": "Contact us at any time" }
+      "refund": {
+        "title": "Get Refund",
+        "text": "Refunds within 30 days"
+      },
+      "payment": {
+        "title": "Safe Payment",
+        "text": "100% Secure Payment"
+      },
+      "support": {
+        "title": "24/7 Support",
+        "text": "Contact us at any time"
+      }
     }
   },
   "Header": {
@@ -79,7 +88,10 @@
     "pushError": "Something went wrong. Please try again.",
     "pushEnabled": "Push notifications are enabled.",
     "pushDisabled": "Push notifications are disabled.",
-    "pushNotEnabled": "Push notifications are not enabled."
+    "pushNotEnabled": "Push notifications are not enabled.",
+    "openMenu": "Open menu",
+    "menu": "Menu",
+    "menuDescription": "Browse the site sections"
   },
   "Search": {
     "title": "Products you may like:",
@@ -89,6 +101,23 @@
     "currency": "EGP",
     "rating": "Rating",
     "ratings": "ratings"
+  },
+  "Wishlist": {
+    "add": "Add to wishlist",
+    "remove": "Remove from wishlist",
+    "title": "Wishlist",
+    "count": "{count, plural, one {# item} other {# items}}",
+    "clear": "Clear Wishlist",
+    "clearing": "Clearing...",
+    "clearConfirmTitle": "Are you sure you want to clear your Wishlist?",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "empty": "Your wishlist is empty",
+    "continueShopping": "Continue Shopping",
+    "exploreSimilar": "Explore Similar Products",
+    "addToCart": "Add to Cart",
+    "loading": "Loading...",
+    "error": "Something went wrong, please try again"
   },
   "NotificationsPanel": {
     "title": "Notifications",
@@ -274,6 +303,32 @@
     "filtersError": "Something went wrong. Please try again.",
     "filtersEmpty": "No items found"
   },
+  "productReview": {
+    "title": "Product Reviews",
+    "generalRating": "General rating",
+    "ratings": "ratings",
+    "loadError": "Failed to load reviews",
+    "retry": "Try again",
+    "empty": "No reviews yet",
+    "yourRating": "Your rating",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Enter review title",
+    "reviewLabel": "Review",
+    "reviewPlaceholder": "What do you think of this product?",
+    "addReview": "Add Review",
+    "submitting": "Submitting...",
+    "loginToReview": "Please login to be able to review",
+    "UNAUTHORIZED": "You must be logged in to submit a review.",
+    "INVALID_DATA": "Please check your review and try again.",
+    "SOMETHING_WENT_WRONG": "Something went wrong, please try again",
+    "ALREADY_REVIEWED": "You have already reviewed this product",
+    "titleRequired": "Title is required",
+    "contentRequired": "Review is required",
+    "ratingInteger": "Rating must be a whole number",
+    "ratingMin": "Please select a rating",
+    "ratingMax": "Rating cannot exceed 5",
+    "REVIEW_CREATED": "Review added successfully"
+  },
   "Auth": {
     "heroImageAlt": "Gift boxes with ribbons"
   },
@@ -451,7 +506,19 @@
     "outOfStock": "OUT OF STOCK",
     "new": "NEW",
     "hot": "HOT",
-    "currency": "EGP"
+    "currency": "EGP",
+    "stockLeft": "{count} left in stock",
+    "ratingValue": "Rating: {rating}/5",
+    "ratingCount": "({count} ratings)",
+    "addToWishlist": "Add to wishlist",
+    "relatedProducts": "Related Products",
+    "loadError": "Unable to load this product. Please try again.",
+    "retry": "Try again",
+    "galleryLabel": "Product images",
+    "imageUnavailable": "No image available",
+    "viewImage": "View product image {number}",
+    "previousImages": "Previous product images",
+    "nextImages": "Next product images"
   },
   "Cart": {
     "title": "Cart",
@@ -459,9 +526,62 @@
     "productYouMayLike": "Products You May Like",
     "checkout": "Checkout",
     "coupon-placeholder": "Coupon Code",
-    "apply": "Apply",
+    "apply": "Apply Coupon",
+    "applying": "Applying…",
+    "coupon-applied": "Coupon Applied: ",
+    "code-required": "Enter a coupon code",
+    "coupon-not-found": "Coupon not found",
+    "coupon-already-applied": "This coupon is already applied",
+    "coupon-inactive": "This coupon is not active",
+    "coupon-expired": "Invalid or expired coupon",
+    "coupon-below-minimum": "Cart subtotal is below the minimum purchase",
+    "coupon-request-failed": "Could not check this coupon. Please try again.",
     "no-coupons": "No coupons applied",
+    "discount": "Discount",
+    "currency": "EGP",
     "subtotal": "Subtotal",
-    "total": "Total"
+    "total": "Total",
+    "clear-cart": "Clear Cart",
+    "clearing": "Clearing...",
+    "confirmClear": "Clear your cart?",
+    "confirmClearDescription": "Are you sure you want to remove all items from your cart? This action cannot be undone.",
+    "cancel": "Cancel",
+    "remove": "Remove",
+    "continueShopping": "Continue Shopping",
+    "startShopping": "Start Shopping",
+    "no-of-product": "{count, plural, =0 {No products} one {# product} other {# products}}",
+    "addToCart": "Add To Cart",
+    "adding": "Adding",
+    "error": "Failed to load cart",
+    "loading": "Loading cart...",
+    "no-cart": "Your cart is empty, wanna try shopping?",
+    "quantity": "Quantity",
+    "decrease": "Decrease quantity",
+    "increase": "Increase quantity",
+    "addToCartFailed": "Couldn't add the product to your cart",
+    "addToCartInCart": "Add to cart, {count} already in your cart",
+    "outOfStock": "This product is out of stock.",
+    "actionFailed": "The operation failed. Please try again.",
+    "syncGuestCartFailed": "We couldn't load your guest cart."
+  },
+  "ProductRow": {
+    "rating": "Rating:",
+    "ratingsCount": "{count, plural, one {# rating} other {# ratings}}",
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "currency": "EGP",
+    "originalPrice": "Original price"
+  },
+  "ProductsCarousel": {
+    "empty": "No products to show",
+    "error": "Something went wrong. Please try again."
+  },
+  "NoItemsFound": {
+    "title": "No Items Found",
+    "description": "We couldn't find any products matching your selection. Try changing your filters or search for something else."
+  },
+  "WishList": {
+    "addToWishlist": "Add to Wishlist",
+    "removeFromWishlist": "Remove from Wishlist"
   }
 }

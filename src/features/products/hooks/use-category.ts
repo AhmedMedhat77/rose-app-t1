@@ -1,6 +1,6 @@
 "use client";
 
-import { CATEGORY_ENDPOINT } from "../lib/apis/product.endpoint";
+import { CATEGORY_ENDPOINT } from "../lib/constants/product.endpoint";
 import { FILTER_KEYS } from "../lib/constants/filters.constant";
 import type { ICategoriesItem } from "../types/categories.types";
 import { useInfiniteFilterQuery } from "./use-infinite-filter-query";

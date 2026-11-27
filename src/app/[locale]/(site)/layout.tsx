@@ -1,20 +1,14 @@
-import { LocaleSwitcher } from "@/shared/components/locale-switcher";
-import { ThemeMode } from "@/shared/components/theme-mode";
-import Footer from "@/shared/layout/Footer";
-import { Header } from "@/shared/layout/Header";
+import Footer from "@/shared/layout/footer";
+import { Header } from "@/shared/layout/header";
 
 export default async function RootLayout({
   children,
 }: LayoutProps<"/[locale]">) {
   return (
-    <main className="flex-1">
-      <header className="flex flex-wrap items-center justify-between">
-        <LocaleSwitcher />
-        <ThemeMode />
-      </header>
+    <section className="flex-1">
       <Header />
-      <main className="flex-1">{children}</main>
+      <section className="flex-1">{children}</section>
       <Footer />
-    </main>
+    </section>
   );
 }

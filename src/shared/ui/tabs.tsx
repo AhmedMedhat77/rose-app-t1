@@ -37,7 +37,7 @@ function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
       data-slot="tabs-trigger"
       className={cn(
         "relative inline-flex h-full flex-1 items-center justify-center gap-1.5 px-4 py-3.5 text-sm font-medium whitespace-nowrap transition-all disabled:pointer-events-none has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-        "z-[1] rounded-none first:rounded-s-lg last:rounded-e-lg",
+        "z-1 rounded-none first:rounded-s-lg last:rounded-e-lg",
         "border-border-soft bg-bg-plain text-text-plain border first:border-e-0 last:border-s-0",
         // Focused
         "focus-visible:ring-ring-default outline-none focus-visible:z-10 focus-visible:ring-3",

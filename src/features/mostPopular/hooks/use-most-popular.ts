@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Product } from "../types/mostPopular";
+import { Product } from "../lib/types/mostPopular";
 
 interface UseMostPopularProps {
   occasionId: string;
