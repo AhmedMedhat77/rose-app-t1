@@ -22,7 +22,7 @@ export default async function HomePage({ searchParams }: Props) {
 
       <FeaturesStrip />
 
-      <div className="mx-auto w-full max-w-[80rem]">
+      <div className="mx-auto w-full max-w-7xl">
         <BestSelling />
 
         <MostPopular occasionId={occasionId} />
@@ -34,7 +34,7 @@ export default async function HomePage({ searchParams }: Props) {
 
       <Testimonials />
 
-      <div className="mx-auto w-full max-w-[80rem]">
+      <div className="mx-auto w-full max-w-7xl">
         <Companies />
       </div>
     </div>
