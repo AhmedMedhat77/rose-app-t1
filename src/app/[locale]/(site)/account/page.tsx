@@ -34,10 +34,9 @@ async function AccountSettingsContent({
   const { locale } = await params;
   const { tab } = await searchParams;
   const session = await getServerSession(authOptions);
-  const accessToken = session?.accessToken;
   const userId = session?.user?.id;
 
-  if (!accessToken || !userId) {
+  if (!userId) {
     redirect({ href: "/login", locale });
     return null;
   }
@@ -46,7 +45,7 @@ async function AccountSettingsContent({
     return <ChangePasswordForm />;
   }
 
-  const profile = await getProfile(accessToken, userId).catch(() => null);
+  const profile = await getProfile(userId).catch(() => null);
   if (!profile) return <ProfileLoadError />;
 
   return <ProfileForm profile={profile} />;

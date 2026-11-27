@@ -1,14 +1,12 @@
 export function getSafeCallbackUrl(
   callbackUrl: string | null,
 ): string | undefined {
-  if (!callbackUrl) return "/";
+  if (!callbackUrl) return undefined;
 
   const isSafeCallbackUrl =
-    callbackUrl?.startsWith("/") &&
+    callbackUrl.startsWith("/") &&
     !callbackUrl.startsWith("//") &&
-    // Browsers normalize backslashes and strip tabs and newlines in URLs.
     !/[\\\t\r\n]/.test(callbackUrl);
-  if (isSafeCallbackUrl) {
-    return callbackUrl;
-  }
+
+  return isSafeCallbackUrl ? callbackUrl : undefined;
 }

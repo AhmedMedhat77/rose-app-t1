@@ -46,7 +46,7 @@ export async function forgotPasswordAction(
 }
 ```
 
-HTTP calls that an action or a Server Component shares go in `src/features/<feature-name>/lib/apis/<scope>.api.ts`. Shared request headers live in `src/app/shared/constants/api.constant.ts` (`HEADERS.JSON_HEADER`). Response types live in `src/app/shared/types/api.d.ts` (`IApiResponse<T>`).
+HTTP calls that an action or a Server Component shares go in `src/features/<feature-name>/lib/apis/<scope>.api.ts`. Shared request headers live in `src/shared/lib/constants/api.constant.ts` (`HEADERS.JSON_HEADER`). Response types live in `src/shared/lib/types/api.d.ts` (`IApiResponse<T>`).
 
 ### Refreshing server-fetched data after a mutation (Next 16)
 
@@ -176,7 +176,7 @@ export default function ForgotPasswordRequestForm() {
 | --------------- | -------------------------------------------------------------- | ------------------------------------------ |
 | **Runs on**     | Server, when called from a Server Component or a Server Action | Server only (`"use server"`)               |
 | **Called from** | Server Components, Server Actions, Route Handlers              | Client Components, through a mutation hook |
-| **Use for**     | HTTP reads and shared request functions                        | Mutations triggered from the client        |
+| **Use for**     | HTTP calls (any method) and shared request functions           | Mutations triggered from the client        |
 
 Auth is the exception for the folder: its actions are `src/features/auth/actions/`, not `lib/actions/`.
 

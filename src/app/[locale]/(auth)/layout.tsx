@@ -12,7 +12,7 @@ export default async function AuthLayout({
   const t = await getTranslations("Auth");
 
   return (
-    <main className="grid min-h-screen w-full grid-cols-1 md:grid-cols-2">
+    <section className="grid min-h-screen w-full grid-cols-1 md:grid-cols-2">
       {/* Left Column */}
       <section className="relative flex min-h-screen flex-col justify-between px-6 py-6 sm:px-12 md:px-14 lg:px-20">
         {/* Center content container */}
@@ -57,6 +57,6 @@ export default async function AuthLayout({
           className="object-cover object-center"
         />
       </aside>
-    </main>
+    </section>
   );
 }

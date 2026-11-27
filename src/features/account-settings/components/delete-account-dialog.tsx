@@ -61,7 +61,7 @@ export function DeleteAccountDialog() {
         <Button
           variant="ghost"
           size="icon-xs"
-          className="text-text-soft hover:text-text-plain absolute end-4 top-4 bg-transparent transition-opacity hover:bg-transparent"
+          className="text-text-soft hover:text-text-plain absolute inset-e-4 top-4 bg-transparent transition-opacity hover:bg-transparent"
           onClick={() => setOpen(false)}
           disabled={isPending}
         >

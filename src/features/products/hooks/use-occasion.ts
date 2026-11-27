@@ -1,6 +1,6 @@
 "use client";
 
-import { OCCASIONS_ENDPOINT } from "../lib/apis/product.endpoint";
+import { OCCASIONS_ENDPOINT } from "../lib/constants/product.endpoint";
 import { FILTER_KEYS } from "../lib/constants/filters.constant";
 import type { IOccasionsItem } from "../types/occasions.types";
 import { useInfiniteFilterQuery } from "./use-infinite-filter-query";

@@ -56,8 +56,6 @@ src/
 │   ├── request.ts
 │   └── routing.ts
 │
-├── providers/
-│   └── <name>.provider.tsx
 │
 ├── features/
 │   └── <feature-name>/
@@ -67,8 +65,8 @@ src/
 │       │   ├── <component-name>.tsx
 │       │   └── shared?/
 │       │       └── <component-name>.tsx
-|       ├── skeletons?/                  # skeleton components related to the route
-|       |   └── <component-name>-skeleton.tsx
+│       ├── skeletons?/                  # skeleton components related to the route
+│       │   └── <component-name>-skeleton.tsx
 │       ├── layout?/
 │       │   └── <component-name>.tsx
 │       ├── screens?/
@@ -77,7 +75,7 @@ src/
 │       │   └── use-<hook-name>.ts
 │       └── lib?/
 │           ├── actions/
-│           |   └── <scope-name>.action.ts      # feature-specific server actions
+│           │   └── <scope-name>.action.ts      # feature-specific server actions
 │           ├── apis/
 │           │   └── <scope-name>.api.ts
 │           ├── constants/
@@ -97,7 +95,7 @@ src/
 │   │   └── <component-name>-skeleton.tsx
 │   ├── layout/
 │   │   └── <component-name>.tsx
-│   ├── context/
+│   ├── providers/
 │   │   ├── <name>.context.tsx
 │   │   └── <name>.provider.tsx
 │   ├── hooks/
@@ -107,8 +105,12 @@ src/
 │   └── lib/
 │       ├── constants/
 │       │   └── <scope-name>.constant.ts
-│       └── utils/
-│           └── <scope-name>.util.ts
+│       ├── utils/
+│       │   └── <scope-name>.util.ts
+│       ├── types/
+│       │   └── <scope-name>.d.ts
+│       └── apis/
+│           └── <scope-name>.api.ts
 │
 └── app/
     ├── favicon.ico
@@ -117,11 +119,6 @@ src/
     │   └── auth/
     │       └── [...nextauth]/
     │           └── route.ts
-    ├── shared/
-    │   ├── constants/
-    │   │   └── <scope-name>.constant.ts
-    │   └── types/
-    │       └── <scope-name>.d.ts
     └── [locale]/                        # localized root
         ├── layout.tsx
         ├── page.tsx
@@ -200,3 +197,4 @@ Read the matching file before working on that topic.
 - [Components](.agents/rules/components.md) — read before creating a component, skeleton, dialog, or loading/error/empty state
 - [i18n](.agents/rules/i18n.md) — read before touching translations, locale routing, navigation imports, or RTL layout
 - [Auth](.agents/rules/auth.md) — read before touching NextAuth v4 config, session types, or route protection in `proxy.ts`
+- [API fetch](.agents/rules/api-fetch.md) — read before writing or changing a `*.api.ts` file or `apiFetch`
