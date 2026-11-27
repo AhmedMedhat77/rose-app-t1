@@ -14,7 +14,7 @@ function toViewItem(id: string, product: IProduct): WishlistViewItem {
     discountValue:
       product.discountValue === null ? null : Number(product.discountValue),
     stock: product.stock,
-    categoryName: product.category.title,
+    categoryId: product.category.id,
   };
 }
 

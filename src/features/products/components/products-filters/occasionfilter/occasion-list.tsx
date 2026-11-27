@@ -57,7 +57,7 @@ export default function OccasionList() {
       className="grid max-h-60.5 scrollbar-none grid-cols-2 gap-2.5 overflow-y-auto [&::-webkit-scrollbar]:hidden"
     >
       {occasions.map((el) => {
-        const isActive = selectedId === el.title;
+        const isActive = selectedId === el.id;
 
         return (
           <button

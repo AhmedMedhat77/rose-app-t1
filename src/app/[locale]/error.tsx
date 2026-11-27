@@ -1,61 +1,29 @@
 "use client";
 
-import React, { Component, ErrorInfo, ReactNode } from "react";
+import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 
-interface ErrorBoundaryProps {
-  children: ReactNode;
-  onError?: (error: Error, errorInfo: ErrorInfo) => void;
+import { Button } from "@/shared/ui/button";
+
+type RouteErrorProps = {
+  error: Error & { digest?: string };
+  retry: () => void;
+};
+
+export default function RouteError({ error, retry }: RouteErrorProps) {
+  const t = useTranslations("RouteError");
+
+  useEffect(() => {
+    console.error(error);
+  }, [error]);
+
+  return (
+    <div
+      role="alert"
+      className="container mx-auto flex flex-col items-center gap-4 px-4 py-16 text-center"
+    >
+      <p>{t("message")}</p>
+      <Button onClick={retry}>{t("retry")}</Button>
+    </div>
+  );
 }
-
-interface ErrorBoundaryState {
-  hasError: boolean;
-}
-
-export class GracefullyDegradingErrorBoundary extends Component<
-  ErrorBoundaryProps,
-  ErrorBoundaryState
-> {
-  private contentRef: React.RefObject<HTMLDivElement | null>;
-
-  constructor(props: ErrorBoundaryProps) {
-    super(props);
-    this.state = { hasError: false };
-    this.contentRef = React.createRef();
-  }
-
-  static getDerivedStateFromError(): ErrorBoundaryState {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    if (this.props.onError) {
-      this.props.onError(error, errorInfo);
-    }
-  }
-
-  render() {
-    if (this.state.hasError) {
-      // Render the current HTML content without hydration
-      return (
-        <>
-          <div
-            ref={this.contentRef}
-            suppressHydrationWarning
-            dangerouslySetInnerHTML={{
-              __html: this.contentRef.current?.innerHTML || "",
-            }}
-          />
-          <div className="fixed right-0 bottom-0 left-0 bg-red-600 px-6 py-4 text-center text-white">
-            <p className="font-semibold">
-              An error occurred during page rendering
-            </p>
-          </div>
-        </>
-      );
-    }
-
-    return <div ref={this.contentRef}>{this.props.children}</div>;
-  }
-}
-
-export default GracefullyDegradingErrorBoundary;

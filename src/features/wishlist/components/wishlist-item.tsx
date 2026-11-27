@@ -69,7 +69,7 @@ export default function WishlistItem({ item, onRemove }: WishlistRowProps) {
                 <Link
                   href={{
                     pathname: "/products",
-                    query: { [FILTER_KEYS.CATEGORY]: item.categoryName },
+                    query: { [FILTER_KEYS.CATEGORY]: item.categoryId },
                   }}
                 />
               }

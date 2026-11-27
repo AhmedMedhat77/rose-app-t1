@@ -1,6 +1,10 @@
 {
   "welcome": "مرحبا",
   "language": "اللغة",
+  "RouteError": {
+    "message": "حدث خطأ أثناء تحميل هذه الصفحة.",
+    "retry": "حاول مرة أخرى"
+  },
   "theme": {
     "label": "السمة",
     "light": "فاتح",

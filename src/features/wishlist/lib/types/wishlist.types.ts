@@ -26,5 +26,5 @@ export type WishlistViewItem = {
   discountType: "PERCENT" | "FIXED" | null;
   discountValue: number | null;
   stock: number;
-  categoryName: string;
+  categoryId: string;
 };

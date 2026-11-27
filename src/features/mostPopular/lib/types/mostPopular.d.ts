@@ -1,7 +1,4 @@
-import type {
-  IProduct,
-  IProductOverviewOccasion,
-} from "@/features/products/types/products";
+import type { IProduct } from "@/features/products/types/product";
 import type { ReactNode } from "react";
 
 export interface IMetadata {
@@ -53,7 +50,7 @@ export interface MostPopularProps {
 }
 
 export interface MostPopularClientProps {
-  occasions: IProductOverviewOccasion[];
+  occasions: IOccasion[];
   initialProducts: IProduct[];
   initialOccasionId: string;
   sectionTitle: ReactNode;

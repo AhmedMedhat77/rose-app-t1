@@ -1,6 +1,10 @@
 {
   "welcome": "welcome",
   "language": "language",
+  "RouteError": {
+    "message": "An error occurred while loading this page.",
+    "retry": "Try again"
+  },
   "theme": {
     "label": "Theme",
     "light": "Light",
