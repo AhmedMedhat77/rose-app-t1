@@ -9,12 +9,9 @@ export function profileCacheTag(userId: string) {
   return `${PROFILE_TAG_PREFIX}:${userId}`;
 }
 
-export async function getProfile(
-  accessToken: string,
-  userId: string,
-): Promise<UserProfile> {
+export async function getProfile(userId: string): Promise<UserProfile> {
   const result = await apiFetch<{ user: UserProfile }>("/users/profile", {
-    auth: accessToken,
+    auth: true,
     next: { tags: [profileCacheTag(userId)] },
   });
 

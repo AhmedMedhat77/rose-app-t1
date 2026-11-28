@@ -25,7 +25,7 @@ export default function OccasionList() {
     isFetchNextPageError,
   } = useOccasions();
   // Hooks
-  const { value: selectedTitle, select } = useFilterParam(FILTER_KEYS.OCCASION);
+  const { value: selectedId, select } = useFilterParam(FILTER_KEYS.OCCASION);
 
   // Hook handell infinent scroll
   const { rootRef, sentinelRef } = useInfiniteSentinel({
@@ -54,16 +54,16 @@ export default function OccasionList() {
   return (
     <div
       ref={rootRef}
-      className="grid max-h-60.5 [scrollbar-width:none] grid-cols-2 gap-2.5 overflow-y-auto [&::-webkit-scrollbar]:hidden"
+      className="grid max-h-60.5 scrollbar-none grid-cols-2 gap-2.5 overflow-y-auto [&::-webkit-scrollbar]:hidden"
     >
       {occasions.map((el) => {
-        const isActive = selectedTitle === el.title;
+        const isActive = selectedId === el.title;
 
         return (
           <button
             key={el.id}
             type="button"
-            onClick={() => select(el.title)}
+            onClick={() => select(el.id)}
             aria-pressed={isActive}
             className="relative h-18.5 w-33.25 overflow-hidden rounded-lg"
           >

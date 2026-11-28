@@ -2,6 +2,7 @@ export interface IErrorResponse {
   status: false;
   code: number;
   message: string;
+  errors?: { path: string; message: string }[];
 }
 
 export interface ISuccessResponse<T> {

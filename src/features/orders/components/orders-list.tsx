@@ -7,6 +7,7 @@ import { Button } from "@/shared/ui/button";
 import { Pagination } from "@/shared/ui/pagination";
 
 import { getOrders } from "../lib/apis/orders.api";
+import { IOrder } from "../lib/types/order.types";
 import { OrderCard } from "./order-card";
 
 interface OrdersListProps {
@@ -58,7 +59,7 @@ export async function OrdersList({ locale, page, limit }: OrdersListProps) {
   return (
     <div className="flex flex-col gap-8">
       <ul className="flex flex-col gap-4">
-        {orders.map((order) => (
+        {orders.map((order: IOrder) => (
           <li key={order.id}>
             <OrderCard order={order} />
           </li>

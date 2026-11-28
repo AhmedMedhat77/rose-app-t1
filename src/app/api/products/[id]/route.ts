@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { apiFetch, ApiError } from "@/shared/lib/apis/fetch.api";
+import { ApiError } from "@/shared/lib/apis/fetch.api";
+import { getProductById } from "@/shared/lib/apis/products.api";
 
 export async function GET(
   request: NextRequest,
@@ -9,16 +10,18 @@ export async function GET(
   try {
     const { id } = await params;
 
-    const response = await apiFetch(`/products/${encodeURIComponent(id)}`, {
-      method: "GET",
+    const product = await getProductById(id, {
       signal: request.signal,
     });
 
-    if (!response.payload) {
-      throw new ApiError(404, "Product not found");
+    if (!product) {
+      return NextResponse.json(
+        { status: false, code: 404, message: "Product not found" },
+        { status: 404 },
+      );
     }
 
-    return NextResponse.json(response);
+    return NextResponse.json(product);
   } catch (error) {
     console.error("Get product API error:", error);
 

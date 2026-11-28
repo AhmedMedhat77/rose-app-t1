@@ -1,7 +1,7 @@
 import "server-only";
 
-import { HEADERS } from "@/app/shared/constants/api.constant";
-import { API_URL } from "@/app/shared/constants/config";
+import { HEADERS } from "@/shared/lib/constants/api.constant";
+import { API_URL } from "@/shared/lib/constants/config";
 
 import {
   ChangePasswordRequestError,

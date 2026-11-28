@@ -2,7 +2,7 @@ import "server-only";
 
 import type { Coupon } from "@/features/summary/lib/types/coupon";
 import { apiFetch } from "@/shared/lib/apis/fetch.api";
-import type { IPaginatedPayload } from "@/shared/types/api";
+import type { IPaginatedPayload } from "@/shared/lib/types/api";
 
 export async function getCoupons(query: {
   page: number;

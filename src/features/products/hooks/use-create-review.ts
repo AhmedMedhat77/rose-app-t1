@@ -2,10 +2,8 @@
 
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-
-import { addToast } from "@/shared/ui/toast";
 import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
-
+import { addToast } from "@/shared/ui/toast";
 import { createReviewAction } from "../lib/actions/review.action";
 import type { IReviewFormValues } from "../schemas/review.schema";
 
@@ -26,10 +24,11 @@ export function useCreateReview() {
       addToast(TOAST_STATE.Successful, t("REVIEW_CREATED"));
     },
     onError: (error) => {
-      const message = t.has(error.message)
+      const errorMessage = t.has(error.message)
         ? t(error.message)
         : t("SOMETHING_WENT_WRONG");
-      addToast(TOAST_STATE.Unsuccessful, message);
+
+      addToast(TOAST_STATE.Unsuccessful, errorMessage);
     },
   });
 

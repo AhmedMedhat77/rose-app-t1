@@ -1,11 +1,13 @@
 import { getTranslations } from "next-intl/server";
 
 import ProductsCarousel from "@/shared/components/products-carousel";
-import { getProductsByCategory } from "../lib/apis/products.api";
-import type { IProductOverview } from "../types/product";
+import { getProducts } from "@/shared/lib/apis/products.api";
+import type { IProductOverview, IProduct } from "../types/product";
 import { ProductDetails } from "./product-description";
 import ProductGallery from "./product-gallery/product-gallery";
 import ProductReview from "./product-reviews/product-review";
+
+const RELATED_PRODUCTS_LIMIT = 9;
 
 interface ProductOverviewContentProps {
   product: IProductOverview;
@@ -19,7 +21,13 @@ export default async function ProductOverviewContent({
   reviewsSlot,
 }: ProductOverviewContentProps) {
   const t = await getTranslations("Product");
-  const relatedProducts = getProductsByCategory(product.categoryId, product.id);
+  const relatedProductsQuery = new URLSearchParams({
+    categoryId: product.categoryId,
+    limit: String(RELATED_PRODUCTS_LIMIT),
+  }).toString();
+
+  const products: IProduct[] = await getProducts(relatedProductsQuery);
+  const relatedProducts = products.filter((p) => p.id !== product.id);
 
   return (
     <div className="container mx-auto flex flex-col justify-between px-4 py-8 lg:py-12">
@@ -40,7 +48,7 @@ export default async function ProductOverviewContent({
 
       <section className="mt-42 mb-72 flex flex-col">
         <ProductsCarousel
-          productsList={relatedProducts}
+          productsList={Promise.resolve(relatedProducts)}
           title={t("relatedProducts")}
         />
       </section>

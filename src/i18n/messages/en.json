@@ -320,7 +320,8 @@
     "loginToReview": "Please login to be able to review",
     "UNAUTHORIZED": "You must be logged in to submit a review.",
     "INVALID_DATA": "Please check your review and try again.",
-    "SOMETHING_WENT_WRONG": "You have already reviewed this product.",
+    "SOMETHING_WENT_WRONG": "Something went wrong, please try again",
+    "ALREADY_REVIEWED": "You have already reviewed this product",
     "titleRequired": "Title is required",
     "contentRequired": "Review is required",
     "ratingInteger": "Rating must be a whole number",
@@ -601,5 +602,13 @@
     "empty": "You have no orders yet",
     "startShopping": "Start Shopping",
     "error": "Something went wrong while loading your orders. Please try again."
+  },
+  "NoItemsFound": {
+    "title": "No Items Found",
+    "description": "We couldn't find any products matching your selection. Try changing your filters or search for something else."
+  },
+  "WishList": {
+    "addToWishlist": "Add to Wishlist",
+    "removeFromWishlist": "Remove from Wishlist"
   }
 }

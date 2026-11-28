@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { unwrapActionResult } from "../lib/utils/unwrap-action-result";
-import { removeWishlistItemAction } from "../lib/actions/wishlist.actions";
+import { removeWishlistItemAction } from "../lib/actions/wishlist.action";
 import { WISHLIST_QUERY_KEY } from "../lib/constants/wishlist-constants";
 import { WishlistItem } from "../lib/types/wishlist.types";
 

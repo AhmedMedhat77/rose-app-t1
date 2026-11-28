@@ -1,4 +1,4 @@
-import { ITimeStamp } from "@/shared/types/time";
+import { ITimeStamp } from "@/shared/lib/types/time";
 
 export type IProduct = {
   id: string;

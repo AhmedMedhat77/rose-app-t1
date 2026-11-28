@@ -23,7 +23,7 @@ export default function ReviewsList({ reviews }: ReviewsListProps) {
   }
 
   return (
-    <div className="flex max-h-91.75 flex-col gap-2.5 overflow-y-auto">
+    <div className="flex max-h-91.75 flex-col gap-2.5 overflow-y-auto [&::-webkit-scrollbar]:hidden">
       {reviews?.map((review) => {
         const fullName =
           `${review.user.firstName} ${review.user.lastName}`.trim();

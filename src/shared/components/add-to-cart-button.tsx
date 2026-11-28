@@ -9,7 +9,7 @@ import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
 import { Button } from "@/shared/ui/button";
 import { addToast } from "@/shared/ui/toast";
 import type { IProductOverviewResponse } from "@/features/products/types/product";
-import type { IApiResponse } from "@/shared/types/api";
+import type { IApiResponse } from "@/shared/lib/types/api";
 import { cn } from "cn";
 
 // types

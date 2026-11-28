@@ -1,7 +1,7 @@
 import "server-only";
 
 import { apiFetch } from "@/shared/lib/apis/fetch.api";
-import type { IPaginatedPayload } from "@/shared/types/api";
+import type { IPaginatedPayload } from "@/shared/lib/types/api";
 
 import type { IOrder } from "../types/order.types";
 

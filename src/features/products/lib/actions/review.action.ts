@@ -3,12 +3,11 @@
 import { updateTag } from "next/cache";
 import { getServerSession } from "next-auth";
 import z from "zod";
-
 import { authOptions } from "@/auth";
-
 import { reviewSchema } from "../../schemas/review.schema";
+import { createReviewApi } from "../apis/reviews.api";
 import { REVIEWS_TAG } from "../constants/product.constants";
-import { createReviewApi } from "../apis/products.api";
+import { ApiError } from "next/dist/server/api-utils";
 
 const serverSchema = reviewSchema({
   titleRequired: "titleRequired",
@@ -53,10 +52,16 @@ export async function createReviewAction(values: unknown) {
       success: true,
       message: "REVIEW_CREATED",
     };
-  } catch {
-    return {
-      success: false,
-      message: "SOMETHING_WENT_WRONG",
-    };
+  } catch (error) {
+    // Only when the backend explicitly rejects a duplicate review
+    if (
+      error instanceof ApiError &&
+      error.statusCode === 409 &&
+      error.message === "You have already reviewed this product."
+    ) {
+      return { success: false, message: "ALREADY_REVIEWED" };
+    }
+
+    return { success: false, message: "SOMETHING_WENT_WRONG" };
   }
 }
