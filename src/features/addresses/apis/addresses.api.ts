@@ -1,5 +1,4 @@
-import type { IApiResponse } from "@/shared/types/api";
-
+import { IApiResponse } from "@/shared/lib/types/api";
 import type {
   IAddress,
   IAddressesPayload,
