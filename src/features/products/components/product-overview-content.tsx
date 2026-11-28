@@ -39,13 +39,11 @@ function getGalleryImages(gallery: unknown, cover: string): string[] {
 
 interface ProductOverviewContentProps {
   productId: string;
-  isAuthenticated: boolean;
   reviewsSlot: ReactNode;
 }
 
 export default function ProductOverviewContent({
   productId,
-  isAuthenticated,
   reviewsSlot,
 }: ProductOverviewContentProps) {
   // Translation
@@ -91,11 +89,7 @@ export default function ProductOverviewContent({
         <ProductDetails product={product} />
       </section>
 
-      <ProductReview
-        productId={product.id}
-        isAuthenticated={isAuthenticated}
-        reviewsSlot={reviewsSlot}
-      />
+      <ProductReview productId={product.id} reviewsSlot={reviewsSlot} />
 
       <RelatedProducts productId={product.id} categoryId={product.categoryId} />
     </div>
