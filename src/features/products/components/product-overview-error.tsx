@@ -9,11 +9,13 @@ import { Button } from "@/shared/ui/button";
 interface ProductOverviewErrorProps {
   error: unknown;
   retry: () => void;
+  isRetrying?: boolean;
 }
 
 export function ProductOverviewError({
   error,
   retry,
+  isRetrying,
 }: ProductOverviewErrorProps) {
   // Translation
   const t = useTranslations("Product");
@@ -29,7 +31,9 @@ export function ProductOverviewError({
       className="container mx-auto flex flex-col items-center gap-4 px-4 py-16 text-center"
     >
       <p className="text-text-muted">{t("loadError")}</p>
-      <Button onClick={retry}>{t("retry")}</Button>
+      <Button onClick={retry} loading={isRetrying}>
+        {t("retry")}
+      </Button>
     </div>
   );
 }

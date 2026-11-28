@@ -5,11 +5,10 @@ import { ShoppingCart } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { useCartContext } from "@/features/cart/context/cart-provider";
+import { fetchProduct } from "@/shared/lib/apis/fetch-product";
 import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
 import { Button } from "@/shared/ui/button";
 import { addToast } from "@/shared/ui/toast";
-import type { IProductOverviewResponse } from "@/features/products/types/product";
-import type { IApiResponse } from "@/shared/lib/types/api";
 import { cn } from "cn";
 
 // types
@@ -51,20 +50,8 @@ export default function AddToCartButton({
     setIsAdding(true);
 
     try {
-      const response = await fetch(
-        `/api/products/${encodeURIComponent(productId)}`,
-        { cache: "no-store" },
-      );
-      const result: IApiResponse<IProductOverviewResponse> =
-        await response.json();
-
-      if (!response.ok || !result.status) {
-        throw new Error(
-          "message" in result ? result.message : "Product request failed",
-        );
-      }
-
-      const product = result.payload.product;
+      const product = await fetchProduct(productId);
+      if (!product) throw new Error("Product not found");
 
       if (product.stock <= 0) {
         throw new Error("Product is out of stock");
