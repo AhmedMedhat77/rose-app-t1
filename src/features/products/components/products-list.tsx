@@ -1,25 +1,18 @@
 "use client";
-
-import { useQuery } from "@tanstack/react-query";
-
 import { Pagination } from "@/shared/ui/pagination";
 import ProductCardSkeleton from "@/shared/components/product-card-skeleton";
 import ProductCard from "@/shared/components/product-card";
-
 import { GetAllProductsParams } from "../types/allProducts";
-import { getAllProducts } from "../lib/apis/api-allProducts";
-
 import NoItemsFound from "./not-found-items";
+import useAllProducts from "../hooks/use-allProducts";
 
 interface ProductListProps {
   filters: GetAllProductsParams;
 }
 
 export default function ProductList({ filters }: ProductListProps) {
-  const { data, isLoading, isError, refetch, isRefetching } = useQuery({
-    queryKey: ["products", filters],
-    queryFn: () => getAllProducts(filters),
-  });
+  const { data, isLoading, isError, refetch, isRefetching } =
+    useAllProducts(filters);
 
   // Loading State
   if (isLoading) {
