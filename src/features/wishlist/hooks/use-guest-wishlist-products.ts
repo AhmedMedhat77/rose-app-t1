@@ -4,15 +4,15 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
 import { useGuestWishlist } from "./use-guest-wishlist";
-import { getGuestWishlistProductsAction } from "../lib/actions/guest-wishlist.actions";
 import { removeGuestWishlistItems } from "../lib/utils/guest-wishlist-storage";
+import { fetchGuestWishlistProducts } from "../lib/apis/fetch-guest-wishlist-products";
 
 export function useGuestWishlistProducts(enabled: boolean) {
   const { ids } = useGuestWishlist();
 
   const query = useQuery({
     queryKey: ["wishlist", "guest-products", ids],
-    queryFn: () => getGuestWishlistProductsAction(ids),
+    queryFn: () => fetchGuestWishlistProducts(ids),
     enabled: enabled && ids.length > 0,
     placeholderData: keepPreviousData,
   });

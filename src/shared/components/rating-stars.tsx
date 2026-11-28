@@ -1,4 +1,5 @@
 import { Star } from "lucide-react";
+
 const STAR_COUNT = 5;
 const MAX_RATING = 5;
 const ROUND_DOWN_MAX_FRACTION = 0.25;
@@ -31,23 +32,55 @@ export function getRatingStarFills(rating: number): StarFill[] {
   });
 }
 
-export function RatingStars({ rating }: { rating: number }) {
+interface RatingStarsProps {
+  rating: number;
+  size?: number;
+  onRatingChange?: (rating: number) => void;
+}
+
+export function RatingStars({
+  rating,
+  size = 16,
+  onRatingChange,
+}: RatingStarsProps) {
   const starFills = getRatingStarFills(rating);
 
-  return starFills.map((fill, index) => (
-    <span key={index} className="relative inline-flex size-4">
-      <Star size={16} strokeWidth={1.5} className="text-text-rating" />
+  return starFills.map((fill, index) => {
+    const star = (
       <span
-        className="absolute inset-y-0 inset-s-0 overflow-hidden"
-        style={{ width: `${fill * 100}%` }}
+        className="relative inline-flex"
+        style={{ width: size, height: size }}
       >
-        <Star
-          size={16}
-          strokeWidth={1.5}
-          fill="currentColor"
-          className="text-text-rating"
-        />
+        <Star size={size} strokeWidth={1.5} className="text-text-rating" />
+
+        <span
+          className="absolute inset-y-0 inset-s-0 overflow-hidden"
+          style={{ width: `${fill * 100}%` }}
+        >
+          <Star
+            size={size}
+            strokeWidth={1.5}
+            fill="currentColor"
+            className="text-text-rating"
+          />
+        </span>
       </span>
-    </span>
-  ));
+    );
+
+    if (!onRatingChange) {
+      return <span key={index}>{star}</span>;
+    }
+
+    return (
+      <button
+        key={index}
+        type="button"
+        aria-label={`Rate ${index + 1} out of 5`}
+        aria-pressed={rating === index + 1}
+        onClick={() => onRatingChange(index + 1)}
+      >
+        {star}
+      </button>
+    );
+  });
 }

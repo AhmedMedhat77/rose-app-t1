@@ -303,6 +303,32 @@
     "filtersError": "حدث خطأ ما. حاول مرة أخرى.",
     "filtersEmpty": "لا توجد عناصر"
   },
+  "productReview": {
+    "title": "تقييمات المنتجات",
+    "generalRating": "التقييم العام",
+    "ratings": "تقييمات",
+    "loadError": "تعذّر تحميل التقييمات",
+    "retry": "حاول مرة أخرى",
+    "empty": "لا توجد تقييمات بعد",
+    "yourRating": "تقييمك",
+    "titleLabel": "العنوان",
+    "titlePlaceholder": "اكتب عنوان التقييم",
+    "reviewLabel": "التقييم",
+    "reviewPlaceholder": "ما رأيك في هذا المنتج؟",
+    "addReview": "إضافة تقييم",
+    "submitting": "جارٍ الإرسال...",
+    "loginToReview": "الرجاء تسجيل الدخول لتتمكن من التقييم",
+    "UNAUTHORIZED": "لازم تسجل دخول علشان تضيف تقييم.",
+    "INVALID_DATA": "راجع بيانات التقييم وحاول تاني.",
+    "SOMETHING_WENT_WRONG": "حدث خطأ ما، حاول مرة أخرى",
+    "ALREADY_REVIEWED": "لقد قمت بتقييم هذا المنتج من قبل",
+    "titleRequired": "العنوان مطلوب",
+    "contentRequired": "التقييم مطلوب",
+    "ratingInteger": "التقييم لازم يكون رقم صحيح",
+    "ratingMin": "من فضلك اختار تقييم",
+    "ratingMax": "التقييم لا يمكن أن يزيد عن 5",
+    "REVIEW_CREATED": "تمت إضافة التقييم بنجاح"
+  },
   "Auth": {
     "heroImageAlt": "صناديق هدايا مزينة بشرائط"
   },
@@ -549,6 +575,14 @@
   "ProductsCarousel": {
     "empty": "لا يوجد منتجات للعرض",
     "error": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+  },
+  "NoItemsFound": {
+    "title": "لا توجد منتجات",
+    "description": "لم نتمكن من العثور على منتجات تطابق اختياراتك. حاول تغيير الفلاتر أو البحث عن شيء آخر."
+  },
+  "WishList": {
+    "addToWishlist": "إضافة إلى المفضلة",
+    "removeFromWishlist": "إزالة من المفضلة"
   },
   "Addresses": {
     "title": "عناويني",

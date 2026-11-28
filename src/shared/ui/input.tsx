@@ -20,10 +20,10 @@ const defaultInputStyle = cn(
   "aria-invalid:border-border-danger aria-invalid:ring-ring-danger aria-invalid:hover:border-border-danger aria-invalid:focus:border-border-danger aria-invalid:focus-visible:border-border-danger aria-invalid:ring-3",
 );
 const errorInputStyle = cn(
-  "text-text-danger border-border-danger ring-ring-danger ring-3 hover:border-danger hover:ring-ring-danger hover:ring-3 dark:shadow-[0_0_0_3px_border-border-danger-faint]",
+  "text-text-danger border-border-danger ring-ring-danger ring-3 hover:border-danger hover:ring-ring-danger hover:ring-3",
 );
 const inputVariants = cva(
-  "flex w-full  rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50",
+  "flex w-full  rounded-md border bg-transparent px-3 py-2 text-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -236,7 +236,7 @@ function PhoneNumberInput({
         "!w-full !h-full !rounded-xl",
         "!border-0 !bg-transparent",
         "!text-sm !font-normal !text-foreground",
-        "!shadow-none !outline-none",
+        "!outline-none",
         "placeholder:!text-muted-foreground",
         "focus:!border-0 focus:!ring-0",
         // isArabic ? "!text-right" : "!text-left",
@@ -244,7 +244,7 @@ function PhoneNumberInput({
       countrySelectorStyleProps={{
         buttonClassName: cn(
           "!h-full !border-0 !bg-transparent",
-          "hover:!bg-transparent !shadow-none",
+          "hover:!bg-transparent",
           isArabic ? "!rounded-r-xl" : "!rounded-l-xl",
         ),
         flagClassName: cn(

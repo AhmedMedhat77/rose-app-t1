@@ -13,7 +13,7 @@ import {
   removeGuestWishlistItems,
   setGuestWishlistOwner,
 } from "../lib/utils/guest-wishlist-storage";
-import { addToWishlistAction } from "../lib/actions/wishlist.actions";
+import { addToWishlistAction } from "../lib/actions/wishlist.action";
 
 const FINAL_STATUSES = new Set([400, 404, 409]);
 

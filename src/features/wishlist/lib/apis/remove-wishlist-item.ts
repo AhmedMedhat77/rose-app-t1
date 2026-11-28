@@ -1,7 +1,7 @@
 import "server-only";
 
-import { API_URL } from "@/app/shared/constants/config";
-import { IApiResponse } from "@/shared/types/api";
+import { API_URL } from "@/shared/lib/constants/config";
+import { IApiResponse } from "@/shared/lib/types/api";
 import { IClearWishlistSuccessResponse } from "../types/wishlist.types";
 
 export async function removeWishlistItem(

@@ -3,11 +3,12 @@ import { Link } from "@/i18n/navigation";
 import { getDiscountedPrice } from "@/shared/lib/utils/price";
 import { Badge } from "@/shared/ui/badge";
 import { cn } from "cn";
-import { Eye, Heart, Star } from "lucide-react";
-import Image from "next/image";
-
+import { Eye, HeartMinus, Star, HeartPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import AddToCartButton from "./add-to-cart-button";
+import { WishlistButton } from "@/features/wishlist/components/wishlist-button";
+import { useState } from "react";
+import Image from "next/image";
 
 export interface ProductCardProduct {
   id: string | number;
@@ -18,11 +19,25 @@ export interface ProductCardProduct {
   price: number | string;
   discountType?: string | null;
   discountValue?: number | string | null;
+  createdAt?: string | Date | null;
 }
 
 interface ProductCardProps {
   product: ProductCardProduct;
-  variant?: "bestSelling" | "mostPopular";
+  variant?: "bestSelling" | "mostPopular" | "displayAllProduct";
+}
+
+// Checks whether the product was created within the last 7 days.
+function isNewProduct(createdAt?: string | Date | null) {
+  if (!createdAt) return false;
+
+  const date = new Date(createdAt);
+
+  if (Number.isNaN(date.getTime())) return false;
+
+  const daysDifference = (Date.now() - date.getTime()) / (1000 * 60 * 60 * 24);
+
+  return daysDifference >= 0 && daysDifference <= 7;
 }
 
 export default function ProductCard({
@@ -32,10 +47,16 @@ export default function ProductCard({
   const t = useTranslations();
   const isPopular = variant === "mostPopular";
 
+  const [isWishlisted, setIsWishlisted] = useState(false);
+
   const starsCount = isPopular ? 5 : 4;
 
   const discountedPrice = getDiscountedPrice(product);
   const hasDiscount = discountedPrice < Number(product.price);
+
+  const toggleWishlist = () => {
+    setIsWishlisted((prev) => !prev);
+  };
 
   return (
     <div
@@ -52,22 +73,68 @@ export default function ProductCard({
           isPopular ? "min-h-0 flex-1 rounded-2xl" : "h-55",
         )}
       >
-        {product.cover && (
-          <Image
-            src={product.cover}
-            alt={product.title}
-            fill
-            sizes={
-              isPopular
-                ? "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                : "302px"
+        <Link href={`/products/${product.id}`}>
+          {product.cover && (
+            <Image
+              src={product.cover}
+              alt={product.title}
+              fill
+              sizes={
+                isPopular
+                  ? "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  : "302px"
+              }
+              className={cn(
+                "object-cover",
+                isPopular &&
+                  "transition-transform duration-300 group-hover:scale-105",
+              )}
+            />
+          )}
+        </Link>
+
+        {/* Wishlist Button */}
+        {variant === "displayAllProduct" && (
+          <button
+            type="button"
+            aria-label={
+              isWishlisted
+                ? t("Product.removeFromWishlist")
+                : t("Product.addToWishlist")
             }
+            aria-pressed={isWishlisted}
+            onClick={toggleWishlist}
             className={cn(
-              "object-cover",
-              isPopular &&
-                "transition-transform duration-300 group-hover:scale-105",
+              "group/wishlist insert-s-2 absolute top-2 z-30 cursor-pointer",
+              "flex h-8 w-8 items-center justify-start gap-2",
+              "mx-2 rounded-full px-2",
+              "transition-all duration-300 ease-in-out",
+              "hover:w-45",
+              isWishlisted
+                ? "bg-bg-inverse text-text-inverse"
+                : "bg-bg-plain text-text-maron-700",
             )}
-          />
+          >
+            {isWishlisted ? (
+              <HeartMinus size={16} className="shrink-0" />
+            ) : (
+              <HeartPlus size={16} className="text-text-maroon shrink-0" />
+            )}
+
+            <span
+              className={cn(
+                "max-w-0 overflow-hidden text-xs font-medium whitespace-nowrap opacity-0",
+                "transition-all duration-300",
+                "group-hover/wishlist:max-w-37.5",
+                "group-hover/wishlist:opacity-100",
+                isWishlisted === false && "text-text-maroon",
+              )}
+            >
+              {isWishlisted
+                ? t("WishList.removeFromWishlist")
+                : t("WishList.addToWishlist")}
+            </span>
+          </button>
         )}
 
         {/* Popular Hover Actions */}
@@ -77,18 +144,15 @@ export default function ProductCard({
               href={`/products/${product.id}`}
               type="button"
               aria-label="Quick view"
-              className="text-text-maroon-700 pointer-events-auto flex size-7 items-center justify-center rounded-full bg-white"
+              className="text-text-maroon-700 pointer-events-auto flex size-7.5 items-center justify-center rounded-full bg-white"
             >
               <Eye size={15} />
             </Link>
 
-            <button
-              type="button"
-              aria-label="Add to favorites"
-              className="text-text-maroon-700 pointer-events-auto flex size-7 items-center justify-center rounded-full bg-white"
-            >
-              <Heart size={15} />
-            </button>
+            <WishlistButton
+              productId={String(product.id)}
+              className="pointer-events-auto"
+            />
           </div>
         )}
 
@@ -96,7 +160,7 @@ export default function ProductCard({
         <div
           className={cn(
             "pointer-events-none absolute top-2 z-20 flex flex-wrap gap-1",
-            isPopular ? "inset-e-1 justify-end" : "right-2",
+            isPopular ? "inset-e-1 justify-end" : "inset-e-2",
           )}
         >
           {product.stock <= 0 ? (
@@ -107,24 +171,25 @@ export default function ProductCard({
               <span>{t("Product.outOfStock")}</span>
             </Badge>
           ) : (
-            isPopular &&
-            product.stock && (
-              <>
+            <>
+              {isNewProduct(product.createdAt) && (
                 <Badge
                   variant="subtle"
                   className="bg-bg-muted text-text-zinc-700 dark:bg-bg-inverse dark:text-text-inverse"
                 >
                   <span>{t("Product.new")}</span>
                 </Badge>
+              )}
 
+              {(product.rating ?? 0) >= 4 && (
                 <Badge
                   variant="secondary"
                   className="bg-bg-primary-fade text-text-maroon dark:bg-bg-maroon-secondary dark:text-text-secondary"
                 >
                   <span>{t("Product.hot")}</span>
                 </Badge>
-              </>
-            )
+              )}
+            </>
           )}
         </div>
       </div>
@@ -160,6 +225,7 @@ export default function ProductCard({
               />
             ))}
           </div>
+
           <div className="relative z-20">
             <AddToCartButton
               productId={String(product.id)}
@@ -177,14 +243,11 @@ export default function ProductCard({
           )}
         >
           {hasDiscount && (
-            <span
-              className={cn(
-                "font-primary text-text-muted align-bottom text-base leading-none font-medium tracking-normal line-through",
-              )}
-            >
+            <span className="font-primary text-text-muted align-bottom text-base leading-none font-medium tracking-normal line-through">
               {product.price} {t("Product.currency")}
             </span>
           )}
+
           <span
             className={cn(
               "font-primary align-bottom text-[14px] leading-none font-medium",

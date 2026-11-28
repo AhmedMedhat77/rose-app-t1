@@ -161,7 +161,7 @@ export default function ProductsPage() {
 }
 
 // features/products/components/product-list.tsx — must be async
-import { getProducts } from "@/features/products/lib/services/product.service";
+import { getProducts } from "@/features/products/lib/apis/product.api";
 
 export async function ProductList() {
   const products = await getProducts();

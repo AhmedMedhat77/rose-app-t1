@@ -5,23 +5,21 @@ import { INewsLetterFormValues } from "../lib/types/newsletter";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { newsletterSchema } from "../lib/schemas/newsletter.schema";
 import { useTranslations } from "next-intl";
-import {
-  SubscribeResult,
-  subscribeToNewsletter,
-} from "../lib/apis/newsletter.api";
+import { useSubscribe } from "../hooks/use-subscribe";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
-import { TOAST_STATE } from "@/shared/lib/constants/toast-states.constant";
-import { addToast } from "@/shared/ui/toast";
 import { ArrowRight } from "lucide-react";
 export default function NewsletterForm() {
   //Translation
   const t = useTranslations("Footer");
+
+  const { isPending, subscribe } = useSubscribe();
+
   //Form
   const {
     handleSubmit,
     register,
-    formState: { isSubmitting, errors },
+    formState: { errors },
     reset,
   } = useForm<INewsLetterFormValues>({
     defaultValues: {
@@ -33,20 +31,11 @@ export default function NewsletterForm() {
   //Submit Function
 
   const onSubmit = async ({ email }: INewsLetterFormValues) => {
-    const response = await subscribeToNewsletter(email);
-
-    const messages: Record<SubscribeResult, string> = {
-      subscribed: t("subscribeSuccess"),
-      "already-subscribed": t("subscribeAlready"),
-      error: t("subscribeError"),
-    };
-
-    if (response === "subscribed") {
-      addToast(TOAST_STATE.Successful, messages[response]);
-      reset();
-    } else {
-      addToast(TOAST_STATE.Unsuccessful, messages[response]);
-    }
+    subscribe(email, {
+      onSuccess: (result) => {
+        if (result === "subscribed") reset();
+      },
+    });
   };
 
   return (
@@ -68,8 +57,8 @@ export default function NewsletterForm() {
         <Button
           type="submit"
           variant="secondary"
-          disabled={isSubmitting}
-          loading={isSubmitting}
+          disabled={isPending}
+          loading={isPending}
           className="dark:bg-bg-primary dark:text-text-inverse absolute inset-y-0 inset-e-0 flex h-full items-center gap-3 rounded-full px-6"
         >
           {t("subscribe")}
