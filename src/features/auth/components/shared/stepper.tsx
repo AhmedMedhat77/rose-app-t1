@@ -1,10 +1,14 @@
+import { cn } from "cn";
+
 interface StepperProps {
+  className?: string;
   step: number;
   totalSteps: number;
   fullWidth?: boolean;
 }
 
 export default function Stepper({
+  className,
   step,
   totalSteps,
   fullWidth = false,
@@ -12,7 +16,7 @@ export default function Stepper({
   const items = Array.from({ length: totalSteps }, (_, i) => i + 1);
 
   return (
-    <div className={`flex items-center ${fullWidth ? "w-full" : ""}`}>
+    <div className={cn("flex items-center", fullWidth && "w-full")}>
       {items.map((s, i) => {
         const isDone = s < step;
         const isActive = s === step;
@@ -21,25 +25,31 @@ export default function Stepper({
         return (
           <div
             key={s}
-            className={`flex items-center ${
-              fullWidth && i < items.length - 1 ? "flex-1" : ""
-            }`}
+            className={cn(
+              "flex items-center",
+              fullWidth && i < items.length - 1 && "flex-1",
+            )}
           >
             <span
-              className={`flex size-6.25 shrink-0 items-center justify-center rounded-full ${
+              className={cn(
+                "flex size-6.25 shrink-0 items-center justify-center rounded-full",
                 filled
                   ? "bg-bg-primary text-white"
-                  : "bg-bg-primary-fade text-text-primary"
-              } ${isActive ? "ring-ring-default ring-3" : ""} `}
+                  : "bg-bg-primary-fade text-text-primary",
+                isActive && "ring-ring-default ring-3",
+              )}
             >
               {s}
             </span>
 
             {i < items.length - 1 && (
               <span
-                className={`mx-1 h-px ${fullWidth ? "flex-1" : "w-14"} ${
-                  isDone ? "bg-bg-primary" : "bg-bg-primary-fade"
-                }`}
+                className={cn(
+                  "mx-1 h-px",
+                  className,
+                  fullWidth ? "flex-1" : "w-14",
+                  isDone ? "bg-bg-primary" : "bg-bg-primary-fade",
+                )}
               />
             )}
           </div>

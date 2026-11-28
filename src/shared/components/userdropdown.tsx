@@ -22,6 +22,8 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import FormDivider from "@/features/auth/components/shared/form-divider";
+import { useState } from "react";
+import AddressesDialog from "@/features/addresses/components/addresses-dialog";
 
 interface UserDropdownProps {
   showDashboard?: boolean;
@@ -32,7 +34,7 @@ export default function UserDropdown({
 }: UserDropdownProps) {
   const t = useTranslations("UserDropdown");
   const { data: session } = useSession();
-
+  const [addressesOpen, setAddressesOpen] = useState(false);
   const firstName = session?.user?.firstName ?? t("myAccount");
   const fullName =
     `${firstName ?? ""} ${session?.user?.lastName ?? ""}`.trim() ||
@@ -42,99 +44,102 @@ export default function UserDropdown({
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger
-        render={
-          <Button
-            variant="ghost"
-            type="button"
-            aria-label={fullName}
-            className="hover:bg-transparent dark:bg-transparent"
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          render={
+            <Button
+              variant="ghost"
+              type="button"
+              aria-label={fullName}
+              className="hover:bg-transparent dark:bg-transparent"
+            />
+          }
+        >
+          <UserRound aria-hidden="true" className="size-5 shrink-0 sm:hidden" />
+
+          <span className="hidden flex-col items-start sm:flex">
+            <span className="text-text-soft text-xs font-normal">
+              {t("hello")}
+            </span>
+            <span className="text-primary max-w-40 truncate text-base font-semibold">
+              {firstName}
+            </span>
+          </span>
+
+          <ChevronDown
+            aria-hidden="true"
+            className="text-text-soft hidden size-4.5 shrink-0 sm:block"
           />
-        }
-      >
-        <UserRound aria-hidden="true" className="size-5 shrink-0 sm:hidden" />
+        </DropdownMenuTrigger>
 
-        <span className="hidden flex-col items-start sm:flex">
-          <span className="text-text-soft text-xs font-normal">
-            {t("hello")}
-          </span>
-          <span className="text-primary max-w-40 truncate text-base font-semibold">
-            {firstName}
-          </span>
-        </span>
+        <DropdownMenuContent
+          align="end"
+          side="bottom"
+          sideOffset={8}
+          className="border-border-subtle w-60 min-w-60 rounded-[12px] border p-0"
+        >
+          <DropdownMenuGroup className="p-1.25">
+            <DropdownMenuLabel className="text-text-primary px-2 py-1.5 text-sm font-semibold">
+              {fullName}
+            </DropdownMenuLabel>
+          </DropdownMenuGroup>
+          <FormDivider />
 
-        <ChevronDown
-          aria-hidden="true"
-          className="text-text-soft hidden size-4.5 shrink-0 sm:block"
-        />
-      </DropdownMenuTrigger>
+          <DropdownMenuGroup className="p-1.25">
+            <DropdownMenuItem
+              render={<Link href="/account" />}
+              className="text-text-plain gap-2 px-2 py-1.5 text-sm font-medium"
+            >
+              <UserRound aria-hidden="true" className="size-4" />
+              <span>{t("account")}</span>
+            </DropdownMenuItem>
 
-      <DropdownMenuContent
-        align="end"
-        side="bottom"
-        sideOffset={8}
-        className="border-border-subtle w-60 min-w-60 rounded-[12px] border p-0"
-      >
-        <DropdownMenuGroup className="p-1.25">
-          <DropdownMenuLabel className="text-text-primary px-2 py-1.5 text-sm font-semibold">
-            {fullName}
-          </DropdownMenuLabel>
-        </DropdownMenuGroup>
-        <FormDivider />
+            <DropdownMenuItem
+              onClick={() => setAddressesOpen(true)}
+              className="text-text-plain gap-2 px-2 py-1.5 text-sm font-medium"
+            >
+              <MapPin aria-hidden="true" className="size-4" />
+              <span>{t("addresses")}</span>
+            </DropdownMenuItem>
 
-        <DropdownMenuGroup className="p-1.25">
-          <DropdownMenuItem
-            render={<Link href="/account" />}
-            className="text-text-plain gap-2 px-2 py-1.5 text-sm font-medium"
-          >
-            <UserRound aria-hidden="true" className="size-4" />
-            <span>{t("account")}</span>
-          </DropdownMenuItem>
+            <DropdownMenuItem
+              render={<Link href="/orders" />}
+              className="text-text-plain gap-2 px-2 py-1.5 text-sm font-medium"
+            >
+              <ClipboardList aria-hidden="true" className="size-4" />
+              <span>{t("orders")}</span>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
 
-          <DropdownMenuItem
-            render={<Link href="/addresses" />}
-            className="text-text-plain gap-2 px-2 py-1.5 text-sm font-medium"
-          >
-            <MapPin aria-hidden="true" className="size-4" />
-            <span>{t("addresses")}</span>
-          </DropdownMenuItem>
+          {showDashboard && (
+            <>
+              <FormDivider />
+              <DropdownMenuGroup className="p-1.25">
+                <DropdownMenuItem
+                  render={<Link href="/dashboard" />}
+                  className="text-text-plain gap-2 px-2 py-1.5 text-sm font-medium"
+                >
+                  <LayoutDashboard aria-hidden="true" className="size-4" />
+                  <span>{t("dashboard")}</span>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </>
+          )}
 
-          <DropdownMenuItem
-            render={<Link href="/orders" />}
-            className="text-text-plain gap-2 px-2 py-1.5 text-sm font-medium"
-          >
-            <ClipboardList aria-hidden="true" className="size-4" />
-            <span>{t("orders")}</span>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-
-        {showDashboard && (
-          <>
-            <FormDivider />
-            <DropdownMenuGroup className="p-1.25">
-              <DropdownMenuItem
-                render={<Link href="/dashboard" />}
-                className="text-text-plain gap-2 px-2 py-1.5 text-sm font-medium"
-              >
-                <LayoutDashboard aria-hidden="true" className="size-4" />
-                <span>{t("dashboard")}</span>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </>
-        )}
-
-        <FormDivider />
-        <DropdownMenuGroup className="p-1.25">
-          <DropdownMenuItem
-            onClick={handleLogout}
-            className="text-text-plain gap-2 px-2 py-1.5 text-sm font-medium"
-          >
-            <LogOut aria-hidden="true" className="size-4 rtl:rotate-180" />
-            <span>{t("logout")}</span>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+          <FormDivider />
+          <DropdownMenuGroup className="p-1.25">
+            <DropdownMenuItem
+              onClick={handleLogout}
+              className="text-text-plain gap-2 px-2 py-1.5 text-sm font-medium"
+            >
+              <LogOut aria-hidden="true" className="size-4 rtl:rotate-180" />
+              <span>{t("logout")}</span>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <AddressesDialog open={addressesOpen} onOpenChange={setAddressesOpen} />
+    </>
   );
 }

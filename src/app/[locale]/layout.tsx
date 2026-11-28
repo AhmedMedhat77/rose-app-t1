@@ -26,6 +26,7 @@ import { CartProvider } from "@/features/cart/context/cart-provider";
 import { CouponProvider } from "@/features/summary/context/coupon-provider";
 import { Toaster } from "@/shared/ui/toast";
 import { GuestWishlistMerger } from "@/features/wishlist/components/guest-wishlist-merger";
+import { DeliveryLocationProvider } from "@/features/addresses/context/delivery-location-context";
 export const metadata: Metadata = {
   title: "Rose App",
   description: "Rose Application",
@@ -79,7 +80,9 @@ export default async function RootLayout({
                 <CartProvider>
                   <CouponProvider>
                     <GuestWishlistMerger />
-                    <main className="flex-1">{children}</main>
+                    <DeliveryLocationProvider>
+                      <main className="flex-1">{children}</main>
+                    </DeliveryLocationProvider>
                   </CouponProvider>
                 </CartProvider>
               </QueryProvider>
