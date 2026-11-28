@@ -1,32 +1,27 @@
 import { Suspense } from "react";
-import { notFound } from "next/navigation";
 
 import { getServerSession } from "next-auth";
 
 import { authOptions } from "@/auth";
-import { getProductById } from "@/shared/lib/apis/products.api";
 
 import ProductOverviewContent from "../components/product-overview-content";
 import ReviewsSection from "../components/product-reviews/reviews-section";
 import ReviewsListSkeleton from "../skeletons/reviews-list.skeleton";
-import type { IProductOverview } from "../types/product";
+
+interface ProductOverviewPageProps {
+  params: Promise<{ id: string }>;
+}
 
 export default async function ProductOverViewPage({
   params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+}: ProductOverviewPageProps) {
   const { id } = await params;
 
-  const [product, session] = await Promise.all([
-    getProductById<IProductOverview>(id),
-    getServerSession(authOptions),
-  ]);
-  if (!product) notFound();
+  const session = await getServerSession(authOptions);
 
   return (
     <ProductOverviewContent
-      product={product}
+      productId={id}
       isAuthenticated={!!session?.accessToken}
       reviewsSlot={
         <Suspense fallback={<ReviewsListSkeleton />}>

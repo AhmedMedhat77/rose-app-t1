@@ -1,13 +1,12 @@
 "use client";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import type { IProductOverview } from "../../types/product";
 import ProductImage from "./product-image";
 import ProductSlider from "./product-slider";
 
 type ProductGalleryProps = {
   title: string;
-  images: IProductOverview["gallery"];
+  images: string[];
 };
 
 export default function ProductGallery({ images, title }: ProductGalleryProps) {

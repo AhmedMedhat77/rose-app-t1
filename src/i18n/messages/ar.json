@@ -512,6 +512,7 @@
     "ratingCount": "({count} تقييمات)",
     "addToWishlist": "أضف إلى المفضلة",
     "relatedProducts": "منتجات ذات صلة",
+    "notFound": "المنتج غير موجود.",
     "loadError": "تعذر تحميل المنتج. حاول مرة أخرى.",
     "retry": "حاول مرة أخرى",
     "galleryLabel": "صور المنتج",

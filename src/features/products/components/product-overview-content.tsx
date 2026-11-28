@@ -1,41 +1,92 @@
-import { getTranslations } from "next-intl/server";
+"use client";
 
-import ProductsCarousel from "@/shared/components/products-carousel";
-import { getProducts } from "@/shared/lib/apis/products.api";
-import type { IProductOverview, IProduct } from "../types/product";
+import type { ReactNode } from "react";
+
+import { useTranslations } from "next-intl";
+
+import { useProductOverview } from "../hooks/use-product-overview";
+import { ProductOverviewSkeleton } from "../skeletons/product-overview.skeleton";
 import { ProductDetails } from "./product-description";
 import ProductGallery from "./product-gallery/product-gallery";
+import { ProductOverviewError } from "./product-overview-error";
 import ProductReview from "./product-reviews/product-review";
+import { RelatedProducts } from "./related-products";
 
-const RELATED_PRODUCTS_LIMIT = 9;
+function isImageSource(value: unknown): value is string {
+  if (typeof value !== "string") return false;
+  if (value.startsWith("/")) return !value.startsWith("//");
 
-interface ProductOverviewContentProps {
-  product: IProductOverview;
-  isAuthenticated: boolean;
-  reviewsSlot: React.ReactNode;
+  return /^https?:\/\//i.test(value) && URL.canParse(value);
 }
 
-export default async function ProductOverviewContent({
-  product,
+function getGalleryImages(gallery: unknown, cover: string): string[] {
+  let images = gallery;
+
+  if (typeof gallery === "string") {
+    try {
+      images = JSON.parse(gallery);
+    } catch {
+      images = gallery;
+    }
+  }
+
+  const sources = (Array.isArray(images) ? images : [images]).filter(
+    isImageSource,
+  );
+
+  return sources.length ? sources : [cover].filter(isImageSource);
+}
+
+interface ProductOverviewContentProps {
+  productId: string;
+  isAuthenticated: boolean;
+  reviewsSlot: ReactNode;
+}
+
+export default function ProductOverviewContent({
+  productId,
   isAuthenticated,
   reviewsSlot,
 }: ProductOverviewContentProps) {
-  const t = await getTranslations("Product");
-  const relatedProductsQuery = new URLSearchParams({
-    categoryId: product.categoryId,
-    limit: String(RELATED_PRODUCTS_LIMIT),
-  }).toString();
+  // Translation
+  const t = useTranslations("Product");
 
-  const products: IProduct[] = await getProducts(relatedProductsQuery);
-  const relatedProducts = products.filter((p) => p.id !== product.id);
+  // Query
+  const {
+    data: product,
+    error,
+    isPending,
+    refetch,
+    isRefetching,
+  } = useProductOverview(productId);
+
+  if (isPending) return <ProductOverviewSkeleton />;
+
+  if (product === undefined) {
+    return (
+      <ProductOverviewError
+        error={error}
+        retry={() => void refetch()}
+        isRetrying={isRefetching}
+      />
+    );
+  }
+
+  if (product === null) {
+    return (
+      <p className="text-text-muted container mx-auto px-4 py-16 text-center">
+        {t("notFound")}
+      </p>
+    );
+  }
+
+  // Variables
+  const images = getGalleryImages(product.gallery, product.cover);
 
   return (
     <div className="container mx-auto flex flex-col justify-between px-4 py-8 lg:py-12">
       <section className="grid items-stretch gap-8 lg:grid-cols-2 lg:gap-17.5">
-        <ProductGallery
-          title={product.title}
-          images={product.gallery.length ? product.gallery : [product.cover]}
-        />
+        <ProductGallery title={product.title} images={images} />
 
         <ProductDetails product={product} />
       </section>
@@ -46,12 +97,7 @@ export default async function ProductOverviewContent({
         reviewsSlot={reviewsSlot}
       />
 
-      <section className="mt-42 mb-72 flex flex-col">
-        <ProductsCarousel
-          productsList={Promise.resolve(relatedProducts)}
-          title={t("relatedProducts")}
-        />
-      </section>
+      <RelatedProducts productId={product.id} categoryId={product.categoryId} />
     </div>
   );
 }

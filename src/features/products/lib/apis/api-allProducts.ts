@@ -1,28 +1,17 @@
-import { GetAllProductsParams, ProductDetails } from "../../types/allProducts";
+import type { IPaginatedResponse } from "@/shared/lib/types/api";
 
-export interface ProductsMetadata {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-}
-
-export interface GetAllProductsResponse {
-  status: boolean;
-  code: number;
-  payload: {
-    data: ProductDetails[];
-    metadata: ProductsMetadata;
-  };
-}
+import type { GetAllProductsParams } from "../../types/allProducts";
+import type { IProduct } from "../../types/product";
 
 export async function getAllProducts(
   params: GetAllProductsParams = {},
-): Promise<GetAllProductsResponse> {
+  signal?: AbortSignal,
+): Promise<IPaginatedResponse<IProduct>> {
   const searchParams = new URLSearchParams();
 
   const apiParams = {
     page: params.page,
+    limit: params.limit,
     categoryId: params.category,
     occasionId: params.occasion,
     minPrice: params.minPrice,
@@ -40,6 +29,7 @@ export async function getAllProducts(
 
   const response = await fetch(
     `/api/products/all-product${queryString ? `?${queryString}` : ""}`,
+    { signal },
   );
 
   if (!response.ok) {

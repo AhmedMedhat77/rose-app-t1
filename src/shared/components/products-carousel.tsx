@@ -1,6 +1,6 @@
-import { getTranslations } from "next-intl/server";
-import { Suspense } from "react";
-import { IProduct } from "@/features/products/types/product";
+import { Suspense, use } from "react";
+import { useTranslations } from "next-intl";
+import type { IProduct } from "@/features/products/types/product";
 import SectionsTitle from "@/shared/components/SectionsTitle";
 import ProductCard from "@/shared/components/product-card-copy";
 import { ProductsCarouselErrorBoundary } from "@/shared/components/products-carousel-error-boundary";
@@ -21,7 +21,7 @@ export default function ProductsCarousel({
   productsList,
 }: {
   title?: string;
-  productsList: Promise<IProduct[]>;
+  productsList: IProduct[] | Promise<IProduct[]>;
 }) {
   return (
     <ProductsCarouselErrorBoundary>
@@ -37,14 +37,16 @@ export default function ProductsCarousel({
   );
 }
 
-async function ProductsCarouselSlides({
+function ProductsCarouselSlides({
   productsList,
 }: {
-  productsList: Promise<IProduct[]>;
+  productsList: IProduct[] | Promise<IProduct[]>;
 }) {
-  const products = await productsList;
+  const t = useTranslations("ProductsCarousel");
 
-  const t = await getTranslations("ProductsCarousel");
+  const products = Array.isArray(productsList)
+    ? productsList
+    : use(productsList);
   if (products.length === 0) {
     return <p>{t("empty")}</p>;
   }

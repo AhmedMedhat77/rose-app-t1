@@ -512,6 +512,7 @@
     "ratingCount": "({count} ratings)",
     "addToWishlist": "Add to wishlist",
     "relatedProducts": "Related Products",
+    "notFound": "Product not found.",
     "loadError": "Unable to load this product. Please try again.",
     "retry": "Try again",
     "galleryLabel": "Product images",

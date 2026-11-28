@@ -7,10 +7,9 @@ import {
 } from "@/shared/ui/carousel";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import type { IProductOverview } from "../../types/product";
 
 type ProductSliderProps = {
-  images: IProductOverview["gallery"];
+  images: string[];
   activeImage: string | null;
   onSetActiveImage: (indx: number) => void;
 };

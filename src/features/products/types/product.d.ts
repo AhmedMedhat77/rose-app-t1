@@ -89,7 +89,7 @@ interface ICount {
 }
 
 export interface IProductOverview extends IProduct {
-  gallery: string[];
+  gallery: string[] | string | null;
   deletedAt: string | null;
   createdAt: string;
   updatedAt: string;
@@ -104,10 +104,6 @@ export interface IProductOverview extends IProduct {
   }[];
   reviews: IProductOverViewReview[];
   _count: ICount;
-}
-
-export interface IProductOverviewResponse {
-  product: IProductOverview;
 }
 
 export interface IProductReview extends ITimeStamp {
